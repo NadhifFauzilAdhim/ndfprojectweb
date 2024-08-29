@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,8 +21,8 @@ class PostFactory extends Factory
         return [
             'title' => $this->faker->sentence(),
             'author_id' => User::factory(),
-            'category' => $this->faker->randomElement(['IoT', 'Web Development', 'Machine Learning', 'Backend Development', 'Security']),
-            'body' => $this->faker->text(500),
+            'category_id' => Category::factory(),
+            'body' => $this->faker->paragraph(20),
             'slug' => $this->faker->slug(),
 
         ];

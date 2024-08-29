@@ -2,9 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Post;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,9 +19,27 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+
+
+        $admin = User::create([
+            'name' => 'Nadhif Fauzil Adhim',
+            'username' => 'nadhif_f.a',
+            'email' => 'nadhif@gmail.com',
+            'is_admin' => 1,
+            'password' => Hash::make('password'),
+            'remember_token' => Str::random(10)
+
         ]);
+
+        Post::factory(20)->recycle([
+            Category::factory(5)->create(),
+            $admin,
+            User::factory(2)->create()
+        ])->create();
+
     }
 }

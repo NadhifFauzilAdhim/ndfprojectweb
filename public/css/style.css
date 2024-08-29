@@ -1464,3 +1464,31 @@ section {
         .comment-list li .comment-body .reply:hover {
           color: #fff;
           background: #8c8c8c; }
+
+
+  .bloghero .input-group {
+  background-color:#fff;
+  border-radius: 100px;
+  padding: 10px 15px;
+  z-index: 3;
+}
+
+.bloghero .input-group-text {
+  background-color: transparent;
+  border: 0;
+}
+
+.bloghero input[type="search"] {
+  border: 0;
+  box-shadow: none;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+.bloghero button[type="submit"] {
+  background-color: #0d6efd;
+  border: 0;
+  border-radius: 100px !important;
+  color: #fff;
+  max-width: 150px;
+}

@@ -7,9 +7,9 @@
             <div class="col-lg-6">
               <h1 class="heading text-white mb-3" data-aos="fade-up" >{{ $post['title'] }}</h1>
               <div class="d-flex justify-content-center" data-aos="fade-up">
-                <p class="me-4"><i class="bi bi-pencil-square me-1"></i>{{ $post->author->name }}</p>
+                <p class="me-4"><i class="bi bi-feather me-1"></i></i><a href="/author/{{ $post->author->username }}" class="link-opacity-50-hover ">{{ $post->author->name }}</a></p>
                 <p class="me-4"><i class="bbi bi-calendar-check-fill me-1"></i>{{ $post['created_at'] }}</p>
-                <p><i class="bi bi-bookmark me-1"></i>{{ $post['category'] }}</p>
+                <p><i class="bi bi-bookmark me-1"></i><a href="/category/{{ $post->category->slug }}">{{ $post->category->name }}</a></p>
               </div>
               
             </div>

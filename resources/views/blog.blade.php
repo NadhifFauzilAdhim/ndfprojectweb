@@ -5,19 +5,69 @@
           <img src="{{ asset('img/blob.svg') }}" alt="" class="img-fluid blob">
           <div class="container">
             <div class="row align-items-center justify-content-center text-center pt-5">
-              <div class="col-lg-6">
-                <h1 class="heading text-white mb-3" data-aos="fade-up" >Blog / News / Project</h1>
-                <p class="mb-3">Dapatkan berita terkini dan update terbaru </p>
+              <div class="col-lg-10">
+                  @if(request('author'))
+                    <h1 class="heading text-white mb-3" data-aos="fade-up">{{ $posts->count() }} Article By  {{ $posts->first()->author->name }}</h1>  
+                      <div class="d-flex justify-content-center" data-aos="fade-up">
+                        <span class="badge rounded-pill text-bg-primary me-4"><i class="bi bi-calendar-check me-1"></i>Bergabung : {{ $posts->first()->author->created_at }}</span>
+                        <span class="badge rounded-pill text-bg-primary"><i class="bi bi-mailbox me-1"></i>Post : {{ $posts->count() }}</span>
+                      </div>
+                  @elseif(request('category'))
+                     <h1 class="heading text-white mb-3" data-aos="fade-up">Post in Category {{ $posts->first()->category->name }}</h1> 
+                  @elseif($type == 'all')
+                    <h1 class="heading text-white mb-3" data-aos="fade-up" >Blog / News / Project</h1>
+                     <p class="mb-3" data-aos="fade-up">Dapatkan berita terkini dan update terbaru </p>
+                  @endif
+             
               </div>
+              <div class="col-lg-6">
+                    <form
+                action=""
+                method="GET"
+                class="custom-form mt-4 pt-2 mb-5"
+                role="search"
+                data-aos="fade"
+                data-aos-delay="300"
+              
+              >
+               @if(request('category'))
+               <input type="hidden" name="category" value="{{ request('category') }}">
+               @endif
+               @if(request('author'))
+               <input type="hidden" name="author" value="{{ request('author') }}">
+               @endif
+                <div class="input-group input-group-lg">
+                  <span class="input-group-text bi-search" id="basic-addon1">
+                  </span>
+
+                  <input
+                    name="search"
+                    type="search"
+                    style="z-index: 10;"
+                    class="form-control"
+                    id="keyword"
+                    placeholder="Search For Article, Project or News"
+                    @if(request('search'))
+                     value="{{ request('search') }}"
+                    @endif
+                    aria-label="Search"
+                  />
+
+                  <button type="submit"  class="form-control">Search</button>
+                </div>
+              </form>
+              </div>
+              
             </div>
+            
           </div>
         </div>
     
       <section id="blog-section" class="blog">
         <div class="container-fluid blog py-5">
-                <div class="container py-5">
+                <div class="container py-5" data-aos="fade-up">
                     <div class="row g-4 ">
-                        @foreach ($posts as $item)
+                        @forelse ($posts as $item)
                         <div class="col-lg-6 col-xl-4 col-md-6 wow fadeInUp" data-aos-delay="100">
                             <div class="blog-item">
                                 <div class="blog-img">
@@ -37,13 +87,15 @@
                                       </div>
                                     </div> --}}
                                     <div class="blog-categiry py-2 px-4">
-                                        <span>{{ $item['category'] }}</span>
+                                      <a href="/blog?category={{ $item->category->slug }}">
+                                        <span class="text-white"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">{{ $item->category->name }}</span>
+                                      </a>
                                     </div>
                                 </div>
                                 <div class="blog-content p-4">
                                     <div class="blog-comment d-flex justify-content-between mb-3">
-                                        <div class="small"> <a href="/author/{{ $item->author->username }}"><span class="bi bi-code-slash text-primary"></span> {{ $item->author->name }}</a></div>
-                                        <div class="small"><span class="bi bi-calendar2-check text-primary"></span> {{ $item['created_at']->diffForHumans() }}</div>
+                                        <div class="small"> <a href="/blog?author={{ $item->author->username }}"><i class="bi bi-feather"></i> {{ $item->author->name }}</a></div>
+                                        <div class="small"><i class="bi bi-clock-history"></i> {{ $item['created_at']->diffForHumans() }}</div>
                                     </div>
                                     <a href="/blog/{{ $item['slug'] }}" class="h4 d-inline-block mb-3">{{ $item['title']}}</a>
                                     <p class="mb-3">{{ Str::limit($item['body'], 100) }}</p>
@@ -51,9 +103,17 @@
                                 </div>
                             </div>
                         </div>
-                        @endforeach
+                        @empty
+                        <div class="text-center">
+                          <h1 class="home__title">Nampaknya tidak ada &#129300;</h1>
+                          <p class="home__description">
+                              Cek kembali kata kunci yang anda cari
+                          </p>  
+                        </div>
                         
-                       
+                        @endforelse
+                        
+                        {{ $posts->links() }}
                         
                     </div>
                 </div>
