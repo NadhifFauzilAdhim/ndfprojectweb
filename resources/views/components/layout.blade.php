@@ -66,8 +66,9 @@
 
   <footer id="footer">
     <div class="container">
-      <div class="copyright">
-        &copy; Copyright <strong><span>NDFProject <br> <small >Last Update 30/7/2024</small></span></strong>
+      <div class=" text-white-50">
+        {{-- &copy; Copyright <strong><span>NDFProject</span></strong> --}}
+        Develop With <i class="bi bi-heart-fill text-danger"></i> by NDFProject
       </div>
       <div class="credits">
       </div>

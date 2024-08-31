@@ -24,6 +24,7 @@ return new class extends Migration
             );
             $table->text('body');
             $table->string('slug')->unique();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

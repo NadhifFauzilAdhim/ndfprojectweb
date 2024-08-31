@@ -15,8 +15,8 @@
                   @elseif(request('category'))
                      <h1 class="heading text-white mb-3" data-aos="fade-up">Post in Category {{ $posts->first()->category->name }}</h1> 
                   @elseif($type == 'all')
+                    <img src="{{ asset('img/product-tip.png') }}" class="img-fluid" alt="" width="200px">
                     <h1 class="heading text-white mb-3" data-aos="fade-up" >Blog / News / Project</h1>
-                     <p class="mb-3" data-aos="fade-up">Dapatkan berita terkini dan update terbaru </p>
                   @endif
              
               </div>
@@ -63,7 +63,7 @@
           </div>
         </div>
     
-      <section id="blog-section" class="blog">
+      <div id="blog-section" class="blog">
         <div class="container-fluid blog py-5">
                 <div class="container py-5" data-aos="fade-up">
                     <div class="row g-4 ">
@@ -71,7 +71,11 @@
                         <div class="col-lg-6 col-xl-4 col-md-6 wow fadeInUp" data-aos-delay="100">
                             <div class="blog-item">
                                 <div class="blog-img">
-                                  <img src="{{ asset('img/project/kostifyadv.png') }}" class="img-fluid rounded-top w-100" alt="">
+                                  @if($item->image)
+                                  <img src="{{ asset('storage/' . $item->image) }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
+                                  @else
+                                  <img src="{{ asset('img/programmer_text_2.jpg') }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
+                                  @endif
                                     <!-- <img src="img/project/kostifyadv.png" class="img-fluid rounded-top w-100" alt=""> -->
                                     {{-- <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                                       <div class="carousel-inner">
@@ -98,7 +102,7 @@
                                         <div class="small"><i class="bi bi-clock-history"></i> {{ $item['created_at']->diffForHumans() }}</div>
                                     </div>
                                     <a href="/blog/{{ $item['slug'] }}" class="h4 d-inline-block mb-3">{{ $item['title']}}</a>
-                                    <p class="mb-3">{{ Str::limit($item['body'], 100) }}</p>
+                                    <p class="mb-3">{{ Str::limit(strip_tags($item['body']), 100) }}</p>
                                     <a href="/blog/{{ $item['slug'] }}" class="btn p-0">Read more  <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
@@ -118,6 +122,6 @@
                     </div>
                 </div>
             </div>
-            </section>
+            </div>
     
 </x-layout>

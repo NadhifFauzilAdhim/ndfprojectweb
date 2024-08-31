@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Post extends Model
 {
     protected $guarded = ['id'];
     protected $with = ['category','author'];
     use HasFactory;
+    use Sluggable;
     
     public function author() : BelongsTo
     {
@@ -40,6 +42,18 @@ class Post extends Model
             fn ($query, $author) =>
             $query->whereHas('author', fn ($query) => $query->where('username', $author))
         );
+    }
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
     
 }

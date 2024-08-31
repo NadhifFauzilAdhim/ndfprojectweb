@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'nadhif_f.a',
             'email' => 'nadhif@gmail.com',
             'is_admin' => 1,
-            'password' => Hash::make('password'),
+            'password' => Hash::make('testt'),
             'remember_token' => Str::random(10)
 
         ]);

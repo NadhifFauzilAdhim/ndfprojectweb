@@ -1306,7 +1306,7 @@ section {
   background-position: center;
   background-repeat: no-repeat;
   
-  background-color: #040b14;
+  background-color: #4690ff;
   overflow: hidden; }
   .bloghero .blob {
     position: absolute;
@@ -1469,7 +1469,7 @@ section {
   .bloghero .input-group {
   background-color:#fff;
   border-radius: 100px;
-  padding: 10px 15px;
+  padding: 4px 4px;
   z-index: 3;
 }
 
@@ -1491,4 +1491,10 @@ section {
   border-radius: 100px !important;
   color: #fff;
   max-width: 150px;
+}
+
+.fixed-size {
+    width: 100%; /* Memastikan gambar menyesuaikan lebar kontainernya */
+    height: 200px; /* Tetapkan tinggi gambar */
+    object-fit: cover; /* Memastikan gambar dipotong untuk menyesuaikan dimensi tanpa meregang */
 }
