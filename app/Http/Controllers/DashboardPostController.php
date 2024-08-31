@@ -94,14 +94,17 @@ class DashboardPostController extends Controller
             $datarules['slug'] = 'required|unique:posts';
         }
         $validatedData = $request->validate($datarules);
-        if($request->file('image')){     
-            $validatedData['image']=$request->file('image')->store('post-image');
+        if($request->file('image')){
+            if($request->oldImagePoster){
+                Storage::delete($request->oldImagePoster);
+            }
+        $validatedData['image']=$request->file('image')->store('post-images');
         }
         $validatedData['author_id'] = Auth::id();
        
         Post::where('id', $post->id)
             ->update($validatedData);
-        return redirect('/dashboard/posts')->with('success','Post Berhasil Dibuat');
+        return redirect('/dashboard/posts')->with('success','Post Berhasil Diubah');
     }
 
     /**
@@ -111,7 +114,6 @@ class DashboardPostController extends Controller
     {
         if($post->image){
             Storage::delete($post->image);
-           
         }
         Post::destroy($post->id);
         return redirect('/dashboard/posts')->with('success','Post Dihapus');
