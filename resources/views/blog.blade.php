@@ -13,7 +13,7 @@
                         <span class="badge rounded-pill text-bg-primary"><i class="bi bi-mailbox me-1"></i>Post : {{ $posts->count() }}</span>
                       </div>
                   @elseif(request('category'))
-                     <h1 class="heading text-white mb-3" data-aos="fade-up">Post in Category {{ $posts->first()->category->name }}</h1> 
+                     <h1 class="heading text-white mb-3" data-aos="fade-up">Post in Category @if($posts) {{ $posts->first()->category->name }} @endif</h1> 
                   @elseif($type == 'all')
                     <img src="{{ asset('img/product-tip.png') }}" class="img-fluid" alt="" width="200px">
                     <h1 class="heading text-white mb-3" data-aos="fade-up" >Blog / News / Project</h1>

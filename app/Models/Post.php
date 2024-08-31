@@ -12,9 +12,9 @@ class Post extends Model
 {
     protected $guarded = ['id'];
     protected $with = ['category','author'];
-    use HasFactory;
-    use Sluggable;
+    use HasFactory, Sluggable;
     
+
     public function author() : BelongsTo
     {
         return $this->belongsTo(User::class);

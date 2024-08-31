@@ -26,7 +26,7 @@
           </li>
           <li class="nav-small-cap">
             <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
-            <span class="hide-menu">Feature</span>
+            <span class="hide-menu">User Menu</span>
           </li>
           <li class="sidebar-item">
             <a class="sidebar-link "  href="/dashboard/posts" aria-expanded="false">
@@ -44,12 +44,17 @@
               <span class="hide-menu">Create Post</span>
             </a>
           </li>
+          @can('admin')
+          <li class="nav-small-cap">
+            <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4" class="fs-6"></iconify-icon>
+            <span class="hide-menu">Administrator</span>
+          </li>
           <li class="sidebar-item">
-            <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
+            <a class="sidebar-link" href="/dashboard/categories" aria-expanded="false">
               <span>
                 <iconify-icon icon="solar:bookmark-square-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
               </span>
-              <span class="hide-menu">Card</span>
+              <span class="hide-menu">Categories</span>
             </a>
           </li>
           <li class="sidebar-item">
@@ -68,6 +73,8 @@
               <span class="hide-menu">Typography</span>
             </a>
           </li>
+          @endcan
+          
           
           <li class="nav-small-cap">
             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4" class="fs-6"></iconify-icon>
