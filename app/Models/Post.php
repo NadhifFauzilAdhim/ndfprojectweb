@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Cviebrock\EloquentSluggable\Sluggable;
 
 class Post extends Model
 {
@@ -22,6 +23,11 @@ class Post extends Model
     public function category() : BelongsTo 
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function comments() : HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 
 
@@ -43,6 +49,7 @@ class Post extends Model
             $query->whereHas('author', fn ($query) => $query->where('username', $author))
         );
     }
+
     public function getRouteKeyName()
     {
         return 'slug';

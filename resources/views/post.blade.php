@@ -29,66 +29,66 @@
               @endif
               <p>{!! $post['body'] !!}</p>
               <div class="pt-5 categories_tags ">
-                <p>Categories:  <a href="#">Design</a>, <a href="#">Events</a>  Tags: <a href="#">#html</a>, <a href="#">#trends</a></p>
-              </div>
-    
-              <div class="post-single-navigation d-flex align-items-stretch">
-                <a href="#" class="mr-auto w-50 pr-4">
-                  <span class="d-block">Previous Post</span>
-                  A Mounteering Guide For Beginners
-                </a>
-                <a href="#" class="ml-auto w-50 text-right pl-4">
-                  <span class="d-block">Next Post</span>
-                  12 Creative Designers Share Ideas About Web Design
-                </a>
+                <p>Categories:  <a href="#">{{ $post->category->name }}</a></p>
               </div>
     
     
               <div class="pt-5">
-                <h3 class="mb-5">1 Comments</h3>
-                <ul class="comment-list">
-                  <li class="comment">
-                    <div class="vcard bio">
-                      <img src="{{ asset('img/author.png') }}" alt="Image placeholder">
-                    </div>
-                    <div class="comment-body">
-                      <h3>Nadhif Fauzil</h3>
-                      <div class="meta">January 9, 2018 at 2:21pm</div>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                      <p><a href="#" class="reply">Reply</a></p>
-                    </div>
-                  </li>
-    
-                  
-                </ul>
+                @if(Auth::check())
+                <div class="comment-form-wrap pt-5">
+                    <h3 class="mb-2">Leave a comment</h3>
+                    @if(session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
+                    <!-- Form untuk mengirimkan komentar -->
+                    <form action="{{ url('/post/' . $post->slug . '/comment') }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea name="message" id="message" cols="30" rows="5" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary mt-2">Post Comment</button>
+                        </div> 
+                    </form>
+                </div>
+                @else
+                <div class="alert alert-warning text-center" role="alert">
+                    Login To Comment
+                </div>
+                @endif
+                <h3 class="mb-5 mt-4">{{ count($post->comments) }} Comments</h3>
+                @forelse($post->comments as $comment)
+                  <ul class="comment-list">
+                    <li class="comment">
+                      <div class="vcard bio">
+                        <img src="{{ asset('img/author.png') }}" alt="Image placeholder">
+                      </div>
+                      <div class="comment-body">
+                        <h3>{{ $comment->user->name }}</h3>
+                        <div class="meta">{{ $comment->created_at->format('F j, Y \a\t g:i a') }}</div>
+                        <p>{{ $comment->body }}</p>
+                        <div class="d-flex">
+                          <p><a href="#" class="reply">Reply</a></p>
+                          
+                          @if(Auth::check() && Auth::id() == $comment->user_id)
+                            <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this comment?');">
+                              @csrf
+                              @method('delete')
+                              <button type="submit" class="btn btn-sm btn-danger rounded-pill ms-1"><small>Delete</small></button>
+                            </form>
+                          @endif
+
+                        </div>
+                      </div>
+                    </li>          
+                  </ul>
+                  @empty
+                  <p>No Comments</p>
+                  @endforelse
                 <!-- END comment-list -->
                 
-                <div class="comment-form-wrap pt-5">
-                  <h3 class="mb-5">Leave a comment</h3>
-                  <form action="#" class="">
-                    <div class="form-group">
-                      <label for="name">Name *</label>
-                      <input type="text" class="form-control" id="name">
-                    </div>
-                    <div class="form-group">
-                      <label for="email">Email *</label>
-                      <input type="email" class="form-control" id="email">
-                    </div>
-                    <div class="form-group">
-                      <label for="website">Website</label>
-                      <input type="url" class="form-control" id="website">
-                    </div>
-    
-                    <div class="form-group">
-                      <label for="message">Message</label>
-                      <textarea name="message" id="message" cols="30" rows="5" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group">
-                      <input type="submit" value="Post Comment" class="btn btn-primary btn-md">
-                    </div>
-    
-                  </form>
-                </div>
+                
               </div>
               
     

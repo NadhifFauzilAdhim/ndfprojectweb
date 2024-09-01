@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Comment;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -49,6 +51,26 @@ class HomeController extends Controller
             'type' => 'category',
             'posts' => $category->posts
         ]);
+    }
+
+    public function storeComment(Request $request, Post $post)
+    {
+        $request->validate([
+            'message' => 'required|string|max:1000',
+        ]);
+
+        $post->comments()->create([
+            'body' => $request->message,
+            'user_id' => Auth::id(),
+        ]);
+
+        return back()->with('success', 'Comment posted!');
+    }
+
+    public function deleteComment(Comment $comment)
+    {
+        $comment->delete();
+        return back()->with('success', 'Comment deleted!');
     }
 }
 

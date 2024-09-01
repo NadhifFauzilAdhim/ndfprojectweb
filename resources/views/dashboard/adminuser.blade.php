@@ -31,8 +31,11 @@
                         <a href="javascript:void(0)" class="link-primary text-dark fw-medium d-block">{{ $user->created_at }}</a>
                       </td>
                       <td class="text-center fw-medium">@if($user->is_admin) <i class="bi bi-check-circle-fill text-success"></i> @else <i class="bi bi-x-circle-fill text-danger"></i> @endif</td>
+                      @if($user->is_admin)
+                      <td class="text-center fw-medium"><button type="button" class="btn btn-danger">Revert</button></td>
+                      @else
                       <td class="text-center fw-medium"><button type="button" class="btn btn-primary">Make Admin</button></td>
-                    
+                      @endif
                     </tr>
                     @empty
 

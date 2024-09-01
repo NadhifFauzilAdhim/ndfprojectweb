@@ -57,20 +57,27 @@
               <span class="hide-menu">Categories</span>
             </a>
           </li>
+          
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/dashboard/allpost" aria-expanded="false">
+              <span>
+                <iconify-icon icon="solar:text-field-focus-bold-duotone" class="fs-6"></iconify-icon>
+              </span>
+              <span class="hide-menu">All Post</span>
+            </a>
+          </li>
+          @endcan
+          @can('owner')
+          <li class="nav-small-cap">
+            <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4" class="fs-6"></iconify-icon>
+            <span class="hide-menu">Owner</span>
+          </li>
           <li class="sidebar-item">
             <a class="sidebar-link" href="/dashboard/usersetting" aria-expanded="false">
               <span>
                 <iconify-icon icon="solar:file-text-bold-duotone" class="fs-6"></iconify-icon>
               </span>
               <span class="hide-menu">User Verif</span>
-            </a>
-          </li>
-          <li class="sidebar-item">
-            <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
-              <span>
-                <iconify-icon icon="solar:text-field-focus-bold-duotone" class="fs-6"></iconify-icon>
-              </span>
-              <span class="hide-menu">Typography</span>
             </a>
           </li>
           @endcan

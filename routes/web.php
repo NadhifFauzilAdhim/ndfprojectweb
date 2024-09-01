@@ -10,6 +10,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardPostController;
 
 Route::get('/', [HomeController::class, 'index']);
@@ -30,4 +31,6 @@ Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'check
 Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth');
 
 Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show')->middleware(['auth','admin']);
-Route::resource('/dashboard/usersetting', AdminUserController::class)->middleware(['auth','admin']);
+Route::resource('/dashboard/usersetting', AdminUserController::class)->middleware(['auth','owner']);
+Route::post('/post/{post:slug}/comment', [CommentController::class, 'store'])->middleware('auth');
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy')->middleware('auth');

@@ -15,14 +15,15 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
+
     public function boot(): void
     {
         Paginator::useBootstrapFive();
         Gate::define('admin',function(User $user){
             return $user->is_admin;
+         });
+         Gate::define('owner',function(User $user){
+            return $user->is_owner;
          });
     }
 }
