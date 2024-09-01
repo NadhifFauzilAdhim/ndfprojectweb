@@ -9,6 +9,7 @@
   <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
   <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
+  <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -33,6 +34,7 @@
   <script src="{{ asset('js/dashjs/sidebarmenu.js') }}"></script>
   <script src="{{ asset('js/dashjs/app.min.js') }}"></script>
   <script src="{{ asset('js/dashjs/dashboard.js') }}"></script>
+  <script src="{{ asset('vendor/swiper/swiper-bundle.min.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </body>
 

@@ -23,6 +23,7 @@
                                     <tr class="border-2 border-bottom border-primary border-0"> 
                                         <th scope="col" class="ps-0">Categories</th>
                                         <th scope="col">Link</th>
+                                        <th scope="col">Post</th>
                                         <th scope="col" class="text-center">Slug</th>
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>
@@ -31,11 +32,12 @@
                                     @forelse ($categories as $category)
                                     <tr>
                                         <th scope="row" class="ps-0 fw-medium">
-                                            <span class="table-link1 text-truncate d-block">{{ $category->name }}</span>
+                                            <span class="table-link1 text-truncate d-block">{{ $category->name }} </span>
                                         </th>
                                         <td>
                                             <a href="/blog?category={{ $category->slug }}" class="link-primary text-dark fw-medium d-block">Goto</a>
                                         </td>
+                                        <td class=" fw-medium">{{ $category->posts()->count() }} Post</td>
                                         <td class="text-center fw-medium">{{ $category->slug }}</td>
                                         <td class="text-center fw-medium">
                                             <!-- Edit button to trigger edit modal -->
@@ -146,37 +148,33 @@
         const name = document.querySelector('#name');
         const slug = document.querySelector('#slug');
 
-        // Fetch slug dynamically based on category name
         name.addEventListener('change', function() {
             fetch('/dashboard/categories/checkSlug?name=' + name.value)
                 .then(response => response.json())
                 .then(data => slug.value = data.slug)
         });
 
-        // Handle modal data for delete action
         document.addEventListener('DOMContentLoaded', function() {
             var deleteModal = document.getElementById('deleteModal');
             deleteModal.addEventListener('show.bs.modal', function(event) {
-                var button = event.relatedTarget; // Button that triggered the modal
-                var slug = button.getAttribute('data-slug'); // Extract slug from data-* attributes
+                var button = event.relatedTarget; 
+                var slug = button.getAttribute('data-slug'); 
                 var form = document.getElementById('deleteForm');
-                form.action = '/dashboard/categories/' + slug; // Update form action with category slug
+                form.action = '/dashboard/categories/' + slug; 
             });
-
-            // Handle modal data for edit action
             var editModal = document.getElementById('editModal');
             editModal.addEventListener('show.bs.modal', function(event) {
-                var button = event.relatedTarget; // Button that triggered the modal
-                var slug = button.getAttribute('data-slug'); // Extract slug from data-* attribute
-                var name = button.closest('tr').querySelector('.table-link1').innerText; // Extract name from the table row
+                var button = event.relatedTarget; 
+                var slug = button.getAttribute('data-slug'); 
+                var name = button.closest('tr').querySelector('.table-link1').innerText;
 
                 var form = document.getElementById('editForm');
                 var editName = document.getElementById('editName');
                 var editSlug = document.getElementById('editSlug');
 
-                form.action = '/dashboard/categories/' + slug; // Set form action to update URL
-                editName.value = name; // Set the current category name
-                editSlug.value = slug; // Set the current category slug
+                form.action = '/dashboard/categories/' + slug; 
+                editName.value = name; 
+                editSlug.value = slug; 
             });
         });
     </script>

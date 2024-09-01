@@ -80,12 +80,10 @@ class AdminCategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        // Mengecek apakah kategori memiliki postingan terkait
     if ($category->posts()->exists()) {
         return redirect('/dashboard/categories')->with('error', 'Kategori tidak dapat dihapus karena masih memiliki postingan.');
     }
 
-    // Jika tidak ada postingan terkait, lanjutkan untuk menghapus kategori
     $category->delete();
 
     return redirect('/dashboard/categories')->with('success', 'Kategori berhasil dihapus.');

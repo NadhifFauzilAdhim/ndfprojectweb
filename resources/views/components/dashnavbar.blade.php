@@ -58,11 +58,11 @@
             </a>
           </li>
           <li class="sidebar-item">
-            <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+            <a class="sidebar-link" href="/dashboard/usersetting" aria-expanded="false">
               <span>
                 <iconify-icon icon="solar:file-text-bold-duotone" class="fs-6"></iconify-icon>
               </span>
-              <span class="hide-menu">Forms</span>
+              <span class="hide-menu">User Verif</span>
             </a>
           </li>
           <li class="sidebar-item">
