@@ -2,7 +2,16 @@
     <div class="d-flex flex-column">
 
       <div class="profile">
+        @if(Auth::check())
+          @if(Auth::user()->avatar)
+          <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="" class="img-fluid rounded-circle author-img">
+          @else
+          <img src="https://img.icons8.com/color/500/user-male-circle--v1.png" alt="" class="img-fluid rounded-circle author-img">
+           @endif
+        @else
         <img src="{{ asset('img/author.png') }}" alt="" class="img-fluid rounded-circle author-img">
+        @endif
+
         @auth
         <h1 class="sitename text-white">{{ auth()->user()->name}}</h1>
         @else

@@ -62,7 +62,11 @@
                   <ul class="comment-list">
                     <li class="comment">
                       <div class="vcard bio">
+                        @if($comment->user->avatar)
+                        <img src="{{ asset('storage/' . $comment->user->avatar) }}" alt="Image placeholder">
+                        @else
                         <img src="https://img.icons8.com/color/48/user-male-circle--v1.png" alt="Image placeholder">
+                        @endif
                       </div>
                       <div class="comment-body">
                         <h3>{{ $comment->user->name }}</h3>

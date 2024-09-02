@@ -29,6 +29,14 @@
             <span class="hide-menu">User Menu</span>
           </li>
           <li class="sidebar-item">
+            <a class="sidebar-link " href="/dashboard/profile" aria-expanded="false">
+              <span>
+                <iconify-icon icon="solar:user-bold-duotone" class="fs-6"></iconify-icon>
+              </span>
+              <span class="hide-menu">Profile</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
             <a class="sidebar-link "  href="/dashboard/posts" aria-expanded="false">
               <span>
                 <iconify-icon icon="solar:text-field-focus-bold-duotone" class="fs-6"></iconify-icon>
@@ -106,7 +114,5 @@
         </ul>
         
       </nav>
-      <!-- End Sidebar navigation -->
     </div>
-    <!-- End Sidebar scroll-->
   </aside>

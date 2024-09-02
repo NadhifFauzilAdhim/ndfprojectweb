@@ -2,15 +2,14 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
       <div class="bloghero overlay inner-page">
-          <img src="{{ asset('img/blob.svg') }}" alt="" class="img-fluid blob">
           <div class="container">
             <div class="row align-items-center justify-content-center text-center pt-5">
               <div class="col-lg-10 mt-5">
                   @if(request('author'))
+                    <img src="{{ asset('storage/' . $posts->first()->author->avatar) }}" alt="" width="150" class="rounded-circle ">
                     <h1 class="heading text-white mb-3" data-aos="fade-up">{{ $posts->count() }} Article By  {{ $posts->first()->author->name }}</h1>  
                       <div class="d-flex justify-content-center" data-aos="fade-up">
-                        <span class="badge rounded-pill text-bg-primary me-4"><i class="bi bi-calendar-check me-1"></i>Bergabung : {{ $posts->first()->author->created_at }}</span>
-                        <span class="badge rounded-pill text-bg-primary"><i class="bi bi-mailbox me-1"></i>Post : {{ $posts->count() }}</span>
+                        
                       </div>
                   @elseif(request('category'))
                      <h1 class="heading text-white mb-3" data-aos="fade-up">Post in Category @if($posts) {{ $posts->first()->category->name }} @endif</h1> 

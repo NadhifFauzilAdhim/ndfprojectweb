@@ -12,6 +12,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardPostController;
+use App\Http\Controllers\UserProfileController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/blog', [HomeController::class, 'blog']);
@@ -34,3 +35,6 @@ Route::resource('/dashboard/categories', AdminCategoryController::class)->except
 Route::resource('/dashboard/usersetting', AdminUserController::class)->middleware(['auth','owner']);
 Route::post('/post/{post:slug}/comment', [CommentController::class, 'store'])->middleware('auth');
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy')->middleware('auth');
+
+Route::resource('/dashboard/profile', UserProfileController::class)->only(['index','update'])->parameters(['profile' => 'user:username'])->middleware('auth');
+Route::put('/dashboard/profile/{user:username}/change-image', [UserProfileController::class, 'changeProfileImage'])->middleware('auth');

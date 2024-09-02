@@ -2,6 +2,16 @@
     <x-slot:title>{{ $title  }}</x-slot:title>
     <div class="container-fluid">
         <div class="row">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body text-center card-fixed-size">
+                <img src="{{ asset('img/product-tip.png') }}" alt="image" class="img-fluid" width="205">
+                <h4 class="mt-7"><small>Welcome !</small> <br> {{ Auth::user()->name }}</h4>
+                <p class="card-subtitle mt-2 mb-1 fs-2">We're glad to have you here. Explore the features and tools available on your dashboard to make the most out of your experience.</p>
+                  <button class="btn btn-primary mb-3">Explore</button>
+              </div>
+            </div>
+          </div>
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
@@ -16,17 +26,7 @@
                     </div>
                 </div>
             </div>
-        <div class="col-lg-4">
-          <div class="card">
-            <div class="card-body text-center card-fixed-size">
-              <img src="{{ asset('img/product-tip.png') }}" alt="image" class="img-fluid" width="205">
-              <h4 class="mt-7">Welcome !</h4>
-              <p class="card-subtitle mt-2 mb-3">Duis at orci justo nulla in libero id leo
-                molestie sodales phasellus justo.</p>
-                <button class="btn btn-primary mb-3">Explore</button>
-            </div>
-          </div>
-        </div>
+        
         <div class="col-lg-8">
           <div class="card">
             <div class="card-body card-fixed-size">
