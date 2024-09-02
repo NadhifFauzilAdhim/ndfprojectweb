@@ -476,10 +476,6 @@
               </div>
           </div>
           </section>
-  
-     
-  
-      <!-- ======= Testimonials Section ======= -->
       <section id="testimonials" class="testimonials section-bg">
         <div class="container">
   
@@ -488,7 +484,7 @@
             <p>Arabis Group is a team of computer science students who are driven by passion and share a common objective of personal growth and making significant contributions to the field of information technology. As a group, we strive to create a dynamic environment where members can learn, collaborate, and excel in their respective areas of interest within the realm of technology. We firmly believe that by coming together, we can achieve far greater heights than we could individually.</p>
           </div>
   
-          <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+          <div class="testimonials-slider " data-aos="fade-up" data-aos-delay="100">
             <div class="swiper-wrapper">
               <div class="swiper-slide">
                 <div class="testimonial-item" data-aos="fade-up">

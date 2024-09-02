@@ -28,12 +28,22 @@ class HomeController extends Controller
     }
 
     public function showPost(Post $post)
-    {
-        return view('post', [
-            'title' => $post['title'],
-            'post' => $post
-        ]);
-    }
+{
+    // Eager load relationships and order comments
+    $post->load([
+        'author', 
+        'category',
+        'comments.user', 
+        'comments' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+        }
+    ]);
+
+    return view('post', [
+        'title' => $post->title,
+        'post' => $post
+    ]);
+}    
 
     public function showAuthor(User $user)
     {
@@ -53,24 +63,6 @@ class HomeController extends Controller
         ]);
     }
 
-    public function storeComment(Request $request, Post $post)
-    {
-        $request->validate([
-            'message' => 'required|string|max:1000',
-        ]);
 
-        $post->comments()->create([
-            'body' => $request->message,
-            'user_id' => Auth::id(),
-        ]);
-
-        return back()->with('success', 'Comment posted!');
-    }
-
-    public function deleteComment(Comment $comment)
-    {
-        $comment->delete();
-        return back()->with('success', 'Comment deleted!');
-    }
 }
 

@@ -18,7 +18,7 @@
             </div>
         <div class="col-lg-4">
           <div class="card">
-            <div class="card-body text-center">
+            <div class="card-body text-center card-fixed-size">
               <img src="{{ asset('img/product-tip.png') }}" alt="image" class="img-fluid" width="205">
               <h4 class="mt-7">Welcome !</h4>
               <p class="card-subtitle mt-2 mb-3">Duis at orci justo nulla in libero id leo
@@ -29,83 +29,54 @@
         </div>
         <div class="col-lg-8">
           <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Your Post Comment</h5>
-              <div class="table-responsive">
+            <div class="card-body card-fixed-size">
+              <h5 class="card-title">Your post comment based on the 3 newest posts.</h5>
+              <!-- Make this div scrollable by setting a max height -->
+              <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
                 <table class="table text-nowrap align-middle mb-0">
                   <thead>
-                    <tr class="border-2 border-bottom border-primary border-0"> 
-                      <th scope="col" class="ps-0">Page Title</th>
-                      <th scope="col" >Link</th>
-                      <th scope="col" class="text-center">Pageviews</th>
-                      <th scope="col" class="text-center">Page Value</th>
+                    <tr class="border-2 border-bottom border-primary border-0">
+                      <th scope="col" class="ps-0">Post</th>
+                      <th scope="col">User</th>
+                      <th scope="col">Comments</th>
+                      <th scope="col"></th>
                     </tr>
                   </thead>
                   <tbody class="table-group-divider">
-                    <tr>
-                      <th scope="row" class="ps-0 fw-medium">
-                        <span class="table-link1 text-truncate d-block">Welcome to our
-                          website</span>
-                      </th>
-                      <td>
-                        <a href="javascript:void(0)" class="link-primary text-dark fw-medium d-block">/index.html</a>
-                      </td>
-                      <td class="text-center fw-medium">18,456</td>
-                      <td class="text-center fw-medium">$2.40</td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="ps-0 fw-medium">
-                        <span class="table-link1 text-truncate d-block">Modern Admin
-                          Dashboard Template</span>
-                      </th>
-                      <td>
-                        <a href="javascript:void(0)" class="link-primary text-dark fw-medium d-block">/dashboard</a>
-                      </td>
-                      <td class="text-center fw-medium">17,452</td>
-                      <td class="text-center fw-medium">$0.97</td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="ps-0 fw-medium">
-                        <span class="table-link1 text-truncate d-block">Explore our
-                          product catalog</span>
-                      </th>
-                      <td>
-                        <a href="javascript:void(0)" class="link-primary text-dark fw-medium d-block">/product-checkout</a>
-                      </td>
-                      <td class="text-center fw-medium">12,180</td>
-                      <td class="text-center fw-medium">$7,50</td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="ps-0 fw-medium">
-                        <span class="table-link1 text-truncate d-block">Comprehensive
-                          User Guide</span>
-                      </th>
-                      <td>
-                        <a href="javascript:void(0)" class="link-primary text-dark fw-medium d-block">/docs</a>
-                      </td>
-                      <td class="text-center fw-medium">800</td>
-                      <td class="text-center fw-medium">$5,50</td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="ps-0 fw-medium border-0">
-                        <span class="table-link1 text-truncate d-block">Check out our
-                          services</span>
-                      </th>
-                      <td class="border-0">
-                        <a href="javascript:void(0)" class="link-primary text-dark fw-medium d-block">/services</a>
-                      </td>
-                      <td class="text-center fw-medium border-0">1300</td>
-                      <td class="text-center fw-medium border-0">$2,15</td>
-                    </tr>
+                    @forelse($posts as $post)
+                      @forelse($post->comments as $comment)
+                        <tr>
+                          <th scope="row" class="ps-0 fw-medium">
+                            <a href="/blog/{{ $comment->post->slug }}" class="link-primary">
+                              <span class="table-link1 text-truncate d-block"><small>{{ Str::limit(strip_tags($comment->post->title), 30) }}</small></span>
+                            </a>
+                          </th>
+                          <td class="fw-medium"><small>{{ $comment->user->name }}</small></td>
+                          <td>
+                            <a href="javascript:void(0)" class="link-primary text-dark fw-medium d-block"><small>{{ Str::limit(strip_tags($comment->body), 30) }}</small></a>
+                          </td>
+                          <td>
+                            <a href="javascript:void(0)" class="link-primary text-dark fw-medium d-block"><small>{{ $comment->created_at->diffForHumans() }}</small></a>
+                          </td>
+                        </tr>
+                      @empty
+                        
+                      @endforelse
+                    @empty
+                      <tr>
+                        <td colspan="3" class="text-center">Anda Belum memiliki Post &#129300;</td>
+                      </tr>
+                    @endforelse
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
         </div>
+        
         <div class="col-lg-4">
           <div class="card">
-            <div class="card-body">
+            <div class="card-body card-fixed-size">
               <h5 class="card-title d-flex align-items-center gap-2 mb-5 pb-3">Sessions by
                 device<span><iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Locations"></iconify-icon></span>
               </h5>
@@ -167,7 +138,7 @@
         @forelse($posts as $post)
         <div class="col-lg-4">
           
-          <div class="card overflow-hidden hover-img">
+          <div class="card overflow-hidden hover-img ">
             <div class="position-relative">
               <a href="javascript:void(0)">
                 @if($post->image )
@@ -176,8 +147,8 @@
                 <img src="{{ asset('img/programmer_text_2.jpg') }}" class="card-img-top img-fluid fixed-size" alt="Default Image">
                 @endif
               </a>
-              {{-- <span class="badge text-bg-light text-dark fs-2 lh-sm mb-9 me-9 py-1 px-2 fw-semibold position-absolute bottom-0 end-0">2
-                min Read</span> --}}
+              <span class="badge text-bg-light text-dark fs-2 lh-sm mb-9 me-9 py-1 px-2 fw-semibold position-absolute bottom-0 end-0">-
+                views</span>
              
             </div>
             <div class="card-body p-4">
@@ -194,7 +165,6 @@
           </div>
         </div>
         @empty
-
 
         @endforelse
         {{ $posts->links() }}

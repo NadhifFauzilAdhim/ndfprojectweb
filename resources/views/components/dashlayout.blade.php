@@ -5,11 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NDFProject | {{ $title }}</title>
   <link rel="shortcut icon" type="image/png" href="" />
-  <link rel="stylesheet" href="{{ asset('css/styles.min.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/dash.css') }}" />
   <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
   <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
   <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+  
+  <script type="text/javascript">
+    window.$crisp = [];
+    window.CRISP_WEBSITE_ID = "1e04db0b-6c8c-4e95-a60b-49c6607ff0c3";
+    (function() {
+      d = document;
+      s = d.createElement("script");
+      s.src = "https://client.crisp.chat/l.js";
+      s.async = 1;
+      d.getElementsByTagName("head")[0].appendChild(s);
+    })();
+  </script>
 </head>
 
 <body>
@@ -28,13 +40,11 @@
     </div>
   </div>
   <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
-  <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('vendor/apexcharts/dist/apexcharts.min.js') }}"></script>
-  <script src="{{ asset('vendor/simplebar/dist/simplebar.js') }}"></script>
   <script src="{{ asset('js/dashjs/sidebarmenu.js') }}"></script>
   <script src="{{ asset('js/dashjs/app.min.js') }}"></script>
   <script src="{{ asset('js/dashjs/dashboard.js') }}"></script>
-  <script src="{{ asset('vendor/swiper/swiper-bundle.min.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </body>
 

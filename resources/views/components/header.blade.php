@@ -4,9 +4,11 @@
       <div class="profile">
         <img src="{{ asset('img/author.png') }}" alt="" class="img-fluid rounded-circle author-img">
         @auth
-        <h6 class="text-white fw-bold text-center">{{ auth()->user()->name }}</h6>
-        @endauth
+        <h1 class="sitename text-white">{{ auth()->user()->name}}</h1>
+        @else
         <h1 class="text-light"><a href="#"><img class="logo-img" src="{{ asset('img/project/ndfproject-logo-white.png') }}" alt=""></a></h1>
+        @endauth
+       
         <div class="social-links mt-3 text-center">
           <a href="mailto:nadya15a3@gmail.com" class="mail" target="_blank"><i class="bi bi-envelope-arrow-up"></i></a>
           <a href="https://www.instagram.com/nadhif_f.a/" class="instagram" target="_blank"><i class="bx bxl-instagram"></i></a>

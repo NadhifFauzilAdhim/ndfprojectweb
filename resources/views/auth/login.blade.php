@@ -59,7 +59,7 @@
                     </div>
                     <div class="d-flex align-items-center justify-content-center pb-4">
                       <p class="mb-0 me-2">Belum Punya Akun?</p>
-                      <a href="">
+                      <a href="/register">
                         <button type="button" class="btn btn-outline-warning">Create new</button>
                       </a>
                     </div>

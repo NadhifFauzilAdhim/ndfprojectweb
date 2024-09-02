@@ -34,7 +34,7 @@
     
     
               <div class="pt-5">
-                @if(Auth::check())
+                @auth
                 <div class="comment-form-wrap pt-5">
                     <h3 class="mb-2">Leave a comment</h3>
                     @if(session('success'))
@@ -56,13 +56,13 @@
                 <div class="alert alert-warning text-center" role="alert">
                     Login To Comment
                 </div>
-                @endif
+                @endauth
                 <h3 class="mb-5 mt-4">{{ count($post->comments) }} Comments</h3>
                 @forelse($post->comments as $comment)
                   <ul class="comment-list">
                     <li class="comment">
                       <div class="vcard bio">
-                        <img src="{{ asset('img/author.png') }}" alt="Image placeholder">
+                        <img src="https://img.icons8.com/color/48/user-male-circle--v1.png" alt="Image placeholder">
                       </div>
                       <div class="comment-body">
                         <h3>{{ $comment->user->name }}</h3>
@@ -87,21 +87,18 @@
                   <p>No Comments</p>
                   @endforelse
                 <!-- END comment-list -->
-                
-                
               </div>
-              
-    
             </article>
     
             <div class="col-md-12 col-lg-1 order-lg-1">
               <div class="share sticky-top">
                 <h3>Share</h3>
-                <ul class="list-unstyled share-article">
-                  <li><a href="#"><i class="bi bi-whatsapp"></i></a></li>
-                  <li><a href="#"><i class="bi bi-twitter-x"></i></a></li>
-                </ul>
+                  <ul class="list-unstyled share-article d-flex">
+                    <li><a href="https://wa.me/?text={{ urlencode('Check out this awesome blog post: ' . $post->title . ' ' . url()->current()) }}"><i class="bi bi-whatsapp me-3"></i></a></li>
+                    <li><a href="https://x.com/intent/tweet?text={{ urlencode('Check out this awesome blog post: ' . $post->title . ' ' . url()->current()) }}"><i class="bi bi-twitter-x"></i></a></li>
+                  </ul>
               </div>
+              
             </div>
             <div class="col-lg-3 mb-5 mb-lg-0 order-lg-3">
               <div class="share floating-block sticky-top ">
@@ -112,8 +109,8 @@
                   src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGPZrOlJxU&#x2F;za6c0pgrynlAEEzwJFeBPw&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
                 </iframe>
               </div>
-                <h2 class="mb-3 text-black">Subscribe to Newsletter</h2>
-                <p>Far far away behind the word mountains far from.</p>
+              
+                <h2 class="mb-3 text-black">Subscribe to Blog</h2>
                 <form action="#">
                   <input type="email" class="form-control mb-2" placeholder="Enter email">
                   <input type="submit" value="Subscribe" class="btn btn-primary btn-block">

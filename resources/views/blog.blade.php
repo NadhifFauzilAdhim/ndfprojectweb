@@ -5,7 +5,7 @@
           <img src="{{ asset('img/blob.svg') }}" alt="" class="img-fluid blob">
           <div class="container">
             <div class="row align-items-center justify-content-center text-center pt-5">
-              <div class="col-lg-10">
+              <div class="col-lg-10 mt-5">
                   @if(request('author'))
                     <h1 class="heading text-white mb-3" data-aos="fade-up">{{ $posts->count() }} Article By  {{ $posts->first()->author->name }}</h1>  
                       <div class="d-flex justify-content-center" data-aos="fade-up">
@@ -15,53 +15,61 @@
                   @elseif(request('category'))
                      <h1 class="heading text-white mb-3" data-aos="fade-up">Post in Category @if($posts) {{ $posts->first()->category->name }} @endif</h1> 
                   @elseif($type == 'all')
-                    <img src="{{ asset('img/product-tip.png') }}" class="img-fluid" alt="" width="200px">
+                    
                     <h1 class="heading text-white mb-3" data-aos="fade-up" >Blog / News / Project</h1>
                   @endif
-             
+                  <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                      <form
+                  action=""
+                  method="GET"
+                  class="custom-form mt-4 pt-2 mb-5"
+                  role="search"
+                  data-aos="fade"
+                  data-aos-delay="300"
+                
+                >
+                 @if(request('category'))
+                 <input type="hidden" name="category" value="{{ request('category') }}">
+                 @endif
+                 @if(request('author'))
+                 <input type="hidden" name="author" value="{{ request('author') }}">
+                 @endif
+                  <div class="input-group input-group-lg">
+                    <span class="input-group-text bi-search" id="basic-addon1">
+                    </span>
+  
+                    <input
+                      name="search"
+                      type="search"
+                      style="z-index: 10;"
+                      class="form-control"
+                      id="keyword"
+                      placeholder="Search For Article, Project or News"
+                      @if(request('search'))
+                       value="{{ request('search') }}"
+                      @endif
+                      aria-label="Search"
+                    />
+  
+                    <button type="submit"  class="form-control">Search</button>
+                  </div>
+                </form>
+                    </div>
+                  </div>
+                  
               </div>
-              <div class="col-lg-6">
-                    <form
-                action=""
-                method="GET"
-                class="custom-form mt-4 pt-2 mb-5"
-                role="search"
-                data-aos="fade"
-                data-aos-delay="300"
-              
-              >
-               @if(request('category'))
-               <input type="hidden" name="category" value="{{ request('category') }}">
-               @endif
-               @if(request('author'))
-               <input type="hidden" name="author" value="{{ request('author') }}">
-               @endif
-                <div class="input-group input-group-lg">
-                  <span class="input-group-text bi-search" id="basic-addon1">
-                  </span>
-
-                  <input
-                    name="search"
-                    type="search"
-                    style="z-index: 10;"
-                    class="form-control"
-                    id="keyword"
-                    placeholder="Search For Article, Project or News"
-                    @if(request('search'))
-                     value="{{ request('search') }}"
-                    @endif
-                    aria-label="Search"
-                  />
-
-                  <button type="submit"  class="form-control">Search</button>
-                </div>
-              </form>
-              </div>
-              
             </div>
             
           </div>
-        </div>
+          <div class="video-wrap">
+            {{-- <video autoplay loop muted class="custom-video" poster="img/poster.png">
+              <source src="vid/bannervid.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video> --}}
+            <img src="{{ asset('img/banner.png') }}" class="custom-video" alt="">
+          </div>
+        </div>  
     
       <div id="blog-section" class="blog">
         <div class="container-fluid blog py-5">
