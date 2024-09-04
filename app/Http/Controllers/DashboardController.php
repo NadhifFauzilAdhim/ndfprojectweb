@@ -13,7 +13,8 @@ class DashboardController extends Controller
         return view('dashboard.index', [
             'title' => 'dashboard',
             'posts' => Post::with(['author', 'category', 'comments' => function ($query) {
-             $query->latest();},'comments.user', 'comments.post'])->where('author_id', Auth::id())->latest()->paginate(3)
+             $query->latest();},'comments.user', 'comments.post'])->where('author_id', Auth::id())->latest()->paginate(3),
+             
         ]);
     }
 }

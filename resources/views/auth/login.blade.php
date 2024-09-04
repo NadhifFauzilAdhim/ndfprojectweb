@@ -1,82 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kostify | {{ $title }}</title>
-    <meta name="author" content="Kostify" />
-    <link href="{{ asset('img/favicon.ico') }}" rel="icon"> 
-    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/auth.css') }}" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NDFProject | {{ $title }}</title>
+  <meta name="author" content="Kostify" />
+  <link href="{{ asset('img/favicon.ico') }}" rel="icon">
+  <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/dash.css') }}" rel="stylesheet">
+
 </head>
-<body style="background-image:url('img/banner.png');">
-  <section class="h-100 gradient-form ">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-xl-10">
-          <div class="card rounded-3 text-black">
-            <div class="row g-0">
-              <div class="col-lg-6">
-                <div class="card-body p-md-5 mx-md-4">
-                  <div class="text-center">
-                    <img src="{{ asset('img/authlogo.png') }}"
-                      style="width: 185px;" alt="logo">
-                  </div>
-                  @if (session('success'))
-                      <div class="alert alert-success text-center">
-                          {{ session('success') }}
-                      </div>
-                  @endif
-                  @error('loginfeedback')
-                      <div class="alert alert-danger text-center">
-                          {{ $message }}
-                      </div>
-                  @enderror
-                  <div class="text-center">
-                    <p>Masukan Email dan Password yang terdaftar</p>
-                  </div>
-                  <form action="/login" method="POST">
-                    @csrf 
-                    <div class="form-outline mb-4">
-                      <label class="form-label" for="email">Email</label>
-                      <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                        placeholder="Email address" autofocus required/>
-                        @error('email')
-                          <div class="invalid-feedback">
-                            {{ $message }}
-                          </div>
-                          @enderror
-                    </div>  
-                    <div class="form-outline mb-4">
-                      <label class="form-label" for="password">Password</label>
-                      <input type="password" id="password" name="password" placeholder="Masukan Password" class="form-control " autofocus required/>
-                      <div id="frogotpassword" class="form-text"><a href="/forgotpassword" class="text-danger">Lupa Password?</a></div>
-                    </div>
-                    <div class="text-center pt-1 mb-5 pb-1">
-                      <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="sumbit">Log
-                        in</button>
-                    </div>
-                    <div class="d-flex align-items-center justify-content-center pb-4">
-                      <p class="mb-0 me-2">Belum Punya Akun?</p>
-                      <a href="/register">
-                        <button type="button" class="btn btn-outline-warning">Create new</button>
-                      </a>
-                    </div>
-                  </form>
+
+<body class="authbody">
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <div
+      class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+      <div class="d-flex align-items-center justify-content-center w-100">
+        <div class="row justify-content-center w-100">
+          <div class="col-md-8 col-lg-6 col-xxl-3">
+            <div class="card mb-0">
+              <div class="card-body">
+                <a href="/" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                  <img src="{{ asset('img/project/nprojectlogoblue.png') }}" style="width: 250px;" alt="logo">
+                </a>
+                @if (session('success'))
+                <div class="alert alert-success text-center">
+                  {{ session('success') }}
                 </div>
-              </div>
-              <div class="col-lg-6 d-flex align-items-center ">
-                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                    <img class="mb-4" src="{{ asset('img/loginicon.jpg') }}" alt="" width="400px">
+                @endif
+                @error('loginfeedback')
+                <div class="alert alert-danger text-center">
+                  {{ $message }}
                 </div>
+                @enderror
+                <p class="text-center">Masukkan Email dan Password yang terdaftar</p>
+                <form action="/login" method="POST">
+                  @csrf
+                  <div class="mb-3">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                      placeholder="Email address" autofocus required />
+                    @error('email')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Masukan Password"
+                      class="form-control" required />
+                    <div id="forgotpassword" class="form-text"><a href="/forgotpassword" class="text-danger">Lupa
+                        Password?</a></div>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-between mb-4">
+                    <div class="form-check">
+                      <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" checked>
+                      <label class="form-check-label text-dark" for="flexCheckChecked">
+                        Remember this Device
+                      </label>
+                    </div>
+                    <a class="text-primary fw-bold" href="/forgotpassword">Forgot Password ?</a>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100 py-2 fs-4 mb-4">Log In</button>
+                  <div class="d-flex align-items-center justify-content-center">
+                    <p class="fs-4 mb-0 fw-bold">Belum Punya Akun?</p>
+                    <a class="text-primary fw-bold ms-2" href="/register">Create new</a>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
-  
+  </div>
 </body>
+
 </html>

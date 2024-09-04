@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NDFProject | {{ $title }}</title>
-  <link rel="shortcut icon" type="image/png" href="" />
+  <link rel="shortcut icon" type="image/png" href="{{ asset('img/favicon.ico') }}" />
   <link rel="stylesheet" href="{{ asset('css/dash.css') }}" />
   <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
@@ -25,6 +25,15 @@
 </head>
 
 <body>
+  <!-- Spinner -->
+  <div id="spinner" class="spinner-wrapper">
+    <div class="text-center">
+      <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+  
   <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
@@ -46,6 +55,12 @@
   <script src="{{ asset('js/dashjs/app.min.js') }}"></script>
   <script src="{{ asset('js/dashjs/dashboard.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+  <script>
+    // JavaScript to hide the spinner after the page has fully loaded
+    window.addEventListener('load', function() {
+      document.getElementById('spinner').style.display = 'none';
+    });
+  </script>
 </body>
 
 </html>

@@ -33,12 +33,7 @@
     })();
   </script>
 </head>
-{{-- <div id="overlayer"></div>
-<div class="loader">
-    <div class="spinner-grow text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-    </div>
-</div> --}}
+
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1Q50VMMXK6"></script>
@@ -54,6 +49,15 @@
 </script>
 
 <body>
+
+  <div id="spinner" class="spinner-wrapper">
+    <div class="text-center">
+      <div class="spinner-grow text-info" style="width: 3rem; height: 3rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="text-info" style="font-family: 'Courier New', Courier, monospace">Sedang Menyiapkan Tampilan...</p>
+    </div>
+  </div>
 
   <!-- ======= Mobile nav toggle button ======= -->
   <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
@@ -95,6 +99,11 @@
     var umurSpan = document.getElementById("umurSpan");
     umurSpan.textContent = umur;
   </script> 
+   <script>
+    window.addEventListener('load', function() {
+      document.getElementById('spinner').style.display = 'none';
+    });
+  </script>
 
 </body>
 
