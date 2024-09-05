@@ -52,7 +52,7 @@
                       @endif
                       <h4 class="mt-7">{{ $user->name }} <i class="bi bi-patch-check-fill me-1 text-primary"></i><span class="badge text-bg-success rounded-pill ms-1">@if($user->is_admin)<small>Admin</small>@endif</span></h4>
                       <p class="card-subtitle mt-2 mb-3">Joined on {{ $user->created_at }}</p>
-                      <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#changeImageModal">Change Profile Image</button>
+                      <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#changeImageModal">Change Image</button>
                   </div>
               </div>
           </div>

@@ -3,9 +3,14 @@
   <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 2000;">
       <div id="toastMessage" class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
           <div class="d-flex">
+           
               <div class="toast-body">
+                @if(!Auth::check())
                 Waktunya berbagi cerita kamu! Login dan mulai blog kamu sekarang!
                 <a href="{{ route('login') }}" class="link text-warning">Login</a>
+                @else
+                Waktunya berbagi cerita kamu!  <a href="{{ route('dashboard') }}" class="link text-warning">Create Post</a>
+                @endif
               </div>
               <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
           </div>

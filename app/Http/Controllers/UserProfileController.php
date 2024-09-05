@@ -52,7 +52,4 @@ class UserProfileController extends Controller
         }
         return redirect('/dashboard/profile')->with('success', 'Profile image updated successfully.');
     }  
-        
-    
-    
 }

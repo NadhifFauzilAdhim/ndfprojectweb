@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NDFProject | {{ $title }}</title>
+    <title> {{ $title }} | NDFProject</title>
     <meta name="author" content="Kostify" />
     <link rel="shortcut icon" href="{{ asset('images/Kostifyop.png') }}" />
     <!-- Menggunakan stylesheet dari template kedua -->

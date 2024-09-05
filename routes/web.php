@@ -1,8 +1,4 @@
 <?php
-
-use App\Models\Post;
-use App\Models\User;
-use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
@@ -14,27 +10,55 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\UserProfileController;
 
+// Public routes
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/blog', [HomeController::class, 'blog']);
 Route::get('/blog/{post:slug}', [HomeController::class, 'showPost']);
 Route::get('author/{user:username}', [HomeController::class, 'showAuthor']);
 Route::get('category/{category:slug}', [HomeController::class, 'showCategory']);
-//login
-Route::get('/login',[LoginController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/login',[LoginController::class, 'authenticate'])->name('authenticate')->middleware('guest');
-Route::post('/logout',[LoginController::class, 'deauthenticate'])->name('logout')->middleware('auth');
-//register
-Route::get('/register',[RegisterController::class, 'index'])->name('register')->middleware('guest');
-Route::post('/register',[RegisterController::class, 'store'])->name('storeregister')->middleware('guest');
 
-Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
-Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'checkSlug'])->middleware('auth');
-Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth');
+// Authentication routes
+Route::middleware('guest')->group(function() {
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate');
+    Route::get('/register', [RegisterController::class, 'index'])->name('register');
+    Route::post('/register', [RegisterController::class, 'store'])->name('storeregister');
+});
 
-Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show')->middleware(['auth','admin']);
-Route::resource('/dashboard/usersetting', AdminUserController::class)->middleware(['auth','owner']);
-Route::post('/post/{post:slug}/comment', [CommentController::class, 'store'])->middleware('auth');
-Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy')->middleware('auth');
+// Email Verification routes
+Route::middleware('auth')->group(function() {
+    Route::get('/email/verify', [RegisterController::class, 'verifyemail'])->name('verification.notice');
+    Route::get('/email/verify-success', [RegisterController::class, 'verificationSuccess'])->name('verification.success');
+    Route::post('/email/verification-notification', [RegisterController::class, 'verificationResend'])->middleware('throttle:2,1')->name('verification.send');
+    Route::get('/email/verify/{id}/{hash}', [RegisterController::class, 'emailVerificationRequest'])->middleware('signed')->name('verification.verify');
+});
 
-Route::resource('/dashboard/profile', UserProfileController::class)->only(['index','update'])->parameters(['profile' => 'user:username'])->middleware('auth');
-Route::put('/dashboard/profile/{user:username}/change-image', [UserProfileController::class, 'changeProfileImage'])->middleware('auth');
+// Dashboard routes
+Route::middleware(['auth', 'verified'])->group(function() {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    // Posts
+    Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'checkSlug']);
+    Route::resource('/dashboard/posts', DashboardPostController::class);
+
+    // Profile
+    Route::resource('/dashboard/profile', UserProfileController::class)->only(['index', 'update'])->parameters(['profile' => 'user:username']);
+    Route::put('/dashboard/profile/{user:username}/change-image', [UserProfileController::class, 'changeProfileImage']);
+    
+    // Comments
+    Route::post('/post/{post:slug}/comment', [CommentController::class, 'store']);
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+});
+
+// Dashboard Admin routes
+Route::middleware(['auth', 'admin', 'verified'])->group(function() {
+    Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show');
+});
+
+// Owner-specific routes
+Route::middleware(['auth', 'owner', 'verified'])->group(function() {
+    Route::resource('/dashboard/usersetting', AdminUserController::class);
+});
+
+// Logout
+Route::post('/logout', [LoginController::class, 'deauthenticate'])->name('logout')->middleware('auth');

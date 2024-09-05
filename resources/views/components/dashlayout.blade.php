@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NDFProject | {{ $title }}</title>
+  <title> {{ $title }} | NDFProject</title>
   <link rel="shortcut icon" type="image/png" href="{{ asset('img/favicon.ico') }}" />
   <link rel="stylesheet" href="{{ asset('css/dash.css') }}" />
   <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
