@@ -59,38 +59,78 @@
                 @endauth
                 <h3 class="mb-5 mt-4">{{ count($post->comments) }} Comments</h3>
                 @forelse($post->comments as $comment)
-                  <ul class="comment-list">
+                <ul class="comment-list">
                     <li class="comment">
-                      <div class="vcard bio">
-                        @if($comment->user->avatar)
-                        <img src="{{ asset('storage/' . $comment->user->avatar) }}" alt="Image placeholder">
-                        @else
-                        <img src="https://img.icons8.com/color/48/user-male-circle--v1.png" alt="Image placeholder">
-                        @endif
-                      </div>
-                      <div class="comment-body">
-                        <h3>{{ $comment->user->name }}</h3>
-                        <div class="meta">{{ $comment->created_at->format('F j, Y \a\t g:i a') }}</div>
-                        <p>{{ $comment->body }}</p>
-                        <div class="d-flex">
-                          <p><a href="#" class="reply">Reply</a></p>
-                          
-                          @if(Auth::check() && Auth::id() == $comment->user_id)
-                            <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this comment?');">
-                              @csrf
-                              @method('delete')
-                              <button type="submit" class="btn btn-sm btn-danger rounded-pill ms-1"><small>Delete</small></button>
-                            </form>
-                          @endif
-
+                        <!-- Komentar Utama -->
+                        <div class="vcard bio">
+                            @if($comment->user->avatar)
+                                <img src="{{ asset('storage/' . $comment->user->avatar) }}" alt="Image placeholder">
+                            @else
+                                <img src="https://img.icons8.com/color/48/user-male-circle--v1.png" alt="Image placeholder">
+                            @endif
                         </div>
-                      </div>
+                        <div class="comment-body">
+                            <h3>{{ $comment->user->name }}</h3>
+                            <div class="meta">{{ $comment->created_at->format('F j, Y \a\t g:i a') }}</div>
+                            <p>{{ $comment->body }}</p>
+            
+                            <div class="d-flex">
+                                <p><a href="javascript:void(0);" class="reply" data-comment-id="{{ $comment->id }}">Reply</a></p>
+            
+                                @if(Auth::check() && Auth::id() == $comment->user_id)
+                                    <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this comment?');" class="ms-3">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-sm btn-warning rounded-pill ms-1"><small>Delete</small></button>
+                                    </form>
+                                @endif
+                            </div>
+            
+                            <!-- Reply Form (Initially hidden) -->
+                            <div id="reply-form-{{ $comment->id }}" class="reply-form d-none mt-3">
+                                <form action="/comments/{{ $comment->id }}/reply" method="POST">
+                                    @csrf
+                                    <div class="form-group">
+                                        <textarea name="body" class="form-control" rows="3" placeholder="Write your reply here..."></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-sm btn-primary mt-2">Reply</button>
+                                </form>
+                            </div>
+                        </div>
+            
+                        <!-- Balasan Komentar -->
+                        <ul class="children">
+                            @foreach($comment->commentreplies as $reply)
+                                <li class="comment">
+                                    <div class="vcard bio">
+                                        @if($reply->user->avatar)
+                                            <img src="{{ asset('storage/' . $reply->user->avatar) }}" alt="Image placeholder">
+                                        @else
+                                            <img src="https://img.icons8.com/color/48/user-male-circle--v1.png" alt="Image placeholder">
+                                        @endif
+                                    </div>
+                                    <div class="comment-body">
+                                        <h3>{{ $reply->user->name }} <small class="fs-6">reply</small></h3>
+                                        <div class="meta">{{ $reply->created_at->format('F j, Y \a\t g:i a') }}</div>
+                                        <p>{{ $reply->body }}</p>
+            
+                                        <!-- Delete Button for Reply -->
+                                        @if(Auth::check() && Auth::id() == $reply->user_id)
+                                            <form action="{{ route('commentReply.destroy', $reply->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this reply?');" class="d-inline">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-sm btn-warning rounded-pill ms-1"><small>Delete</small></button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
                     </li>          
-                  </ul>
-                  @empty
-                  <p>No Comments</p>
-                  @endforelse
-                <!-- END comment-list -->
+                </ul>
+            @empty
+                <p>No Comments</p>
+            @endforelse
               </div>
             </article>
     
@@ -124,4 +164,5 @@
           </div>
         </div>
       </div>
+      <script src="{{ asset('js/blog.js') }}"></script>
 </x-layout>

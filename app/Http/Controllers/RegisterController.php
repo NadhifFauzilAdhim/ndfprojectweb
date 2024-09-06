@@ -64,7 +64,5 @@ class RegisterController extends Controller
             'title' => 'Email Verification Success'
         ]);
     }
-
-    
-        
+       
 }

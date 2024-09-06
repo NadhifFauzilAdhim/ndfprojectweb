@@ -28,22 +28,24 @@ class HomeController extends Controller
     }
 
     public function showPost(Post $post)
-{
+    {
     // Eager load relationships and order comments
     $post->load([
         'author', 
         'category',
         'comments.user', 
+        'comments.commentreplies.user',
         'comments' => function ($query) {
             $query->orderBy('created_at', 'desc');
-        }
+        },
+        
     ]);
 
     return view('post', [
         'title' => $post->title,
         'post' => $post
     ]);
-}    
+    }    
 
     public function showAuthor(User $user)
     {
