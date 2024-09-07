@@ -10,6 +10,7 @@
   <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
   <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
   <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
   
   <script type="text/javascript">
     window.$crisp = [];
@@ -55,6 +56,7 @@
   <script src="{{ asset('js/dashjs/app.min.js') }}"></script>
   <script src="{{ asset('js/dashjs/dashboard.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.js"></script>
   <script>
     // JavaScript to hide the spinner after the page has fully loaded
     window.addEventListener('load', function() {

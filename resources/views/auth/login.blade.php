@@ -39,7 +39,7 @@
                   <label class="form-label" for="password">Password</label>
                   <input type="password" id="password" name="password" placeholder="Masukan Password"
                     class="form-control" required />
-                  <div id="forgotpassword" class="form-text"><a href="/forgotpassword" class="text-danger">Lupa
+                  <div id="forgotpassword" class="form-text"><a href="/forgot-password" class="text-danger">Lupa
                       Password?</a></div>
                 </div>
                 <div class="d-flex align-items-center justify-content-between mb-4">

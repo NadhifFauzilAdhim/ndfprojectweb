@@ -44,6 +44,11 @@
                         <li><a class="dropdown-item fw-bold" href="/dashboard/posts/{{ $post->slug }}"><i class="bi bi-eye"></i> Post Preview</a></li>
                         <li><a class="dropdown-item fw-bold" href="/blog/{{ $post->slug }}"><i class="bi bi-eye"></i> Lihat Post Asli</a></li>
                         <li><a class="dropdown-item fw-bold" href="/dashboard/posts/{{ $post->slug }}/edit"><i class="bi bi-pencil-square"></i> Edit Post</a></li>
+                        <li>
+                          <button type="button" class="dropdown-item fw-bold text-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                              <i class="bi bi-trash"></i> Delete Post
+                          </button>
+                      </li>
                       
                       </ul>
                     </div>
@@ -62,6 +67,27 @@
         </div>
       </div>
     </div>
-   
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="deleteModalLabel">Hapus Post {{ $post->title }}</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Aksi ini tidak dapat dibatalkan, Apakah Anda yakin ingin menghapus post ini?
+                  
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Batal</button>
+                  <form action="/dashboard/posts/{{ $post->slug }}" method="POST" class="d-inline">
+                      @method('delete')
+                      @csrf
+                      <button type="submit" class="btn btn-danger">Hapus</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
   </div>
 </x-dashlayout>

@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardPostController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\UserProfileController;
 
 // Public routes
@@ -23,6 +24,10 @@ Route::middleware('guest')->group(function() {
     Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate');
     Route::get('/register', [RegisterController::class, 'index'])->name('register');
     Route::post('/register', [RegisterController::class, 'store'])->name('storeregister');
+    Route::get('/forgot-password',[ForgotPasswordController::class,'passwordReset'])->name('password.request');
+    Route::post('/forgot-password',[ForgotPasswordController::class,'resetRequest'])->name('password.email');
+    Route::get('/reset-password/{token}',[ForgotPasswordController::class,'resetToken'])->name('password.reset');
+    Route::post('/reset-password',[ForgotPasswordController::class,'resetForm'])->name('password.update');
 });
 
 // Email Verification routes

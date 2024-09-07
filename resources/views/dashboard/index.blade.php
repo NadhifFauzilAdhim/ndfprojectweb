@@ -134,10 +134,8 @@
           </div>
         </div>
         
-        
         @forelse($posts as $post)
         <div class="col-lg-4">
-          
           <div class="card overflow-hidden hover-img ">
             <div class="position-relative">
               <a href="javascript:void(0)">
