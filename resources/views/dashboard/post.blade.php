@@ -56,6 +56,28 @@
                 </div>
               </div>
             </div>
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="deleteModalLabel">Hapus Post {{ $post->title }}</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Aksi ini tidak dapat dibatalkan, Apakah Anda yakin ingin menghapus post ini?
+                          
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Batal</button>
+                          <form action="/dashboard/posts/{{ $post->slug }}" method="POST" class="d-inline">
+                              @method('delete')
+                              @csrf
+                              <button type="submit" class="btn btn-danger">Hapus</button>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
             @empty
             <div class="text-center">
                 <h1 class="home__title">Nampaknya Belum Ada Post &#129300;</h1>
@@ -67,27 +89,6 @@
         </div>
       </div>
     </div>
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="deleteModalLabel">Hapus Post {{ $post->title }}</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                Aksi ini tidak dapat dibatalkan, Apakah Anda yakin ingin menghapus post ini?
-                  
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Batal</button>
-                  <form action="/dashboard/posts/{{ $post->slug }}" method="POST" class="d-inline">
-                      @method('delete')
-                      @csrf
-                      <button type="submit" class="btn btn-danger">Hapus</button>
-                  </form>
-              </div>
-          </div>
-      </div>
-  </div>
+    
   </div>
 </x-dashlayout>

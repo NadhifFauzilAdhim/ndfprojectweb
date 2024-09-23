@@ -1,5 +1,16 @@
 <x-layout>
   <x-slot:title>{{ $title }}</x-slot:title>
+  <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 2000;">
+    <div id="toastMessage" class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+         
+            <div class="toast-body">
+              Cek My Blog <a href="/blog" class="link text-warning">Here</a>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+  </div>
      <!-- ======= About Section ======= -->
      <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
 
@@ -7,28 +18,28 @@
         <h1 class="">Nadhif Fauzil Adhim</h1>
         <p class="text-md-start">I'm <span class="typed" data-typed-items="Student, Tech Entusiast, Developer"></span></p>
         <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-auto">
-        <a class="btn btn-light rounded-pill py-2 px-3 px-md-5 mt-2 name-text" target="_blank" href="https://www.linkedin.com/in/nadhif-fauzil-adhim-99a330294">
-          <i class="bi bi-linkedin ms-2"></i> LinkedIn
-        </a>
+      <div class="row justify-content-center">
+        <div class="col-auto">
+          <a class="btn btn-light rounded-pill py-2 px-3 px-md-5 mt-2 name-text" target="_blank" href="https://www.linkedin.com/in/nadhif-fauzil-adhim-99a330294">
+            <i class="bi bi-linkedin ms-2"></i> LinkedIn
+          </a>
+        </div>
+        <div class="col-auto">
+          <a class="btn btn-dark rounded-pill py-2 px-3 px-md-5 mt-2" target="_blank" href="https://www.instagram.com/nadhif_f.a/">
+            <i class="bi bi-instagram me-2"></i> Instagram
+          </a>
+        </div>
+        <div class="col-auto">
+          <a class="btn btn-dark rounded-pill py-2 px-3 px-md-5 mt-2 fw-bold" target="_blank" href="https://github.com/NadhifFauzilAdhim">
+            <i class="bi bi-github ms-3"></i> GitHub
+          </a>
+        </div>
       </div>
-      <div class="col-auto">
-        <a class="btn btn-dark rounded-pill py-2 px-3 px-md-5 mt-2" target="_blank" href="https://www.instagram.com/nadhif_f.a/">
-          <i class="bi bi-instagram me-2"></i> Instagram
-        </a>
-      </div>
-      <div class="col-auto">
-        <a class="btn btn-dark rounded-pill py-2 px-3 px-md-5 mt-2 fw-bold" target="_blank" href="https://github.com/NadhifFauzilAdhim">
-          <i class="bi bi-github ms-3"></i> GitHub
-        </a>
-      </div>
-    </div>
   </div>
       </div>
       <div class="video-wrap">
-        <video autoplay loop muted class="custom-video" poster="img/poster.png">
-          <source src="vid/bannervid.mp4" type="video/mp4">
+        <video autoplay loop muted class="custom-video" poster="{{ asset('img/poster.png') }}">
+          <source src="{{ asset('vid/bannervid.mp4') }}" type="video/mp4">
           Your browser does not support the video tag.
         </video>
       </div>
@@ -610,4 +621,11 @@
   
         </div>
       </section><!-- End Contact Section -->  
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var toastEl = document.getElementById('toastMessage');
+            var toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        });
+    </script>
 </x-layout>

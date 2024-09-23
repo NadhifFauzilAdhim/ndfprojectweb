@@ -23,7 +23,7 @@
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
   <script type="text/javascript">
     window.$crisp = [];
-    window.CRISP_WEBSITE_ID = "1e04db0b-6c8c-4e95-a60b-49c6607ff0c3";
+    window.CRISP_WEBSITE_ID = "{{ config('services.crisp.website_id') }}";
     (function() {
       d = document;
       s = d.createElement("script");
@@ -33,29 +33,24 @@
     })();
   </script>
 </head>
-
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1Q50VMMXK6"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ config('services.gtm.id') }}"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-
-  gtag('config', 'G-1Q50VMMXK6');
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', '{{ config('services.gtm.id') }}');
 </script>
 
 <body>
 
   <div id="spinner" class="spinner-wrapper">
-    <div class="text-center">
-      <div class="spinner-grow text-info" style="width: 3rem; height: 3rem;" role="status">
+    <div class="text-center d-flex">
+      <div class="spinner-grow spinner-grow-sm text-info" style="width: 1rem; height: 1rem;" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
-      <p class="text-info" style="font-family: 'Courier New', Courier, monospace">Sedang Menyiapkan Tampilan...</p>
+      <p class="text-info ms-2" style="font-family: 'Courier New', Courier, monospace">Loading Assets...</p>
     </div>
   </div>
 
@@ -71,8 +66,7 @@
   <footer id="footer">
     <div class="container">
       <div class=" text-white-50">
-        {{-- &copy; Copyright <strong><span>NDFProject</span></strong> --}}
-        Develop With <i class="bi bi-heart-fill text-danger"></i> by NDFProject
+        &copy; Copyright <strong><span>NDFProject</span></strong>
       </div>
       <div class="credits">
       </div>
@@ -90,7 +84,6 @@
   <script src="{{ asset('vendor/typed.js/typed.umd.js') }}"></script>
   <script src="{{ asset('vendor/waypoints/noframework.waypoints.js') }}"></script>
 
-  <!-- Template Main JS File -->
   <script src="{{ asset('js/main.js') }}"></script>
   <script>
     var tahunSekarang = new Date().getFullYear();

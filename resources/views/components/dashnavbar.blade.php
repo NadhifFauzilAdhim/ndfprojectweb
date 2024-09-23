@@ -91,26 +91,7 @@
           @endcan
           
           
-          <li class="nav-small-cap">
-            <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4" class="fs-6"></iconify-icon>
-            <span class="hide-menu">EXTRA</span>
-          </li>
-          <li class="sidebar-item">
-            <a class="sidebar-link" href="./icon-tabler.html" aria-expanded="false">
-              <span>
-                <iconify-icon icon="solar:sticker-smile-circle-2-bold-duotone" class="fs-6"></iconify-icon>
-              </span>
-              <span class="hide-menu">Icons</span>
-            </a>
-          </li>
-          <li class="sidebar-item">
-            <a class="sidebar-link" href="./sample-page.html" aria-expanded="false">
-              <span>
-                <iconify-icon icon="solar:planet-3-bold-duotone" class="fs-6"></iconify-icon>
-              </span>
-              <span class="hide-menu">Sample Page</span>
-            </a>
-          </li>
+          
         </ul>
         
       </nav>

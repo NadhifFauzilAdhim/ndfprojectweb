@@ -49,7 +49,7 @@
                       Remember this Device
                     </label>
                   </div>
-                  <a class="text-primary fw-bold" href="/forgotpassword">Forgot Password ?</a>
+                  <a class="text-primary fw-bold" href="/forgot-password">Forgot Password ?</a>
                 </div>
                 <button type="submit" class="btn btn-primary w-100 py-2 fs-4 mb-4">Log In</button>
                 <div class="d-flex align-items-center justify-content-center">
