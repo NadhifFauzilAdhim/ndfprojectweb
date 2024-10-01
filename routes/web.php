@@ -47,6 +47,8 @@ Route::middleware(['auth', 'verified'])->group(function() {
 // Profile
     Route::resource('/dashboard/profile', UserProfileController::class)->only(['index', 'update'])->parameters(['profile' => 'user:username']);
     Route::put('/dashboard/profile/{user:username}/change-image', [UserProfileController::class, 'changeProfileImage']);
+    Route::get('/dashboard/profile/change-password', [UserProfileController::class, 'changePassword'])->name('profile.change-password');
+    Route::put('/dashboard/profile/{user:username}/change-password', [UserProfileController::class, 'updatePassword']);
     // Comments and Replies
     Route::post('/post/{post:slug}/comment', [CommentController::class, 'store']);
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');

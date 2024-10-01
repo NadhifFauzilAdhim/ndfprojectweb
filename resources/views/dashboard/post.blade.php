@@ -21,7 +21,7 @@
             <div class="card">
               @if($post->image)
               <a href="/dashboard/posts/{{ $post->slug }}">
-                  <img src="{{ asset('storage/' . $post->image ) }}" class="card-img-top img-fluid fixed-size" alt="Post Image">
+                  <img src="{{ asset('uploads/' . $post->image ) }}" class="card-img-top img-fluid fixed-size" alt="Post Image">
               </a>
              @else
               <a href="/dashboard/posts/{{ $post->slug }}">

@@ -46,7 +46,7 @@ class DashboardPostController extends Controller
             'body' => 'required'
         ]);
         if($request->file('image')){     
-            $validatedData['image']=$request->file('image')->store('post-image');
+            $validatedData['image']=$request->file('image')->store('post-images','public');
         }
 
         $validatedData['author_id'] = Auth::id();
@@ -96,9 +96,9 @@ class DashboardPostController extends Controller
         $validatedData = $request->validate($datarules);
         if($request->file('image')){
             if($request->oldImagePoster){
-                Storage::delete($request->oldImagePoster);
+                Storage::disk('public')->delete($request->oldImagePoster);
             }
-        $validatedData['image']=$request->file('image')->store('post-images');
+        $validatedData['image']=$request->file('image')->store('post-images','public');
         }
         $validatedData['author_id'] = Auth::id();
        
@@ -113,7 +113,7 @@ class DashboardPostController extends Controller
     public function destroy(Post $post)
     {
         if($post->image){
-            Storage::delete($post->image);
+            Storage::disk('public')->delete($post->image);
         }
         Post::destroy($post->id);
         return redirect('/dashboard/posts')->with('success','Post Dihapus');

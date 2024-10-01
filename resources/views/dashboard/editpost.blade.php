@@ -53,7 +53,7 @@
                                 @enderror
                                 <div class="d-flex justify-content-center">
                                   @if($post->image)
-                                  <img id="imgPreview" src="{{ asset('storage/' . $post->image ) }}" alt="Pratinjau Gambar" class="img-fluid mt-3" >
+                                  <img id="imgPreview" src="{{ asset('uploads/' . $post->image ) }}" alt="Pratinjau Gambar" class="img-fluid mt-3" >
                                   @else
                                   <img id="imgPreview" src="#" alt="Pratinjau Gambar" class="img-fluid mt-3" >
                                   @endif

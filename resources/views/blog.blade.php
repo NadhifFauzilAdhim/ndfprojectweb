@@ -21,7 +21,7 @@
           <div class="row align-items-center justify-content-center text-center pt-5">
               <div class="col-lg-10 mt-5">
                   @if(request('author') && $posts->count() > 0)
-                      <img src="{{ asset('storage/' . $posts->first()->author->avatar) }}" alt="" width="150" class="rounded-circle ">
+                      <img src="{{ asset('uploads/' . $posts->first()->author->avatar) }}" alt="" width="150" class="rounded-circle ">
                       <h1 class="heading text-white mb-3" data-aos="fade-up">{{ $posts->count() }} Article By {{ $posts->first()->author->name }}</h1>  
                       <div class="d-flex justify-content-center" data-aos="fade-up">
                       </div>
@@ -87,7 +87,7 @@
                           <div class="blog-item">
                               <div class="blog-img">
                                   @if($item->image)
-                                      <img src="{{ asset('storage/' . $item->image) }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
+                                      <img src="{{ asset('uploads/' . $item->image) }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
                                   @else
                                       <img src="{{ asset('img/programmer_text_2.jpg') }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
                                   @endif

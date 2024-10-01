@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
 
 class UserProfileController extends Controller
@@ -26,7 +27,12 @@ class UserProfileController extends Controller
         ]);
     
         if ($request->username != $user->username) {
-            $datarules['username'] = 'required|unique:users';
+            $datarules['username'] = [
+                'required', 
+                'unique:users', 
+                'regex:/^\S*$/', 
+                'not_regex:/<[^>]*>/' 
+            ];
         }
         
        $validatedData = $request->validate($datarules);
@@ -41,15 +47,40 @@ class UserProfileController extends Controller
         ]);
         if ($request->file('image')) {
             if ($user->avatar) {  
-                Storage::delete($user->avatar);
+                  Storage::disk('public')->delete($user->avatar);
             }
-            $imagePath = $request->file('image')->store('profile_images');
+            $imagePath = $request->file('image')->store('avatar', 'public');
             $imgManager = new ImageManager(new Driver);
-            $filteredImage = $imgManager->read('storage/'.$imagePath);
-            $filteredImage->resize(500,500)->save('storage/'.$imagePath);
+            $filteredImage = $imgManager->read('uploads/'.$imagePath);
+            $filteredImage->resize(500,500)->save('uploads/'.$imagePath);
             $user->avatar = $imagePath;
             $user->save();
         }
         return redirect('/dashboard/profile')->with('success', 'Profile image updated successfully.');
     }  
+
+    public function changePassword(){
+        return view('dashboard.profile.reset-password', [
+            'title' => 'Change Password',
+            'user' => Auth::user()
+        ]);
+    }
+
+    public function updatePassword(Request $request, User $user)
+    {
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|min:5'
+        ]);
+        if($request->new_password != $request->password_confirmation){
+            return back()->withErrors(['password_confirmation' => 'Password baru dan Konfirmasi tidak sama']);
+        }
+        if (!Hash::check($request->old_password, $user->password)) {
+            return back()->withErrors(['old_password' => 'Password lama tidak cocok']);
+        }
+        $user->update([ 
+            'password' => Hash::make($request->new_password)
+        ]);
+        return redirect('/dashboard/profile')->with('success', 'Password diperbarui');
+    }   
 }

@@ -46,7 +46,7 @@
               <div class="card">
                   <div class="card-body text-center">
                       @if($user->avatar)
-                      <img src="{{ asset('storage/' . $user->avatar) }}" alt="image" class="img-fluid rounded-circle" width="205">
+                      <img src="{{ asset('uploads/' . $user->avatar) }}" alt="image" class="img-fluid rounded-circle" width="205">
                       @else
                       <img src="https://img.icons8.com/color/500/user-male-circle--v1.png" alt="image" class="img-fluid rounded-circle" width="205">
                       @endif
@@ -98,7 +98,7 @@
                                       <button type="submit" class="btn btn-primary">Change Profile</button>
                                     </div>
                                     <div class="col-6">
-                                      <a class="btn btn-info">Change Password</a>
+                                      <a class="btn btn-info" href="{{ url('/dashboard/profile/change-password') }}">Change Password</a>
                                     </div>
                                   </div>
                                  
