@@ -4,7 +4,7 @@
       <div class="profile">
         @auth
           @if(Auth::user()->avatar)
-          <img src="{{ asset('uploads/' . auth()->user()->avatar) }}" alt="" class="img-fluid rounded-circle author-img">
+          <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="" class="img-fluid rounded-circle author-img">
           @else
           <img src="https://img.icons8.com/color/500/user-male-circle--v1.png" alt="" class="img-fluid rounded-circle author-img">
            @endif

@@ -67,7 +67,7 @@
           </li>
           
           <li class="sidebar-item">
-            <a class="sidebar-link" href="/dashboard/allpost" aria-expanded="false">
+            <a class="sidebar-link" href="/dashboard/postmanagement" aria-expanded="false">
               <span>
                 <iconify-icon icon="solar:text-field-focus-bold-duotone" class="fs-6"></iconify-icon>
               </span>

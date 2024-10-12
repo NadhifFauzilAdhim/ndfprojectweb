@@ -4,19 +4,25 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AdminPostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\UserProfileController;
 
+
 // Public routes
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/blog', [HomeController::class, 'blog']);
-Route::get('/blog/{post:slug}', [HomeController::class, 'showPost']);
+Route::get('/blog/{post:slug}', [HomeController::class, 'showPost'])->name('blog.show');
 Route::get('author/{user:username}', [HomeController::class, 'showAuthor']);
 Route::get('category/{category:slug}', [HomeController::class, 'showCategory']);
+Route::get('/event', [EventController::class, 'index'])->name('event');
+Route::get('/event/{id}', [EventController::class, 'show'])->name('eventdetail');
+Route::get('/events/search', [EventController::class, 'search'])->name('events.search');
 // Authentication routes
 Route::middleware('guest')->group(function() {
     Route::get('/login', [LoginController::class, 'index'])->name('login');
@@ -38,7 +44,6 @@ Route::middleware('auth')->group(function() {
     Route::post('/logout', [LoginController::class, 'deauthenticate'])->name('logout');
 });
 
-// Dashboard routes
 Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Posts 
@@ -58,8 +63,12 @@ Route::middleware(['auth', 'verified'])->group(function() {
 // Dashboard Admin routes
 Route::middleware(['auth', 'admin', 'verified'])->group(function() {
     Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show');
+    Route::delete('/dashboard/postmanagement/{post:slug}', [AdminPostController::class, 'destroy'])->name('postmanagement.destroy');
+    Route::resource('/dashboard/postmanagement', AdminPostController::class)->only(['index','destroy']);
 });
 // Owner-specific routes
 Route::middleware(['auth', 'owner', 'verified'])->group(function() {
     Route::resource('/dashboard/usersetting', AdminUserController::class);
+    
 });
+

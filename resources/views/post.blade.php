@@ -23,7 +23,7 @@
     
             <article class="col-lg-8 order-lg-2 px-lg-5">
               @if($post['image'])
-              <img class="img-fluid" src="{{ asset('uploads/' . $post['image']) }}" alt="">
+              <img class="img-fluid" src="{{ asset('storage/' . $post['image']) }}" alt="">
               @else
               <img class="img-fluid" src="{{ asset('img/programmer_text_2.jpg')  }}" alt="">
               @endif
@@ -64,7 +64,7 @@
                         <!-- Komentar Utama -->
                         <div class="vcard bio">
                             @if($comment->user->avatar)
-                                <img src="{{ asset('uploads/' . $comment->user->avatar) }}" alt="Image placeholder">
+                                <img src="{{ asset('storage/' . $comment->user->avatar) }}" alt="Image placeholder">
                             @else
                                 <img src="https://img.icons8.com/color/48/user-male-circle--v1.png" alt="Image placeholder">
                             @endif
@@ -104,7 +104,7 @@
                                 <li class="comment">
                                     <div class="vcard bio">
                                         @if($reply->user->avatar)
-                                            <img src="{{ asset('uploads/' . $reply->user->avatar) }}" alt="Image placeholder">
+                                            <img src="{{ asset('storage/' . $reply->user->avatar) }}" alt="Image placeholder">
                                         @else
                                             <img src="https://img.icons8.com/color/48/user-male-circle--v1.png" alt="Image placeholder">
                                         @endif

@@ -46,7 +46,7 @@
                 <div class="card">
                     <div class="card-body text-center">
                         @if($user->avatar)
-                        <img src="{{ asset('uploads/' . $user->avatar) }}" alt="image" class="img-fluid rounded-circle" width="205">
+                        <img src="{{ asset('storage/' . $user->avatar) }}" alt="image" class="img-fluid rounded-circle" width="205">
                         @else
                         <img src="https://img.icons8.com/color/500/user-male-circle--v1.png" alt="image" class="img-fluid rounded-circle" width="205">
                         @endif

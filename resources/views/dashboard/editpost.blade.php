@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title fw-semibold mb-4 text-center">Create New Post</h4>
+                <h4 class="card-title fw-semibold mb-4 text-center">Edit Post <br><small>Last updated: {{ $post->updated_at }}</small></h4>
                 <div class="card">
                     <div class="card-body">
                         <form action="/dashboard/posts/{{ $post->slug }}" method="POST" enctype="multipart/form-data">
@@ -53,7 +53,7 @@
                                 @enderror
                                 <div class="d-flex justify-content-center">
                                   @if($post->image)
-                                  <img id="imgPreview" src="{{ asset('uploads/' . $post->image ) }}" alt="Pratinjau Gambar" class="img-fluid mt-3" >
+                                  <img id="imgPreview" src="{{ asset('storage/' . $post->image ) }}" alt="Pratinjau Gambar" class="img-fluid mt-3" >
                                   @else
                                   <img id="imgPreview" src="#" alt="Pratinjau Gambar" class="img-fluid mt-3" >
                                   @endif

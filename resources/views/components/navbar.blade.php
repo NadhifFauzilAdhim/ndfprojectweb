@@ -9,6 +9,7 @@
       <li><a href="/#project" class="nav-link scrollto"><i class="bx bx-server"></i> <span>Project</span></a></li>
       <li><a href="/#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
       <li><a href="/blog" class="{{ request()->is('blog') ? 'nav-link scrollto active' : 'nav-link scrollto' }}"><i class="bi bi-pencil-square fs-5"></i> <span>Blog</span></a></li>
+      <li><a href="/event" class="{{ request()->is('event') ? 'nav-link scrollto active' : 'nav-link scrollto' }}"><i class="bi bi-people-fill fs-5"></i> <span>Event</span></a></li>
      
       @auth
       <li><a href="/dashboard" class="nav-link scrollto"><i class="bi bi-send fs-5"></i> <span>Dashboard</span></a></li>

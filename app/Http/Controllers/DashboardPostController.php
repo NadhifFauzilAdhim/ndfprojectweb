@@ -14,11 +14,17 @@ class DashboardPostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
         return view('dashboard.post', [
             'title' => 'Create Post',
-            'posts' => Post::where('author_id', Auth::id())->latest()->get()
+            'posts' => Post::where('author_id', Auth::id())
+            ->when($search, function ($query, $search) {
+                return $query->where('title', 'like', "%{$search}%")
+                            ->orWhere('slug', 'like', "%{$search}%");
+            })
+            ->latest()->get()
         ]);
     }
 
@@ -96,9 +102,9 @@ class DashboardPostController extends Controller
         $validatedData = $request->validate($datarules);
         if($request->file('image')){
             if($request->oldImagePoster){
-                Storage::disk('public')->delete($request->oldImagePoster);
+                Storage::delete($request->oldImagePoster);
             }
-        $validatedData['image']=$request->file('image')->store('post-images','public');
+        $validatedData['image']=$request->file('image')->store('post-images');
         }
         $validatedData['author_id'] = Auth::id();
        
@@ -113,7 +119,7 @@ class DashboardPostController extends Controller
     public function destroy(Post $post)
     {
         if($post->image){
-            Storage::disk('public')->delete($post->image);
+            Storage::delete($post->image);
         }
         Post::destroy($post->id);
         return redirect('/dashboard/posts')->with('success','Post Dihapus');

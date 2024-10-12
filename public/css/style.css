@@ -69,6 +69,26 @@ h6 {
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
+
+.custom-blue-shadow {
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.5); /* Blue shadow with 50% opacity */
+}
+
+@keyframes blink-shadow {
+    0% {
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.5);
+    }
+    50% {
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.8);
+    }
+    100% {
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.5);
+    }
+}
+
+.custom-blinking-shadow {
+    animation: blink-shadow 1s infinite;
+}
 #header {
   position: fixed;
   top: 0;

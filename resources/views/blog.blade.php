@@ -87,7 +87,7 @@
                           <div class="blog-item">
                               <div class="blog-img">
                                   @if($item->image)
-                                      <img src="{{ asset('uploads/' . $item->image) }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
+                                      <img src="{{ asset('storage/' . $item->image) }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
                                   @else
                                       <img src="{{ asset('img/programmer_text_2.jpg') }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
                                   @endif

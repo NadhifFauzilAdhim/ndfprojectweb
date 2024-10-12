@@ -36,7 +36,7 @@
             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
               aria-expanded="false">
               @if(Auth::user()->avatar)
-              <img src="{{ asset('uploads/' . auth()->user()->avatar) }}" alt="" width="35" height="35" class="rounded-circle">
+              <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="" width="35" height="35" class="rounded-circle">
               @else
               <img src="https://img.icons8.com/color/48/user-male-circle--v1.png" alt="" width="35" height="35" class="rounded-circle">
               @endif

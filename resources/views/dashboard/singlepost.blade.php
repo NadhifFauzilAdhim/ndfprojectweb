@@ -23,7 +23,7 @@
               <p class="fs-4 text-center">Posted {{ $post->created_at }} in Category <b><a href="">{{ $post->category->name }}</a></b></p>
               <div class="d-flex justify-content-center">
                 @if($post->image)
-                <img class="img-fluid" src="{{ asset('uploads/' . $post->image ) }}" alt="">
+                <img class="img-fluid" src="{{ asset('storage/' . $post->image ) }}" alt="">
                 @else
                 <img class="img-fluid" src="{{ asset('img/programmer_text_2.jpg') }}" alt="">
                 @endif

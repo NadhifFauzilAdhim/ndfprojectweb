@@ -2,15 +2,26 @@
 <x-slot:title>{{ $title  }}</x-slot:title>
 <div class="container-fluid">
     <div class="card">
-        <div class="row">
+        <div class="row ">
             <div class="col-md-12">
               @if(session()->has('success'))
               <div class="alert alert-success text-center" role="alert">
                 {{ session('success') }}
               </div>
               @endif
-                <a href="/dashboard/posts/create" class="btn btn-primary mt-4 ms-4">Create New Post</a>    
+               
             </div>
+            <div class="col-md-12 d-flex">
+              
+              <a href="/dashboard/posts/create" class="btn btn-primary mt-4 ms-4">New Post</a>   
+              <form action="/dashboard/posts" method="GET">
+                <div class="input-group  mt-4 ms-4">
+                    <input type="text" name="search" class="form-control" placeholder="Search Post" aria-label="Search" aria-describedby="button-addon2" value="{{ request('search')  }}">
+                    <button class="btn btn-outline-primary" type="submit" id="button-addon2">Search</button>
+                </div>
+            </form> 
+            </div>
+            
         </div>
        
       <div class="card-body">
@@ -21,7 +32,7 @@
             <div class="card">
               @if($post->image)
               <a href="/dashboard/posts/{{ $post->slug }}">
-                  <img src="{{ asset('uploads/' . $post->image ) }}" class="card-img-top img-fluid fixed-size" alt="Post Image">
+                  <img src="{{ asset('storage/' . $post->image ) }}" class="card-img-top img-fluid fixed-size" alt="Post Image">
               </a>
              @else
               <a href="/dashboard/posts/{{ $post->slug }}">
@@ -31,8 +42,9 @@
                  
                 <div class="card-body">
                   <h5 class="card-title">{{ $post->title }}</h5>
-                  <h6 class="card-text"><i class="bi bi-bookmark-check-fill text-secondary"></i> In Category {{ $post->category->name }}</h6>
-                  <h6 class="card-text"><i class="bi bi-calendar-check-fill text-secondary"></i> Posted on {{ $post->created_at }}</h6>
+                  <h6 class="card-text"><i class="bi bi-bookmark-check "></i> <small>In Category {{ $post->category->name }}</small></h6>
+                  <h6 class="card-text"><i class="bi bi-calendar-check "></i> <small>Posted on {{ $post->created_at }}</small></h6>
+                  <h6 class="card-text"><i class="bi bi-pencil-square"></i> <small>Modified {{ $post->updated_at->diffForHumans() }}</small></h6>
                   <p class="card-text">{{ Str::limit(strip_tags($post->body), 100) }} </p>
                   
                   <div class="btn-group" role="group" aria-label="Button group with nested dropdown">

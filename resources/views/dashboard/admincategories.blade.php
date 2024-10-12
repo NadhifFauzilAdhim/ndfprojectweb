@@ -16,6 +16,9 @@
                             {{ session('error') }}
                         </div>
                         @endif
+                        <div class="alert alert-warning text-center" role="alert">
+                            Admin Zone 
+                           </div>
                         <h5 class="card-title">All Categories</h5>
                         <div class="table-responsive">
                             <table class="table text-nowrap align-middle mb-0">
@@ -59,7 +62,9 @@
                                     </tr>
                                     @endforelse
                                 </tbody>
+                                
                             </table>
+                            
                         </div>
                     </div>
                 </div>

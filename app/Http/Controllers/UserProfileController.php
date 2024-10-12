@@ -47,12 +47,12 @@ class UserProfileController extends Controller
         ]);
         if ($request->file('image')) {
             if ($user->avatar) {  
-                  Storage::disk('public')->delete($user->avatar);
+                  Storage::delete($user->avatar);
             }
-            $imagePath = $request->file('image')->store('avatar', 'public');
+            $imagePath = $request->file('image')->store('avatar');
             $imgManager = new ImageManager(new Driver);
-            $filteredImage = $imgManager->read('uploads/'.$imagePath);
-            $filteredImage->resize(500,500)->save('uploads/'.$imagePath);
+            $filteredImage = $imgManager->read('storage/'.$imagePath);
+            $filteredImage->resize(500,500)->save('storage/'.$imagePath);
             $user->avatar = $imagePath;
             $user->save();
         }
