@@ -14,7 +14,8 @@ class HomeController extends Controller
     public function index()
     {
         return view('home',[
-            'title' => 'Home'
+            'title' => 'Home',
+            'posts' => Post::filter(request(['search', 'category', 'author']))->latest()->paginate(6)->withQueryString()
         ]);
     }
 

@@ -92,36 +92,35 @@ class EventController extends Controller
     }
 
     public function search(Request $request)
-{
-    $keyword = $request->input('q', ''); 
-    if (empty($keyword)) {
-        return redirect()->route('event'); 
-    }
-    try {
-        $response = Http::get("https://event-api.dicoding.dev/events", [
-            'active' => -1,  
-            'q' => $keyword  
-        ]);
+    {
+        $keyword = $request->input('q', ''); 
+        if (empty($keyword)) {
+            return redirect()->route('event'); 
+        }
+        try {
+            $response = Http::get("https://event-api.dicoding.dev/events", [
+                'active' => -1,  
+                'q' => $keyword  
+            ]);
 
-        if ($response->successful()) {
-            $searchResults = $response->json();
-            foreach ($searchResults['listEvents'] as &$event) {
-                $event['IsAvailable'] = $this->checkIfAvailable($event);
-                $event['timeLeft'] = $this->getTimeLeft($event);
+            if ($response->successful()) {
+                $searchResults = $response->json();
+                foreach ($searchResults['listEvents'] as &$event) {
+                    $event['IsAvailable'] = $this->checkIfAvailable($event);
+                    $event['timeLeft'] = $this->getTimeLeft($event);
+                }
+
+                return view('event', [
+                    'title' => 'Search Results',
+                    'data' => $searchResults,
+                    'upcoming' => $this->getUpcomingEvents($searchResults)
+                ]);
             }
 
-            return view('event', [
-                'title' => 'Search Results',
-                'data' => $searchResults,
-                'upcoming' => $this->getUpcomingEvents($searchResults)
-            ]);
+            return view('event', ['error' => 'No events found for the search keyword']);
+        } catch (\Exception $e) {
+            return view('event', ['error' => 'Something went wrong: ' . $e->getMessage()]);
         }
-
-        return view('event', ['error' => 'No events found for the search keyword']);
-    } catch (\Exception $e) {
-        return view('event', ['error' => 'Something went wrong: ' . $e->getMessage()]);
     }
-}
-
    
 }

@@ -17,7 +17,7 @@
                         </div>
                         @endif
                         <div class="container">
-                            <div class="alert alert-warning text-center" role="alert">
+                            <div class="alert alert-warning text-center" role="alert">  
                                Admin Zone 
                               </div>
                             <div class="row d-flex">

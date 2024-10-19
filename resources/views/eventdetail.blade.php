@@ -1,12 +1,5 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
-    <style>
-        .blog-section img {
-            width: 100%; /* Make the image fill the width of its container */
-            height: auto; /* Maintain aspect ratio */
-            max-width: 100%; /* Ensure the image does not exceed the container's width */
-        }
-    </style>
     <div class="bloghero overlay inner-page">
         <img src="{{ asset('img/blob.svg') }}" alt="" class="img-fluid blob">
         <div class="container">
