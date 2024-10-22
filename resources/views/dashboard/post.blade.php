@@ -9,7 +9,7 @@
                     <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
                         <div class="d-flex">
                             <div class="toast-body">
-                                {{ session('success') }}
+                                <i class="bi bi-check-circle-fill me-3"></i>{{ session('success') }}
                             </div>
                             <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                         </div>
@@ -20,7 +20,7 @@
                     <div class="toast align-items-center text-bg-warning border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
                         <div class="d-flex">
                             <div class="toast-body">
-                                {{ session('error') }}
+                                <i class="bi bi-exclamation-diamond-fill me-3"></i> {{ session('error') }}
                             </div>
                             <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                         </div>
@@ -90,6 +90,7 @@
                   </div>
                   @endforelse
               </div>
+              {{ $posts->links() }}
           </div>
       </div>
   </div>

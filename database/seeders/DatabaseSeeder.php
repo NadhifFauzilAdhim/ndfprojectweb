@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'nadya15a3@gmail.com',
             'is_admin' => 1,
             'email_verified_at' => now(),
-            'password' => Hash::make('testt'),
+            'password' => Hash::make('Nadhif2003'),
             'remember_token' => Str::random(10)
 
         ]);

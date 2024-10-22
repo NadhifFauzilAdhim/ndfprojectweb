@@ -9,7 +9,7 @@
                             <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
                                 <div class="d-flex">
                                     <div class="toast-body">
-                                        {{ session('success') }}
+                                        <i class="bi bi-check-circle-fill me-3"></i>{{ session('success') }}
                                     </div>
                                     <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                                 </div>
@@ -20,7 +20,7 @@
                             <div class="toast align-items-center text-bg-warning border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
                                 <div class="d-flex">
                                     <div class="toast-body">
-                                        {{ session('error') }}
+                                        <i class="bi bi-exclamation-diamond-fill me-3"></i> {{ session('error') }}
                                     </div>
                                     <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                                 </div>
@@ -81,7 +81,7 @@
                     @forelse ($links as $link)
                     <div class="col-md-4">
                         <div class="card mb-4">
-                            <div class="card-header" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);">
+                            <div class="card-header @if($link->active) linkactivecolor @else linkinactivecolor @endif" >
                                 <h6 class="card-title">
                                     <input type="text" value="{{ url('r/' . $link->slug) }}" id="linkInput-{{ $link->slug }}" class="form-control text-dark shadow-sm bg-white" readonly>
                                 </h6>
@@ -113,7 +113,7 @@
                                             </a>
                                           </li>
                                           <li>
-                                            <a class="dropdown-item text-warning bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $link->slug }}" data-target-url="{{ $link->target_url }}">
+                                            <a class="dropdown-item text-warning bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $link->slug }}" data-target-url="{{ $link->target_url }}"  data-active="{{ $link->active }}">
                                                 <i class="bi bi-pencil-square"></i>  Edit
                                             </a>
                                           </li>
@@ -125,8 +125,9 @@
                         </div>
                     </div>
                     @empty
-                    <div class="col-12 text-center">
-                        <p>No links found.</p>
+                    <div class="text-center">
+                        <h4 class="home__title">Nampaknya Belum Ada Link &#129300;</h4>
+                       
                     </div>
                     @endforelse
                 </div>
@@ -174,6 +175,12 @@
                                 <label for="editTargetUrl" class="form-label">Url Destination</label>
                                 <input type="text" class="form-control" id="editTargetUrl" name="target_url">
                             </div>
+                            <label for="editTargetUrl" class="form-label">Status</label>
+                            <div class="form-check form-switch mb-5">
+                                
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="active" value="1">
+                                <label class="form-check-label" for="flexSwitchCheckChecked" id="switchLabel">Active</label>
+                            </div>
                             <button type="submit" class="btn btn-primary">Save Changes</button>
                         </form>
                     </div>
@@ -190,7 +197,6 @@
             // Traffic Overview
             // -----------------------------------------------------------------------
             var visitData = @json($visitData);
-            console.log(visitData);
 
             var chart = {
                 series: [
@@ -240,7 +246,7 @@
                     axisTicks: {
                         show: false,
                     },
-                    categories: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                    categories: ["Sun","Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
                 },
                 yaxis: {
                     tickAmount: 4,

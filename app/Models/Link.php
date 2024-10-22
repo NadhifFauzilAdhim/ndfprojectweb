@@ -17,4 +17,8 @@ class Link extends Model
     {
         return 'slug';
     }
+    public function visits()
+    {
+        return $this->hasMany(Linkvisithistory::class);
+    }
 }

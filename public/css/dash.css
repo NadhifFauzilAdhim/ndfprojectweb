@@ -5,8 +5,8 @@
  * Copyright 2011-2023 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
-@import "../libs/simplebar/dist/simplebar.css";
-@import "../css/icons/tabler-icons/tabler-icons.css";
+/* @import "../libs/simplebar/dist/simplebar.css";
+@import "../css/icons/tabler-icons/tabler-icons.css"; */
 :root,
 [data-bs-theme=light] {
   --bs-blue: #2952ff;
@@ -197,6 +197,13 @@
 }
 
 
+/* Custom */
+.linkactivecolor {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+}
+.linkinactivecolor {
+  background: linear-gradient(135deg, #6a11cb 0%, #fc2525 100%);
+}
 
 body {
   margin: 0;

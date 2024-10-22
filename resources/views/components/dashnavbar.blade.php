@@ -39,7 +39,8 @@
           <li class="sidebar-item">
             <a class="sidebar-link "  href="/dashboard/posts" aria-expanded="false">
               <span>
-                <iconify-icon icon="solar:text-field-focus-bold-duotone" class="fs-6"></iconify-icon>
+               
+                <iconify-icon icon="solar:file-text-bold-duotone" class="fs-6"></iconify-icon>
               </span>
               <span class="hide-menu">My Post</span>
             </a>
@@ -47,7 +48,7 @@
           <li class="sidebar-item">
             <a class="sidebar-link" href="/dashboard/posts/create" aria-expanded="false">
               <span>
-                <iconify-icon icon="solar:file-text-bold-duotone" class="fs-6"></iconify-icon>
+                <iconify-icon icon="solar:text-field-focus-bold-duotone" class="fs-6"></iconify-icon>
               </span>
               <span class="hide-menu">Create Post</span>
             </a>

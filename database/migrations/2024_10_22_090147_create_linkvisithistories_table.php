@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('links', function (Blueprint $table) {
+        Schema::create('linkvisithistories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained(
-                table : 'users',
-                indexName : 'links_user_id'
+            $table->foreignId('link_id')->constrained(
+                table : 'links',
+                indexName : 'linkvisithistories_link_id'
             );
-            $table->string('slug');
-            $table->string('target_url');
-            $table->integer('visits')->default(0);
-            $table->boolean('active')->default(true);
+            $table->boolean('status')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('links');
+        Schema::dropIfExists('linkvisithistories');
     }
 };

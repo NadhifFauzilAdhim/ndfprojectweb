@@ -24,7 +24,7 @@ class DashboardPostController extends Controller
                 return $query->where('title', 'like', "%{$search}%")
                             ->orWhere('slug', 'like', "%{$search}%");
             })
-            ->latest()->get()
+            ->latest()->paginate(6)
         ]);
     }
 

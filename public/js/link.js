@@ -1,9 +1,9 @@
 var deleteModal = document.getElementById('deleteModal');
 deleteModal.addEventListener('show.bs.modal', function (event) {
-    var button = event.relatedTarget; // Button that triggered the modal
-    var linkId = button.getAttribute('data-id'); // Extract info from data-* attributes
+    var button = event.relatedTarget;
+    var linkId = button.getAttribute('data-id'); 
     var form = deleteModal.querySelector('#deleteForm');
-    form.action = '/dashboard/link/' + linkId; // Set the form action to include the link ID
+    form.action = '/dashboard/link/' + linkId; 
 });
 
 var editModal = document.getElementById('editModal');
@@ -11,14 +11,21 @@ editModal.addEventListener('show.bs.modal', function (event) {
     var button = event.relatedTarget;
     var linkId = button.getAttribute('data-id');
     var targetUrl = button.getAttribute('data-target-url');
-    
-    // Set form action dynamically
+    var isActive = button.getAttribute('data-active'); 
+
     var form = editModal.querySelector('#editForm');
     form.action = '/dashboard/link/' + linkId;
 
-    // Set the input value dynamically
     var input = editModal.querySelector('#editTargetUrl');
     input.value = targetUrl;
+
+    var checkbox = editModal.querySelector('#flexSwitchCheckChecked');
+    var label = editModal.querySelector('#switchLabel');
+    checkbox.checked = (isActive == 1);  // Checked jika active bernilai 1
+    label.textContent = checkbox.checked ? 'Active' : 'Inactive';
+    checkbox.addEventListener('change', function () {
+        label.textContent = checkbox.checked ? 'Active' : 'Inactive';
+    });
 });
 
 function copyFunction(slug) {

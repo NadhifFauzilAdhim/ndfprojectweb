@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Link;
+use App\Models\Linkvisithistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,11 +16,14 @@ class LinkController extends Controller
     public function index()
     {
         $links = Link::where('user_id', Auth::id())->latest()->paginate(6);
-        $visits = Link::where('user_id', Auth::id())
-            ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('SUM(visits) as total_visits'))
+        $visits = Linkvisithistory::whereHas('link', function ($query) {
+                $query->where('user_id', Auth::id());
+            })
+            ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
             ->groupBy('day')
             ->orderBy('day', 'asc')
             ->get();
+
         $visitData = [];
         foreach (range(1, 7) as $day) {
             $visitData[$day] = $visits->firstWhere('day', $day)->total_visits ?? 0;
@@ -27,7 +31,7 @@ class LinkController extends Controller
         return view('dashboard.shortlink', [
             'title' => 'Short Link',
             'links' => $links,
-            'visitData' => array_values($visitData),
+            'visitData' => array_values($visitData), // Ambil array tanpa index kunci
         ]);
     }
 
@@ -36,10 +40,14 @@ class LinkController extends Controller
         if ($link->user_id !== Auth::id()) {
             abort(403);
         }
-        $validatedData = $request->validate([
-            'target_url' => 'required|max:255|url', 
-        ]);
-        $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
+        if($request->target_url != $link->target_url){
+            $validatedData = $request->validate([
+                'target_url' => 'required|max:255|url',
+            ]);
+            $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
+        }
+        
+        $validatedData['active'] = $request->has('active') ? 1 : 0;
         $link->update($validatedData);
         return redirect()->back()->with('success', 'Link Berhasil Diubah');
     }
