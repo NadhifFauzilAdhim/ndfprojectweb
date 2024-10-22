@@ -12,10 +12,12 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\LinkController;
+use App\Http\Controllers\RedirectController;
 
 
 // Public routes
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/blog', [HomeController::class, 'blog']);
 Route::get('/blog/{post:slug}', [HomeController::class, 'showPost'])->name('blog.show');
 Route::get('author/{user:username}', [HomeController::class, 'showAuthor']);
@@ -23,6 +25,10 @@ Route::get('category/{category:slug}', [HomeController::class, 'showCategory']);
 Route::get('/event', [EventController::class, 'index'])->name('event');
 Route::get('/event/{id}', [EventController::class, 'show'])->name('eventdetail');
 Route::get('/events/search', [EventController::class, 'search'])->name('events.search');
+Route::get('/r/{link:slug}', RedirectController::class);
+
+//redirect route
+
 // Authentication routes
 Route::middleware('guest')->group(function() {
     Route::get('/login', [LoginController::class, 'index'])->name('login');
@@ -52,13 +58,18 @@ Route::middleware(['auth', 'verified'])->group(function() {
 // Profile
     Route::resource('/dashboard/profile', UserProfileController::class)->only(['index', 'update'])->parameters(['profile' => 'user:username']);
     Route::put('/dashboard/profile/{user:username}/change-image', [UserProfileController::class, 'changeProfileImage']);
+    Route::middleware(['throttle:2,1'])->group(function () {
     Route::get('/dashboard/profile/change-password', [UserProfileController::class, 'changePassword'])->name('profile.change-password');
-    Route::put('/dashboard/profile/{user:username}/change-password', [UserProfileController::class, 'updatePassword']);
+    Route::get('/dashboard/profile/reset-password', [UserProfileController::class, 'showResetPasswordForm'])->name('profile.reset-password');
+    Route::post('/dashboard/profile/update-password', [UserProfileController::class, 'updatePassword'])->name('profile.update-password');
+    });
     // Comments and Replies
     Route::post('/post/{post:slug}/comment', [CommentController::class, 'store']);
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
     Route::post('/comments/{comment}/reply', [CommentController::class, 'reply']);
     Route::delete('/commentReply/{reply}', [CommentController::class, 'destroyReply'])->name('commentReply.destroy');
+    // Link Redirected
+    Route::resource('/dashboard/link', LinkController::class)->only(['index', 'store', 'destroy','update']);
 });
 // Dashboard Admin routes
 Route::middleware(['auth', 'admin', 'verified'])->group(function() {

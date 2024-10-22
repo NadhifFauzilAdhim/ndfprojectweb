@@ -39,7 +39,13 @@
           </ul>
       </li>
       @else
-      <li><a href="/login" class="nav-link scrollto"><i class="bi bi-box-arrow-in-left"></i> <span>Login</span></a></li>
+      <li>
+        <a href="/login" class="nav-link scrollto">
+            <i class="bi bi-box-arrow-in-left"></i> 
+            <span>Login</span>
+            <span class="badge bg-primary ms-2 px-2 py-1">Access feature</span>
+        </a>
+    </li>
       @endauth
   </ul>
 </nav><!-- .nav-menu -->

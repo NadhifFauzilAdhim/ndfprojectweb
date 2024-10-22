@@ -52,6 +52,16 @@
               <span class="hide-menu">Create Post</span>
             </a>
           </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/dashboard/link" aria-expanded="false">
+              <span>
+                <iconify-icon icon="solar:link-bold-duotone" class="fs-6"></iconify-icon>
+              </span>
+              <span class="hide-menu">Shorten Link
+                <span class="badge bg-success d-inline-flex align-items-center justify-content-center ms-2"><small>New</small></span>
+            </span>
+            </a>
+          </li>
           @can('admin')
           <li class="nav-small-cap">
             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4" class="fs-6"></iconify-icon>

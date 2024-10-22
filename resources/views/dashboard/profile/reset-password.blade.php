@@ -68,18 +68,9 @@
                         <h5 class="card-title fw-semibold">Change Password</h5>
                         <div class="card">
                             <div class="card-body">
-                                <form action="/dashboard/profile/{{ $user->username }}/change-password" method="POST">
-                                    @method('PUT')
+                                <form action="/dashboard/profile/update-password" method="POST">
                                     @csrf
-                                    <div class="mb-3">
-                                        <label for="old_password" class="form-label">Password lama</label>
-                                        <input type="password" name="old_password" class="form-control @error('old_password') is-invalid @enderror" id="old_password">
-                                        @error('old_password')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
+                                   <input type="hidden" name="token" value="{{ $token }}">
                                     <div class="mb-3">
                                         <label for="new_password" class="form-label">Password Baru</label>
                                         <input type="password" name="new_password" class="form-control @error('new_password') is-invalid @enderror" id="new_password">

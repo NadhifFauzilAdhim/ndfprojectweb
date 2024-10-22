@@ -11,7 +11,7 @@
   <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
   <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
-  
+  <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
   <script type="text/javascript">
     window.$crisp = [];
     window.CRISP_WEBSITE_ID = "1e04db0b-6c8c-4e95-a60b-49c6607ff0c3";
@@ -49,12 +49,11 @@
       {{ $slot }}
     </div>
   </div>
-  <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+  
   <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('vendor/apexcharts/dist/apexcharts.min.js') }}"></script>
   <script src="{{ asset('js/dashjs/sidebarmenu.js') }}"></script>
   <script src="{{ asset('js/dashjs/app.min.js') }}"></script>
-  <script src="{{ asset('js/dashjs/dashboard.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.js"></script>
   <script>

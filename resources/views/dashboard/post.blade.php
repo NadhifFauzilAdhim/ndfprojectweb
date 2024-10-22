@@ -4,11 +4,29 @@
       <div class="card">
           <div class="row">
               <div class="col-md-12">
-                  @if(session()->has('success'))
-                  <div class="alert alert-success text-center" role="alert">
-                      {{ session('success') }}
-                  </div>
-                  @endif
+                @if(session()->has('success'))
+                <div class="toast-container position-fixed top-0 end-0 p-3">
+                    <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                {{ session('success') }}
+                            </div>
+                            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                @elseif(session()->has('error'))
+                <div class="toast-container position-fixed top-0 end-0 p-3">
+                    <div class="toast align-items-center text-bg-warning border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                {{ session('error') }}
+                            </div>
+                            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                @endif
               </div>
               <div class="col-md-12 d-flex">
                   <a href="/dashboard/posts/create" class="btn btn-primary mt-4 ms-4">New Post</a>
@@ -45,7 +63,7 @@
 
                               <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                   <div class="btn-group" role="group">
-                                      <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                      <button type="button" class="btn btn-outline-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                           Action
                                       </button>
                                       <ul class="dropdown-menu">
@@ -104,5 +122,12 @@
           document.getElementById('deleteForm').action = `/dashboard/posts/${slug}`;
           document.getElementById('deleteModalLabel').innerText = `Hapus Post ${title}`;
       }
+      document.addEventListener("DOMContentLoaded", function() {
+            const toastElList = [].slice.call(document.querySelectorAll('.toast'));
+            const toastList = toastElList.map(function (toastEl) {
+                return new bootstrap.Toast(toastEl);
+            });
+            toastList.forEach(toast => toast.show());
+        });
   </script>
 </x-dashlayout>

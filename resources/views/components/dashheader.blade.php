@@ -17,7 +17,7 @@
         <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
           <!-- Elemen ini hanya akan terlihat pada layar md (768px) ke atas -->
           <li class="nav-item d-none d-md-block">
-              <a href="#" target="_blank" class="btn btn-primary me-2">
+              <a  target="_blank" class="btn btn-primary me-2">
                   <span><small>{{ auth()->user()->name }}</small></span>
               </a>
           </li>
