@@ -13,7 +13,7 @@
   <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
   <script type="text/javascript">
     window.$crisp = [];
-    window.CRISP_WEBSITE_ID = "1e04db0b-6c8c-4e95-a60b-49c6607ff0c3";
+    window.CRISP_WEBSITE_ID = "{{ config('services.crisp.website_id') }}";
     (function() {
       d = document;
       s = d.createElement("script");
@@ -23,9 +23,7 @@
     })();
   </script>
 </head>
-
 <body>
-  <!-- Spinner -->
   <div id="spinner" class="spinner-wrapper">
     <div class="text-center">
       <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
@@ -33,22 +31,14 @@
       </div>
     </div>
   </div>
-  
-  <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
-    <!-- Sidebar Start -->
    <x-dashnavbar></x-dashnavbar>
-    <!--  Sidebar End -->
-    <!--  Main wrapper -->
     <div class="body-wrapper">
-      <!--  Header Start -->
      <x-dashheader></x-dashheader>
-      <!--  Header End -->
       {{ $slot }}
     </div>
   </div>
-  
   <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('vendor/apexcharts/dist/apexcharts.min.js') }}"></script>
   <script src="{{ asset('js/dashjs/sidebarmenu.js') }}"></script>
@@ -56,7 +46,6 @@
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.js"></script>
   <script>
-    // JavaScript to hide the spinner after the page has fully loaded
     window.addEventListener('load', function() {
       document.getElementById('spinner').style.display = 'none';
     });

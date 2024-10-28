@@ -74,7 +74,7 @@
                 </div>
                 <div class="col-lg-6">
                   <ul>
-                    <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span id="umurSpan"></span></li>
+                    <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span id="umurSpan">20</span></li>
                     <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>Bachelor</span></li>
                     <li><i class="bi bi-chevron-right"></i> <strong>PhEmailone:</strong> <span>analyticgames@gmail.com</span></li>
                   </ul>
@@ -250,13 +250,13 @@
                 </ul>
               </div>
               <div class="resume-item">
-                <h4>lab assistant</h4>
-                <h5>2023</h5>
+                <h4>Lab Assistant</h4>
+                <h5>2023 - 2024</h5>
                 <p><em>Universitas Amikom Yogyakarta</em></p>
                 <ul>
-                  <li>lead the instruction and guidance on programming languages, including C++, to students at Universitas Amikom Yogyakarta.</li>
-                  <li> Responsibilities involve crafting and delivering engaging curriculum content, providing support to students, and assessing their progress. </li>
-                  <li>Supervise and mentor a group of learners, fostering a collaborative learning environment.</li>
+                  <li>Lead the instruction and guidance on programming languages, focusing on Algorithms and Programming, Advanced Programming, Microcontrollers, and Database Systems.</li>
+                  <li>Crafted and delivered engaging curriculum content, tailored to these subjects, to support student learning and skill development.</li>
+                  <li>Provided hands-on assistance, supervised project work, and assessed students' progress to foster a collaborative and interactive learning environment.</li>
                 </ul>
               </div>
               <div class="resume-item">
@@ -309,12 +309,47 @@
               <div class="portfolio-wrap">
                 <img src="certificate/SertifikatAsisten.jpeg" class="img-fluid" alt="">
                 <div class="portfolio-links">
+                  <a  target="_blank"><i class="bi bi-check2-square"> </i>
+                    <h6>Check Credential</h6>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+              <div class="portfolio-wrap">
+                <img src="certificate/SICStage1.png" class="img-fluid" alt="">
+                <div class="portfolio-links">
+                  <a  target="_blank"><i class="bi bi-check2-square"> </i>
+                    <h6>Check Credential</h6>
+                  </a>
+                </div>
+              </div>
+            </div>
+  
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+              <div class="portfolio-wrap">
+                <img src="certificate/SICStage2.png" class="img-fluid" alt="">
+                <div class="portfolio-links">
+                  <a  target="_blank"><i class="bi bi-check2-square"> </i>
+                    <h6>Check Credential</h6>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+              <div class="portfolio-wrap">
+                <img src="certificate/SICStage3.png" class="img-fluid" alt="">
+                <div class="portfolio-links">
                   <a href="https://forumasisten.or.id/sertifikat/4871198960f1f156a5/show" target="_blank"><i class="bi bi-check2-square"> </i>
                     <h6>Check Credential</h6>
                   </a>
                 </div>
               </div>
             </div>
+  
   
             <div class="col-lg-4 col-md-6 portfolio-item filter-app">
               <div class="portfolio-wrap">

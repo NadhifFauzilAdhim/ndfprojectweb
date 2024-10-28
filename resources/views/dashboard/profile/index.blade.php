@@ -23,7 +23,7 @@
                                     <p>Drag & Drop your image here or click to select</p>
                                     <input type="file" class="form-control @error('image') is-invalid @enderror d-none" 
                                            id="image" name="image" accept="image/*" onchange="previewImage(event)">
-                                    <button type="button" class="btn btn-sm btn-info" onclick="document.getElementById('image').click();">Select Image</button>
+                                    <button type="button" class="btn btn-sm btn-outline-info" onclick="document.getElementById('image').click();">Select Image</button>
                                 </div>
                                 @error('image')
                                 <div class="invalid-feedback">

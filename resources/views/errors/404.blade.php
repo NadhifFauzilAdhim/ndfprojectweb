@@ -1,6 +1,5 @@
 <x-errorlayout>
     <x-slot:title>{{ "404" }}</x-slot:title>
-    <section class="home">
         <div class="home__container container">
             <div class="home__data">
                 <span class="home__subtitle">Error 404</span>
@@ -18,10 +17,4 @@
                 <div class="home__shadow"></div>
             </div>
         </div>
-
-        <footer class="home__footer">
-            
-            <span>ndfproject.my.id</span>
-        </footer>
-    </section>
 </x-errorlayout>

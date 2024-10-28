@@ -1,19 +1,32 @@
 <x-dashlayout>
     <x-slot:title>{{ $title }}</x-slot:title>
-    
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
                         @if(session()->has('success'))
-                        <div class="alert alert-success text-center" role="alert">  
-                            {{ session('success') }}
+                        <div class="toast-container position-fixed top-0 end-0 p-3">
+                            <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div class="d-flex">
+                                    <div class="toast-body">
+                                        <i class="bi bi-check-circle-fill me-3"></i>{{ session('success') }}
+                                    </div>
+                                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                </div>
+                            </div>
                         </div>
                         @endif
                         @if(session()->has('error'))
-                        <div class="alert alert-danger text-center" role="alert">  
-                            {{ session('error') }}
+                        <div class="toast-container position-fixed top-0 end-0 p-3">
+                            <div class="toast align-items-center text-bg-warning border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div class="d-flex">
+                                    <div class="toast-body">
+                                        <i class="bi bi-exclamation-diamond-fill me-3"></i> {{ session('error') }}
+                                    </div>
+                                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                </div>
+                            </div>
                         </div>
                         @endif
                         <div class="alert alert-warning text-center" role="alert">
@@ -43,7 +56,6 @@
                                         <td class=" fw-medium">{{ $category->posts()->count() }} Post</td>
                                         <td class="text-center fw-medium">{{ $category->slug }}</td>
                                         <td class="text-center fw-medium">
-                                            <!-- Edit button to trigger edit modal -->
                                             <button 
                                                 class="btn btn-primary btn-sm" 
                                                 data-bs-toggle="modal" 
@@ -52,7 +64,6 @@
                                             >
                                                 Edit
                                             </button>
-                                            <!-- Trigger modal for deletion confirmation -->
                                             <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-slug="{{ $category->slug }}">Delete</button>
                                         </td>
                                     </tr>
@@ -69,7 +80,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
@@ -95,8 +105,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal for delete confirmation -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -118,8 +126,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal for edit category -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -181,6 +187,13 @@
                 editName.value = name; 
                 editSlug.value = slug; 
             });
+        });
+        document.addEventListener("DOMContentLoaded", function() {
+            const toastElList = [].slice.call(document.querySelectorAll('.toast'));
+            const toastList = toastElList.map(function (toastEl) {
+                return new bootstrap.Toast(toastEl);
+            });
+            toastList.forEach(toast => toast.show());
         });
     </script>
 </x-dashlayout>

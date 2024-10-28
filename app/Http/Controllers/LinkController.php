@@ -23,15 +23,25 @@ class LinkController extends Controller
             ->groupBy('day')
             ->orderBy('day', 'asc')
             ->get();
-
         $visitData = [];
         foreach (range(1, 7) as $day) {
             $visitData[$day] = $visits->firstWhere('day', $day)->total_visits ?? 0;
         }
-        return view('dashboard.shortlink', [
+        return view('dashboard.shortlink.index', [
             'title' => 'Short Link',
             'links' => $links,
-            'visitData' => array_values($visitData), // Ambil array tanpa index kunci
+            'visitData' => array_values($visitData), 
+        ]);
+    }
+
+    public function show(Link $link){
+        if ($link->user_id !== Auth::id()) {
+            abort(404);
+        }
+        return view('dashboard.shortlink.linkdetail', [
+            'title' => 'Detail Link',
+            'link' => $link,
+            'visithistory' => Linkvisithistory::where('link_id', $link->id)->latest()->paginate(3)
         ]);
     }
 

@@ -25,8 +25,7 @@ Route::get('category/{category:slug}', [HomeController::class, 'showCategory']);
 Route::get('/event', [EventController::class, 'index'])->name('event');
 Route::get('/event/{id}', [EventController::class, 'show'])->name('eventdetail');
 Route::get('/events/search', [EventController::class, 'search'])->name('events.search');
-Route::get('/r/{link:slug}', RedirectController::class);
-
+Route::middleware('throttle:5,1')->get('/r/{link:slug}', RedirectController::class);
 //redirect route
 
 // Authentication routes
@@ -69,7 +68,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::post('/comments/{comment}/reply', [CommentController::class, 'reply']);
     Route::delete('/commentReply/{reply}', [CommentController::class, 'destroyReply'])->name('commentReply.destroy');
     // Link Redirected
-    Route::resource('/dashboard/link', LinkController::class)->only(['index', 'store', 'destroy','update']);
+    Route::resource('/dashboard/link', LinkController::class)->only(['index', 'store', 'show', 'destroy','update']);
 });
 // Dashboard Admin routes
 Route::middleware(['auth', 'admin', 'verified'])->group(function() {
@@ -82,4 +81,10 @@ Route::middleware(['auth', 'owner', 'verified'])->group(function() {
     Route::resource('/dashboard/usersetting', AdminUserController::class);
     
 });
+
+//Storage Link
+// Route::get('generate-link', function () {
+//     \Illuminate\Support\Facades\Artisan::call('storage:link');
+//     echo "Storage Link Generated";
+// });
 

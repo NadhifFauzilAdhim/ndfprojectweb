@@ -3,6 +3,13 @@
   <div class="container-fluid">
       <div class="card">
           <div class="card-body">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                  <li class="breadcrumb-item"><a href="{{ url('/dashboard/posts') }}">Posts</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">{{ $post->slug }}</li>
+                </ol>
+              </nav>
               <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                   <div class="btn-group mt-3 mb-3" role="group">
                       <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

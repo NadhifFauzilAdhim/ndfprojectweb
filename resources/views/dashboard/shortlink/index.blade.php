@@ -107,14 +107,19 @@
                                           Actions
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li>
+                                                <a class="dropdown-item text-primary bg-transparent" href="/dashboard/link/{{ $link->slug }}">
+                                                    <i class="bi bi-card-checklist"></i> <strong>Detail</strong> 
+                                                </a>
+                                              </li>
                                           <li>
-                                            <a class="dropdown-item text-danger bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $link->slug }}">
-                                            <i class="bi bi-trash-fill"></i> Delete
+                                            <a class="dropdown-item text-primary bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $link->slug }}" data-target-url="{{ $link->target_url }}"  data-active="{{ $link->active }}">
+                                                <i class="bi bi-pencil-square"></i> Quick Action
                                             </a>
                                           </li>
                                           <li>
-                                            <a class="dropdown-item text-warning bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $link->slug }}" data-target-url="{{ $link->target_url }}"  data-active="{{ $link->active }}">
-                                                <i class="bi bi-pencil-square"></i>  Edit
+                                            <a class="dropdown-item text-danger bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $link->slug }}">
+                                            <i class="bi bi-trash-fill"></i> Delete
                                             </a>
                                           </li>
                                         </ul>
@@ -225,7 +230,7 @@
                     show: false,
                 },
                 stroke: {
-                    width: 2,
+                    width: 2, 
                     curve: "smooth",
                     // Remove dashed line
                     dashArray: [0],  // Solid line (no dashes)

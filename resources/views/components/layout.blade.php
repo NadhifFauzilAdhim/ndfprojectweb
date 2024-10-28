@@ -86,13 +86,6 @@
      <script src="{{ asset('js/event/event.js') }}"></script>
 
   <script src="{{ asset('js/main.js') }}"></script>
-  <script>
-    var tahunSekarang = new Date().getFullYear();
-    var tahunKelahiran = 2003;
-    var umur = tahunSekarang - tahunKelahiran;
-    var umurSpan = document.getElementById("umurSpan");
-    umurSpan.textContent = umur;
-  </script> 
    <script>
     window.addEventListener('load', function() {
       document.getElementById('spinner').style.display = 'none';
