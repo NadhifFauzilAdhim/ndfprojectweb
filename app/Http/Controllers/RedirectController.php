@@ -24,7 +24,7 @@ class RedirectController extends Controller
                 'status' => true,
             ]);
             $link->increment('visits');
-            session([$sessionKey => true]);
+            session([$sessionKey => true]); 
         }
         
         return view('redirect.redirecting', ['targetUrl' => $link->target_url]);

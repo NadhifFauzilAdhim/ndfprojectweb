@@ -3,7 +3,7 @@
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
   data-sidebar-position="fixed" data-header-position="fixed">
   <div
-    class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+    class="position-relative overflow-hidden auth-background min-vh-100 d-flex align-items-center justify-content-center">
     <div class="d-flex align-items-center justify-content-center w-100">
       <div class="row justify-content-center w-100">
         <div class="col-md-8 col-lg-6 col-xxl-3">
@@ -23,6 +23,7 @@
               </div>
               @enderror
               <p class="text-center">Masukkan Email dan Password yang terdaftar</p>
+              
               <form action="/login" method="POST">
                 @csrf
                 <div class="mb-3">

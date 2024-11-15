@@ -29,12 +29,15 @@ editModal.addEventListener('show.bs.modal', function (event) {
 });
 
 function copyFunction(slug) {
-  var copyText = document.getElementById("linkInput-" + slug);
-  copyText.select();
-  copyText.setSelectionRange(0, 99999); 
-  navigator.clipboard.writeText(copyText.value).then(function() {
-    alert("Copied the text: " + copyText.value);
-  }).catch(function(error) {
-    console.error("Error copying text: ", error);
-  });
+    var copyText = document.getElementById("linkInput-" + slug);
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+
+    navigator.clipboard.writeText(copyText.value).then(function() {
+        // Show the toast for copied link
+        var copyToast = new bootstrap.Toast(document.getElementById('copyToast'));
+        copyToast.show();
+    }).catch(function(error) {
+        console.error("Error copying text: ", error);
+    });
 }

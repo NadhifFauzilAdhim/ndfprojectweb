@@ -82,9 +82,4 @@ Route::middleware(['auth', 'owner', 'verified'])->group(function() {
     
 });
 
-//Storage Link
-// Route::get('generate-link', function () {
-//     \Illuminate\Support\Facades\Artisan::call('storage:link');
-//     echo "Storage Link Generated";
-// });
 

@@ -218,6 +218,13 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+body .auth-background {
+  background-image: url('../img/poster.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 hr {
   margin: 1rem 0;
   color: inherit;

@@ -4,6 +4,16 @@
         
         <div class="card">
             <div class="card-body">
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="copyToast" class="toast align-items-center text-bg-primary border-0 copy-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <i class="bi bi-clipboard-check me-2"></i> Link copied to clipboard!
+                        </div>
+                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
                 @if(session()->has('success'))
                         <div class="toast-container position-fixed top-0 end-0 p-3">
                             <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
@@ -87,7 +97,7 @@
                                 </h6>
                             </div>
                             
-                            <div class="card-body shadow-sm">
+                            <div class="card-body shadow">
                                 <h6 class="card-subtitle mb-2 ">Url Destination</h6>
                                 <p class="card-text"><a href="{{ $link->target_url }}" target="_blank" class="text-dark link-success">{{ $link->target_url }}</a></p>
                                 <div class="row mb-4 align-items-center text-center">
@@ -116,7 +126,7 @@
                                             <a class="dropdown-item text-primary bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $link->slug }}" data-target-url="{{ $link->target_url }}"  data-active="{{ $link->active }}">
                                                 <i class="bi bi-pencil-square"></i> Quick Action
                                             </a>
-                                          </li>
+                                         </li>
                                           <li>
                                             <a class="dropdown-item text-danger bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $link->slug }}">
                                             <i class="bi bi-trash-fill"></i> Delete
@@ -272,7 +282,7 @@
             chart.render();
         });
         document.addEventListener("DOMContentLoaded", function() {
-            const toastElList = [].slice.call(document.querySelectorAll('.toast'));
+            const toastElList = [].slice.call(document.querySelectorAll('.toast:not(.copy-toast)'));
             const toastList = toastElList.map(function (toastEl) {
                 return new bootstrap.Toast(toastEl);
             });

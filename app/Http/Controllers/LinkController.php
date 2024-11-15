@@ -44,7 +44,6 @@ class LinkController extends Controller
             'visithistory' => Linkvisithistory::where('link_id', $link->id)->latest()->paginate(3)
         ]);
     }
-
     public function update(Request $request, Link $link)
     {
         if ($link->user_id !== Auth::id()) {
@@ -52,16 +51,15 @@ class LinkController extends Controller
         }
         if($request->target_url != $link->target_url){
             $validatedData = $request->validate([
-                'target_url' => 'required|max:255|url',
+                'target_url' => 'required|max:255|url ',
             ]);
             $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
-        }
+         }
         
         $validatedData['active'] = $request->has('active') ? 1 : 0;
         $link->update($validatedData);
         return redirect()->back()->with('success', 'Link Berhasil Diubah');
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -75,9 +73,8 @@ class LinkController extends Controller
         $validatedData['user_id'] = Auth::id();
         Link::create($validatedData);
         return redirect()->back()->with('success', 'Link Berhasil Ditambahkan');
+
     }
-
-
     /**
      * Remove the specified resource from storage.
      */

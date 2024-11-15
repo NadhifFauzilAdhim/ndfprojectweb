@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('link_id')->constrained(
                 table : 'links',
                 indexName : 'linkvisithistories_link_id'
-            );
+            )->cascadeOnDelete();
             $table->boolean('status')->nullable();
             $table->timestamps();
         });

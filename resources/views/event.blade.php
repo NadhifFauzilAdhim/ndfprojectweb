@@ -1,5 +1,63 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
+    <div class="bloghero overlay inner-page">
+      <div class="container">
+          <div class="row align-items-center justify-content-center text-center pt-5">
+              <div class="col-lg-10 mt-5">
+                <div class="section text-center">
+                  <h1 class="text-white">Event Developer</h1>
+                  <div class="row justify-content-center no-gutters">
+                    <div class="col-3 d-flex justify-content-center align-items-center" data-aos="fade-up">
+                      <div class="count-box text-center text-primary">
+                        <i class="bi bi-newspaper text-primary fs-8"></i>
+                        <span  data-purecounter-start="0" data-purecounter-end="{{ count($data['listEvents']) }}" data-purecounter-duration="1" class="purecounter"></span>
+                        <p><strong>Event</strong></p>
+                      </div>
+                    </div>
+                    <div class="col-3 d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="100">
+                      <div class="count-box text-center text-warning">
+                        <i class="bi bi-file-arrow-up fs-8"></i>
+                        <span data-purecounter-start="0" data-purecounter-end="{{ count($upcoming) }}" data-purecounter-duration="1" class="purecounter"></span>
+                        <p><strong>Upcoming</strong></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  <div class="row justify-content-center">
+                      <div class="col-lg-6">
+                          <form
+                              action="{{ route('events.search') }}"
+                              method="GET"
+                              class="custom-form mt-4 pt-2 mb-5"
+                              role="search"
+                              data-aos="fade"
+                              data-aos-delay="300"
+                          >
+                              <div class="input-group input-group-lg">
+                                  <span class="input-group-text bi-search" id="basic-addon1"></span>
+                                  <input
+                                      name="q"
+                                      type="q"
+                                      style="z-index: 10;"
+                                      class="form-control"
+                                      id="keyword"
+                                      placeholder="Search For Article, Project or News"
+                                      aria-label="Search"
+                                      value="{{ request('q') }}"
+                                  />
+                                  <button type="submit" class="form-control">Search</button>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="video-wrap">
+         
+          <img src="{{ asset('img/banner_blog.jpg') }}" class="custom-video" alt="">
+      </div>
+  </div> 
       <div id="blog-section" class="blog">
         <!-- Share Modal -->
         <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
@@ -34,40 +92,6 @@
       </div>
         <div class="container-fluid blog py-5">
             <div class="container py-5" data-aos="fade-up">
-                <div class="row">
-                  <section id="facts" class="facts">
-                    <div class="container">
-                      <div class="section text-center">
-                        <h2>Event Developer</h2>
-                      </div>
-                      <div class="row height d-flex justify-content-center align-items-center">
-                        <div class="col-md-6">
-                          <form action="{{ route('events.search') }}" method="GET">
-                            <input type="text" class="form-control form-input" placeholder="Search anything..." name="q" value="{{ request('q') }}">
-                            <span class="left-pan"><i class="fa fa-microphone"></i></span>
-                          </form>
-                        </div>
-                      </div>
-                      <div class="row justify-content-center no-gutters">
-                        <div class="col-lg-3 col-md-3 d-flex justify-content-center align-items-center" data-aos="fade-up">
-                          <div class="count-box text-center">
-                            <i class="bi bi-newspaper"></i>
-                            <span data-purecounter-start="0" data-purecounter-end="{{ count($data['listEvents']) }}" data-purecounter-duration="1" class="purecounter"></span>
-                            <p><strong>Event</strong></p>
-                          </div>
-                        </div>
-                  
-                        <div class="col-lg-3 col-md-3 d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="100">
-                          <div class="count-box text-center">
-                            <i class="bi bi-file-arrow-up"></i>
-                            <span data-purecounter-start="0" data-purecounter-end="{{ count($upcoming) }}" data-purecounter-duration="1" class="purecounter"></span>
-                            <p><strong>Upcoming</strong></p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </section>
-                </div>
                 <div class="row g-4">
                   @forelse ($data['listEvents'] as $event)
                   <div class="col-lg-6 col-xl-4 col-md-6 ">

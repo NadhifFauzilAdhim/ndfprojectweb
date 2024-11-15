@@ -75,7 +75,7 @@
       </div>
       <div class="video-wrap">
          
-          <img src="{{ asset('img/banner.png') }}" class="custom-video" alt="">
+          <img src="{{ asset('img/banner_blog.jpg') }}" class="custom-video" alt="">
       </div>
   </div>  
   <div id="blog-section" class="blog">
