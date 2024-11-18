@@ -11,18 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('linkvisithistories', function (Blueprint $table) {
+        Schema::create('blocked_ips', function (Blueprint $table) {
             $table->id();
             $table->foreignId('link_id')->constrained(
                 table : 'links',
-                indexName : 'linkvisithistories_link_id'
+                indexName : 'blocked_ips_link_id'
             )->cascadeOnDelete();
-            $table->boolean('status')->nullable();
-            $table->ipAddress('ip_address')->nullable();
-            $table->string('user_agent')->nullable();
-            $table->string('referer_url')->nullable();
-            $table->string('location')->nullable();
-            $table->boolean('is_unique')->nullable();
+            $table->string('ip_address');
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('linkvisithistories');
+        Schema::dropIfExists('blocked_ips');
     }
 };

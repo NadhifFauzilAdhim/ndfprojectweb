@@ -196,6 +196,10 @@
   }
 }
 
+.card.same-height {
+  height: 90%; 
+}
+
 
 /* Custom */
 .linkactivecolor {

@@ -23,7 +23,7 @@
                                 <div class="d-flex">
                                     <div class="toast-body">
                                         <i class="bi bi-exclamation-diamond-fill me-3"></i> {{ session('error') }}
-                                    </div>
+                                    </div> 
                                     <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                                 </div>
                             </div>

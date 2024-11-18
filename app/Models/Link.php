@@ -21,4 +21,7 @@ class Link extends Model
     {
         return $this->hasMany(Linkvisithistory::class);
     }
+    public function blockedip(){
+        return $this->hasMany(BlockedIp::class);
+    }
 }

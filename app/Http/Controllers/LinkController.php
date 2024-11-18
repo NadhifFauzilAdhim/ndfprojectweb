@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BlockedIp;
 use App\Models\Link;
 use App\Models\Linkvisithistory;
 use Illuminate\Http\Request;
@@ -34,32 +35,97 @@ class LinkController extends Controller
         ]);
     }
 
-    public function show(Link $link){
+
+    public function show(Link $link, Request $request)
+    {
         if ($link->user_id !== Auth::id()) {
             abort(404);
         }
+
+        $filter = $request->query('filter', 'all'); // Default 'all'
+        $query = Linkvisithistory::where('link_id', $link->id);
+        if ($filter === 'unique') {
+            $query->where('is_unique', true);
+        }
+
+        $visithistory = $query->latest()->paginate(10);
+        $redirectedCount = Linkvisithistory::where('link_id', $link->id)->where('status', 1)->count();
+        $rejectedCount = Linkvisithistory::where('link_id', $link->id)->where('status', 0)->count();
+        $blockedIps = BlockedIp::where('link_id', $link->id)->get();
+        $topReferers = Linkvisithistory::where('link_id', $link->id)
+        ->select('referer_url', DB::raw('COUNT(*) as visit_count'))
+        ->groupBy('referer_url')
+        ->orderByDesc('visit_count')
+        ->limit(5) // Ambil 5 referer teratas
+        ->get();
+        
+        $visitsByDay = Linkvisithistory::where('link_id', $link->id)
+        ->whereDate('created_at', '>=', now()->subDays(7)) // Hanya ambil data 7 hari terakhir
+        ->selectRaw('DAYOFWEEK(created_at) as day, COUNT(*) as count')
+        ->groupBy('day')
+        ->pluck('count', 'day')
+        ->toArray();
+
+        $days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        $chartData = [];
+        for ($i = 1; $i <= 7; $i++) {
+            $chartData[] = $visitsByDay[$i] ?? 0; 
+        }
+
         return view('dashboard.shortlink.linkdetail', [
             'title' => 'Detail Link',
             'link' => $link,
-            'visithistory' => Linkvisithistory::where('link_id', $link->id)->latest()->paginate(3)
+            'visithistory' => $visithistory,
+            'redirectedCount' => $redirectedCount,
+            'rejectedCount' => $rejectedCount,
+            'blockedIps' => $blockedIps,
+            'filter' => $filter,
+            'chartData' => $chartData,
+            'topReferers' => $topReferers, // Tambahkan data referer teratas
         ]);
     }
+
+    
+    
     public function update(Request $request, Link $link)
     {
         if ($link->user_id !== Auth::id()) {
             abort(403);
         }
-        if($request->target_url != $link->target_url){
-            $validatedData = $request->validate([
-                'target_url' => 'required|max:255|url ',
-            ]);
-            $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
-         }
+        $oldslug = $link->slug;
         
+        if($request->has('quickedit')){
+           $validatedData = $request->validate([
+            'target_url' => 'required|max:255|url'
+           ]);
+           $validatedData['active'] = $request->has('active') ? 1 : 0;
+           $link->update($validatedData);
+           return redirect()->back()->with('success', 'Link Berhasil Diubah');
+        }
+
+        $validatedData = $request->validate([
+            'target_url' => 'required|max:255|url',
+            'slug' => 'required|max:255|unique:links,slug,'. $link->id,
+            'password' => 'nullable|min:6|max:255', 
+        ]);
+        $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
+        $validatedData['password_protected'] = $request->has('password_protected') ? 1 : 0;
+        if ($validatedData['password_protected'] && !empty($request->password)) {
+            $validatedData['password'] = bcrypt($request->password);
+        }elseif ($validatedData['password_protected'] && empty($request->password)) {
+            $validatedData['password'] = $link->password;
+        }
+        else  {
+            $validatedData['password'] = null;
+        }
         $validatedData['active'] = $request->has('active') ? 1 : 0;
         $link->update($validatedData);
+        if ($oldslug !== $link->slug) {
+            return redirect()->route('link.index')->with('success', 'Slug diperbarui. Link Berhasil Diubah');
+        }
         return redirect()->back()->with('success', 'Link Berhasil Diubah');
     }
+    
     /**
      * Store a newly created resource in storage.
      */

@@ -8,6 +8,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminPostController;
+use App\Http\Controllers\BlockedIpController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\ForgotPasswordController;
@@ -25,8 +26,10 @@ Route::get('category/{category:slug}', [HomeController::class, 'showCategory']);
 Route::get('/event', [EventController::class, 'index'])->name('event');
 Route::get('/event/{id}', [EventController::class, 'show'])->name('eventdetail');
 Route::get('/events/search', [EventController::class, 'search'])->name('events.search');
-Route::middleware('throttle:5,1')->get('/r/{link:slug}', RedirectController::class);
 //redirect route
+Route::middleware('throttle:5,1')->get('/r/{link:slug}', RedirectController::class);
+Route::post('/r/{link:slug}', RedirectController::class)->name('link.redirect');
+Route::get('/r/{link:slug}', RedirectController::class)->name('link.access');
 
 // Authentication routes
 Route::middleware('guest')->group(function() {
@@ -69,6 +72,11 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::delete('/commentReply/{reply}', [CommentController::class, 'destroyReply'])->name('commentReply.destroy');
     // Link Redirected
     Route::resource('/dashboard/link', LinkController::class)->only(['index', 'store', 'show', 'destroy','update']);
+    // Blocked IPs
+    Route::post('/block-ip', [BlockedIpController::class, 'block'])->name('block.ip');
+    Route::delete('/unblock-ip/{id}', [BlockedIpController::class, 'unblock'])->name('unblock.ip');
+
+  
 });
 // Dashboard Admin routes
 Route::middleware(['auth', 'admin', 'verified'])->group(function() {

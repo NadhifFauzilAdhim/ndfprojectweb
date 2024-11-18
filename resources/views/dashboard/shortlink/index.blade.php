@@ -89,11 +89,11 @@
                         </div>
                     </div>
                     @forelse ($links as $link)
-                    <div class="col-md-4">
+                    {{-- <div class="col-md-4">
                         <div class="card mb-4">
                             <div class="card-header @if($link->active) linkactivecolor @else linkinactivecolor @endif" >
-                                <h6 class="card-title">
-                                    <input type="text" value="{{ url('r/' . $link->slug) }}" id="linkInput-{{ $link->slug }}" class="form-control text-dark shadow-sm bg-white" readonly>
+                                <h6 class="card-title d-flex align-items-center gap-2">
+                                    <input type="text" value="{{ url('r/' . $link->slug) }}" id="linkInput-{{ $link->slug }}" class="form-control text-dark shadow-sm bg-white" readonly> {{ $link->password_protected ? '🔒' : '🔓' }} 
                                 </h6>
                             </div>
                             
@@ -101,13 +101,17 @@
                                 <h6 class="card-subtitle mb-2 ">Url Destination</h6>
                                 <p class="card-text"><a href="{{ $link->target_url }}" target="_blank" class="text-dark link-success">{{ $link->target_url }}</a></p>
                                 <div class="row mb-4 align-items-center text-center">
-                                    <div class="col-6">
-                                        <h6 class="card-subtitle mb-2 "><i class="bi bi-calendar-check me-1"></i>Created</h6>
+                                    <div class="col-4">
+                                        <h6 class="card-subtitle mb-2 "><i class="bi bi-calendar-check-fill me-1 text-info"></i></i>Created</h6>
                                         <p class="card-text">{{ $link->created_at }}</p>
                                     </div>
-                                    <div class="col-6">
-                                        <h6 class="card-subtitle mb-2 "><i class="bi bi-box-arrow-up-right me-1"></i>Visits</h6>
-                                        <p class="card-text">{{ $link->visits }}</p>
+                                    <div class="col-4">
+                                        <h6 class="card-subtitle mb-2 "><i class="bi bi-cursor-fill me-1 text-info"></i></i>Visits</h6>
+                                        <p class="card-text pb-3">{{ $link->visits }}</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6 class="card-subtitle mb-2 "><i class="bi bi-people-fill me-1 text-info"></i></i>Unique</h6>
+                                        <p class="card-text pb-3">{{ $link->unique_visits }}</p>
                                     </div>
                                 </div>
                                 
@@ -138,7 +142,59 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
+                    <div class="col-md-4">
+                        <div class="card">
+                          <div class="card-header @if($link->active) linkactivecolor @else linkinactivecolor @endif">
+                            <h6 class="card-title d-flex align-items-center gap-2">
+                                <input type="text" value="{{ url('r/' . $link->slug) }}" id="linkInput-{{ $link->slug }}" class="form-control text-dark shadow-sm bg-white" readonly> {{ $link->password_protected ? '🔒' : '🔓' }} 
+                            </h6>
+                          </div>
+                          <div class="card-body">
+                            <h6 class="card-subtitle mb-2 ">Url Destination</h6>
+                                <p class="card-text"><a href="{{ $link->target_url }}" target="_blank" class="text-dark link-success">{{ $link->target_url }}</a></p>
+                                <div class="row mb-4 align-items-center text-center">
+                                    <div class="col-4">
+                                        <h6 class="card-subtitle mb-2 "><i class="bi bi-calendar-check-fill me-1 text-info"></i></i>Created</h6>
+                                        <p class="card-text">{{ $link->created_at }}</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6 class="card-subtitle mb-2 "><i class="bi bi-cursor-fill me-1 text-info"></i></i>Visits</h6>
+                                        <p class="card-text pb-3">{{ $link->visits }}</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6 class="card-subtitle mb-2 "><i class="bi bi-people-fill me-1 text-info"></i></i>Unique</h6>
+                                        <p class="card-text pb-3">{{ $link->unique_visits }}</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-warning btn-sm dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                          Actions
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li>
+                                                <a class="dropdown-item text-primary bg-transparent" href="/dashboard/link/{{ $link->slug }}">
+                                                    <i class="bi bi-card-checklist"></i> <strong>Detail</strong> 
+                                                </a>
+                                              </li>
+                                          <li>
+                                            <a class="dropdown-item text-primary bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $link->slug }}" data-target-url="{{ $link->target_url }}"  data-active="{{ $link->active }}">
+                                                <i class="bi bi-pencil-square"></i> Quick Action
+                                            </a>
+                                         </li>
+                                          <li>
+                                            <a class="dropdown-item text-danger bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $link->slug }}">
+                                            <i class="bi bi-trash-fill"></i> Delete
+                                            </a>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="copyFunction('{{ $link->slug }}')"><i class="bi bi-copy me-1"></i>Copy Link</button>
+                                </div>
+                          </div>
+                        </div>
+                      </div>
                     @empty
                     <div class="text-center">
                         <h4 class="home__title">Nampaknya Belum Ada Link &#129300;</h4>
@@ -194,6 +250,7 @@
                             <div class="form-check form-switch mb-5">
                                 
                                 <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="active" value="1">
+                                <input type="hidden" name="quickedit" value="1">
                                 <label class="form-check-label" for="flexSwitchCheckChecked" id="switchLabel">Active</label>
                             </div>
                             <button type="submit" class="btn btn-primary">Save Changes</button>

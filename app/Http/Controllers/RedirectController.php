@@ -1,14 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Link;
 use App\Models\Linkvisithistory;
+use App\Models\BlockedIp; // Pastikan sudah ada model BlockedIp
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class RedirectController extends Controller
 {
-    public function __invoke(Link $link)
+    public function __invoke(Request $request, Link $link)
     {
+        // Periksa apakah link aktif
         if (!$link->active) {
             return view('redirect.inactive', [
                 'title' => "Link Inactive",
@@ -16,20 +20,76 @@ class RedirectController extends Controller
             ]);
         }
 
-        $sessionKey = 'visited_link_' . $link->id;
+        // Cek apakah IP diblokir
+        $ipAddress = $request->ip();
+        $blockedIp = BlockedIp::where('link_id', $link->id)
+            ->where('ip_address', $ipAddress)
+            ->exists();
         
-        if (!session()->has($sessionKey)) {
-            Linkvisithistory::create([
-                'link_id' => $link->id,
-                'status' => true,
+        if ($blockedIp) {
+            return view('redirect.ipblocked', [
+                'title' => "Access Denied",
+                'message' => 'Your IP has been blocked from accessing this link.',
             ]);
-            $link->increment('visits');
-            session([$sessionKey => true]); 
         }
-        
+
+        // Proses password protection
+        if ($link->password_protected) {
+            $password = $request->input('password');
+            if (!$password) {
+                return view('redirect.passwordreq', [
+                    'title' => "Password Protected",
+                    'message' => 'This link is password protected.',
+                    'linkSlug' => $link->slug,
+                ]);
+            }
+
+            // Verifikasi password
+            if (!Hash::check($password, $link->password)) {
+                return redirect()->back()->withErrors(['password' => 'Incorrect password.']);
+            }
+        }
+
+        // Proses pencatatan kunjungan
+        $userAgent = $request->header('User-Agent');
+        $refererUrl = $request->header('Referer');
+        $location = $this->getLocationFromIp($ipAddress);
+
+        $isUnique = !Linkvisithistory::where('link_id', $link->id)
+            ->where('ip_address', $ipAddress)
+            ->where('user_agent', $userAgent)
+            ->exists();
+
+        Linkvisithistory::create([
+            'link_id' => $link->id,
+            'status' => true,
+            'ip_address' => $ipAddress,
+            'user_agent' => $userAgent,
+            'referer_url' => $refererUrl,
+            'location' => $location,
+            'is_unique' => $isUnique,
+        ]);
+
+        if ($isUnique) {
+            $link->increment('unique_visits');
+        }
+
+        $link->increment('visits');
+
         return view('redirect.redirecting', ['targetUrl' => $link->target_url]);
     }
 
-
-    
+    private function getLocationFromIp($ip)
+    {
+        try {
+            $response = file_get_contents("http://ip-api.com/json/{$ip}");
+            $data = json_decode($response, true);
+            if ($data['status'] === 'success') {
+                return "{$data['city']}, {$data['country']}";
+            }
+        } catch (\Exception $e) {
+            return 'Unknown Location';
+        }
+        return 'Unknown Location';
+    }
 }
