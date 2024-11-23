@@ -15,6 +15,7 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\RedirectController;
+use App\Http\Controllers\TodoController;
 
 
 // Public routes
@@ -75,8 +76,10 @@ Route::middleware(['auth', 'verified'])->group(function() {
     // Blocked IPs
     Route::post('/block-ip', [BlockedIpController::class, 'block'])->name('block.ip');
     Route::delete('/unblock-ip/{id}', [BlockedIpController::class, 'unblock'])->name('unblock.ip');
-
-  
+    // Todo List
+    Route::resource('/dashboard/todolist', TodoController::class);
+    Route::put('/dashboard/todolist/{id}', [TodoController::class, 'update'])->name('todolist.update');
+    Route::delete('/dashboard/todolist/{id}', [TodoController::class, 'destroy']);
 });
 // Dashboard Admin routes
 Route::middleware(['auth', 'admin', 'verified'])->group(function() {

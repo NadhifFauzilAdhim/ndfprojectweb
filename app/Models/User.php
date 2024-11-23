@@ -70,4 +70,8 @@ class User extends Authenticatable implements MustVerifyEmail
     public function link(){
         return $this->hasMany(Link::class, 'user_id');
     }
+
+    public function todo(){
+        return $this->hasMany(Todo::class, 'user_id');
+    }
 }

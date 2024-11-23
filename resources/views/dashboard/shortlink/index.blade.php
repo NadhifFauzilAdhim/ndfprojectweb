@@ -54,27 +54,33 @@
                     </div>
                     <div class="col-lg-12">
                         <div class="card-body">
-                           
-                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
-                                <i class="bi bi-link-45deg fs-5"></i>Create New
+                            <!-- Button to toggle form -->
+                            <button class="btn btn-primary d-flex align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
+                                <i class="bi bi-link-45deg fs-5 me-2"></i>Create New
                             </button>
-                            <div class="collapse mt-3" id="collapseForm">
-                                <div class="card card-body">
+                        
+                            <!-- Collapsible form -->
+                            <div class="collapse mt-4" id="collapseForm">
+                                <div class="card card-body shadow-sm border-0">
                                     <form action="/dashboard/link" method="POST">
                                         @csrf
-                                        <div class="mb-3">
-                                            <label for="url_target" class="form-label">Url Destination</label>
-                                            <input type="text" class="form-control @error('target_url') is-invalid @enderror shadow-sm" id="target_url" name="target_url" value="{{ old('target_url') }}">
+                                        <!-- URL Destination Field -->
+                                        <div class="mb-4">
+                                            <label for="url_target" class="form-label fw-bold">URL Destination</label>
+                                            <input type="text" class="form-control @error('target_url') is-invalid @enderror shadow-sm" id="target_url" name="target_url" placeholder="https://example.com" value="{{ old('target_url') }}">
                                             @error('target_url')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                             @enderror
                                         </div>
-                                        <div class="mb-3">
+                        
+                                        <!-- Shortened Link Field -->
+                                        <div class="mb-4">
+                                            <label for="short_link" class="form-label fw-bold">Shortened Link</label>
                                             <div class="input-group">
-                                                <span class="input-group-text" id="basic-addon3">{{ url('r/') }}</span>
-                                                <input type="text" class="form-control @error('slug') is-invalid @enderror shadow-sm" id="short_link" name="slug" value="{{ old('slug') }}" aria-describedby="basic-addon3 basic-addon4">
+                                                <span class="input-group-text bg-light text-secondary" id="basic-addon3">{{ url('r/') }}</span>
+                                                <input type="text" class="form-control @error('slug') is-invalid @enderror shadow-sm" id="short_link" name="slug" placeholder="custom-slug" value="{{ old('slug') }}" aria-describedby="basic-addon3">
                                                 @error('slug')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -82,7 +88,13 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Create</button>
+                        
+                                        <!-- Submit Button -->
+                                        <div class="text-end">
+                                            <button type="submit" class="btn btn-primary px-4">
+                                                <i class="bi bi-check-circle me-2"></i>Create
+                                            </button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>

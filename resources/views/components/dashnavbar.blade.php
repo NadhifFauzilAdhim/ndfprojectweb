@@ -59,11 +59,19 @@
                 <iconify-icon icon="solar:link-bold-duotone" class="fs-6"></iconify-icon>
               </span>
               <span class="hide-menu">Shorten Link
+            </span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/dashboard/todolist" aria-expanded="false">
+              <span>
+                <iconify-icon icon="solar:archive-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
+              </span>
+              <span class="hide-menu">To-Do List
                 <span class="badge bg-success d-inline-flex align-items-center justify-content-center ms-2"><small>New</small></span>
             </span>
             </a>
           </li>
-          
           @can('admin')
           <li class="nav-small-cap">
             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4" class="fs-6"></iconify-icon>
