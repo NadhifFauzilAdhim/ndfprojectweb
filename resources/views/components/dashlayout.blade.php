@@ -7,8 +7,10 @@
   <link rel="shortcut icon" type="image/png" href="{{ asset('img/favicon.ico') }}" />
   <link rel="stylesheet" href="{{ asset('css/dash.css') }}" />
   <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
-  <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
+
+  <!-- Summernote CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+  
   <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
   <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
   <script type="text/javascript">
@@ -39,6 +41,7 @@
       {{ $slot }}
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="{{ asset('vendor/apexcharts/dist/apexcharts.min.js') }}"></script>
   <script src="{{ asset('js/dashjs/sidebarmenu.js') }}"></script>
@@ -69,6 +72,8 @@
       document.getElementById('spinner').style.display = 'none';
     });
   </script>
+  
+ 
 </body>
 
 </html>

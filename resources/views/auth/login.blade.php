@@ -29,7 +29,7 @@
                 <div class="mb-3">
                   <label class="form-label" for="email">Email</label>
                   <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                    placeholder="Email address" autofocus required />
+                    placeholder="Email address" value="{{ old('email') }}" autofocus required />
                   @error('email')
                   <div class="invalid-feedback">
                     {{ $message }}
@@ -43,14 +43,11 @@
                   <div id="forgotpassword" class="form-text"><a href="/forgot-password" class="text-danger">Lupa
                       Password?</a></div>
                 </div>
-                <div class="d-flex align-items-center justify-content-between mb-4">
-                  <div class="form-check">
-                    <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" checked>
-                    <label class="form-check-label text-dark" for="flexCheckChecked">
-                      Remember this Device
-                    </label>
-                  </div>
-                  <a class="text-primary fw-bold" href="/forgot-password">Forgot Password ?</a>
+                <div class="form-check mb-4">
+                  <input class="form-check-input primary" type="checkbox" id="flexCheckChecked" name="remember">
+                  <label class="form-check-label text-dark" for="flexCheckChecked">
+                    Remember this Device
+                  </label>
                 </div>
                 <button type="submit" class="btn btn-primary w-100 py-2 fs-4 mb-4">Log In</button>
                 <div class="d-flex align-items-center justify-content-center">

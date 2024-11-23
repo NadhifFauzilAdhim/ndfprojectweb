@@ -17,6 +17,7 @@
       </div>
   </div>
   <div class="bloghero overlay inner-page">
+    <img src="{{ asset('img/blob.svg') }}" alt="" class="img-fluid blob">
       <div class="container">
           <div class="row align-items-center justify-content-center text-center pt-5">
               <div class="col-lg-10 mt-5">
@@ -30,7 +31,7 @@
                   @elseif($type == 'all')
                      <div class="row align-items-center justify-content-center">
                       <div class="col-lg-6">
-                        <img src="{{ asset('img/project/ndfproject-logo-white.png') }}" alt="" class="img-fluid ">
+                        <img src="{{ asset('img/project/ndfproject-logo-white.png') }}" alt="" class="img-fluid">
                       </div>
                      </div>
                       
@@ -73,10 +74,7 @@
               </div>
           </div>
       </div>
-      <div class="video-wrap">
-         
-          <img src="{{ asset('img/banner_blog.jpg') }}" class="custom-video" alt="">
-      </div>
+      
   </div>  
   <div id="blog-section" class="blog">
       <div class="container-fluid blog py-5">

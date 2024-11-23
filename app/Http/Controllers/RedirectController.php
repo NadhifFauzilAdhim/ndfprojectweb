@@ -12,7 +12,6 @@ class RedirectController extends Controller
 {
     public function __invoke(Request $request, Link $link)
     {
-        // Periksa apakah link aktif
         if (!$link->active) {
             return view('redirect.inactive', [
                 'title' => "Link Inactive",
@@ -20,20 +19,14 @@ class RedirectController extends Controller
             ]);
         }
 
-        // Cek apakah IP diblokir
         $ipAddress = $request->ip();
         $blockedIp = BlockedIp::where('link_id', $link->id)
             ->where('ip_address', $ipAddress)
             ->exists();
         
         if ($blockedIp) {
-            return view('redirect.ipblocked', [
-                'title' => "Access Denied",
-                'message' => 'Your IP has been blocked from accessing this link.',
-            ]);
+          abort(403, 'Access forbidden');
         }
-
-        // Proses password protection
         if ($link->password_protected) {
             $password = $request->input('password');
             if (!$password) {
@@ -43,14 +36,11 @@ class RedirectController extends Controller
                     'linkSlug' => $link->slug,
                 ]);
             }
-
-            // Verifikasi password
             if (!Hash::check($password, $link->password)) {
                 return redirect()->back()->withErrors(['password' => 'Incorrect password.']);
             }
         }
 
-        // Proses pencatatan kunjungan
         $userAgent = $request->header('User-Agent');
         $refererUrl = $request->header('Referer');
         $location = $this->getLocationFromIp($ipAddress);

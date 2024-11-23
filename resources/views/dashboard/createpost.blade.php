@@ -72,16 +72,14 @@
                             </div>
   
                             <div class="mb-3">
-                                <label for="x" class="form-label">Tulis Post Anda</label>
+                                <label for="summernote" class="form-label">Tulis Post Anda</label>
+                                <textarea id="summernote" name="body" class="form-control">
+                                    {{ old('body') }}
+                                </textarea>
                                 @error('body')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
+                                <div class="alert alert-danger" role="alert">{{ $message }}</div>
                                 @enderror
-                                <input id="x" type="hidden" name="body" value="{{ old('body') }}">
-                                <trix-editor input="x"></trix-editor>
                             </div>
-  
                             <button type="submit" class="btn btn-primary">Create Post</button>
                         </form>
                     </div>

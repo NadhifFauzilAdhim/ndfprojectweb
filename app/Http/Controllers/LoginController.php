@@ -20,13 +20,12 @@ class LoginController extends Controller
             'email' => 'required|email:dns',
             'password' => 'required',
         ]);
- 
-        
-        if (Auth::attempt($credentials)) {
+        $remember = $request->has('remember');
+        if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
             return redirect()->intended('/');
         }
- 
+
         return back()->withErrors([
             'loginfeedback' => 'Email dan Password salah',
         ])->onlyInput('email');

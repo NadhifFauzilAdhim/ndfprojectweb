@@ -299,7 +299,7 @@
                                         <ul class="list-group list-group-flush">
                                             @foreach($blockedIps as $ip)
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <span>{{ $ip->ip_address }}</span>
+                                                    <input type="text" class="form-control me" value="{{ $ip->ip_address }}" readonly>
                                                     <form method="POST" action="{{ route('unblock.ip', $ip->id) }}">
                                                         @csrf
                                                         @method('DELETE')

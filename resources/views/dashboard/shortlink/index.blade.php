@@ -89,82 +89,37 @@
                         </div>
                     </div>
                     @forelse ($links as $link)
-                    {{-- <div class="col-md-4">
-                        <div class="card mb-4">
-                            <div class="card-header @if($link->active) linkactivecolor @else linkinactivecolor @endif" >
-                                <h6 class="card-title d-flex align-items-center gap-2">
-                                    <input type="text" value="{{ url('r/' . $link->slug) }}" id="linkInput-{{ $link->slug }}" class="form-control text-dark shadow-sm bg-white" readonly> {{ $link->password_protected ? '🔒' : '🔓' }} 
-                                </h6>
-                            </div>
-                            
-                            <div class="card-body shadow">
-                                <h6 class="card-subtitle mb-2 ">Url Destination</h6>
-                                <p class="card-text"><a href="{{ $link->target_url }}" target="_blank" class="text-dark link-success">{{ $link->target_url }}</a></p>
-                                <div class="row mb-4 align-items-center text-center">
-                                    <div class="col-4">
-                                        <h6 class="card-subtitle mb-2 "><i class="bi bi-calendar-check-fill me-1 text-info"></i></i>Created</h6>
-                                        <p class="card-text">{{ $link->created_at }}</p>
-                                    </div>
-                                    <div class="col-4">
-                                        <h6 class="card-subtitle mb-2 "><i class="bi bi-cursor-fill me-1 text-info"></i></i>Visits</h6>
-                                        <p class="card-text pb-3">{{ $link->visits }}</p>
-                                    </div>
-                                    <div class="col-4">
-                                        <h6 class="card-subtitle mb-2 "><i class="bi bi-people-fill me-1 text-info"></i></i>Unique</h6>
-                                        <p class="card-text pb-3">{{ $link->unique_visits }}</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div class="dropdown">
-                                        <button class="btn btn-outline-warning btn-sm dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                          Actions
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <li>
-                                                <a class="dropdown-item text-primary bg-transparent" href="/dashboard/link/{{ $link->slug }}">
-                                                    <i class="bi bi-card-checklist"></i> <strong>Detail</strong> 
-                                                </a>
-                                              </li>
-                                          <li>
-                                            <a class="dropdown-item text-primary bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $link->slug }}" data-target-url="{{ $link->target_url }}"  data-active="{{ $link->active }}">
-                                                <i class="bi bi-pencil-square"></i> Quick Action
-                                            </a>
-                                         </li>
-                                          <li>
-                                            <a class="dropdown-item text-danger bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $link->slug }}">
-                                            <i class="bi bi-trash-fill"></i> Delete
-                                            </a>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    <button class="btn btn-sm btn-outline-secondary" onclick="copyFunction('{{ $link->slug }}')"><i class="bi bi-copy me-1"></i>Copy Link</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
                     <div class="col-md-4">
-                        <div class="card">
+                        <div class="card shadow">
                           <div class="card-header @if($link->active) linkactivecolor @else linkinactivecolor @endif">
                             <h6 class="card-title d-flex align-items-center gap-2">
-                                <input type="text" value="{{ url('r/' . $link->slug) }}" id="linkInput-{{ $link->slug }}" class="form-control text-dark shadow-sm bg-white" readonly> {{ $link->password_protected ? '🔒' : '🔓' }} 
+                                <div class="input-group ">
+                                    <input type="text" class="form-control text-dark shadow-sm bg-white" aria-label="link" id="linkInput-{{ $link->slug }}" value="{{ url('r/' . $link->slug) }}">
+                                    <button class="btn btn-sm btn-success"  id="button-addon2" onclick="copyFunction('{{ $link->slug }}')"><i class="bi bi-copy me-1"></i></button>
+                                </div>
                             </h6>
                           </div>
                           <div class="card-body">
-                            <h6 class="card-subtitle mb-2 ">Url Destination</h6>
+                                <h6 class="card-subtitle mb-2 "> Url Destination</h6>
                                 <p class="card-text"><a href="{{ $link->target_url }}" target="_blank" class="text-dark link-success">{{ $link->target_url }}</a></p>
-                                <div class="row mb-4 align-items-center text-center">
-                                    <div class="col-4">
-                                        <h6 class="card-subtitle mb-2 "><i class="bi bi-calendar-check-fill me-1 text-info"></i></i>Created</h6>
-                                        <p class="card-text">{{ $link->created_at }}</p>
+                                <div class="row mb-4">
+                                    <div class="col-12 mb-1">
+                                        <h6 class="card-text d-flex align-items-center">
+                                            <iconify-icon icon="solar:archive-down-minimlistic-line-duotone" class="fs-6 me-2"></iconify-icon>
+                                            Created {{ $link->created_at }}
+                                        </h6>
                                     </div>
-                                    <div class="col-4">
-                                        <h6 class="card-subtitle mb-2 "><i class="bi bi-cursor-fill me-1 text-info"></i></i>Visits</h6>
-                                        <p class="card-text pb-3">{{ $link->visits }}</p>
+                                    <div class="col-12 mb-1">
+                                        <h6 class="card-text d-flex align-items-center">
+                                            <iconify-icon icon="solar:chart-square-linear" class="fs-6 me-2"></iconify-icon>
+                                            <b class="me-1">{{ $link->visits }}</b>Visits  <b class="mx-1">{{ $link->unique_visits }}</b> Unique
+                                        </h6>
                                     </div>
-                                    <div class="col-4">
-                                        <h6 class="card-subtitle mb-2 "><i class="bi bi-people-fill me-1 text-info"></i></i>Unique</h6>
-                                        <p class="card-text pb-3">{{ $link->unique_visits }}</p>
+                                    <div class="col-12">
+                                        <h6 class="card-text d-flex align-items-center">
+                                            <iconify-icon icon="solar:checklist-minimalistic-line-duotone" class="fs-6 me-2"></iconify-icon>
+                                            <b class="me-1">{{ $link->unique_visits }}</b> Unique
+                                        </h6>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between">

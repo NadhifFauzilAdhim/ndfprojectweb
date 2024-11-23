@@ -63,6 +63,7 @@
             </span>
             </a>
           </li>
+          
           @can('admin')
           <li class="nav-small-cap">
             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4" class="fs-6"></iconify-icon>

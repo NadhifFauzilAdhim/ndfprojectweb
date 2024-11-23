@@ -39,10 +39,10 @@ class LinkController extends Controller
     public function show(Link $link, Request $request)
     {
         if ($link->user_id !== Auth::id()) {
-            abort(404);
+            abort(403);
         }
 
-        $filter = $request->query('filter', 'all'); // Default 'all'
+        $filter = $request->query('filter', 'all');
         $query = Linkvisithistory::where('link_id', $link->id);
         if ($filter === 'unique') {
             $query->where('is_unique', true);
@@ -56,11 +56,11 @@ class LinkController extends Controller
         ->select('referer_url', DB::raw('COUNT(*) as visit_count'))
         ->groupBy('referer_url')
         ->orderByDesc('visit_count')
-        ->limit(5) // Ambil 5 referer teratas
+        ->limit(5) 
         ->get();
         
         $visitsByDay = Linkvisithistory::where('link_id', $link->id)
-        ->whereDate('created_at', '>=', now()->subDays(7)) // Hanya ambil data 7 hari terakhir
+        ->whereDate('created_at', '>=', now()->subDays(7)) 
         ->selectRaw('DAYOFWEEK(created_at) as day, COUNT(*) as count')
         ->groupBy('day')
         ->pluck('count', 'day')
@@ -81,7 +81,7 @@ class LinkController extends Controller
             'blockedIps' => $blockedIps,
             'filter' => $filter,
             'chartData' => $chartData,
-            'topReferers' => $topReferers, // Tambahkan data referer teratas
+            'topReferers' => $topReferers,
         ]);
     }
 
@@ -93,7 +93,7 @@ class LinkController extends Controller
             abort(403);
         }
         $oldslug = $link->slug;
-        
+
         if($request->has('quickedit')){
            $validatedData = $request->validate([
             'target_url' => 'required|max:255|url'
