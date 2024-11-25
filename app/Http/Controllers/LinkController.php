@@ -19,8 +19,7 @@ class LinkController extends Controller
         $links = Link::where('user_id', Auth::id())->latest()->paginate(6);
         $visits = Linkvisithistory::whereHas('link', function ($query) {
                 $query->where('user_id', Auth::id());
-            })
-            ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
+            })->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
             ->groupBy('day')
             ->orderBy('day', 'asc')
             ->get();
@@ -34,20 +33,16 @@ class LinkController extends Controller
             'visitData' => array_values($visitData), 
         ]);
     }
-
-
     public function show(Link $link, Request $request)
     {
         if ($link->user_id !== Auth::id()) {
             abort(403);
         }
-
         $filter = $request->query('filter', 'all');
         $query = Linkvisithistory::where('link_id', $link->id);
         if ($filter === 'unique') {
             $query->where('is_unique', true);
         }
-
         $visithistory = $query->latest()->paginate(10);
         $redirectedCount = Linkvisithistory::where('link_id', $link->id)->where('status', 1)->count();
         $rejectedCount = Linkvisithistory::where('link_id', $link->id)->where('status', 0)->count();
@@ -84,9 +79,6 @@ class LinkController extends Controller
             'topReferers' => $topReferers,
         ]);
     }
-
-    
-    
     public function update(Request $request, Link $link)
     {
         if ($link->user_id !== Auth::id()) {
@@ -114,13 +106,12 @@ class LinkController extends Controller
             $validatedData['password'] = bcrypt($request->password);
         }elseif ($validatedData['password_protected'] && empty($request->password)) {
             $validatedData['password'] = $link->password;
-        }
-        else  {
+        }else  {
             $validatedData['password'] = null;
         }
         $validatedData['active'] = $request->has('active') ? 1 : 0;
         $link->update($validatedData);
-        if ($oldslug !== $link->slug) {
+        if($oldslug !== $link->slug) {
             return redirect()->route('link.index')->with('success', 'Slug diperbarui. Link Berhasil Diubah');
         }
         return redirect()->back()->with('success', 'Link Berhasil Diubah');
@@ -139,7 +130,6 @@ class LinkController extends Controller
         $validatedData['user_id'] = Auth::id();
         Link::create($validatedData);
         return redirect()->back()->with('success', 'Link Berhasil Ditambahkan');
-
     }
     /**
      * Remove the specified resource from storage.

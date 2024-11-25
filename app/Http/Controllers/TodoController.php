@@ -14,9 +14,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        // Fetch all todos grouped by status
-        $todos = Todo::all();
-
+        $todos = Todo::where('user_id', Auth::id())->get();
         return view('dashboard.todo.index', [
             'title' => 'To-Do List',
             'todos' => $todos,
@@ -28,7 +26,6 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-       
         try {
             $request->validate([
                 'title' => 'required|string|max:255',
@@ -38,9 +35,6 @@ class TodoController extends Controller
                 'due_date' => 'nullable|date',
                 'color' => 'nullable|string',
             ]);
-            
-
-            // Simpan data ke database
             $todo = Todo::create([
                 'title' => $request->title,
                 'description' => $request->description,
@@ -50,11 +44,8 @@ class TodoController extends Controller
                 'color' => $request->color,
                 'user_id' => Auth::id(), 
             ]);
-
-            // Kirim respons sukses
             return response()->json(['success' => true, 'todo' => $todo], 201);
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
             return response()->json(['success' => false, 'message' => 'Internal Server Error'], 500);
         }
     }

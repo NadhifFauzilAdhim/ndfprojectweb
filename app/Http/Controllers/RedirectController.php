@@ -23,7 +23,11 @@ class RedirectController extends Controller
         $blockedIp = BlockedIp::where('link_id', $link->id)
             ->where('ip_address', $ipAddress)
             ->exists();
-        
+            
+        $userAgent = $request->header('User-Agent');
+        $refererUrl = $request->header('Referer');
+        $location = $this->getLocationFromIp($ipAddress);
+
         if ($blockedIp) {
           abort(403, 'Access forbidden');
         }
@@ -37,34 +41,11 @@ class RedirectController extends Controller
                 ]);
             }
             if (!Hash::check($password, $link->password)) {
+                $this->recordVisit($link,false, $ipAddress, $userAgent, $refererUrl, $location);
                 return redirect()->back()->withErrors(['password' => 'Incorrect password.']);
             }
         }
-
-        $userAgent = $request->header('User-Agent');
-        $refererUrl = $request->header('Referer');
-        $location = $this->getLocationFromIp($ipAddress);
-
-        $isUnique = !Linkvisithistory::where('link_id', $link->id)
-            ->where('ip_address', $ipAddress)
-            ->where('user_agent', $userAgent)
-            ->exists();
-
-        Linkvisithistory::create([
-            'link_id' => $link->id,
-            'status' => true,
-            'ip_address' => $ipAddress,
-            'user_agent' => $userAgent,
-            'referer_url' => $refererUrl,
-            'location' => $location,
-            'is_unique' => $isUnique,
-        ]);
-
-        if ($isUnique) {
-            $link->increment('unique_visits');
-        }
-
-        $link->increment('visits');
+        $this->recordVisit($link,true, $ipAddress, $userAgent, $refererUrl, $location);
 
         return view('redirect.redirecting', ['targetUrl' => $link->target_url]);
     }
@@ -81,5 +62,29 @@ class RedirectController extends Controller
             return 'Unknown Location';
         }
         return 'Unknown Location';
+    }
+
+    private function recordVisit($link, $status, $ipAddress, $userAgent, $refererUrl, $location)
+    {
+        $isUnique = !Linkvisithistory::where('link_id', $link->id)
+            ->where('ip_address', $ipAddress)
+            ->where('user_agent', $userAgent)
+            ->exists();
+
+        Linkvisithistory::create([
+            'link_id' => $link->id,
+            'status' => $status,
+            'ip_address' => $ipAddress,
+            'user_agent' => $userAgent,
+            'referer_url' => $refererUrl,
+            'location' => $location,
+            'is_unique' => $isUnique,
+        ]);
+
+        if ($isUnique) {
+            $link->increment('unique_visits');
+        }
+
+        $link->increment('visits');
     }
 }

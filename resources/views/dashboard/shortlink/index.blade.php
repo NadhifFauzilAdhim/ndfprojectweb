@@ -100,9 +100,30 @@
                             </div>
                         </div>
                     </div>
+                    <!-- QR Code Modal -->
+                    <div class="modal fade" id="qrCodeModal" tabindex="-1" aria-labelledby="qrCodeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="qrCodeModalLabel">QR Code</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <div id="qrCodeContainer">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                          </div>
+                                    </div>
+                                    <button id="downloadQrCode" class="btn btn-primary mt-3">Download QR Code</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
                     @forelse ($links as $link)
-                    <div class="col-md-4">
-                        <div class="card shadow">
+                    <div class="col-md-4 ">
+                        <div class="card shadow card-hover">
                           <div class="card-header @if($link->active) linkactivecolor @else linkinactivecolor @endif">
                             <h6 class="card-title d-flex align-items-center gap-2">
                                 <div class="input-group ">
@@ -113,26 +134,27 @@
                           </div>
                           <div class="card-body">
                                 <h6 class="card-subtitle mb-2 "> Url Destination</h6>
-                                <p class="card-text"><a href="{{ $link->target_url }}" target="_blank" class="text-dark link-success">{{ $link->target_url }}</a></p>
+                                <p class="card-text"><a href="{{ $link->target_url }}" target="_blank" class="text-dark link-success">{{ Str::limit(strip_tags($link->target_url), 80) }}</a></p>
                                 <div class="row mb-4">
                                     <div class="col-12 mb-1">
-                                        <h6 class="card-text d-flex align-items-center">
-                                            <iconify-icon icon="solar:archive-down-minimlistic-line-duotone" class="fs-6 me-2"></iconify-icon>
+                                        <p class="card-text d-flex align-items-center">
+                                            <iconify-icon icon="solar:archive-down-minimlistic-line-duotone" class="fs-6 me-2 "></iconify-icon>
                                             Created {{ $link->created_at }}
-                                        </h6>
+                                        </p>
                                     </div>
                                     <div class="col-12 mb-1">
-                                        <h6 class="card-text d-flex align-items-center">
+                                        <p class="card-text d-flex align-items-center">
                                             <iconify-icon icon="solar:chart-square-linear" class="fs-6 me-2"></iconify-icon>
                                             <b class="me-1">{{ $link->visits }}</b>Visits  <b class="mx-1">{{ $link->unique_visits }}</b> Unique
-                                        </h6>
+                                        </p>
                                     </div>
                                     <div class="col-12">
-                                        <h6 class="card-text d-flex align-items-center">
+                                        <p class="card-text d-flex align-items-center">
                                             <iconify-icon icon="solar:checklist-minimalistic-line-duotone" class="fs-6 me-2"></iconify-icon>
                                             <b class="me-1">{{ $link->unique_visits }}</b> Unique
-                                        </h6>
+                                        </p>
                                     </div>
+                            
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <div class="dropdown">
@@ -144,7 +166,12 @@
                                                 <a class="dropdown-item text-primary bg-transparent" href="/dashboard/link/{{ $link->slug }}">
                                                     <i class="bi bi-card-checklist"></i> <strong>Detail</strong> 
                                                 </a>
-                                              </li>
+                                            </li>
+                                            <li>
+                                                <button class="dropdown-item text-primary bg-transparent"   data-bs-toggle="modal" data-bs-target="#qrCodeModal" onclick="showQRCode('{{ url('r/' . $link->slug) }}')">
+                                                    <i class="bi bi-qr-code me-1"></i> Generate QR 
+                                                </button>
+                                            </li>
                                           <li>
                                             <a class="dropdown-item text-primary bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $link->slug }}" data-target-url="{{ $link->target_url }}"  data-active="{{ $link->active }}">
                                                 <i class="bi bi-pencil-square"></i> Quick Action
@@ -157,7 +184,7 @@
                                           </li>
                                         </ul>
                                       </div>
-                                    <button class="btn btn-sm btn-outline-secondary" onclick="copyFunction('{{ $link->slug }}')"><i class="bi bi-copy me-1"></i>Copy Link</button>
+                                   
                                 </div>
                           </div>
                         </div>
@@ -226,93 +253,8 @@
                 </div>
             </div>
         </div>
-
-        <!-- Short Link Form -->
-      
-    </div>
     <script>
-        $(function () {
-            // -----------------------------------------------------------------------
-            // Traffic Overview
-            // -----------------------------------------------------------------------
-            var visitData = @json($visitData);
-
-            var chart = {
-                series: [
-                    {
-                        name: "Visits",
-                        data: visitData,
-                    }
-                ],
-                chart: {
-                    toolbar: {
-                        show: false,
-                    },
-                    type: "line",
-                    fontFamily: "inherit",
-                    foreColor: "#adb0bb",
-                    height: 320,
-                    stacked: false,
-                },
-                // Set the color to blue
-                colors: ["#007bff"],  // Blue color for the line
-                plotOptions: {},
-                dataLabels: {
-                    enabled: false,
-                },
-                legend: {
-                    show: false,
-                },
-                stroke: {
-                    width: 2, 
-                    curve: "smooth",
-                    // Remove dashed line
-                    dashArray: [0],  // Solid line (no dashes)
-                },
-                grid: {
-                    borderColor: "rgba(0,0,0,0.1)",
-                    strokeDashArray: 3,
-                    xaxis: {
-                        lines: {
-                            show: false,
-                        },
-                    },
-                },
-                xaxis: {
-                    axisBorder: {
-                        show: false,
-                    },
-                    axisTicks: {
-                        show: false,
-                    },
-                    categories: ["Sun","Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-                },
-                yaxis: {
-                    tickAmount: 4,
-                },
-                markers: {
-                    strokeColor: ["#007bff"], 
-                    strokeWidth: 2,
-                },
-                tooltip: {
-                    theme: "dark",
-                },
-            };
-
-            var chart = new ApexCharts(
-                document.querySelector("#traffic-overview"),
-                chart
-            );
-            chart.render();
-        });
-        document.addEventListener("DOMContentLoaded", function() {
-            const toastElList = [].slice.call(document.querySelectorAll('.toast:not(.copy-toast)'));
-            const toastList = toastElList.map(function (toastEl) {
-                return new bootstrap.Toast(toastEl);
-            });
-            toastList.forEach(toast => toast.show());
-        });
+        const visitDataGlobal = @json($visitData);
     </script>
-    <!-- Script to handle delete modal -->
     <script src="{{ asset('js/link.js') }}"></script>
 </x-dashlayout>
