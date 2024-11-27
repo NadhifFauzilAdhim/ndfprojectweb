@@ -6,7 +6,7 @@ $(function () {
         series: [
             {
                 name: "Visits",
-                data: visitData, // Gunakan data dari server
+                data: visitData, 
             }
         ],
         chart: {
@@ -19,7 +19,6 @@ $(function () {
             height: 320,
             stacked: false,
         },
-        // Warna untuk garis
         colors: ["#007bff"], 
         plotOptions: {},
         dataLabels: {
@@ -31,7 +30,7 @@ $(function () {
         stroke: {
             width: 2,
             curve: "smooth",
-            dashArray: [0], // Solid line
+            dashArray: [0], 
         },
         grid: {
             borderColor: "rgba(0,0,0,0.1)",
@@ -87,101 +86,74 @@ function applyFilter() {
 
 
 $(document).ready(function () {
-    const blockForm = $('#block-ip-form');
+    const blockForm = $('#block-ip-form'); 
     const blockedIpsContainer = $('#blocked-ips-container');
-    const blockedIpsForm = $('#block-ip-form');
 
-    // Fungsi untuk menampilkan toast
-    function showToast(message, type = 'success') {
-        const toast = $('#toast-notification');
-        const toastMessage = $('#toast-message');
+    // Block IP Address
+    blockForm.on('submit', function (e) {
+        e.preventDefault();
 
-        // Set pesan toast
-        toastMessage.text(message);
+        const formData = blockForm.serialize();
+        const errorContainer = $('#ip-address-error');
+        const blockUrl = blockForm.data('block-url');
 
-        // Set warna berdasarkan tipe
-        toast.removeClass('text-bg-success text-bg-danger');
-        toast.addClass(type === 'success' ? 'text-bg-success' : 'text-bg-danger');
+        if (!blockUrl) {
+            console.error('Block URL is missing.');
+            return;
+        }
 
-        // Tampilkan toast
-        const bootstrapToast = new bootstrap.Toast(toast[0]);
-        bootstrapToast.show();
-    }
+        errorContainer.text('');
 
-    // Handle Block IP
-    $(document).ready(function () {
-        const blockForm = $('#block-ip-form'); // Form selector
-        const blockedIpsContainer = $('#blocked-ips-container'); // Container for blocked IPs
-    
-        blockForm.on('submit', function (e) {
-            e.preventDefault(); // Cegah pengiriman form secara normal
-    
-            const formData = blockForm.serialize(); // Serialize form data
-            const errorContainer = $('#ip-address-error'); // Error container
-            const blockUrl = blockForm.data('block-url'); // Ambil URL dari atribut data-block-url
-    
-            if (!blockUrl) {
-                console.error('Block URL is missing.');
-                return;
-            }
-    
-            // Clear previous error
-            errorContainer.text('');
-    
-            $.ajax({
-                url: blockUrl,
-                type: 'POST',
-                data: formData,
-                headers: {
-                    'X-CSRF-TOKEN': $('input[name="_token"]').val(),
-                    'Accept': 'application/json',
-                },
-                success: function (data) {
-                    if (data.errors) {
-                        if (data.errors.ip_address) {
-                            errorContainer.text(data.errors.ip_address[0]);
-                        }
-                    } else if (data.success) {
-                        showToast('IP Address blocked successfully!', 'success');
-    
-                        // Cari elemen <ul> di dalam #blocked-ips-container
-                        let ul = blockedIpsContainer.find('ul.list-group-flush');
-    
-                        // Jika <ul> belum ada, buat elemen <ul> baru
-                        if (!ul.length) {
-                            ul = $('<ul class="list-group list-group-flush"></ul>');
-                            blockedIpsContainer.empty(); // Hapus pesan "No IP addresses are blocked."
-                            blockedIpsContainer.append(ul);
-                        }
-    
-                        // Tambahkan elemen baru ke dalam <ul>
-                        const newIpItem = `
-                            <li class="list-group-item d-flex justify-content-between align-items-center" id="ip-${data.blockedIp.id}">
-                                <input type="text" class="form-control me-2" value="${data.blockedIp.ip_address}" readonly>
-                                <button class="btn btn-sm btn-outline-danger unblock-btn" data-id="${data.blockedIp.id}">Unblock</button>
-                            </li>`;
-                        ul.append(newIpItem);
-    
-                        blockForm.trigger('reset'); // Reset form setelah berhasil
+        $.ajax({
+            url: blockUrl,
+            type: 'POST',
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('input[name="_token"]').val(),
+                'Accept': 'application/json',
+            },
+            success: function (data) {
+                if (data.errors) {
+                    if (data.errors.ip_address) {
+                        errorContainer.text(data.errors.ip_address[0]);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error blocking IP:', xhr.responseJSON?.message || error);
-                    if (xhr.responseJSON?.message) {
-                        errorContainer.text(xhr.responseJSON.message);
+                } else if (data.success) {
+                    showToast('IP Address blocked successfully!', 'success');
+
+                    let ul = blockedIpsContainer.find('ul.list-group-flush');
+
+                    if (!ul.length) {
+                        ul = $('<ul class="list-group list-group-flush"></ul>');
+                        blockedIpsContainer.empty();
+                        blockedIpsContainer.append(ul);
                     }
+
+                    const newIpItem = `
+                        <li class="list-group-item d-flex justify-content-between align-items-center" id="ip-${data.blockedIp.id}">
+                            <input type="text" class="form-control me-2" value="${data.blockedIp.ip_address}" readonly>
+                            <button class="btn btn-sm btn-outline-danger unblock-btn" data-id="${data.blockedIp.id}">Unblock</button>
+                        </li>`;
+                    ul.append(newIpItem);
+
+                    blockForm.trigger('reset');
                 }
-            });
+            },
+            error: function (xhr, status, error) {
+                console.error('Error blocking IP:', xhr.responseJSON?.message || error);
+                if (xhr.responseJSON?.message) {
+                    errorContainer.text(xhr.responseJSON.message);
+                }
+            }
         });
     });
-    
-    // Handle Unblock IP
+
     blockedIpsContainer.on('click', '.unblock-btn', function () {
         const ipId = $(this).data('id');
 
         $.ajax({
             url: `${blockedIpsContainer.data('unblock-url')}/${ipId}`,
-            type: 'DELETE',
+            type: 'POST', 
+            data: { _method: 'DELETE' }, 
             headers: {
                 'X-CSRF-TOKEN': $('input[name="_token"]').val(),
                 'Accept': 'application/json',
@@ -199,31 +171,30 @@ $(document).ready(function () {
     });
 });
 
+
 $(document).ready(function () {
     const form = $('#link-update-form');
     const slugError = $('#slug-error');
 
     form.on('submit', function (e) {
-        e.preventDefault(); // Cegah pengiriman normal
+        e.preventDefault();
 
-        const formData = form.serialize(); // Serialize form data
-        slugError.text(''); // Bersihkan pesan error sebelumnya
+        const formData = form.serialize() + '&_method=PUT'; 
+        slugError.text(''); 
 
         $.ajax({
-            url: form.data('update-url'), // URL update dari atribut `data-update-url`
-            type: 'PUT', // Gunakan method PUT
+            url: form.data('update-url'), 
+            type: 'POST',
             data: formData,
             headers: {
                 'X-CSRF-TOKEN': $('input[name="_token"]').val(),
-                'Accept': 'application/json'
+                'Accept': 'application/json',
             },
             success: function (data) {
                 if (data.success) {
-                    // Tampilkan notifikasi sukses
                     showToast('Link updated successfully!', 'success');
                     if (data.redirect) {
                         window.location.href = data.redirect;
-                        showToast('URL updated successfully!', 'success');
                     }
                 }
             },
@@ -232,7 +203,6 @@ $(document).ready(function () {
                 if (errors.slug) {
                     slugError.text(errors.slug[0]);
                 }
-                // Tangani error lainnya
                 console.error('Update Error:', errors);
             }
         });
@@ -240,15 +210,13 @@ $(document).ready(function () {
 });
 
 
-// Fungsi untuk menampilkan toast
+
 function showToast(message, type = 'success') {
     const toast = document.getElementById('toast-notification');
     const toastMessage = document.getElementById('toast-message');
 
-    // Set pesan toast
     toastMessage.innerText = message;
 
-    // Set warna berdasarkan tipe
     toast.classList.remove('text-bg-success', 'text-bg-danger');
     if (type === 'success') {
         toast.classList.add('text-bg-success');
@@ -256,7 +224,6 @@ function showToast(message, type = 'success') {
         toast.classList.add('text-bg-danger');
     }
 
-    // Tampilkan toast
     const bootstrapToast = new bootstrap.Toast(toast);
     bootstrapToast.show();
 }
