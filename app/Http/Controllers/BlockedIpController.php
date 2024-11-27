@@ -10,19 +10,30 @@ class BlockedIpController extends Controller
     
     public function block(Request $request)
     {
-        $request->validate([
-            'ip_address' => 'required|ip', 
+        $validated = $request->validate([
+            'ip_address' => 'required|ip',
             'link_id' => 'required|exists:links,id',
         ]);
-        BlockedIp::create([
-            'ip_address' => $request->ip_address,
-            'link_id' => $request->link_id, // Tambahkan link_id di sini
+    
+        $blockedIp = BlockedIp::create([
+            'ip_address' => $validated['ip_address'],
+            'link_id' => $validated['link_id'],
         ]);
-        return back()->with('success', 'IP Address blocked successfully.');
+    
+        return response()->json([
+            'success' => 'IP Address blocked successfully.',
+            'blockedIp' => $blockedIp,
+        ]);
     }
+    
     public function unblock($id)
     {
-        BlockedIp::findOrFail($id)->delete();
-        return back()->with('success', 'IP Address unblocked successfully.');
+        $blockedIp = BlockedIp::findOrFail($id);
+        $blockedIp->delete();
+    
+        return response()->json([
+            'success' => 'IP Address unblocked successfully.',
+        ]);
     }
+    
 }

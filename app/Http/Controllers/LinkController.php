@@ -42,6 +42,10 @@ class LinkController extends Controller
         $query = Linkvisithistory::where('link_id', $link->id);
         if ($filter === 'unique') {
             $query->where('is_unique', true);
+        }elseif($filter === 'redirected'){
+            $query->where('status', 1);
+        }elseif($filter === 'rejected'){
+            $query->where('status', 0);
         }
         $visithistory = $query->latest()->paginate(10);
         $redirectedCount = Linkvisithistory::where('link_id', $link->id)->where('status', 1)->count();
@@ -82,40 +86,44 @@ class LinkController extends Controller
     public function update(Request $request, Link $link)
     {
         if ($link->user_id !== Auth::id()) {
-            abort(403);
+            return response()->json(['message' => 'Forbidden'], 403);
         }
-        $oldslug = $link->slug;
-
-        if($request->has('quickedit')){
-           $validatedData = $request->validate([
-            'target_url' => 'required|max:255|url'
-           ]);
-           $validatedData['active'] = $request->has('active') ? 1 : 0;
-           $link->update($validatedData);
-           return redirect()->back()->with('success', 'Link Berhasil Diubah');
-        }
-
+    
+        // Validasi data
         $validatedData = $request->validate([
             'target_url' => 'required|max:255|url',
-            'slug' => 'required|max:255|unique:links,slug,'. $link->id,
-            'password' => 'nullable|min:6|max:255', 
+            'slug' => 'required|max:255|unique:links,slug,' . $link->id,
+            'password' => 'nullable|min:6|max:255',
         ]);
+    
+        $oldSlug = $link->slug;
+    
+        // Filter URL dan set nilai lainnya
         $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
         $validatedData['password_protected'] = $request->has('password_protected') ? 1 : 0;
-        if ($validatedData['password_protected'] && !empty($request->password)) {
-            $validatedData['password'] = bcrypt($request->password);
-        }elseif ($validatedData['password_protected'] && empty($request->password)) {
-            $validatedData['password'] = $link->password;
-        }else  {
-            $validatedData['password'] = null;
-        }
+        $validatedData['password'] = $validatedData['password_protected']
+            ? (!empty($request->password) ? bcrypt($request->password) : $link->password)
+            : null;
         $validatedData['active'] = $request->has('active') ? 1 : 0;
+    
+        // Update link
         $link->update($validatedData);
-        if($oldslug !== $link->slug) {
-            return redirect()->route('link.index')->with('success', 'Slug diperbarui. Link Berhasil Diubah');
+    
+        if ($oldSlug !== $link->slug) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Slug updated successfully! Link updated.',
+                'redirect' => route('link.show', ['link' => $link->slug]),
+            ]);
         }
-        return redirect()->back()->with('success', 'Link Berhasil Diubah');
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Link updated successfully!',
+        ]);
     }
+    
+
     
     /**
      * Store a newly created resource in storage.

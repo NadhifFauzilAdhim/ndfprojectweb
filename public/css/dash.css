@@ -17006,4 +17006,17 @@ ul {
       z-index: 9999;
     }
 
+    .swiper-slide .card {
+      min-height: 350px; /* Sesuaikan sesuai kebutuhan */
+      max-height: 350px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+  }
+  
+  .swiper-slide .card-body {
+      overflow: hidden; /* Mencegah konten memanjang melampaui card */
+      text-overflow: ellipsis;
+  }
+
     

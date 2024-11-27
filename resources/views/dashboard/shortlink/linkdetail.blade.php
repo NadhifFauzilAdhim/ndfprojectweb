@@ -24,6 +24,16 @@
             </div>
         </div>
         @endif
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div id="toast-notification" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body" id="toast-message">
+                        <!-- Pesan akan muncul di sini -->
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
 
         <div class="card">
             <div class="card-body">
@@ -58,57 +68,45 @@
                                         <div class="card same-height">
                                             <div class="card-body">
                                                 <h5 class="card-title">Top Referers</h5>
-                                                <div class="table-responsive">
-                                                    <table class="table text-nowrap align-middle mb-0">
-                                                        <thead>
-                                                            <tr class="border-2 border-bottom border-primary border-0"> 
-                                                                <th scope="col" class="ps-0">Referer URL</th>
-                                                                <th scope="col" class="ps-0">Visits</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody class="table-group-divider">
-                                                            @forelse($topReferers as $referer)
-                                                                <tr>
-                                                                    <td class="ps-0 fw-medium">
-                                                                        <span class="table-link1 text-truncate d-block">
-                                                                            {{ $referer->referer_url ?? 'Direct' }}
-                                                                        </span>
-                                                                    </td>
-                                                                    <td class="ps-0">
-                                                                        {{ $referer->visit_count }}
-                                                                    </td>
-                                                                </tr>
-                                                            @empty
-                                                                <tr>
-                                                                    <td colspan="2" class="text-center text-muted">No referer data available.</td>
-                                                                </tr>
-                                                            @endforelse
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                @forelse($topReferers as $referer)
+                                                    <div class="card mb-2">
+                                                        <div class="card-body p-3 d-flex align-items-center">
+                                                            <i class="bi bi-link-45deg text-primary me-3" style="font-size: 1.5rem;"></i>
+                                                            <div>
+                                                                <h6 class="card-subtitle text-truncate mb-1">
+                                                                    {{ $referer->referer_url ?? 'Direct' }}
+                                                                </h6>
+                                                                <p class="card-text mb-0">
+                                                                    Visits: <span class="fw-bold">{{ $referer->visit_count }}</span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @empty
+                                                    <div class="text-center text-muted">
+                                                        <i class="bi bi-exclamation-circle me-2"></i>
+                                                        No referer data available.
+                                                    </div>
+                                                @endforelse
                                             </div>
                                         </div>
                                     </div>
-                                
-                                    <!-- Records -->
+                                    
                                     <div class="col-3 text-center">
                                         <i class="bi bi-cloud-check-fill text-primary fs-6"></i>
                                         <span class="fs-6 mt-2 d-block text-secondary">Records</span>
                                         <h4 class="mb-0 mt-1 text-dark">{{ $link->visits }}</h4>
                                     </div>
-                                    <!-- Redirected -->
                                     <div class="col-3 text-center">
                                         <i class="bi bi-arrow-up-right-circle-fill text-success fs-6"></i>
                                         <span class="fs-6 mt-2 d-block text-secondary">Redirected</span>
                                         <h4 class="mb-0 mt-1 text-dark">{{ $redirectedCount }}</h4>
                                     </div>
-                                    <!-- Rejected -->
                                     <div class="col-3 text-center">
                                         <i class="bi bi-exclamation-circle-fill text-danger fs-6"></i>
                                         <span class="fs-6 mt-2 d-block text-secondary">Rejected</span>
                                         <h4 class="mb-0 mt-1 text-dark">{{ $rejectedCount }}</h4>
                                     </div>
-                                    <!-- Unique -->
                                     <div class="col-3 text-center">
                                         <i class="bi bi-people-fill text-info fs-6"></i>
                                         <span class="fs-6 mt-2 d-block text-secondary">Unique</span>
@@ -116,58 +114,73 @@
                                     </div>
                                 </div>
                                 <!-- Table -->
-                                <div class="table-responsive mt-4">
-                                    <div class="d-flex justify-content-between align-items-center mt-4">
+                                <div class="swiper mt-2">
+                                    <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
                                         <div>
                                             <label for="filterUnique" class="me-2 fw-bold"></label>
                                             <select id="filterUnique" class="form-select d-inline-block w-auto" onchange="applyFilter()">
                                                 <option value="all" {{ request('filter') == 'all' ? 'selected' : '' }}>All</option>
                                                 <option value="unique" {{ request('filter') == 'unique' ? 'selected' : '' }}>Unique Only</option>
+                                                <option value="rejected" {{ request('filter') == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                                                <option value="redirected" {{ request('filter') == 'redirected' ? 'selected' : '' }}>Redirected</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <table class="table table-striped table-hover align-middle text-center">
-                                        <thead class="bg-primary text-white">
-                                            <tr>
-                                                <th scope="col" class="ps-0">Date</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">IP Address</th>
-                                                <th scope="col">Browser</th>
-                                                <th scope="col">Referer</th>
-                                                <th scope="col">Location</th>
-                                                <th scope="col">Unique</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @forelse ($visithistory as $visit)
-                                            <tr>
-                                                <td class="ps-0 fw-medium">{{ $visit->created_at }}</td>
-                                                <td>
-                                                    @if($visit->status)
-                                                        <span class="badge bg-success">Redirected</span>
-                                                    @else
-                                                        <span class="badge bg-danger">Rejected</span>
-                                                    @endif
-                                                </td>
-                                                <td>{{ $visit->ip_address }}</td>
-                                                <td>{{ $visit->user_agent }}</td>
-                                                <td>{{ $visit->referer_url ?? 'Direct' }}</td>
-                                                <td>{{ $visit->location }}</td>
-                                                <td>
-                                                    @if($visit->is_unique)
-                                                        <span class="badge bg-success">Yes</span>
-                                                    @else
-                                                        <span class="badge bg-warning">No</span>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                            @empty
-                                            <tr>
-                                                <td colspan="7" class="text-center text-muted">No record data.</td>
-                                            </tr>
-                                            @endforelse
-                                        </tbody>
-                                    </table>
+                                    <div class="swiper-wrapper">
+                                        @forelse ($visithistory as $visit)
+                                        <div class="swiper-slide">
+                                            <div class="card border card-hover">
+                                                <div class="card-body ">
+                                                    <h6 class="card-title fw-bold">
+                                                        <i class="bi bi-calendar-event me-2 text-primary"></i>
+                                                        {{ $visit->created_at }}
+                                                    </h6>
+                                                    <p class="card-text mb-1">
+                                                        <i class="bi bi-info-circle me-2 text-success"></i>
+                                                        Status:
+                                                        @if($visit->status)
+                                                            <span class="badge rounded-pill bg-success ms-1"><small>Redirected</small></span>
+                                                        @else
+                                                            <span class="badge rounded-pill bg-danger ms-1"><small>Rejected</small></span>
+                                                        @endif
+                                                    </p>
+                                                    <p class="card-text mb-1">
+                                                        <i class="bi bi-hdd-network me-2 text-success"></i>
+                                                        IP Address: {{ $visit->ip_address }}
+                                                    </p>
+                                                    <p class="card-text mb-1">
+                                                        <i class="bi bi-browser-edge me-2 text-success"></i>
+                                                        Browser: {{ $visit->user_agent }}
+                                                    </p>
+                                                    <p class="card-text mb-1">
+                                                        <i class="bi bi-link me-2 text-success"></i>
+                                                        Referer: {{ $visit->referer_url ?? 'Direct' }}
+                                                    </p>
+                                                    <p class="card-text mb-1">
+                                                        <i class="bi bi-geo-alt-fill me-2 text-success"></i>
+                                                        Location: {{ $visit->location }}
+                                                    </p>
+                                                    <p class="card-text">
+                                                        <i class="bi bi-check-circle me-2 text-success"></i>
+                                                        Unique:
+                                                        @if($visit->is_unique)
+                                                            <span class="badge bg-success"><small>Yes</small></span>
+                                                        @else
+                                                            <span class="badge rounded-pill bg-warning"><small>No</small></span>
+                                                        @endif
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        @empty
+                                            <div class="swiper-slide">
+                                                <div class="text-center text-muted">No record data.</div>
+                                            </div>
+                                        @endforelse
+                                    </div>
+                                    <!-- Add navigation buttons -->
+                                   
                                 </div>
                                 <!-- Pagination -->
                                 <div class="mt-4">
@@ -193,12 +206,12 @@
                         
                         <div class="card shadow-sm border-0">
                             <div class="card-body p-4">
-                                <form method="POST" action="{{ route('link.update', $link->slug) }}">
+                                <form id="link-update-form" method="POST" data-update-url="{{ route('link.update', $link->slug) }}">
                                     @csrf
                                     @method('PUT')
-                                    
+                                
                                     <div class="mb-4">
-                                        <label for="target_url" class="form-label fw-bold ">Long URL</label>
+                                        <label for="target_url" class="form-label fw-bold">Long URL</label>
                                         <input 
                                             type="text" 
                                             class="form-control border-primary shadow-sm" 
@@ -208,27 +221,23 @@
                                             placeholder="Enter the original URL" 
                                             required>
                                     </div>
-                                    
+                                
                                     <div class="mb-4">
-                                        <label for="slug" class="form-label fw-bold ">Short URL</label>
+                                        <label for="slug" class="form-label fw-bold">Short URL</label>
                                         <div class="input-group">
                                             <span class="input-group-text bg-light text-primary" id="basic-addon3">{{ url('r/') }}</span>
                                             <input 
                                                 type="text" 
-                                                class="form-control border-primary shadow-sm @if($errors->has('slug')) is-invalid @endif" 
+                                                class="form-control border-primary shadow-sm" 
                                                 id="slug" 
                                                 name="slug" 
                                                 value="{{ $link->slug }}" 
                                                 placeholder="Custom short link" 
                                                 required>
-                                            @if ($errors->has('slug'))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first('slug') }}
-                                                </div>
-                                            @endif
+                                            <div class="invalid-feedback" id="slug-error"></div>
                                         </div>
                                     </div>
-                                    
+                                
                                     <div class="form-check form-switch mt-4">
                                         <input 
                                             class="form-check-input" 
@@ -237,9 +246,11 @@
                                             id="activeSwitch" 
                                             name="active" 
                                             {{ $link->active ? 'checked' : '' }}>
-                                        <label class="form-check-label fw-bold" for="activeSwitch">{{ $link->active ? '🔔 Active' : '🔕 Inactive' }}</label>
+                                        <label class="form-check-label fw-bold" for="activeSwitch">
+                                            {{ $link->active ? '🔔 Active' : '🔕 Inactive' }}
+                                        </label>
                                     </div>
-                                    
+                                
                                     <div class="card mt-4 bg-light border-primary shadow-sm rounded">
                                         <div class="card-body">
                                             <h4 class="mb-3 text-warning"><i class="bi bi-shield-lock"></i> Password Protection</h4>
@@ -251,9 +262,8 @@
                                                     id="passwordProtectionSwitch" 
                                                     name="password_protected" 
                                                     {{ $link->password_protected ? 'checked' : '' }}>
-                                                <label class="form-check-label fw-bold " for="passwordProtectionSwitch">Require Password</label>
+                                                <label class="form-check-label fw-bold" for="passwordProtectionSwitch">Require Password</label>
                                             </div>
-                                            
                                             <div class="mt-3">
                                                 <input 
                                                     type="password" 
@@ -265,11 +275,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+                                
                                     <button type="submit" class="btn btn-primary mt-4 w-100 fw-bold shadow">
                                         <i class="bi bi-save"></i> Update
                                     </button>
                                 </form>
+                                
                             </div>
                         </div>
                     </div>
@@ -277,7 +288,8 @@
                     <div class="col-lg-4">
                         <div class="card same-height shadow-sm border-0">
                             <div class="card-body text-center">
-                                <form method="POST" action="{{ route('block.ip') }}" class="text-start">
+                                <!-- Form Block IP -->
+                                <form id="block-ip-form" class="text-start" data-block-url="{{ url('/block-ip') }}">
                                     @csrf
                                     <h5 class="text-primary fw-bold">Block an IP Address</h5>
                                     <div class="input-group mb-3">
@@ -285,38 +297,36 @@
                                         <button class="btn btn-danger" type="submit">Block</button>
                                     </div>
                                     <input type="hidden" name="link_id" value="{{ $link->id }}">
-                                    @if($errors->has('ip_address'))
-                                        <div class="text-danger small">{{ $errors->first('ip_address') }}</div>
-                                    @endif
-                                </form>
-                                
+                                    <div id="ip-address-error" class="text-danger small"></div>
+                                </form>                                
                                 <!-- List of Blocked IPs -->
-                                <div class="mt-4">
+                                <div class="mt-4"
                                     <h5 class="text-primary fw-bold">Blocked IPs</h5>
-                                    @if($blockedIps->isEmpty())
-                                        <p class="text-muted">No IP addresses are blocked.</p>
-                                    @else
-                                        <ul class="list-group list-group-flush">
-                                            @foreach($blockedIps as $ip)
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <input type="text" class="form-control me" value="{{ $ip->ip_address }}" readonly>
-                                                    <form method="POST" action="{{ route('unblock.ip', $ip->id) }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-sm btn-outline-danger" type="submit">Unblock</button>
-                                                    </form>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    @endif
+                                    <div id="blocked-ips-container" data-unblock-url="{{ url('/unblock-ip') }}">
+                                        @if($blockedIps->isEmpty())
+                                            <p class="text-muted">No IP addresses are blocked.</p>
+                                        @else
+                                            <ul class="list-group list-group-flush">
+                                                @foreach($blockedIps as $ip)
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center" id="ip-{{ $ip->id }}">
+                                                        <input type="text" class="form-control me-2" value="{{ $ip->ip_address }}" readonly>
+                                                        <button class="btn btn-sm btn-outline-danger unblock-btn" data-id="{{ $ip->id }}">Unblock</button>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
           </div>
     </div>
     <script>const visitDataGlobal = @json($chartData);</script>
     <script src="{{ asset('js/dashjs/linkdetail.js') }}"></script>
+    
+    
 </x-dashlayout>

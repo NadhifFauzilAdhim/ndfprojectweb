@@ -149,10 +149,10 @@
                                         </p>
                                     </div>
                                     <div class="col-12">
-                                        <p class="card-text d-flex align-items-center">
-                                            <iconify-icon icon="solar:checklist-minimalistic-line-duotone" class="fs-6 me-2"></iconify-icon>
-                                            <b class="me-1">{{ $link->unique_visits }}</b> Unique
-                                        </p>
+                                            <p class="card-text d-flex align-items-center">
+                                                @if($link->password_protected)<iconify-icon icon="solar:lock-keyhole-minimalistic-linear" class="fs-6 me-2"></iconify-icon>@else<iconify-icon icon="solar:lock-unlocked-broken" class="fs-6 me-2"></iconify-icon>@endif
+                                                <b class="me-1"> {{ $link->password_protected ? 'Protected' : 'Unprotected' }}</b>
+                                            </p>
                                     </div>
                             
                                 </div>
