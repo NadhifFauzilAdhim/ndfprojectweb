@@ -25,7 +25,7 @@
         </div>
         @endif
         <div class="toast-container position-fixed top-0 end-0 p-3">
-            <div id="toast-notification" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div id="toast-notification" class="toast notif-toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
                     <div class="toast-body" id="toast-message">
                         <!-- Pesan akan muncul di sini -->
@@ -284,47 +284,63 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="col-lg-4">
-                        <div class="card same-height shadow-sm border-0">
-                            <div class="card-body text-center">
-                                <!-- Form Block IP -->
-                                <form id="block-ip-form" class="text-start" data-block-url="{{ url('/block-ip') }}">
-                                    @csrf
-                                    <h5 class="text-primary fw-bold">Block an IP Address</h5>
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="ip_address" placeholder="Enter IP Address" required>
-                                        <button class="btn btn-danger" type="submit">Block</button>
-                                    </div>
-                                    <input type="hidden" name="link_id" value="{{ $link->id }}">
-                                    <div id="ip-address-error" class="text-danger small"></div>
-                                </form>                                
-                                <!-- List of Blocked IPs -->
-                                <div class="mt-4"
-                                    <h5 class="text-primary fw-bold">Blocked IPs</h5>
-                                    <div id="blocked-ips-container" data-unblock-url="{{ url('/unblock-ip') }}">
-                                        @if($blockedIps->isEmpty())
-                                            <p class="text-muted">No IP addresses are blocked.</p>
-                                        @else
-                                            <ul class="list-group list-group-flush">
-                                                @foreach($blockedIps as $ip)
-                                                    <li class="list-group-item d-flex justify-content-between align-items-center" id="ip-{{ $ip->id }}">
-                                                        <input type="text" class="form-control me-2" value="{{ $ip->ip_address }}" readonly>
-                                                        <button class="btn btn-sm btn-outline-danger unblock-btn" data-id="{{ $ip->id }}">Unblock</button>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        @endif
+                        <div class="">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                   <div id="qrCodeContainer" class="qrCodeContainer mb-3"></div>
+                                    <button id="downloadQrCode" class="btn btn-primary mb-3"><i class="bi bi-cloud-arrow-down"></i> Download</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="">
+                            <div class="card  shadow-sm border-0">
+                                <div class="card-body text-center">
+                                    <!-- Form Block IP -->
+                                    <form id="block-ip-form" class="text-start" data-block-url="{{ url('/block-ip') }}">
+                                        @csrf
+                                        <h5 class="text-primary fw-bold">Block an IP Address</h5>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" name="ip_address" placeholder="Enter IP Address" required>
+                                            <button class="btn btn-danger" type="submit">Block</button>
+                                        </div>
+                                        <input type="hidden" name="link_id" value="{{ $link->id }}">
+                                        <div id="ip-address-error" class="text-danger small"></div>
+                                    </form>                                
+                                    <!-- List of Blocked IPs -->
+                                    <div class="mt-4"
+                                        <h5 class="text-primary fw-bold">Blocked IPs</h5>
+                                        <div id="blocked-ips-container" data-unblock-url="{{ url('/unblock-ip') }}">
+                                            @if($blockedIps->isEmpty())
+                                                <p class="text-muted">No IP addresses are blocked.</p>
+                                            @else
+                                                <ul class="list-group list-group-flush">
+                                                    @foreach($blockedIps as $ip)
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center" id="ip-{{ $ip->id }}">
+                                                            <input type="text" class="form-control me-2" value="{{ $ip->ip_address }}" readonly>
+                                                            <button class="btn btn-sm btn-outline-danger unblock-btn" data-id="{{ $ip->id }}">Unblock</button>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
+                    
                 </div>
             </div>
           </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            showQRCode('{{ url('r/' . $link->slug) }}'); 
+        });
+    </script>
     <script>const visitDataGlobal = @json($chartData);</script>
     <script src="{{ asset('js/dashjs/linkdetail.js') }}"></script>
     

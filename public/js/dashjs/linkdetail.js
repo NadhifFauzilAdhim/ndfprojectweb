@@ -69,13 +69,7 @@ $(function () {
     chart.render();
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-    const toastElList = [].slice.call(document.querySelectorAll('.toast:not(.copy-toast)'));
-    const toastList = toastElList.map(function (toastEl) {
-        return new bootstrap.Toast(toastEl);
-    });
-    toastList.forEach(toast => toast.show());
-});
+
 function applyFilter() {
     const filter = document.getElementById('filterUnique').value;
     const urlParams = new URLSearchParams(window.location.search);
@@ -155,7 +149,7 @@ $(document).ready(function () {
             type: 'POST', 
             data: { _method: 'DELETE' }, 
             headers: {
-                'X-CSRF-TOKEN': $('input[name="_token"]').val(),
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 'Accept': 'application/json',
             },
             success: function (data) {
@@ -187,7 +181,7 @@ $(document).ready(function () {
             type: 'POST',
             data: formData,
             headers: {
-                'X-CSRF-TOKEN': $('input[name="_token"]').val(),
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 'Accept': 'application/json',
             },
             success: function (data) {
@@ -227,4 +221,27 @@ function showToast(message, type = 'success') {
     const bootstrapToast = new bootstrap.Toast(toast);
     bootstrapToast.show();
 }
+
+function showQRCode(url) {
+    const qrCodeContainer = document.getElementById('qrCodeContainer');
+    const downloadButton = document.getElementById('downloadQrCode');
+
+    qrCodeContainer.innerHTML = '';
+    // Generate URL QR Code menggunakan API eksternal
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
+    // Tampilkan QR Code di modal
+    const qrCodeImg = document.createElement('img');
+    qrCodeImg.src = qrCodeUrl;
+    qrCodeImg.alt = 'QR Code';
+    qrCodeImg.classList.add('img-fluid');
+    qrCodeContainer.appendChild(qrCodeImg);
+
+    downloadButton.onclick = function () {
+        const link = document.createElement('a');
+        link.href = qrCodeUrl;
+        link.download = 'qrcode.png'; // Nama file yang akan diunduh
+        link.click(); // Trigger download
+    };
+}
+
 
