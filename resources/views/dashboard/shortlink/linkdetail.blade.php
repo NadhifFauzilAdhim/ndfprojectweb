@@ -28,7 +28,6 @@
             <div id="toast-notification" class="toast notif-toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
                     <div class="toast-body" id="toast-message">
-                        <!-- Pesan akan muncul di sini -->
                     </div>
                     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
@@ -234,6 +233,7 @@
                                                 value="{{ $link->slug }}" 
                                                 placeholder="Custom short link" 
                                                 required>
+                                                
                                             <div class="invalid-feedback" id="slug-error"></div>
                                         </div>
                                     </div>

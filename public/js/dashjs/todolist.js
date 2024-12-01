@@ -3,6 +3,7 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+
 $('#addTodoForm').on('submit', function (e) {
     e.preventDefault();
     const formData = $(this).serialize();
@@ -50,15 +51,28 @@ $('#addTodoForm').on('submit', function (e) {
             `;
             $('#pending').append(card);
             $('#addTodoForm')[0].reset();
+
+            Swal.fire({
+                text: 'Todo added successfully!',
+                icon: 'success',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            });
         }
     });
 });
+
 function allowDrop(event) {
     event.preventDefault();
 }
+
 function drag(event) {
     event.dataTransfer.setData("text", event.target.id);
 }
+
 function drop(event) {
     event.preventDefault();
     const data = event.dataTransfer.getData("text");
@@ -71,31 +85,60 @@ function drop(event) {
         type: 'PUT',
         data: { status: newStatus },
         success: function (response) {
-            const toastElement = document.getElementById('statusToast');
-            const toast = new bootstrap.Toast(toastElement);
-            toast.show();
+            Swal.fire({
+                text: 'Todo status updated!',
+                icon: 'success',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            });
         }
     });
 }
-let todoIdToDelete = null;
+
 function deleteTask(todoId) {
-    todoIdToDelete = todoId;
-    $('#deleteModal').modal('show');
-}
-$('#confirmDeleteBtn').on('click', function () {
-    if (todoIdToDelete) {
-        $.ajax({
-            url: `/dashboard/todolist/${todoIdToDelete}`,
-            type: 'DELETE',
-            success: function (response) {
-                if (response.success) {
-                    $(`#todo${todoIdToDelete}`).remove();
-                    $('#deleteModal').modal('hide');
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'This action cannot be undone!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `/dashboard/todolist/${todoId}`,
+                type: 'DELETE',
+                success: function (response) {
+                    if (response.success) {
+                        $(`#todo${todoId}`).remove();
+
+                        Swal.fire({
+                            text: 'Todo deleted successfully!',
+                            icon: 'success',
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        text: 'Failed to delete the todo.',
+                        icon: 'error',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                    });
                 }
-            },
-            error: function (xhr, status, error) {
-                console.error('Gagal menghapus task:', error);
-            }
-        });
-    }
-});
+            });
+        }
+    });
+}

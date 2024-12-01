@@ -51,25 +51,9 @@
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-  <script> 
-  function copyFunction(slug) {
-    var copyText = document.getElementById("linkInput-" + slug);
-    copyText.select();
-    copyText.setSelectionRange(0, 99999);
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    navigator.clipboard.writeText(copyText.value).then(function() {
-        var copyToastElement = document.getElementById('copyToast');
-        if (copyToastElement) {
-            var copyToast = new bootstrap.Toast(copyToastElement);
-            copyToast.show();
-        } else {
-            console.error("Copy toast element not found.");
-        }
-    }).catch(function(error) {
-        console.error("Error copying text: ", error);
-    });
-}
-  </script>
+  <script src="{{ asset('js/copy.js') }}"></script>
   <script>
     window.addEventListener('load', function() {
       document.getElementById('spinner').style.display = 'none';

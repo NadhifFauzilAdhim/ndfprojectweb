@@ -89,7 +89,8 @@ Route::middleware(['auth', 'admin', 'verified'])->group(function() {
 });
 // Owner-specific routes
 Route::middleware(['auth', 'owner', 'verified'])->group(function() {
-    Route::resource('/dashboard/usersetting', AdminUserController::class);
+    Route::resource('/dashboard/usersetting', AdminUserController::class)->only(['index', 'update']);
+    Route::patch('/dashboard/usersetting/{user}/toggle-verification', [AdminUserController::class, 'update'])->name('usersetting.toggleVerification');
     
 });
 

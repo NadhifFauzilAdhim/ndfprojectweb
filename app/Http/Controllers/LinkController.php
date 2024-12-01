@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\BlockedIp;
 use App\Models\Link;
 use App\Models\Linkvisithistory;
@@ -11,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class LinkController extends Controller
 {
-    /**
+    /** 
      * Display a listing of the resource.
      */
     public function index()
@@ -88,8 +87,6 @@ class LinkController extends Controller
         if ($link->user_id !== Auth::id()) {
             return response()->json(['message' => 'Forbidden'], 403);
         }
-    
-        // Validasi data
         $validatedData = $request->validate([
             'target_url' => 'required|max:255|url',
             'slug' => 'required|max:255|unique:links,slug,' . $link->id,
@@ -97,18 +94,13 @@ class LinkController extends Controller
         ]);
     
         $oldSlug = $link->slug;
-    
-        // Filter URL dan set nilai lainnya
         $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
         $validatedData['password_protected'] = $request->has('password_protected') ? 1 : 0;
         $validatedData['password'] = $validatedData['password_protected']
             ? (!empty($request->password) ? bcrypt($request->password) : $link->password)
             : null;
         $validatedData['active'] = $request->has('active') ? 1 : 0;
-    
-        // Update link
         $link->update($validatedData);
-    
         if ($oldSlug !== $link->slug) {
             return response()->json([
                 'success' => true,

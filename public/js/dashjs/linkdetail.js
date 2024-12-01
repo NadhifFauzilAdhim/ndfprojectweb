@@ -107,37 +107,31 @@ $(document).ready(function () {
                 'Accept': 'application/json',
             },
             success: function (data) {
-                if (data.errors) {
-                    if (data.errors.ip_address) {
-                        errorContainer.text(data.errors.ip_address[0]);
-                    }
-                } else if (data.success) {
+                if (data.success) {
                     showToast('IP Address blocked successfully!', 'success');
-
+            
                     let ul = blockedIpsContainer.find('ul.list-group-flush');
-
                     if (!ul.length) {
                         ul = $('<ul class="list-group list-group-flush"></ul>');
                         blockedIpsContainer.empty();
                         blockedIpsContainer.append(ul);
                     }
-
+            
                     const newIpItem = `
                         <li class="list-group-item d-flex justify-content-between align-items-center" id="ip-${data.blockedIp.id}">
                             <input type="text" class="form-control me-2" value="${data.blockedIp.ip_address}" readonly>
                             <button class="btn btn-sm btn-outline-danger unblock-btn" data-id="${data.blockedIp.id}">Unblock</button>
                         </li>`;
                     ul.append(newIpItem);
-
+            
                     blockForm.trigger('reset');
                 }
             },
             error: function (xhr, status, error) {
                 console.error('Error blocking IP:', xhr.responseJSON?.message || error);
-                if (xhr.responseJSON?.message) {
-                    errorContainer.text(xhr.responseJSON.message);
-                }
+                showToast('Error blocking IP!', 'error');
             }
+            
         });
     });
 
@@ -206,20 +200,15 @@ $(document).ready(function () {
 
 
 function showToast(message, type = 'success') {
-    const toast = document.getElementById('toast-notification');
-    const toastMessage = document.getElementById('toast-message');
-
-    toastMessage.innerText = message;
-
-    toast.classList.remove('text-bg-success', 'text-bg-danger');
-    if (type === 'success') {
-        toast.classList.add('text-bg-success');
-    } else if (type === 'error') {
-        toast.classList.add('text-bg-danger');
-    }
-
-    const bootstrapToast = new bootstrap.Toast(toast);
-    bootstrapToast.show();
+    Swal.fire({
+        text: message,
+        icon: type, // Tipe icon: 'success', 'error', 'warning', 'info', atau 'question'
+        toast: true,
+        position: 'top-end', // Posisi notifikasi
+        showConfirmButton: false,
+        timer: 3000, // Durasi dalam milidetik
+        timerProgressBar: true,
+    });
 }
 
 function showQRCode(url) {

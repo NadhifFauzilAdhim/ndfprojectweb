@@ -28,19 +28,33 @@ editModal.addEventListener('show.bs.modal', function (event) {
     });
 });
 
-function copyFunction(slug) {
-    var copyText = document.getElementById("linkInput-" + slug);
-    copyText.select();
-    copyText.setSelectionRange(0, 99999);
-
-    navigator.clipboard.writeText(copyText.value).then(function() {
-        // Show the toast for copied link
-        var copyToast = new bootstrap.Toast(document.getElementById('copyToast'));
-        copyToast.show();
-    }).catch(function(error) {
-        console.error("Error copying text: ", error);
+function confirmDelete(slug) {
+    Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: "Link ini akan dihapus secara permanen!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const deleteForm = document.createElement('form');
+            deleteForm.action = `/dashboard/link/${slug}`;
+            deleteForm.method = 'POST';
+            deleteForm.innerHTML = `
+                @csrf
+                @method('DELETE')
+            `;
+            document.body.appendChild(deleteForm);
+            deleteForm.submit();
+        }
     });
 }
+
+
+
 
 $(function () {
     var visitData = visitDataGlobal;

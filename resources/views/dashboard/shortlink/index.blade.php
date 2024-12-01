@@ -14,29 +14,31 @@
                     </div>
                 </div>
             </div>
-                @if(session()->has('success'))
-                        <div class="toast-container position-fixed top-0 end-0 p-3">
-                            <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
-                                <div class="d-flex">
-                                    <div class="toast-body">
-                                        <i class="bi bi-check-circle-fill me-3"></i>{{ session('success') }}
-                                    </div>
-                                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                                </div>
-                            </div>
-                        </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        @if(session()->has('success'))
+                            Swal.fire({
+                                text: "{{ session('success') }}",
+                                icon: 'success',
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                            });
                         @elseif(session()->has('error'))
-                        <div class="toast-container position-fixed top-0 end-0 p-3">
-                            <div class="toast align-items-center text-bg-warning border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
-                                <div class="d-flex">
-                                    <div class="toast-body">
-                                        <i class="bi bi-exclamation-diamond-fill me-3"></i> {{ session('error') }}
-                                    </div>
-                                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                                </div>
-                            </div>
-                        </div>
+                            Swal.fire({
+                                text: "{{ session('error') }}",
+                                icon: 'error',
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                            });
                         @endif
+                    });
+                </script>
 
                 <div class="row">
                     <div class="col-lg-12">
@@ -122,13 +124,13 @@
                     
                     
                     @forelse ($links as $link)
-                    <div class="col-md-4 ">
+                    <div class="col-md-4 " >
                         <div class="card shadow card-hover">
-                          <div class="card-header @if($link->active) linkactivecolor @else linkinactivecolor @endif">
+                          <div class="card-header" data-bs-theme="dark">
                             <h6 class="card-title d-flex align-items-center gap-2">
                                 <div class="input-group ">
                                     <input type="text" class="form-control text-dark shadow-sm bg-white" aria-label="link" id="linkInput-{{ $link->slug }}" value="{{ url('r/' . $link->slug) }}">
-                                    <button class="btn btn-sm btn-success"  id="button-addon2" onclick="copyFunction('{{ $link->slug }}')"><i class="bi bi-copy me-1"></i></button>
+                                    <button class="btn btn-sm btn-success {{ $link->active ? 'btn-success' : 'btn-danger' }}"  id="button-addon2" onclick="copyFunction('{{ $link->slug }}')"><i class="bi bi-copy me-1"></i></button>
                                 </div>
                             </h6>
                           </div>
@@ -255,6 +257,81 @@
         </div>
     <script>
         const visitDataGlobal = @json($visitData);
+    </script>
+    <script>
+        function confirmDelete(slug) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Link ini akan dihapus secara permanen!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit delete form programmatically
+                    const deleteForm = document.createElement('form');
+                    deleteForm.action = `/dashboard/link/${slug}`;
+                    deleteForm.method = 'POST';
+                    deleteForm.innerHTML = `
+                        @csrf
+                        @method('DELETE')
+                    `;
+                    document.body.appendChild(deleteForm);
+                    deleteForm.submit();
+                }
+            });
+        }
+
+        function editLink(slug, targetUrl, isActive) {
+            Swal.fire({
+                title: 'Edit Link',
+                html: `
+                    <form id="editForm">
+                        <label for="target_url" class="form-label">URL Tujuan</label>
+                        <input type="text" id="editTargetUrl" class="swal2-input" name="target_url" value="${targetUrl}" placeholder="https://example.com">
+                        <label for="active" class="form-label mt-3">Status</label>
+                        <div class="form-check form-switch">
+                            <input type="checkbox" id="editActive" class="form-check-input" name="active" ${isActive ? 'checked' : ''}>
+                            <label for="editActive" class="form-check-label">Aktif</label>
+                        </div>
+                    </form>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'Simpan',
+                cancelButtonText: 'Batal',
+                preConfirm: () => {
+                    const targetUrl = document.getElementById('editTargetUrl').value;
+                    const isActive = document.getElementById('editActive').checked ? 1 : 0;
+
+                    if (!targetUrl) {
+                        Swal.showValidationMessage('URL Tujuan tidak boleh kosong');
+                        return false;
+                    }
+
+                    return { targetUrl, isActive };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Kirim permintaan update menggunakan form programatis
+                    const editForm = document.createElement('form');
+                    editForm.action = `/dashboard/link/${slug}`;
+                    editForm.method = 'POST';
+                    editForm.innerHTML = `
+                        @csrf
+                        @method('PATCH')
+                        <input type="hidden" name="target_url" value="${result.value.targetUrl}">
+                        <input type="hidden" name="active" value="${result.value.isActive}">
+                    `;
+                    document.body.appendChild(editForm);
+                    editForm.submit();
+                }
+            });
+        }
+
+
     </script>
     <script src="{{ asset('js/link.js') }}"></script>
 </x-dashlayout>

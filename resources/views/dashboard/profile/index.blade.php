@@ -61,29 +61,31 @@
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
-                        @if(session()->has('success'))
-                        <div class="toast-container position-fixed top-0 end-0 p-3">
-                            <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
-                                <div class="d-flex">
-                                    <div class="toast-body">
-                                        <i class="bi bi-check-circle-fill me-3"></i>{{ session('success') }}
-                                    </div>
-                                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                                </div>
-                            </div>
-                        </div>
-                        @elseif(session()->has('error'))
-                        <div class="toast-container position-fixed top-0 end-0 p-3">
-                            <div class="toast align-items-center text-bg-warning border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
-                                <div class="d-flex">
-                                    <div class="toast-body">
-                                        <i class="bi bi-exclamation-diamond-fill me-3"></i> {{ session('error') }}
-                                    </div>
-                                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                                </div>
-                            </div>
-                        </div>
-                        @endif
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                @if(session()->has('success'))
+                                    Swal.fire({
+                                        text: "{{ session('success') }}",
+                                        icon: 'success',
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                    });
+                                @elseif(session()->has('error'))
+                                    Swal.fire({
+                                        text: "{{ session('error') }}",
+                                        icon: 'error',
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                    });
+                                @endif
+                            });
+                        </script>
                         <h5 class="card-title fw-semibold">Your Profile</h5>
                         <div class="card">
                             <div class="card-body">
