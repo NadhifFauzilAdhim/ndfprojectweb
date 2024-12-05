@@ -29,8 +29,9 @@ class RedirectController extends Controller
         $location = $this->getLocationFromIp($ipAddress);
 
         if ($blockedIp) {
-          abort(403, 'Access forbidden');
+            abort(403, 'Access forbidden');
         }
+
         if ($link->password_protected) {
             $password = $request->input('password');
             if (!$password) {
@@ -41,11 +42,12 @@ class RedirectController extends Controller
                 ]);
             }
             if (!Hash::check($password, $link->password)) {
-                $this->recordVisit($link,false, $ipAddress, $userAgent, $refererUrl, $location);
+                $this->recordVisit($link, false, $ipAddress, $userAgent, $refererUrl, $location, $request);
                 return redirect()->back()->withErrors(['password' => 'Incorrect password.']);
             }
         }
-        $this->recordVisit($link,true, $ipAddress, $userAgent, $refererUrl, $location);
+
+        $this->recordVisit($link, true, $ipAddress, $userAgent, $refererUrl, $location, $request);
 
         return view('redirect.redirecting', ['targetUrl' => $link->target_url]);
     }
@@ -64,27 +66,35 @@ class RedirectController extends Controller
         return 'Unknown Location';
     }
 
-    private function recordVisit($link, $status, $ipAddress, $userAgent, $refererUrl, $location)
+    private function recordVisit($link, $status, $ipAddress, $userAgent, $refererUrl, $location, $request)
     {
-        $isUnique = !Linkvisithistory::where('link_id', $link->id)
-            ->where('ip_address', $ipAddress)
-            ->where('user_agent', $userAgent)
-            ->exists();
+        $sessionKey = "visited_link_{$link->slug}";
+        $hasVisited = $request->session()->has($sessionKey);
 
-        Linkvisithistory::create([
-            'link_id' => $link->id,
-            'status' => $status,
-            'ip_address' => $ipAddress,
-            'user_agent' => $userAgent,
-            'referer_url' => $refererUrl,
-            'location' => $location,
-            'is_unique' => $isUnique,
-        ]);
+        if (!$hasVisited) {
+            $request->session()->put($sessionKey, true);
+            Linkvisithistory::create([
+                'link_id' => $link->id,
+                'status' => $status,
+                'ip_address' => $ipAddress,
+                'user_agent' => $userAgent,
+                'referer_url' => $refererUrl,
+                'location' => $location,
+                'is_unique' => true,
+            ]);
 
-        if ($isUnique) {
             $link->increment('unique_visits');
+        } else {
+            Linkvisithistory::create([
+                'link_id' => $link->id,
+                'status' => $status,
+                'ip_address' => $ipAddress,
+                'user_agent' => $userAgent,
+                'referer_url' => $refererUrl,
+                'location' => $location,
+                'is_unique' => false,
+            ]);
         }
-
         $link->increment('visits');
     }
 }

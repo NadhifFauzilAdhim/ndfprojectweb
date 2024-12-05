@@ -159,3 +159,28 @@ function showQRCode(url) {
         link.click(); // Trigger download
     };
 }
+
+function confirmDelete(slug) {
+    Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: "Link ini akan dihapus secara permanen!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const deleteForm = document.createElement('form');
+            deleteForm.action = `/dashboard/link/${slug}`;
+            deleteForm.method = 'POST';
+            deleteForm.innerHTML = `
+                @csrf
+                @method('DELETE')
+            `;
+            document.body.appendChild(deleteForm);
+            deleteForm.submit();
+        }
+    });
+}

@@ -128,8 +128,14 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, status, error) {
-                console.error('Error blocking IP:', xhr.responseJSON?.message || error);
-                showToast('Error blocking IP!', 'error');
+                const response = xhr.responseJSON;
+                const errorMessage = response?.message || 'Error blocking IP!';
+                const errorDetails = response?.errors
+                    ? Object.values(response.errors).flat().join(' ')
+                    : error;
+            
+                console.error('Error blocking IP:', errorMessage, errorDetails);
+                showToast(`${errorMessage}: ${errorDetails}`, 'error');
             }
             
         });

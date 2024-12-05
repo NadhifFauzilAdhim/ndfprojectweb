@@ -58,10 +58,8 @@
                                 @endif
                                 <h5 class="card-title fw-bold mb-4"><i class="bi bi-graph-up-arrow"></i> Visit Statistics</h5>
                                 <div class="row">
-                                    <div class="card mb-5 col-lg-8 same-height">
-                                        <div class="card-body shadow-sm mb-3">
-                                            <div id="traffic-overview" ></div>
-                                        </div>
+                                    <div class="card mb-5 col-lg-8 ">
+                                        <div id="traffic-overview" ></div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="card same-height">
@@ -93,24 +91,25 @@
                                     
                                     <div class="col-3 text-center">
                                         <i class="bi bi-cloud-check-fill text-primary fs-6"></i>
-                                        <span class="fs-6 mt-2 d-block text-secondary">Records</span>
+                                        <span class="fs-6 mt-2 d-block text-secondary d-none d-sm-block">Records</span>
                                         <h4 class="mb-0 mt-1 text-dark">{{ $link->visits }}</h4>
                                     </div>
                                     <div class="col-3 text-center">
                                         <i class="bi bi-arrow-up-right-circle-fill text-success fs-6"></i>
-                                        <span class="fs-6 mt-2 d-block text-secondary">Redirected</span>
+                                        <span class="fs-6 mt-2 d-block text-secondary d-none d-sm-block">Redirected</span>
                                         <h4 class="mb-0 mt-1 text-dark">{{ $redirectedCount }}</h4>
                                     </div>
                                     <div class="col-3 text-center">
                                         <i class="bi bi-exclamation-circle-fill text-danger fs-6"></i>
-                                        <span class="fs-6 mt-2 d-block text-secondary">Rejected</span>
+                                        <span class="fs-6 mt-2 d-block text-secondary d-none d-sm-block">Rejected</span>
                                         <h4 class="mb-0 mt-1 text-dark">{{ $rejectedCount }}</h4>
                                     </div>
                                     <div class="col-3 text-center">
                                         <i class="bi bi-people-fill text-info fs-6"></i>
-                                        <span class="fs-6 mt-2 d-block text-secondary">Unique</span>
+                                        <span class="fs-6 mt-2 d-block text-secondary d-none d-sm-block">Unique</span>
                                         <h4 class="mb-0 mt-1 text-dark">{{ $link->unique_visits }}</h4>
                                     </div>
+                                    
                                 </div>
                                 <!-- Table -->
                                 <div class="swiper mt-2">

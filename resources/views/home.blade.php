@@ -271,9 +271,8 @@
           </div>
   
         </div>
-      </section><!-- End Resume Section -->
+      </section>
   
-      <!-- ======= Portfolio Section ======= -->
       <section id="portfolio" class="portfolio section-bg">
         <div class="container">
   
@@ -285,15 +284,16 @@
           <div class="row" data-aos="fade-up">
             <div class="col-lg-12 d-flex justify-content-center">
               <ul id="portfolio-flters">
-                <li data-filter="*" class="filter-active">All</li>
-  
+                <li data-filter="*" >All</li>
+                <li data-filter=".featured" class="filter-active">Featured</li>
+                <li data-filter=".IoT">IoT</li>
+                <li data-filter=".Web-dev">Web Dev</li>
               </ul>
             </div>
           </div>
   
           <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
-  
-            <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+            <div class="col-lg-4 col-md-6 portfolio-item Web-dev">
               <div class="portfolio-wrap">
                 <img src="certificate/SertifikatAMCC.jpeg" class="img-fluid" alt="">
                 <div class="portfolio-links">
@@ -305,7 +305,7 @@
               </div>
             </div>
   
-            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+            <div class="col-lg-4 col-md-6 portfolio-item featured">
               <div class="portfolio-wrap">
                 <img src="certificate/SertifikatAsisten.jpeg" class="img-fluid" alt="">
                 <div class="portfolio-links">
@@ -316,7 +316,7 @@
               </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+            <div class="col-lg-4 col-md-6 portfolio-item featured IoT">
               <div class="portfolio-wrap">
                 <img src="certificate/SICStage1.png" class="img-fluid" alt="">
                 <div class="portfolio-links">
@@ -328,7 +328,7 @@
             </div>
   
 
-            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+            <div class="col-lg-4 col-md-6 portfolio-item featured IoT">
               <div class="portfolio-wrap">
                 <img src="certificate/SICStage2.png" class="img-fluid" alt="">
                 <div class="portfolio-links">
@@ -339,7 +339,7 @@
               </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+            <div class="col-lg-4 col-md-6 portfolio-item featured IoT">
               <div class="portfolio-wrap">
                 <img src="certificate/SICStage3.png" class="img-fluid" alt="">
                 <div class="portfolio-links">
@@ -351,7 +351,7 @@
             </div>
   
   
-            <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+            <div class="col-lg-4 col-md-6 portfolio-item ">
               <div class="portfolio-wrap">
                 <img src="certificate/SertifikatPythonAlgorithm.png" class="img-fluid" alt="">
                 <div class="portfolio-links">
@@ -362,7 +362,7 @@
               </div>
             </div>
   
-            <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+            <div class="col-lg-4 col-md-6 portfolio-item IoT ">
               <div class="portfolio-wrap">
                 <img src="certificate/SertifikatPythonDasar.png" class="img-fluid" alt="">
                 <div class="portfolio-links">
@@ -373,7 +373,7 @@
               </div>
             </div>
   
-            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+            <div class="col-lg-4 col-md-6 portfolio-item IoT ">
               <div class="portfolio-wrap">
                 <img src="certificate/SertifikatPythonLanjut.png" class="img-fluid" alt="">
                 <div class="portfolio-links">
@@ -383,7 +383,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+            <div class="col-lg-4 col-md-6 portfolio-item IoT ">
               <div class="portfolio-wrap">
                 <img src="certificate/SertifikatIoT.png" class="img-fluid" alt="">
                 <div class="portfolio-links">
@@ -393,7 +393,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+            <div class="col-lg-4 col-md-6 portfolio-item IoT ">
               <div class="portfolio-wrap">
                 <img src="certificate/SertifikatIoTFundamental.png" class="img-fluid" alt="">
                 <div class="portfolio-links">
@@ -403,7 +403,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+            <div class="col-lg-4 col-md-6 portfolio-item IoT ">
               <div class="portfolio-wrap">
                 <img src="certificate/SertifikatIoTSoftware.png" class="img-fluid" alt="">
                 <div class="portfolio-links">
@@ -413,115 +413,138 @@
                 </div>
               </div>
             </div>
-  
-  
-  
-  
+            <div class="col-lg-4 col-md-6 portfolio-item Web-dev ">
+              <div class="portfolio-wrap">
+                <img src="certificate/SertifikatFrontEnd.png" class="img-fluid" alt="">
+                <div class="portfolio-links">
+                  <a href="https://www.dicoding.com/certificates/2VX34365NZYQ" target="_blank"><i class="bi bi-check2-square"> </i>
+                    <h6>Check Credential</h6>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 portfolio-item IoT ">
+              <div class="portfolio-wrap">
+                <img src="certificate/SertifikatIoTHealthMonitoringSystem.png" class="img-fluid" alt="">
+                <div class="portfolio-links">
+                  <a href="https://badgr.com/public/assertions/1ey6ROu9T3C6yRBtcc1tUQ?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
+                    <h6>Check Credential</h6>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 portfolio-item Web-dev ">
+              <div class="portfolio-wrap">
+                <img src="certificate/SertifikatFrontEndJavascript.png" class="img-fluid" alt="">
+                <div class="portfolio-links">
+                  <a href="https://www.dicoding.com/certificates/EYX4J09JWZDL" target="_blank"><i class="bi bi-check2-square"> </i>
+                    <h6>Check Credential</h6>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
+        
       </section><!-- End Portfolio Section -->
       <section id="project" class="project">
-      <div class="container-fluid blog ">
-              <div class="container ">
-              
-                  <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-  
-                      <h1 class="display-4 mb-4">Project</h1>
-                      <p class="mb-0">In the ever-evolving world of technology development, we are dedicated to creating innovative solutions that blend creativity with advanced technology.
-                      </p>
-                  </div>
-                  
-          
-                  <div class="row g-4 justify-content-center">
-                      <div class="col-lg-6 col-xl-4 wow fadeInUp" data-aos-delay="100">
-                          <div class="blog-item">
-                              <div class="blog-img">
-                                  <!-- <img src="img/project/kostifyadv.png" class="img-fluid rounded-top w-100" alt=""> -->
-                                  <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                                    <div class="carousel-inner">
-                                      <div class="carousel-item active">
-                                      <img src="img/project/kostifyadv.png" class="img-fluid rounded-top w-100" alt="">
+          <div class="container-fluid blog ">
+                  <div class="container ">
+                      <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+                          <h1 class="display-4 mb-4">Project</h1>
+                          <p class="mb-0">In the ever-evolving world of technology development, we are dedicated to creating innovative solutions that blend creativity with advanced technology.
+                          </p>
+                      </div>
+                      <div class="row g-4 justify-content-center">
+                          <div class="col-lg-6 col-xl-4 wow fadeInUp" data-aos-delay="100">
+                              <div class="blog-item">
+                                  <div class="blog-img">
+                                      <!-- <img src="img/project/kostifyadv.png" class="img-fluid rounded-top w-100" alt=""> -->
+                                      <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                                        <div class="carousel-inner">
+                                          <div class="carousel-item active">
+                                          <img src="img/project/kostifyadv.png" class="img-fluid rounded-top w-100" alt="">
+                                          </div>
+                                          <div class="carousel-item">
+                                          <img src="img/project/kostifyadv1.png" class="img-fluid rounded-top w-100" alt="">
+                                          </div>
+                                          <div class="carousel-item">
+                                          <img src="img/project/kostifyadv2.png" class="img-fluid rounded-top w-100" alt="">
+                                          </div>
+                                        </div>
                                       </div>
-                                      <div class="carousel-item">
-                                      <img src="img/project/kostifyadv1.png" class="img-fluid rounded-top w-100" alt="">
+                                      <div class="blog-categiry py-2 px-4">
+                                          <span>Web Apps</span>
                                       </div>
-                                      <div class="carousel-item">
-                                      <img src="img/project/kostifyadv2.png" class="img-fluid rounded-top w-100" alt="">
-                                      </div>
-                                    </div>
                                   </div>
-                                  <div class="blog-categiry py-2 px-4">
-                                      <span>Web Apps</span>
+                                  <div class="blog-content p-4">
+                                      <div class="blog-comment d-flex justify-content-between mb-3">
+                                          <div class="small"><span class="bi bi-code-slash text-primary"></span> Nadhif Fauzil A</div>
+                                          <div class="small"><span class="bi bi-globe-americas text-primary"></span> Open Source</div>
+                                          <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Juni 2024</div>
+                                      </div>
+                                      <a href="https://github.com/NadhifFauzilAdhim/KostifyNative" class="h4 d-inline-block mb-3">Kostify: Cari Tempat Tinggal Dan Property dengan mudah</a>
+                                      <p class="mb-3"> tememukan kost atau tempat tinggal ideal Anda hanya dengan beberapa klik saja. Nikmati kemudahan dan kecepatan dalam mencari tempat tinggal impian Anda tanpa ribet.</p>
+                                      <a href="https://github.com/NadhifFauzilAdhim/KostifyNative" class="btn p-0">Github  <i class="bi bi-arrow-right"></i></a>
                                   </div>
                               </div>
-                              <div class="blog-content p-4">
-                                  <div class="blog-comment d-flex justify-content-between mb-3">
+                          </div>
+                          <div class="col-lg-6 col-xl-4 wow fadeInUp" data-aos-delay="100">
+                              <div class="blog-item">
+                                  <div class="blog-img">
+                                      <!-- <img src="img/project/hydroeaselogo.png" class="img-fluid rounded-top w-100" alt=""> -->
+                                      <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                                        <div class="carousel-inner">
+                                          <div class="carousel-item active">
+                                          <img src="img/project/hydroeaselogo.png" class="img-fluid rounded-top w-100" alt="">
+                                          </div>
+                                          <div class="carousel-item">
+                                          <img src="img/project/hydroeasepic1.png" class="img-fluid rounded-top w-100" alt="">
+                                          </div>
+                                          <div class="carousel-item">
+                                          <img src="img/project/hydroeasepic2.png" class="img-fluid rounded-top w-100" alt="">
+                                          </div>
+                                        </div>
+                                      
+                                      </div>
+                                      <div class="blog-categiry py-2 px-4">
+                                          <span>IoT</span>
+                                      </div>
+                                  </div>
+                                  <div class="blog-content p-4">
+                                      <div class="blog-comment d-flex justify-content-between mb-3">
+                                      <div class="small"><span class="bi bi-code-slash text-primary"></span> Arabis Group</div>
+                                      <div class="small"><span class="bi bi-globe-americas text-primary"></span> Open Colab</div>
+                                      <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Februari 2024</div>
+                                      </div>
+                                      <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="h4 d-inline-block mb-3">HydroEase: Hydroponic Efficiency Automated System</a>
+                                      <p class="mb-3">HydroEase menggabungkan hidroponik dengan kenyamanan IoT, mengajak Anda untuk menanam tanaman yang lebih sehat dan berkelanjutan dengan mudah. </p>
+                                      <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="btn p-0">Read More  <i class="bi bi-arrow-right"></i></a>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-lg-6 col-xl-4 wow fadeInUp" data-aos-delay="100">
+                              <div class="blog-item">
+                                  <div class="blog-img">
+                                      <img src="img/project/comingsoon.png" class="img-fluid rounded-top w-100" alt="">
+                                      <div class="blog-categiry py-2 px-4">
+                                          <span>Web Apps</span>
+                                      </div>
+                                  </div>
+                                  <div class="blog-content p-4">
+                                      <div class="blog-comment d-flex justify-content-between mb-3">
                                       <div class="small"><span class="bi bi-code-slash text-primary"></span> Nadhif Fauzil A</div>
-                                      <div class="small"><span class="bi bi-globe-americas text-primary"></span> Open Source</div>
-                                      <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Juni 2024</div>
-                                  </div>
-                                  <a href="https://github.com/NadhifFauzilAdhim/KostifyNative" class="h4 d-inline-block mb-3">Kostify: Cari Tempat Tinggal Dan Property dengan mudah</a>
-                                  <p class="mb-3"> tememukan kost atau tempat tinggal ideal Anda hanya dengan beberapa klik saja. Nikmati kemudahan dan kecepatan dalam mencari tempat tinggal impian Anda tanpa ribet.</p>
-                                  <a href="https://github.com/NadhifFauzilAdhim/KostifyNative" class="btn p-0">Github  <i class="bi bi-arrow-right"></i></a>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-lg-6 col-xl-4 wow fadeInUp" data-aos-delay="100">
-                          <div class="blog-item">
-                              <div class="blog-img">
-                                  <!-- <img src="img/project/hydroeaselogo.png" class="img-fluid rounded-top w-100" alt=""> -->
-                                  <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                                    <div class="carousel-inner">
-                                      <div class="carousel-item active">
-                                      <img src="img/project/hydroeaselogo.png" class="img-fluid rounded-top w-100" alt="">
+                                          <div class="small"><span class="bi bi-globe-americas text-primary"></span> -</div>
+                                          <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Now</div>
                                       </div>
-                                      <div class="carousel-item">
-                                      <img src="img/project/hydroeasepic1.png" class="img-fluid rounded-top w-100" alt="">
-                                      </div>
-                                      <div class="carousel-item">
-                                      <img src="img/project/hydroeasepic2.png" class="img-fluid rounded-top w-100" alt="">
-                                      </div>
-                                    </div>
-                                   
+                                      <a href="#" class="h4 d-inline-block mb-3">Comming Soon</a>
+                                      <p class="mb-3"></p>
+                                      <a href="#" class="btn p-0">Read More  <i class="fa fa-arrow-right"></i></a>
                                   </div>
-                                  <div class="blog-categiry py-2 px-4">
-                                      <span>IoT</span>
-                                  </div>
-                              </div>
-                              <div class="blog-content p-4">
-                                  <div class="blog-comment d-flex justify-content-between mb-3">
-                                  <div class="small"><span class="bi bi-code-slash text-primary"></span> Arabis Group</div>
-                                  <div class="small"><span class="bi bi-globe-americas text-primary"></span> Open Colab</div>
-                                  <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Februari 2024</div>
-                                  </div>
-                                  <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="h4 d-inline-block mb-3">HydroEase: Hydroponic Efficiency Automated System</a>
-                                  <p class="mb-3">HydroEase menggabungkan hidroponik dengan kenyamanan IoT, mengajak Anda untuk menanam tanaman yang lebih sehat dan berkelanjutan dengan mudah. </p>
-                                  <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="btn p-0">Read More  <i class="bi bi-arrow-right"></i></a>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-lg-6 col-xl-4 wow fadeInUp" data-aos-delay="100">
-                          <div class="blog-item">
-                              <div class="blog-img">
-                                  <img src="img/project/comingsoon.png" class="img-fluid rounded-top w-100" alt="">
-                                  <div class="blog-categiry py-2 px-4">
-                                      <span>Web Apps</span>
-                                  </div>
-                              </div>
-                              <div class="blog-content p-4">
-                                  <div class="blog-comment d-flex justify-content-between mb-3">
-                                  <div class="small"><span class="bi bi-code-slash text-primary"></span> Nadhif Fauzil A</div>
-                                      <div class="small"><span class="bi bi-globe-americas text-primary"></span> -</div>
-                                      <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Now</div>
-                                  </div>
-                                  <a href="#" class="h4 d-inline-block mb-3">Comming Soon</a>
-                                  <p class="mb-3"></p>
-                                  <a href="#" class="btn p-0">Read More  <i class="fa fa-arrow-right"></i></a>
                               </div>
                           </div>
                       </div>
                   </div>
               </div>
-          </div>
           </section>
       <section id="testimonials" class="testimonials section-bg">
         <div class="container">
@@ -652,9 +675,7 @@
                 </div>
               </div>
             </div>
-  
           </div>
-  
         </div>
       </section><!-- End Contact Section -->  
       <script>

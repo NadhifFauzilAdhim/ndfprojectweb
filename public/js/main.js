@@ -163,31 +163,35 @@
    * Porfolio isotope and filter
    */
   window.addEventListener('load', () => {
-    let portfolioContainer = select('.portfolio-container');
-    if (portfolioContainer) {
-      let portfolioIsotope = new Isotope(portfolioContainer, {
-        itemSelector: '.portfolio-item'
-      });
+      let portfolioContainer = document.querySelector('.portfolio-container');
+      if (portfolioContainer) {
+          let portfolioIsotope = new Isotope(portfolioContainer, {
+              itemSelector: '.portfolio-item',
+              filter: '.featured' 
+          });
 
-      let portfolioFilters = select('#portfolio-flters li', true);
+          let portfolioFilters = document.querySelectorAll('#portfolio-flters li');
 
-      on('click', '#portfolio-flters li', function(e) {
-        e.preventDefault();
-        portfolioFilters.forEach(function(el) {
-          el.classList.remove('filter-active');
-        });
-        this.classList.add('filter-active');
+          portfolioFilters.forEach(function(filter) {
+              filter.addEventListener('click', function(e) {
+                  e.preventDefault();
+                  portfolioFilters.forEach(el => el.classList.remove('filter-active'));
+                  this.classList.add('filter-active');
 
-        portfolioIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
-        portfolioIsotope.on('arrangeComplete', function() {
-          AOS.refresh()
-        });
-      }, true);
-    }
+                  portfolioIsotope.arrange({
+                      filter: this.getAttribute('data-filter')
+                  });
+                  portfolioIsotope.on('arrangeComplete', function() {
+                      AOS.refresh();
+                  });
+              });
+          });
 
+          document.querySelector('#portfolio-flters .filter-active').classList.remove('filter-active');
+          document.querySelector('#portfolio-flters li[data-filter=".featured"]').classList.add('filter-active');
+      }
   });
+
 
   /**
    * Initiate portfolio lightbox 
@@ -259,4 +263,6 @@
    */
   new PureCounter();
 
+  
 })()
+

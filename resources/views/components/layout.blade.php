@@ -83,13 +83,20 @@
   <script src="{{ asset('vendor/swiper/swiper-bundle.min.js') }}"></script>
   <script src="{{ asset('vendor/typed.js/typed.umd.js') }}"></script>
   <script src="{{ asset('vendor/waypoints/noframework.waypoints.js') }}"></script>
-     <script src="{{ asset('js/event/event.js') }}"></script>
-
+  <script src="{{ asset('js/event/event.js') }}"></script>
   <script src="{{ asset('js/main.js') }}"></script>
    <script>
     window.addEventListener('load', function() {
       document.getElementById('spinner').style.display = 'none';
     });
+    document.getElementById("seeMoreBtn").addEventListener("click", function () {
+    document.querySelectorAll(".portfolio-item.hidden").forEach(item => {
+      item.classList.remove("hidden");
+    });
+    // Hide the button after showing all items
+    this.style.display = "none";
+  });
+
   </script>
 
 </body>
