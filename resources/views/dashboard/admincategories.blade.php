@@ -39,6 +39,7 @@
                                     <tr class="border-2 border-bottom border-primary border-0"> 
                                         <th scope="col" class="ps-0">Categories</th>
                                         <th scope="col">Link</th>
+                                        <th scope="col">Image</th>
                                         <th scope="col">Post</th>
                                         <th scope="col" class="text-center">Slug</th>
                                         <th scope="col" class="text-center">Action</th>
@@ -52,6 +53,9 @@
                                         </th>
                                         <td>
                                             <a href="/blog?category={{ $category->slug }}" class="link-primary text-dark fw-medium d-block">Goto</a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ $category->image }}" class="link-primary text-dark fw-medium d-block image-data-url">Goto</a>
                                         </td>
                                         <td class=" fw-medium">{{ $category->posts()->count() }} Post</td>
                                         <td class="text-center fw-medium">{{ $category->slug }}</td>
@@ -95,6 +99,10 @@
                                     <div class="mb-3">
                                         <label for="slug" class="form-label">Slug</label>
                                         <input type="text" class="form-control" id="slug" name="slug" aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="image" class="form-label">Image URL</label>
+                                        <input type="text" class="form-control" id="image" name="image" aria-describedby="emailHelp">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </form>
@@ -145,6 +153,10 @@
                             <label for="editSlug" class="form-label">Slug</label>
                             <input type="text" class="form-control" id="editSlug" name="slug">
                         </div>
+                        <div class="mb-3">
+                            <label for="editImage" class="form-label">Image URL</label>
+                            <input type="text" class="form-control" id="editImage" name="image">
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -154,6 +166,7 @@
             </div>
         </div>
     </div>
+    
 
     <script>
         const name = document.querySelector('#name');
@@ -166,28 +179,26 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-            var deleteModal = document.getElementById('deleteModal');
-            deleteModal.addEventListener('show.bs.modal', function(event) {
-                var button = event.relatedTarget; 
-                var slug = button.getAttribute('data-slug'); 
-                var form = document.getElementById('deleteForm');
-                form.action = '/dashboard/categories/' + slug; 
-            });
-            var editModal = document.getElementById('editModal');
-            editModal.addEventListener('show.bs.modal', function(event) {
-                var button = event.relatedTarget; 
-                var slug = button.getAttribute('data-slug'); 
-                var name = button.closest('tr').querySelector('.table-link1').innerText;
+        var editModal = document.getElementById('editModal');
+        editModal.addEventListener('show.bs.modal', function(event) {
+            var button = event.relatedTarget; 
+            var slug = button.getAttribute('data-slug'); 
+            var row = button.closest('tr');
+            var name = row.querySelector('.table-link1').innerText;
+            var image = row.querySelector('td .image-data-url ').getAttribute('href'); // Ambil href dari link image.
 
-                var form = document.getElementById('editForm');
-                var editName = document.getElementById('editName');
-                var editSlug = document.getElementById('editSlug');
+            var form = document.getElementById('editForm');
+            var editName = document.getElementById('editName');
+            var editSlug = document.getElementById('editSlug');
+            var editImage = document.getElementById('editImage');
 
-                form.action = '/dashboard/categories/' + slug; 
-                editName.value = name; 
-                editSlug.value = slug; 
-            });
+            form.action = '/dashboard/categories/' + slug; 
+            editName.value = name; 
+            editSlug.value = slug; 
+            editImage.value = image; 
         });
+    });
+
         document.addEventListener("DOMContentLoaded", function() {
             const toastElList = [].slice.call(document.querySelectorAll('.toast'));
             const toastList = toastElList.map(function (toastEl) {

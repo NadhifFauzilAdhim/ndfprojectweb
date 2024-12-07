@@ -27,11 +27,13 @@ class AdminCategoryController extends Controller
      */
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
             'name' => 'required|max:255',
-            'slug' => 'required|unique:categories'
+            'slug' => 'required|unique:categories',
+            'image' => 'required|url'
         ]);
-    
+        
         Category::create($validatedData);
         return redirect('/dashboard/categories')->with('success', 'Category berhasil ditambahkan');
     }
@@ -41,6 +43,7 @@ class AdminCategoryController extends Controller
     {
         $rules = [
             'name' => 'required|max:255',
+            'image' => 'required|url'
         ];
         if ($request->slug != $category->slug) {
             $rules['slug'] = 'required|unique:categories';

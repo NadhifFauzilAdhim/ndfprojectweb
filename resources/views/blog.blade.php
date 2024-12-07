@@ -76,6 +76,50 @@
       </div>
       
   </div>  
+   <!-- Page Title -->
+   {{-- <div class="page-title dark-background">
+    <div class="container d-lg-flex justify-content-between align-items-center">
+        <h2 class="mb-2 mb-lg-0">Blog</h2>
+        <div class="row justify-content-end w-100">
+            <div class="col-lg-4">
+                <form
+                    action=""
+                    method="GET"
+                    class="custom-form mt-4 pt-2 mb-4"
+                    role="search"
+                    data-aos="fade"
+                    data-aos-delay="300"
+                >
+                    @if(request('category'))
+                        <input type="hidden" name="category" value="{{ request('category') }}">
+                    @endif
+                    @if(request('author'))
+                        <input type="hidden" name="author" value="{{ request('author') }}">
+                    @endif
+                    <div class="input-group input-group-lg">
+                        <input
+                            name="search"
+                            type="search"
+                            class="form-control"
+                            id="keyword"
+                            placeholder="Search For Article, Project, or News"
+                            @if(request('search'))
+                                value="{{ request('search') }}"
+                            @endif
+                            aria-label="Search"
+                        />
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+       
+    </div>
+</div> --}}
+<!-- End Page Title -->
+
+
+  </div><!-- End Page Title -->
   <div id="blog-section" class="blog">
       <div class="container-fluid blog py-5">
           <div class="container py-5" data-aos="fade-up">
@@ -87,7 +131,10 @@
                                   @if($item->image)
                                       <img src="{{ asset('storage/' . $item->image) }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
                                   @else
-                                      <img src="{{ asset('img/programmer_text_2.jpg') }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
+                                  <img 
+                                  src="{{ $item->category->image ? $item->category->image : asset('img/programmer_text_2.jpg') }}" 
+                                  class="img-fluid rounded-top w-100 fixed-size" 
+                                  alt="Category Image">
                                   @endif
                                   <!-- <img src="img/project/kostifyadv.png" class="img-fluid rounded-top w-100" alt=""> -->
                                   {{-- <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">

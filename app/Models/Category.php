@@ -13,7 +13,7 @@ class Category extends Model
     use Sluggable;
 
     protected $guarded = ['id']; 
-    protected $fillable = ['name', 'slug'];
+    protected $fillable = ['name', 'slug','image'];
     public function posts() : HasMany
     {
         return $this->hasMany(Post::class);

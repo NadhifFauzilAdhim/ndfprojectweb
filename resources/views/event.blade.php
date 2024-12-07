@@ -9,7 +9,7 @@
                   <div class="row justify-content-center no-gutters">
                     <div class="col-3 d-flex justify-content-center align-items-center" data-aos="fade-up">
                       <div class="count-box text-center text-primary">
-                        <i class="bi bi-newspaper text-primary fs-8"></i>
+                        <i class="bi bi-calendar-event text-primary fs-8"></i>
                         <span  data-purecounter-start="0" data-purecounter-end="{{ count($data['listEvents']) }}" data-purecounter-duration="1" class="purecounter"></span>
                         <p><strong>Event</strong></p>
                       </div>
