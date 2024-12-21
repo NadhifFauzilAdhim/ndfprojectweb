@@ -13,9 +13,14 @@ class LinkController extends Controller
     /** 
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $links = Link::where('user_id', Auth::id())->latest()->paginate(6);
+        $totalLinks = Link::where('user_id', Auth::id())->count();
+        $totalVisit = Link::where('user_id', Auth::id())->sum('visits');
+        $totalUniqueVisit = Link::where('user_id', Auth::id())->sum('unique_visits');
+        $search = $request->input('search');
+        $links = Link::where('user_id', Auth::id())->when($search, function ($query, $search) { return $query->where('slug', 'like', "%{$search}%"); })->latest()->paginate(6);
+        $topLink = Link::where('user_id',Auth::id())->orderByDesc('visits')->take(4)->get();
         $visits = Linkvisithistory::whereHas('link', function ($query) {
                 $query->where('user_id', Auth::id());
             })->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
@@ -30,6 +35,10 @@ class LinkController extends Controller
             'title' => 'Short Link',
             'links' => $links,
             'visitData' => array_values($visitData), 
+            'totalLinks' => $totalLinks,
+            'totalVisit' => $totalVisit,
+            'totalUniqueVisit' => $totalUniqueVisit,
+            'topLinks' => $topLink
         ]);
     }
     public function show(Link $link, Request $request)
@@ -63,8 +72,6 @@ class LinkController extends Controller
         ->groupBy('day')
         ->pluck('count', 'day')
         ->toArray();
-
-        $days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         $chartData = [];
         for ($i = 1; $i <= 7; $i++) {
             $chartData[] = $visitsByDay[$i] ?? 0; 

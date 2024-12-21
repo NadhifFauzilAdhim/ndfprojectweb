@@ -41,7 +41,7 @@
                 </script>
 
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-8">
                         <div class="card">
                             <div class="card-body shadow-sm">
                                 <h5 class="card-title d-flex align-items-center gap-2 mb-4">
@@ -54,12 +54,87 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-4">
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title d-flex align-items-center gap-2 mb-5 pb-3">Link Static<span><iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Locations"></iconify-icon></span>
+                            </h5>
+                            <div class="row">
+                              <div class="col-4">
+                                <iconify-icon icon="solar:link-bold-duotone" class="fs-7 d-flex text-primary"></iconify-icon>
+                                <span class="fs-11 mt-2 d-block text-nowrap">Link Created</span>
+                                <h4 class="mb-0 mt-1">{{ $totalLinks }}</h4>
+                              </div>
+                              <div class="col-4">
+                                <iconify-icon icon="solar:cursor-line-duotone" class="fs-7 d-flex text-secondary"></iconify-icon>
+                                <span class="fs-11 mt-2 d-block text-nowrap">Total Visit</span>
+                                <h4 class="mb-0 mt-1">{{ $totalVisit }}</h4>
+                              </div>
+                              <div class="col-4">
+                                <iconify-icon icon="solar:shield-user-broken" class="fs-7 d-flex text-success"></iconify-icon>
+                                <span class="fs-11 mt-2 d-block text-nowrap">Unique Visit</span>
+                                <h4 class="mb-0 mt-1">{{ $totalUniqueVisit }}</h4>
+                              </div>
+                            </div>
+              
+                            <div class="vstack gap-4 mt-7 pt-2">
+                               @forelse ($topLinks as $link) 
+                               <div>
+                                <div class="hstack justify-content-between">
+                                  <iconify-icon icon="solar:link-round-angle-bold-duotone" class="fs-3 d-flex text-primary"></iconify-icon>
+                                  <span class="fs-3 fw-medium"><a href="{{ url('dashboard/link/').'/'.$link->slug }}">{{ $link->slug }}</a></span>
+                                  <h6 class="fs-3 fw-medium text-dark lh-base mb-0">{{ $link->visits }}</h6>
+                                </div>
+                              </div>  
+                               @empty
+                               <h6 class="fs-3 fw-medium text-dark lh-base mb-0">No Data</h6>
+                               @endforelse
+                              
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     <div class="col-lg-12">
                         <div class="card-body">
-                            <!-- Button to toggle form -->
-                            <button class="btn btn-primary d-flex align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
-                                <i class="bi bi-link-45deg fs-5 me-2"></i>Create New
-                            </button>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-12 col-md-4">
+                                    <button 
+                                        class="btn btn-primary  align-items-center w-100 py-2 position-relative" 
+                                        type="button" 
+                                        data-bs-toggle="collapse" 
+                                        data-bs-target="#collapseForm" 
+                                        aria-expanded="false" 
+                                        aria-controls="collapseForm" 
+                                        style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
+                                    >
+                                        <i class="bi bi-plus-circle fs-4 me-2"></i>
+                                        <span>Create New Link</span>
+                                    </button>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <button 
+                                        class="btn btn-primary  align-items-center w-100 py-2 position-relative" 
+                                        type="button" 
+                                        data-bs-toggle="collapse" 
+                                        data-bs-target="#qrCollapseForm" 
+                                        aria-expanded="false" 
+                                        aria-controls="qrCollapseForm" 
+                                        style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
+                                    >
+                                        <i class="bi bi-plus-circle fs-4 me-2"></i>
+                                        <span>Generate QR</span>
+                                    </button>
+                                </div>
+                                <!-- Form Search -->
+                                <div class="col-12 col-md-4">
+                                    <form action="/dashboard/link" method="GET">
+                                        <div class="input-group">
+                                            <input type="text" name="search" class="form-control" placeholder="Search Post" aria-label="Search" aria-describedby="button-addon2" value="{{ request('search') }}">
+                                            <button class="btn btn-outline-primary" type="submit" id="button-addon2">Search</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         
                             <!-- Collapsible form -->
                             <div class="collapse mt-4" id="collapseForm">
@@ -100,6 +175,21 @@
                                     </form>
                                 </div>
                             </div>
+                            <div class="collapse mt-4" id="qrCollapseForm">
+                                <div class="card card-body shadow-sm border-0">
+                                    <form id="qrForm">
+                                        <div class="mb-4">
+                                            <label for="qr_target_url" class="form-label fw-bold">URL Destination</label>
+                                            <input type="text" class="form-control shadow-sm" id="qr_target_url" name="qr_target_url" placeholder="https://example.com">
+                                        </div>
+                                        <div class="text-end">
+                                            <button type="submit" class="btn btn-primary px-4">
+                                                <i class="bi bi-check-circle me-2"></i>Create
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- QR Code Modal -->
@@ -121,6 +211,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     
                     
                     @forelse ($links as $link)

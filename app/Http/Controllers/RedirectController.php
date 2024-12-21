@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Link;
 use App\Models\Linkvisithistory;
-use App\Models\BlockedIp; // Pastikan sudah ada model BlockedIp
+use App\Models\BlockedIp; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -60,8 +60,8 @@ class RedirectController extends Controller
             if ($data['status'] === 'success') {
                 return "{$data['city']}, {$data['country']}";
             }
-        } catch (\Exception $e) {
-            return 'Unknown Location';
+        } catch (\Exception) {
+            return 'Uknown Location';
         }
         return 'Unknown Location';
     }
@@ -70,8 +70,11 @@ class RedirectController extends Controller
     {
         $sessionKey = "visited_link_{$link->slug}";
         $hasVisited = $request->session()->has($sessionKey);
-
-        if (!$hasVisited) {
+        $isUniqueByIP = !Linkvisithistory::where('link_id', $link->id)
+            ->where('ip_address', $ipAddress)
+            ->exists();
+    
+        if (!$hasVisited && $isUniqueByIP) {
             $request->session()->put($sessionKey, true);
             Linkvisithistory::create([
                 'link_id' => $link->id,
@@ -82,7 +85,7 @@ class RedirectController extends Controller
                 'location' => $location,
                 'is_unique' => true,
             ]);
-
+    
             $link->increment('unique_visits');
         } else {
             Linkvisithistory::create([
@@ -97,4 +100,5 @@ class RedirectController extends Controller
         }
         $link->increment('visits');
     }
+    
 }

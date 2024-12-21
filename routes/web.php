@@ -27,6 +27,8 @@ Route::get('category/{category:slug}', [HomeController::class, 'showCategory']);
 Route::get('/event', [EventController::class, 'index'])->name('event');
 Route::get('/event/{id}', [EventController::class, 'show'])->name('eventdetail');
 Route::get('/events/search', [EventController::class, 'search'])->name('events.search');
+Route::get('/beloved', [HomeController::class, 'beloved'])->name('beloved');
+Route::get('/arabis', [HomeController::class, 'arabisindex'])->name('arabis');
 //redirect route
 Route::middleware('throttle:5,1')->get('/r/{link:slug}', RedirectController::class);
 Route::post('/r/{link:slug}', RedirectController::class)->name('link.redirect');

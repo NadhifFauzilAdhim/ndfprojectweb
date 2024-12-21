@@ -134,35 +134,35 @@
                                                         {{ $visit->created_at }}
                                                     </h6>
                                                     <p class="card-text mb-1">
-                                                        <i class="bi bi-info-circle me-2 text-success"></i>
+                                                        <i class="bi bi-info-circle me-2 text-primary"></i>
                                                         Status:
                                                         @if($visit->status)
-                                                            <span class="badge rounded-pill bg-success ms-1"><small>Redirected</small></span>
+                                                            <span class="badge rounded-pill bg-info ms-1"><small>Redirected</small></span>
                                                         @else
                                                             <span class="badge rounded-pill bg-danger ms-1"><small>Rejected</small></span>
                                                         @endif
                                                     </p>
                                                     <p class="card-text mb-1">
-                                                        <i class="bi bi-hdd-network me-2 text-success"></i>
+                                                        <i class="bi bi-hdd-network me-2 text-primary"></i>
                                                         IP Address: {{ $visit->ip_address }}
                                                     </p>
                                                     <p class="card-text mb-1">
-                                                        <i class="bi bi-browser-edge me-2 text-success"></i>
+                                                        <i class="bi bi-browser-edge me-2 text-primary"></i>
                                                         Browser: {{ $visit->user_agent }}
                                                     </p>
                                                     <p class="card-text mb-1">
-                                                        <i class="bi bi-link me-2 text-success"></i>
+                                                        <i class="bi bi-link me-2 text-primary"></i>
                                                         Referer: {{ $visit->referer_url ?? 'Direct' }}
                                                     </p>
                                                     <p class="card-text mb-1">
-                                                        <i class="bi bi-geo-alt-fill me-2 text-success"></i>
+                                                        <i class="bi bi-geo-alt-fill me-2 text-primary"></i>
                                                         Location: {{ $visit->location }}
                                                     </p>
                                                     <p class="card-text">
-                                                        <i class="bi bi-check-circle me-2 text-success"></i>
+                                                        <i class="bi bi-check-circle me-2 text-primary"></i>
                                                         Unique:
                                                         @if($visit->is_unique)
-                                                            <span class="badge bg-success"><small>Yes</small></span>
+                                                            <span class="badge bg-primary"><small>Yes</small></span>
                                                         @else
                                                             <span class="badge rounded-pill bg-warning"><small>No</small></span>
                                                         @endif

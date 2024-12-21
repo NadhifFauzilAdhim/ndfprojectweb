@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Comment;
 use App\Models\Category;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -16,6 +13,13 @@ class HomeController extends Controller
         return view('home',[
             'title' => 'Home',
             'posts' => Post::filter(request(['search', 'category', 'author']))->latest()->paginate(6)->withQueryString()
+        ]);
+    }
+
+
+    public function beloved(){
+        return view('hidden',[
+            'title' => 'Beloved',
         ]);
     }
 
@@ -63,6 +67,13 @@ class HomeController extends Controller
             'title' => 'Category ' . $category->name,
             'type' => 'category',
             'posts' => $category->posts
+        ]);
+    }
+
+    public function arabisindex(){
+        return view('arabis.index',[
+            'title' => 'Arabis Group',
+            'posts' => Post::filter(request(['search', 'category', 'author']))->latest()->paginate(6)->withQueryString()
         ]);
     }
 

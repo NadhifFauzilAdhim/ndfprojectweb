@@ -160,6 +160,26 @@ function showQRCode(url) {
     };
 }
 
+
+document.getElementById('qrForm').addEventListener('submit', function (event) {
+    event.preventDefault(); // Mencegah pengiriman formulir
+
+    const urlInput = document.getElementById('qr_target_url');
+    const url = urlInput.value.trim();
+    console.log(url);
+
+    if (url) {
+        // Panggil fungsi untuk menampilkan QR Code
+        showQRCode(url);
+
+        // Tampilkan modal QR Code
+        const qrCodeModal = new bootstrap.Modal(document.getElementById('qrCodeModal'));
+        qrCodeModal.show();
+    } else {
+        alert('Please enter a valid URL.');
+    }
+});
+
 function confirmDelete(slug) {
     Swal.fire({
         title: 'Apakah Anda yakin?',

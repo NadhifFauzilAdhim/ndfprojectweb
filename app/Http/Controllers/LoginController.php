@@ -23,7 +23,7 @@ class LoginController extends Controller
         $remember = $request->has('remember');
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
-            return redirect()->intended('/');
+            return redirect()->back();
         }
 
         return back()->withErrors([

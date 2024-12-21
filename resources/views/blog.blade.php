@@ -17,7 +17,7 @@
       </div>
   </div>
   <div class="bloghero overlay inner-page">
-    <img src="{{ asset('img/blob.svg') }}" alt="" class="img-fluid blob">
+        <img src="{{ asset('img/blob.svg') }}" alt="" class="img-fluid blob">
       <div class="container">
           <div class="row align-items-center justify-content-center text-center pt-5">
               <div class="col-lg-10 mt-5">
@@ -31,7 +31,7 @@
                   @elseif($type == 'all')
                      <div class="row align-items-center justify-content-center">
                       <div class="col-lg-6">
-                        <img src="{{ asset('img/project/ndfproject-logo-white.png') }}" alt="" class="img-fluid">
+                        <img src="{{ asset('img/project/ndfproject-logo-white.png') }}" alt="" class="img-fluid ">
                       </div>
                      </div>
                       
@@ -74,52 +74,7 @@
               </div>
           </div>
       </div>
-      
   </div>  
-   <!-- Page Title -->
-   {{-- <div class="page-title dark-background">
-    <div class="container d-lg-flex justify-content-between align-items-center">
-        <h2 class="mb-2 mb-lg-0">Blog</h2>
-        <div class="row justify-content-end w-100">
-            <div class="col-lg-4">
-                <form
-                    action=""
-                    method="GET"
-                    class="custom-form mt-4 pt-2 mb-4"
-                    role="search"
-                    data-aos="fade"
-                    data-aos-delay="300"
-                >
-                    @if(request('category'))
-                        <input type="hidden" name="category" value="{{ request('category') }}">
-                    @endif
-                    @if(request('author'))
-                        <input type="hidden" name="author" value="{{ request('author') }}">
-                    @endif
-                    <div class="input-group input-group-lg">
-                        <input
-                            name="search"
-                            type="search"
-                            class="form-control"
-                            id="keyword"
-                            placeholder="Search For Article, Project, or News"
-                            @if(request('search'))
-                                value="{{ request('search') }}"
-                            @endif
-                            aria-label="Search"
-                        />
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-       
-    </div>
-</div> --}}
-<!-- End Page Title -->
-
-
-  </div><!-- End Page Title -->
   <div id="blog-section" class="blog">
       <div class="container-fluid blog py-5">
           <div class="container py-5" data-aos="fade-up">
@@ -128,7 +83,7 @@
                       <div class="col-lg-6 col-xl-4 col-md-6 wow fadeInUp" data-aos-delay="100">
                           <div class="blog-item">
                               <div class="blog-img">
-                                  @if($item->image)
+                                 @if($item->image)
                                       <img src="{{ asset('storage/' . $item->image) }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
                                   @else
                                   <img 
@@ -161,7 +116,7 @@
                                       <div class="small"><a href="/blog?author={{ $item->author->username }}"><i class="bi bi-feather"></i> {{ $item->author->name }}</a></div>
                                       <div class="small"><i class="bi bi-clock-history"></i> {{ $item['created_at']->diffForHumans() }}</div>
                                   </div>
-                                  <a href="/blog/{{ $item['slug'] }}" class="h4 d-inline-block mb-3">{{ $item['title']}}</a>
+                                  <a href="/blog/{{ $item['slug'] }}" class="h4 d-inline-block mb-3">{{ Str::limit(strip_tags($item['title']), 70) }}</a>
                                   <p class="mb-3">{{ Str::limit(strip_tags($item['body']), 100) }}</p>
                                   <a href="/blog/{{ $item['slug'] }}" class="btn p-0">Read more <i class="bi bi-arrow-right"></i></a>
                               </div>
