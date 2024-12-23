@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'sanctum',
+            'provider' => 'users',
+        ],
     ],
 
     /*
@@ -98,6 +102,7 @@ return [
             'throttle' => 60,
         ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------

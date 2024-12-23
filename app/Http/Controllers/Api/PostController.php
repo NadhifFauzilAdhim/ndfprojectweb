@@ -17,7 +17,6 @@ class PostController extends Controller
         return PostResource::collection($posts);
     }
 
-
     public function showBySlug($slug)
     {
         $post = Post::where('slug', $slug)->first();

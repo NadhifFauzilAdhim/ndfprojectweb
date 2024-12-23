@@ -8,12 +8,13 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Sanctum\HasApiTokens;
 
 class Post extends Model
 {
     protected $guarded = ['id'];
     protected $with = ['category','author'];
-    use HasFactory, Sluggable;
+    use HasFactory, Sluggable, HasApiTokens;
     
 
     public function author() : BelongsTo
