@@ -15,53 +15,39 @@ class ApiLinkController extends Controller
     public function index(Request $request)
     {
         try {
-            $totalLinks = Link::where('user_id', Auth::id())->count();
-            $totalVisit = Link::where('user_id', Auth::id())->sum('visits');
-            $totalUniqueVisit = Link::where('user_id', Auth::id())->sum('unique_visits');
-            
-            $search = $request->input('search');
-            $links = Link::where('user_id', Auth::id())
-                ->when($search, fn($query, $search) => $query->where('slug', 'like', "%{$search}%"))
+            $userId = Auth::id();
+
+            $statistics = $this->getUserLinkStatistics($userId);
+
+            $links = Link::where('user_id', $userId)
+                ->when($request->input('search'), fn($query, $search) => $query->where('slug', 'like', "%{$search}%"))
                 ->latest()
                 ->paginate(6);
-            
-            $topLink = Link::where('user_id', Auth::id())
+
+            $topLinks = Link::where('user_id', $userId)
                 ->orderByDesc('visits')
                 ->take(4)
                 ->get();
 
-            return response()->json([
-                'totalLinks' => $totalLinks,
-                'totalVisit' => $totalVisit,
-                'totalUniqueVisit' => $totalUniqueVisit,
+            return response()->json(array_merge($statistics, [
                 'links' => $links,
-                'topLinks' => $topLink,
-            ]);
+                'topLinks' => $topLinks,
+            ]));
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Error fetching data', 'error' => $e->getMessage()], 500);
+            return $this->handleException($e, 'Error fetching data');
         }
     }
 
     public function getVisitData()
     {
         try {
-            $visits = Linkvisithistory::whereHas('link', function ($query) {
-                    $query->where('user_id', Auth::id());
-                })->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
-                ->groupBy('day')
-                ->orderBy('day', 'asc')
-                ->get();
+            $userId = Auth::id();
 
-            $visitData = [];
-            foreach (range(1, 7) as $day) {
-                $visitData[$day] = $visits->firstWhere('day', $day)->total_visits ?? 0;
-            }
+            $visitData = $this->getVisitStatistics($userId);
 
-            return response()->json([
-                'visitData' => array_values($visitData),
-            ]);
+            return response()->json(['visitData' => $visitData]);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Error fetching visit data', 'error' => $e->getMessage()], 500);
+            return $this->handleException($e, 'Error fetching visit data');
         }
     }
 
@@ -70,85 +56,39 @@ class ApiLinkController extends Controller
         try {
             $validatedData = $request->validate([
                 'data' => 'required|string|max:500',
-                'size' => 'nullable|string|regex:/^\d+x\d+$/|max:10', 
+                'size' => 'nullable|string|regex:/^\d+x\d+$/|max:10',
             ]);
-        
-            $data = $validatedData['data'];
-            $size = $validatedData['size'] ?? '200x200';
-        
-            $qrApiUrl = "https://api.qrserver.com/v1/create-qr-code/";
-            $queryParams = http_build_query([
-                'data' => $data,
-                'size' => $size,
-            ]);
-        
-            $qrCodeUrl = "{$qrApiUrl}?{$queryParams}";
-        
+
+            $qrCodeUrl = $this->createQRCodeUrl($validatedData);
+
             return response()->json([
                 'success' => true,
                 'message' => 'QR Code generated successfully.',
                 'qrCodeUrl' => $qrCodeUrl,
             ]);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Error generating QR code', 'error' => $e->getMessage()], 500);
+            return $this->handleException($e, 'Error generating QR code');
         }
     }
 
     public function show(Link $link, Request $request)
     {
         try {
-            if ($link->user_id !== Auth::id()) {
-                return response()->json(['message' => 'Forbidden'], 403);
-            }
+            $this->authorizeLink($link);
 
-            $filter = $request->query('filter', 'all');
-            $query = Linkvisithistory::where('link_id', $link->id);
+            $details = $this->getLinkDetails($link, $request);
 
-            if ($filter === 'unique') {
-                $query->where('is_unique', true);
-            } elseif ($filter === 'redirected') {
-                $query->where('status', 1);
-            } elseif ($filter === 'rejected') {
-                $query->where('status', 0);
-            }
-
-            $visithistory = $query->latest()->paginate(10);
-
-            $redirectedCount = Linkvisithistory::where('link_id', $link->id)->where('status', 1)->count();
-            $rejectedCount = Linkvisithistory::where('link_id', $link->id)->where('status', 0)->count();
-
-            $blockedIps = BlockedIp::where('link_id', $link->id)->get();
-
-            $topReferers = Linkvisithistory::where('link_id', $link->id)
-                ->select('referer_url', DB::raw('COUNT(*) as visit_count'))
-                ->groupBy('referer_url')
-                ->orderByDesc('visit_count')
-                ->limit(5)
-                ->get();
-
-            return response()->json([
-                'link' => $link,
-                'visithistory' => $visithistory,
-                'redirectedCount' => $redirectedCount,
-                'rejectedCount' => $rejectedCount,
-                'blockedIps' => $blockedIps,
-                'filter' => $filter,
-                'topReferers' => $topReferers,
-            ]);
+            return response()->json($details);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Error fetching link details', 'error' => $e->getMessage()], 500);
+            return $this->handleException($e, 'Error fetching link details');
         }
     }
 
     public function store(Request $request)
     {
         try {
-            $validatedData = $request->validate([
-                'target_url' => 'required|max:255|url',
-                'slug' => 'required|max:255|unique:links',
-            ]);
+            $validatedData = $this->validateLinkData($request);
 
-            $validatedData['user_id'] = Auth::id();
             $link = Link::create($validatedData);
 
             return response()->json([
@@ -156,28 +96,16 @@ class ApiLinkController extends Controller
                 'link' => $link,
             ], 201);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Error creating link', 'error' => $e->getMessage()], 500);
+            return $this->handleException($e, 'Error creating link');
         }
     }
 
     public function update(Request $request, Link $link)
     {
         try {
-            if ($link->user_id !== Auth::id()) {
-                return response()->json(['message' => 'Forbidden'], 403);
-            }
+            $this->authorizeLink($link);
 
-            $validatedData = $request->validate([
-                'target_url' => 'required|max:255|url',
-                'slug' => 'required|max:255|unique:links,slug,' . $link->id,
-                'password' => 'nullable|min:6|max:255',
-            ]);
-
-            $validatedData['password_protected'] = $request->has('password_protected') ? 1 : 0;
-            $validatedData['password'] = $validatedData['password_protected']
-                ? (!empty($request->password) ? bcrypt($request->password) : $link->password)
-                : null;
-            $validatedData['active'] = $request->has('active') ? 1 : 0;
+            $validatedData = $this->validateLinkData($request, $link);
 
             $link->update($validatedData);
 
@@ -186,22 +114,109 @@ class ApiLinkController extends Controller
                 'link' => $link,
             ]);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Error updating link', 'error' => $e->getMessage()], 500);
+            return $this->handleException($e, 'Error updating link');
         }
     }
 
     public function destroy(Link $link)
     {
         try {
-            if ($link->user_id !== Auth::id()) {
-                return response()->json(['message' => 'Forbidden'], 403);
-            }
+            $this->authorizeLink($link);
 
             $link->delete();
 
             return response()->json(['message' => 'Link deleted successfully.']);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Error deleting link', 'error' => $e->getMessage()], 500);
+            return $this->handleException($e, 'Error deleting link');
         }
+    }
+
+    private function authorizeLink(Link $link)
+    {
+        if ($link->user_id !== Auth::id()) {
+            abort(response()->json(['message' => 'Forbidden'], 403));
+        }
+    }
+
+    private function handleException(\Exception $e, string $defaultMessage)
+    {
+        return response()->json([
+            'message' => $defaultMessage,
+            'error' => $e->getMessage(),
+        ], 500);
+    }
+
+    private function getUserLinkStatistics($userId)
+    {
+        return [
+            'totalLinks' => Link::where('user_id', $userId)->count(),
+            'totalVisit' => Link::where('user_id', $userId)->sum('visits'),
+            'totalUniqueVisit' => Link::where('user_id', $userId)->sum('unique_visits'),
+        ];
+    }
+
+    private function getVisitStatistics($userId)
+    {
+        $visits = Linkvisithistory::whereHas('link', fn($query) => $query->where('user_id', $userId))
+            ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
+            ->groupBy('day')
+            ->orderBy('day')
+            ->get()
+            ->keyBy('day');
+
+        return collect(range(1, 7))->map(fn($day) => $visits[$day]->total_visits ?? 0)->values();
+    }
+
+    private function createQRCodeUrl($validatedData)
+    {
+        return "https://api.qrserver.com/v1/create-qr-code/?" . http_build_query([
+            'size' => $validatedData['size'] ?? '200x200',
+            'data' => $validatedData['data'],
+        ]);
+    }
+
+    private function getLinkDetails(Link $link, Request $request)
+    {
+        $filter = $request->query('filter', 'all');
+
+        return [
+            'link' => $link,
+            'visithistory' => Linkvisithistory::where('link_id', $link->id)
+                ->when($filter === 'unique', fn($q) => $q->where('is_unique', true))
+                ->when($filter === 'redirected', fn($q) => $q->where('status', 1))
+                ->when($filter === 'rejected', fn($q) => $q->where('status', 0))
+                ->latest()
+                ->paginate(10),
+            'redirectedCount' => Linkvisithistory::where('link_id', $link->id)->where('status', 1)->count(),
+            'rejectedCount' => Linkvisithistory::where('link_id', $link->id)->where('status', 0)->count(),
+            'blockedIps' => BlockedIp::where('link_id', $link->id)->get(),
+            'filter' => $filter,
+            'topReferers' => Linkvisithistory::where('link_id', $link->id)
+                ->select('referer_url', DB::raw('COUNT(*) as visit_count'))
+                ->groupBy('referer_url')
+                ->orderByDesc('visit_count')
+                ->take(5)
+                ->get(),
+        ];
+    }
+
+    private function validateLinkData(Request $request, Link $link = null)
+    {
+        $rules = [
+            'target_url' => 'required|max:255|url',
+            'slug' => 'required|max:255|unique:links,slug' . ($link ? ',' . $link->id : ''),
+            'password' => 'nullable|min:6|max:255',
+        ];
+
+        $validatedData = $request->validate($rules);
+
+        $validatedData['user_id'] = Auth::id();
+        $validatedData['password_protected'] = $request->has('password_protected');
+        $validatedData['password'] = $validatedData['password_protected']
+            ? (!empty($request->password) ? bcrypt($request->password) : $link?->password)
+            : null;
+        $validatedData['active'] = $request->has('active');
+
+        return $validatedData;
     }
 }
