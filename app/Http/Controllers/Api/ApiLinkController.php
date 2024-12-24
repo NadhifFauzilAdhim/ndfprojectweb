@@ -42,9 +42,7 @@ class ApiLinkController extends Controller
     {
         try {
             $userId = Auth::id();
-
             $visitData = $this->getVisitStatistics($userId);
-
             return response()->json(['visitData' => $visitData]);
         } catch (\Exception $e) {
             return $this->handleException($e, 'Error fetching visit data');
@@ -58,9 +56,7 @@ class ApiLinkController extends Controller
                 'data' => 'required|string|max:500',
                 'size' => 'nullable|string|regex:/^\d+x\d+$/|max:10',
             ]);
-
             $qrCodeUrl = $this->createQRCodeUrl($validatedData);
-
             return response()->json([
                 'success' => true,
                 'message' => 'QR Code generated successfully.',
@@ -163,7 +159,6 @@ class ApiLinkController extends Controller
             ->orderBy('day')
             ->get()
             ->keyBy('day');
-
         return collect(range(1, 7))->map(fn($day) => $visits[$day]->total_visits ?? 0)->values();
     }
 

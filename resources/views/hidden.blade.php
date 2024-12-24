@@ -16,7 +16,29 @@
                     </iframe>
                 </div>
             </div>
-            
+        </div>
+        <div class="mt-4 text-center">
+            <p class="text-secondary">I've been waiting for </p>
+            <h5 id="timecount" class="text-danger"></h5>
         </div>
     </div>
+
+    <script>
+        function updateTimeCount() {
+            const startDate = new Date("2023-02-28T00:00:00");
+            const now = new Date();
+
+            const diff = now - startDate; // Selisih dalam milidetik
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById("timecount").innerText = `${days} hari, ${hours} jam, ${minutes} menit, ${seconds} detik`;
+        }
+
+        setInterval(updateTimeCount, 1000); // Perbarui setiap detik
+        updateTimeCount(); // Jalankan sekali saat halaman dimuat
+    </script>
 </x-layout>

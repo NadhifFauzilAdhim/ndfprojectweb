@@ -211,83 +211,86 @@
                             </div>
                         </div>
                     </div>
-                    
-                    
-                    
                     @forelse ($links as $link)
-                    <div class="col-md-4 " >
-                        <div class="card shadow card-hover">
-                          <div class="card-header" data-bs-theme="dark">
-                            <h6 class="card-title d-flex align-items-center gap-2">
-                                <div class="input-group ">
-                                    <input type="text" class="form-control text-dark shadow-sm bg-white" aria-label="link" id="linkInput-{{ $link->slug }}" value="{{ url('r/' . $link->slug) }}">
-                                    <button class="btn btn-sm btn-success {{ $link->active ? 'btn-success' : 'btn-danger' }}"  id="button-addon2" onclick="copyFunction('{{ $link->slug }}')"><i class="bi bi-copy me-1"></i></button>
-                                </div>
-                            </h6>
-                          </div>
-                          <div class="card-body">
-                                <h6 class="card-subtitle mb-2 "> Url Destination</h6>
-                                <p class="card-text"><a href="{{ $link->target_url }}" target="_blank" class="text-dark link-success">{{ Str::limit(strip_tags($link->target_url), 80) }}</a></p>
+                    <div class="col-md-4 d-flex align-items-stretch">
+                        <div class="card shadow w-100">
+                            <div class="card-header" data-bs-theme="dark">
+                                <h6 class="card-title d-flex align-items-center gap-2">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control text-dark shadow-sm bg-white" aria-label="link" id="linkInput-{{ $link->slug }}" value="{{ url('r/' . $link->slug) }}">
+                                        <button class="btn btn-sm {{ $link->active ? 'btn-success' : 'btn-danger' }}" id="button-addon2" onclick="copyFunction('{{ $link->slug }}')">
+                                            <i class="bi bi-copy me-1"></i>
+                                        </button>
+                                    </div>
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2">Url Destination</h6>
+                                <p class="card-text">
+                                    <a href="{{ $link->target_url }}" target="_blank" class="text-dark link-success">{{ Str::limit(strip_tags($link->target_url), 80) }}</a>
+                                </p>
                                 <div class="row mb-4">
                                     <div class="col-12 mb-1">
                                         <p class="card-text d-flex align-items-center">
-                                            <iconify-icon icon="solar:archive-down-minimlistic-line-duotone" class="fs-6 me-2 "></iconify-icon>
+                                            <iconify-icon icon="solar:archive-down-minimlistic-line-duotone" class="fs-6 me-2"></iconify-icon>
                                             Created {{ $link->created_at }}
                                         </p>
                                     </div>
                                     <div class="col-12 mb-1">
                                         <p class="card-text d-flex align-items-center">
                                             <iconify-icon icon="solar:chart-square-linear" class="fs-6 me-2"></iconify-icon>
-                                            <b class="me-1">{{ $link->visits }}</b>Visits  <b class="mx-1">{{ $link->unique_visits }}</b> Unique
+                                            <b class="me-1">{{ $link->visits }}</b>Visits <b class="mx-1">{{ $link->unique_visits }}</b> Unique
                                         </p>
                                     </div>
                                     <div class="col-12">
-                                            <p class="card-text d-flex align-items-center">
-                                                @if($link->password_protected)<iconify-icon icon="solar:lock-keyhole-minimalistic-linear" class="fs-6 me-2"></iconify-icon>@else<iconify-icon icon="solar:lock-unlocked-broken" class="fs-6 me-2"></iconify-icon>@endif
-                                                <b class="me-1"> {{ $link->password_protected ? 'Protected' : 'Unprotected' }}</b>
-                                            </p>
+                                        <p class="card-text d-flex align-items-center">
+                                            @if($link->password_protected)
+                                                <iconify-icon icon="solar:lock-keyhole-minimalistic-linear" class="fs-6 me-2"></iconify-icon>
+                                            @else
+                                                <iconify-icon icon="solar:lock-unlocked-broken" class="fs-6 me-2"></iconify-icon>
+                                            @endif
+                                            <b class="me-1">{{ $link->password_protected ? 'Protected' : 'Unprotected' }}</b>
+                                        </p>
                                     </div>
-                            
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <div class="dropdown">
                                         <button class="btn btn-outline-warning btn-sm dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                          Actions
+                                            Actions
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <li>
                                                 <a class="dropdown-item text-primary bg-transparent" href="/dashboard/link/{{ $link->slug }}">
-                                                    <i class="bi bi-card-checklist"></i> <strong>Detail</strong> 
+                                                    <i class="bi bi-card-checklist"></i> <strong>Detail</strong>
                                                 </a>
                                             </li>
                                             <li>
-                                                <button class="dropdown-item text-primary bg-transparent"   data-bs-toggle="modal" data-bs-target="#qrCodeModal" onclick="showQRCode('{{ url('r/' . $link->slug) }}')">
-                                                    <i class="bi bi-qr-code me-1"></i> Generate QR 
+                                                <button class="dropdown-item text-primary bg-transparent" data-bs-toggle="modal" data-bs-target="#qrCodeModal" onclick="showQRCode('{{ url('r/' . $link->slug) }}')">
+                                                    <i class="bi bi-qr-code me-1"></i> Generate QR
                                                 </button>
                                             </li>
-                                          <li>
-                                            <a class="dropdown-item text-primary bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $link->slug }}" data-target-url="{{ $link->target_url }}"  data-active="{{ $link->active }}">
-                                                <i class="bi bi-pencil-square"></i> Quick Action
-                                            </a>
-                                         </li>
-                                          <li>
-                                            <a class="dropdown-item text-danger bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $link->slug }}">
-                                            <i class="bi bi-trash-fill"></i> Delete
-                                            </a>
-                                          </li>
+                                            <li>
+                                                <a class="dropdown-item text-primary bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $link->slug }}" data-target-url="{{ $link->target_url }}" data-active="{{ $link->active }}">
+                                                    <i class="bi bi-pencil-square"></i> Quick Action
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item text-danger bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $link->slug }}">
+                                                    <i class="bi bi-trash-fill"></i> Delete
+                                                </a>
+                                            </li>
                                         </ul>
-                                      </div>
-                                   
+                                    </div>
                                 </div>
-                          </div>
+                            </div>
                         </div>
-                      </div>
-                    @empty
-                    <div class="text-center">
-                        <h4 class="home__title">Nampaknya Belum Ada Link &#129300;</h4>
-                       
                     </div>
-                    @endforelse
+                @empty
+                <div class="empty-container text-center">
+                    <p>Ups! No links found.</p>
+                </div>
+                @endforelse
+                
                 </div>
 
                 {{ $links->links() }}

@@ -77,6 +77,13 @@ class HomeController extends Controller
         ]);
     }
 
+    public function ipdocuments(){
+        return view('ipdocument',[
+            'title' => 'IP Documents',
+            'posts' => Post::filter(request(['search', 'category', 'author']))->latest()->paginate(6)->withQueryString()
+        ]);
+    }
+
 
 }
 
