@@ -28,6 +28,6 @@ return Application::configure(basePath: dirname(__DIR__))
                     'message' => 'Not authenticated'
                 ], 401);
             }
-            return $e->render($request);
+            
         });
     })->create();

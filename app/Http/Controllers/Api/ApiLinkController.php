@@ -194,24 +194,23 @@ class ApiLinkController extends Controller
                 ->get(),
         ];
     }
-
     private function validateLinkData(Request $request, Link $link = null)
     {
         $rules = [
             'target_url' => 'required|max:255|url',
             'slug' => 'required|max:255|unique:links,slug' . ($link ? ',' . $link->id : ''),
+            'password_protected' => 'nullable|boolean',
             'password' => 'nullable|min:6|max:255',
+            'active' => 'nullable|boolean',
         ];
-
         $validatedData = $request->validate($rules);
-
         $validatedData['user_id'] = Auth::id();
-        $validatedData['password_protected'] = $request->has('password_protected');
+        $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
         $validatedData['password'] = $validatedData['password_protected']
-            ? (!empty($request->password) ? bcrypt($request->password) : $link?->password)
+            ? (!empty($request->password) ? bcrypt($request->password) : $link->password)
             : null;
-        $validatedData['active'] = $request->has('active');
-
+        $validatedData['active'] = $validatedData['active'] ?? 1;
+        
         return $validatedData;
     }
 }

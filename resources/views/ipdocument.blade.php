@@ -6,14 +6,36 @@
         <section id="api-description">
             <h2>API Overview</h2>
             <p>This API is designed for managing shortened links and tracking their performance. It provides various endpoints to create, update, retrieve, and delete links, as well as monitor link activities such as visits, unique visits, and blocked IPs. Additionally, it supports link protection features like password protection, with full control over the links' visibility and status. Whether you're managing a collection of links or analyzing their traffic, this API offers all the necessary functionality for efficient link management and tracking.</p>
+        
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 mt-2">
+                <div>
+                    <img src="https://i.ibb.co.com/p4SYDhQ/1.png" alt="Image 1" style="max-width: 100%; height: auto;"/>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12  mt-2">
+                <div>
+                    <img src="https://i.ibb.co.com/RvJsXZT/2.png" alt="Image 2" style="max-width: 100%; height: auto;"/>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12  mt-2">
+                <div>
+                    <img src="https://i.ibb.co.com/Zm0ygwV/3.png" alt="Image 3" style="max-width: 100%; height: auto;"/>
+                </div>
+            </div>
+          </div>
+          <a href="https://ndfproject.my.id/dashboard/link" class="btn btn-primary">Go to Apps</a>
+           
+            
         </section>
+        
         <section id="authentication" >
             <h2>Authentication</h2>
             <p>The API uses token-based authentication with Sanctum.</p>
             <div class="accordion" id="authenticationAccordion">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingRegister">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRegister" aria-expanded="true" aria-controls="collapseRegister">
+                        <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapseRegister" aria-expanded="true" aria-controls="collapseRegister">
                             Register
                         </button>
                     </h2>
@@ -24,9 +46,9 @@
                             <strong>Description:</strong> Registers a new user.<br>
                             <pre><code>{
   "name": "string",
+  "username": "string",
   "email": "string",
-  "password": "string",
-  "password_confirmation": "string"
+  "password": "string"
 }</code></pre>
                             <strong>Response:</strong>
                             <ul>
@@ -129,8 +151,8 @@
                             <pre><code>{
   "target_url": "string",
   "slug": "string",
-  "password": "string (optional)",
   "password_protected": "boolean",
+  "password": "string (optional)",
   "active": "boolean"
 }</code></pre>
                             <strong>Response:</strong>
