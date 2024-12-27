@@ -49,9 +49,12 @@
                                     <span>
                                         <iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Traffic Overview"></iconify-icon>
                                     </span>
+                                    
                                 </h5>
-                                <div id="traffic-overview" ></div>
+                                
+                                <div id="traffic-overview"></div>
                             </div>
+                            
                         </div>
                     </div>
                     <div class="col-lg-4">

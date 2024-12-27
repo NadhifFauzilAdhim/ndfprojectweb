@@ -29,12 +29,14 @@ class ApiAuthController extends Controller
 
         $user->sendEmailVerificationNotification();
         return response()->json([
+            'success' => true,
             'message' => 'Berhasil, Email verifikasi dikirimkan ke email Anda.',
             'user' => $user,
         ], 201);
 
     } catch (\Exception $e) {
         return response()->json([
+            'success' => false,
             'message' => 'Pendaftaran gagal',
             'error' => $e->getMessage(),
         ], 400);
@@ -59,11 +61,21 @@ class ApiAuthController extends Controller
             }
 
             $token = $user->createToken('auth_token')->plainTextToken;
+            
+            // Mengembalikan token dan data pengguna yang relevan
             return response()->json([
+                'success' => true,
+                'message' => 'Login successful',
                 'access_token' => $token,
                 'token_type' => 'Bearer',
+                'user' => [
+                    'id' => $user->id,
+                    'email' => $user->email,
+                    'name' => $user->name,
+                    'username' => $user->username,
+                    'avatar' => $user->avatar
+                ]
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Login failed',
@@ -72,16 +84,19 @@ class ApiAuthController extends Controller
         }
     }
 
+
     public function logout(Request $request)
     {
         try {
             $request->user()->tokens()->delete();
 
             return response()->json([
+                'success' => true,
                 'message' => 'Logged out successfully',
             ]);
         } catch (\Exception $e) {
             return response()->json([
+                'success' => false,
                 'message' => 'Logout failed',
                 'error' => $e->getMessage(),
             ], 400);

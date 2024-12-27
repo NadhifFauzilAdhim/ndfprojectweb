@@ -30,6 +30,7 @@ class ApiLinkController extends Controller
                 ->get();
 
             return response()->json(array_merge($statistics, [
+                'success' => true,
                 'links' => $links,
                 'topLinks' => $topLinks,
             ]));
@@ -38,12 +39,17 @@ class ApiLinkController extends Controller
         }
     }
 
+
     public function getVisitData()
     {
         try {
             $userId = Auth::id();
             $visitData = $this->getVisitStatistics($userId);
-            return response()->json(['visitData' => $visitData]);
+            $weeklyVisitData = $this->getVisitStatisticsInWeek($userId);
+            return response()->json([
+                'visitData' => $visitData,
+                'weeklyVisitData' => $weeklyVisitData
+            ]);
         } catch (\Exception $e) {
             return $this->handleException($e, 'Error fetching visit data');
         }
@@ -73,8 +79,13 @@ class ApiLinkController extends Controller
             $this->authorizeLink($link);
 
             $details = $this->getLinkDetails($link, $request);
+            $visitData = $this->getSingleLinkVisitStatistics($link->id);
 
-            return response()->json($details);
+            return response()->json([
+                'success' => true,
+                'details' => $details,
+                'visitData' => $visitData
+            ]);
         } catch (\Exception $e) {
             return $this->handleException($e, 'Error fetching link details');
         }
@@ -88,6 +99,7 @@ class ApiLinkController extends Controller
             $link = Link::create($validatedData);
 
             return response()->json([
+                'success' => true,
                 'message' => 'Link created successfully.',
                 'link' => $link,
             ], 201);
@@ -106,6 +118,7 @@ class ApiLinkController extends Controller
             $link->update($validatedData);
 
             return response()->json([
+                'success' => true,
                 'message' => 'Link updated successfully.',
                 'link' => $link,
             ]);
@@ -121,7 +134,10 @@ class ApiLinkController extends Controller
 
             $link->delete();
 
-            return response()->json(['message' => 'Link deleted successfully.']);
+            return response()->json([
+                'success' => true,
+                'message' => 'Link deleted successfully.'
+            ]);
         } catch (\Exception $e) {
             return $this->handleException($e, 'Error deleting link');
         }
@@ -137,6 +153,7 @@ class ApiLinkController extends Controller
     private function handleException(\Exception $e, string $defaultMessage)
     {
         return response()->json([
+            'success' => false,
             'message' => $defaultMessage,
             'error' => $e->getMessage(),
         ], 500);
@@ -151,6 +168,18 @@ class ApiLinkController extends Controller
         ];
     }
 
+    private function getSingleLinkVisitStatistics($linkId)
+    {
+        $visits = Linkvisithistory::where('link_id', $linkId)
+            ->whereDate('created_at', '>=', now()->subDays(7))
+            ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
+            ->groupBy('day')
+            ->orderBy('day')
+            ->get()
+            ->keyBy('day');
+        return collect(range(1, 7))->map(fn($day) => $visits[$day]->total_visits ?? 0)->values();
+    }
+    
     private function getVisitStatistics($userId)
     {
         $visits = Linkvisithistory::whereHas('link', fn($query) => $query->where('user_id', $userId))
@@ -160,6 +189,19 @@ class ApiLinkController extends Controller
             ->get()
             ->keyBy('day');
         return collect(range(1, 7))->map(fn($day) => $visits[$day]->total_visits ?? 0)->values();
+    }
+
+    private function getVisitStatisticsInWeek($userId)
+    {
+        $visits = Linkvisithistory::whereHas('link', fn($query) => $query->where('user_id', $userId))
+        ->where('created_at', '>=', now()->subDays(7))
+        ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
+        ->groupBy('day')
+        ->orderBy('day')
+        ->get()
+        ->keyBy('day');
+        
+    return collect(range(1, 7))->map(fn($day) => $visits[$day]->total_visits ?? 0)->values();    
     }
 
     private function createQRCodeUrl($validatedData)
@@ -175,6 +217,7 @@ class ApiLinkController extends Controller
         $filter = $request->query('filter', 'all');
 
         return [
+            'success' => true,
             'link' => $link,
             'visithistory' => Linkvisithistory::where('link_id', $link->id)
                 ->when($filter === 'unique', fn($q) => $q->where('is_unique', true))

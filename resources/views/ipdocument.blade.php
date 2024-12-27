@@ -6,7 +6,6 @@
         <section id="api-description">
             <h2>API Overview</h2>
             <p>This API is designed for managing shortened links and tracking their performance. It provides various endpoints to create, update, retrieve, and delete links, as well as monitor link activities such as visits, unique visits, and blocked IPs. Additionally, it supports link protection features like password protection, with full control over the links' visibility and status. Whether you're managing a collection of links or analyzing their traffic, this API offers all the necessary functionality for efficient link management and tracking.</p>
-        
           <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-12 mt-2">
                 <div>
@@ -24,9 +23,7 @@
                 </div>
             </div>
           </div>
-          <a href="https://ndfproject.my.id/dashboard/link" class="btn btn-primary">Go to Apps</a>
-           
-            
+          <a href="https://ndfproject.my.id/dashboard/link" class="btn btn-primary mt-2">Go to Apps</a>
         </section>
         
         <section id="authentication" >
@@ -45,10 +42,10 @@
                             <strong>Method:</strong> POST<br>
                             <strong>Description:</strong> Registers a new user.<br>
                             <pre><code>{
-  "name": "string",
-  "username": "string",
-  "email": "string",
-  "password": "string"
+"name": "string",
+"username": "string",
+"email": "string",
+"password": "string"
 }</code></pre>
                             <strong>Response:</strong>
                             <ul>
@@ -74,11 +71,34 @@
   "email": "string",
   "password": "string"
 }</code></pre>
-                            <strong>Response:</strong>
-                            <ul>
-                                <li><code>200</code> OK on success: <pre><code>{"token": "string"}</code></pre></li>
-                                <li><code>401</code> Unauthorized on failure</li>
-                            </ul>
+<strong>Response:</strong>
+<ul>
+    <li><code>200</code> OK on success:
+        <pre><code>
+{
+    "success": boolean,
+    "message": "string",
+    "access_token": "string",
+    "token_type": "Bearer",
+    "user": {
+        "id": "integer",
+        "email": "string",
+        "name": "string",
+        "username": "string",
+        "avatar": "string|null"
+    }
+}
+        </code></pre>
+    </li>
+    <li><code>401</code> Unauthorized on failure:
+        <pre><code>
+{
+    "message": "The provided credentials are incorrect."
+}
+        </code></pre>
+    </li>
+</ul>
+
                         </div>
                     </div>
                 </div>
@@ -126,6 +146,7 @@
                             </ul>
                             <strong>Response:</strong>
                             <pre><code>{
+  "success" : "boolean",                      
   "totalLinks": "integer",
   "totalVisit": "integer",
   "totalUniqueVisit": "integer",
@@ -148,7 +169,8 @@
                             <strong>Method:</strong> POST<br>
                             <strong>Description:</strong> Creates a new link.<br>
                             <strong>Headers:</strong> <code>Authorization: Bearer {token}</code><br>
-                            <pre><code>{
+                            <pre><code>{ 
+  "success" : "boolean",
   "target_url": "string",
   "slug": "string",
   "password_protected": "boolean",
@@ -181,6 +203,7 @@
                             </ul>
                             <strong>Response:</strong>
                             <pre><code>{
+  "success" : "boolean",
   "link": {...},
   "visithistory": { "data": [...] },
   "redirectedCount": "integer",
@@ -207,6 +230,7 @@
                             <strong>Headers:</strong> <code>Authorization: Bearer {token}</code><br>
                             <strong>Request Body:</strong>
                             <pre><code>{
+  "success" : "boolean",
   "target_url": "string",
   "slug": "string",
   "password": "string (optional)",
@@ -251,36 +275,6 @@
             </div>
         </section>
 
-        <section id="visit-data" >
-            <h2>Visit Data</h2>
-            <p>Retrieve visit statistics for the authenticated user's links.</p>
-            <strong>Endpoint:</strong> <code>/visit-data</code><br>
-            <strong>Method:</strong> GET<br>
-            <strong>Headers:</strong> <code>Authorization: Bearer {token}</code><br>
-            <strong>Response:</strong>
-            <pre><code>{
-  "visitData": [integer, integer, integer, integer, integer, integer, integer]
-}</code></pre>
-            <p>The array represents visit counts for each day of the week, starting with Sunday.</p>
-        </section>
-
-        <section id="qr-code" >
-            <h2>QR Code</h2>
-            <p>Generate a QR code for the provided data.</p>
-            <strong>Endpoint:</strong> <code>/qrcode</code><br>
-            <strong>Method:</strong> GET<br>
-            <strong>Query Parameters:</strong>
-            <ul>
-                <li><code>data</code> (required): The data to encode in the QR code.</li>
-                <li><code>size</code> (optional): Dimensions of the QR code (e.g., 200x200).</li>
-            </ul>
-            <strong>Response:</strong>
-            <pre><code>{
-  "success": true,
-  "message": "QR Code generated successfully.",
-  "qrCodeUrl": "string"
-}</code></pre>
-        </section>
         <section id="links" >
             <h2>Block Ip</h2>
             <div class="accordion" id="linksAccordion">
@@ -290,7 +284,7 @@
             Get Blocked IPs
         </button>
     </h2>
-    <div id="collapseGetBlockedIps" class="accordion-collapse collapse" aria-labelledby="headingGetBlockedIps" data-bs-parent="#linksAccordion">
+    <div id="collapseGetBlockedIps" class="accordion-collapse collapse show" aria-labelledby="headingGetBlockedIps" data-bs-parent="#linksAccordion">
         <div class="accordion-body">
             <strong>Endpoint:</strong> <code>/block-ip/{link_id}</code><br>
             <strong>Method:</strong> GET<br>
@@ -391,5 +385,38 @@
                 <!-- Additional Link operations like Get Link Details, Update Link, Delete Link -->
             </div>
         </section>
+
+        <section id="visit-data" >
+            <h2>Visit Data</h2>
+            <p>Retrieve visit statistics for the authenticated user's links.</p>
+            <strong>Endpoint:</strong> <code>/visit-data</code><br>
+            <strong>Method:</strong> GET<br>
+            <strong>Headers:</strong> <code>Authorization: Bearer {token}</code><br>
+            <strong>Response:</strong>
+            <pre><code>{
+  "visitData": [integer, integer, integer, integer, integer, integer, integer],
+  "weeklyVisitData": [integer, integer, integer, integer, integer, integer, integer]
+}</code></pre>
+            <p>The array represents visit counts for each day of the week, starting with Sunday.</p>
+        </section>
+
+        <section id="qr-code" >
+            <h2>QR Code</h2>
+            <p>Generate a QR code for the provided data.</p>
+            <strong>Endpoint:</strong> <code>/qrcode</code><br>
+            <strong>Method:</strong> GET<br>
+            <strong>Query Parameters:</strong>
+            <ul>
+                <li><code>data</code> (required): The data to encode in the QR code.</li>
+                <li><code>size</code> (optional): Dimensions of the QR code (e.g., 200x200).</li>
+            </ul>
+            <strong>Response:</strong>
+            <pre><code>{
+  "success": true,
+  "message": "QR Code generated successfully.",
+  "qrCodeUrl": "string"
+}</code></pre>
+        </section>
+        
     </div>
 </x-layout>

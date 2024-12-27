@@ -28,7 +28,7 @@
             const startDate = new Date("2023-02-28T00:00:00");
             const now = new Date();
 
-            const diff = now - startDate; // Selisih dalam milidetik
+            const diff = now - startDate; 
 
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -38,7 +38,7 @@
             document.getElementById("timecount").innerText = `${days} hari, ${hours} jam, ${minutes} menit, ${seconds} detik`;
         }
 
-        setInterval(updateTimeCount, 1000); // Perbarui setiap detik
-        updateTimeCount(); // Jalankan sekali saat halaman dimuat
+        setInterval(updateTimeCount, 1000); 
+        updateTimeCount(); 
     </script>
 </x-layout>

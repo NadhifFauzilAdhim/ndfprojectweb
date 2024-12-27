@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\BlockedIp;
 use App\Models\Link;
 use App\Models\Linkvisithistory;
@@ -15,139 +16,199 @@ class LinkController extends Controller
      */
     public function index(Request $request)
     {
-        $totalLinks = Link::where('user_id', Auth::id())->count();
-        $totalVisit = Link::where('user_id', Auth::id())->sum('visits');
-        $totalUniqueVisit = Link::where('user_id', Auth::id())->sum('unique_visits');
+        $userId = Auth::id();
+
+        $totalLinks = Link::where('user_id', $userId)->count();
+        $totalVisit = Link::where('user_id', $userId)->sum('visits');
+        $totalUniqueVisit = Link::where('user_id', $userId)->sum('unique_visits');
         $search = $request->input('search');
-        $links = Link::where('user_id', Auth::id())->when($search, function ($query, $search) { return $query->where('slug', 'like', "%{$search}%"); })->latest()->paginate(6);
-        $topLink = Link::where('user_id',Auth::id())->orderByDesc('visits')->take(4)->get();
-        $visits = Linkvisithistory::whereHas('link', function ($query) {
-                $query->where('user_id', Auth::id());
-            })->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
-            ->groupBy('day')
-            ->orderBy('day', 'asc')
+
+        $links = Link::where('user_id', $userId)
+            ->when($search, fn($query) => $query->where('slug', 'like', "%{$search}%"))
+            ->latest()
+            ->paginate(6);
+
+        $topLinks = Link::where('user_id', $userId)
+            ->orderByDesc('visits')
+            ->take(4)
             ->get();
-        $visitData = [];
-        foreach (range(1, 7) as $day) {
-            $visitData[$day] = $visits->firstWhere('day', $day)->total_visits ?? 0;
-        }
-        return view('dashboard.shortlink.index', [
-            'title' => 'Short Link',
-            'links' => $links,
-            'visitData' => array_values($visitData), 
-            'totalLinks' => $totalLinks,
-            'totalVisit' => $totalVisit,
-            'totalUniqueVisit' => $totalUniqueVisit,
-            'topLinks' => $topLink
-        ]);
+
+        $visitData = $this->getAllVisitData($userId);
+
+        return view('dashboard.shortlink.index', compact(
+            'totalLinks',
+            'totalVisit',
+            'totalUniqueVisit',
+            'links',
+            'topLinks',
+            'visitData'
+        ))->with('title', 'Short Link');
     }
+
+    /**
+     * Show the details of a specific link.
+     */
     public function show(Link $link, Request $request)
     {
-        if ($link->user_id !== Auth::id()) {
-            abort(403);
-        }
-        $filter = $request->query('filter', 'all');
-        $query = Linkvisithistory::where('link_id', $link->id);
-        if ($filter === 'unique') {
-            $query->where('is_unique', true);
-        }elseif($filter === 'redirected'){
-            $query->where('status', 1);
-        }elseif($filter === 'rejected'){
-            $query->where('status', 0);
-        }
-        $visithistory = $query->latest()->paginate(10);
-        $redirectedCount = Linkvisithistory::where('link_id', $link->id)->where('status', 1)->count();
-        $rejectedCount = Linkvisithistory::where('link_id', $link->id)->where('status', 0)->count();
-        $blockedIps = BlockedIp::where('link_id', $link->id)->get();
-        $topReferers = Linkvisithistory::where('link_id', $link->id)
-        ->select('referer_url', DB::raw('COUNT(*) as visit_count'))
-        ->groupBy('referer_url')
-        ->orderByDesc('visit_count')
-        ->limit(5) 
-        ->get();
-        
-        $visitsByDay = Linkvisithistory::where('link_id', $link->id)
-        ->whereDate('created_at', '>=', now()->subDays(7)) 
-        ->selectRaw('DAYOFWEEK(created_at) as day, COUNT(*) as count')
-        ->groupBy('day')
-        ->pluck('count', 'day')
-        ->toArray();
-        $chartData = [];
-        for ($i = 1; $i <= 7; $i++) {
-            $chartData[] = $visitsByDay[$i] ?? 0; 
-        }
+        $this->authorizeLink($link);
 
-        return view('dashboard.shortlink.linkdetail', [
-            'title' => 'Detail Link',
-            'link' => $link,
-            'visithistory' => $visithistory,
-            'redirectedCount' => $redirectedCount,
-            'rejectedCount' => $rejectedCount,
-            'blockedIps' => $blockedIps,
-            'filter' => $filter,
-            'chartData' => $chartData,
-            'topReferers' => $topReferers,
-        ]);
+        $filter = $request->query('filter', 'all');
+        $visithistory = $this->getVisitHistory($link->id, $filter);
+
+        $redirectedCount = $this->getVisitCount($link->id, 1);
+        $rejectedCount = $this->getVisitCount($link->id, 0);
+
+        $blockedIps = BlockedIp::where('link_id', $link->id)->get();
+
+        $topReferers = Linkvisithistory::where('link_id', $link->id)
+            ->select('referer_url', DB::raw('COUNT(*) as visit_count'))
+            ->groupBy('referer_url')
+            ->orderByDesc('visit_count')
+            ->limit(5)
+            ->get();
+
+        $chartData = $this->getSingleLinkStatistic($link->id, false);
+
+        return view('dashboard.shortlink.linkdetail', compact(
+            'link',
+            'visithistory',
+            'redirectedCount',
+            'rejectedCount',
+            'blockedIps',
+            'filter',
+            'chartData',
+            'topReferers'
+        ))->with('title', 'Detail Link');
     }
+
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, Link $link)
     {
-        if ($link->user_id !== Auth::id()) {
-            return response()->json(['message' => 'Forbidden'], 403);
-        }
+        $this->authorizeLink($link);
+
         $validatedData = $request->validate([
             'target_url' => 'required|max:255|url',
             'slug' => 'required|max:255|unique:links,slug,' . $link->id,
             'password' => 'nullable|min:6|max:255',
         ]);
-    
+
         $oldSlug = $link->slug;
+
         $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
         $validatedData['password_protected'] = $request->has('password_protected') ? 1 : 0;
         $validatedData['password'] = $validatedData['password_protected']
-            ? (!empty($request->password) ? bcrypt($request->password) : $link->password)
+            ? bcrypt($request->input('password', $link->password))
             : null;
         $validatedData['active'] = $request->has('active') ? 1 : 0;
+
         $link->update($validatedData);
-        if ($oldSlug !== $link->slug) {
-            return response()->json([
+
+        return $oldSlug !== $link->slug
+            ? response()->json([
                 'success' => true,
                 'message' => 'Slug updated successfully! Link updated.',
                 'redirect' => route('link.show', ['link' => $link->slug]),
-            ]);
-        }
-    
-        return response()->json([
-            'success' => true,
-            'message' => 'Link updated successfully!',
-        ]);
+            ])
+            : response()->json(['success' => true, 'message' => 'Link updated successfully!']);
     }
-    
 
-    
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'target_url' => 'required|max:255|url', 
-            'slug' => 'required|max:255|unique:links'
+            'target_url' => 'required|max:255|url',
+            'slug' => 'required|max:255|unique:links',
         ]);
+
         $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
         $validatedData['user_id'] = Auth::id();
+
         Link::create($validatedData);
+
         return redirect()->back()->with('success', 'Link Berhasil Ditambahkan');
     }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Link $link)
     {
-        if ($link->user_id !== Auth::id()) {
-            abort(403);
-        }
-        Link::destroy($link->id);
+        $this->authorizeLink($link);
+
+        $link->delete();
+
         return redirect()->back()->with('success', 'Link Berhasil Dihapus');
     }
 
+    /**
+     * Get visit data by day.
+     */
+    private function getSingleLinkStatistic($identifier, $isUser = true)
+    {
+        $query = Linkvisithistory::when($isUser, fn($q) => $q->whereHas('link', fn($q) => $q->where('user_id', $identifier)))
+            ->when(!$isUser, fn($q) => $q->where('link_id', $identifier))
+            ->whereDate('created_at', '>=', now()->subDays(7))
+            ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
+            ->groupBy('day')
+            ->orderBy('day', 'asc')
+            ->get()
+            ->keyBy('day');
+
+        return collect(range(1, 7))->map(fn($day) => $query[$day]->total_visits ?? 0)->values()->toArray();
+    }
+
+
+    private function getAllVisitData($userId){
+        $visits = Linkvisithistory::whereHas('link', fn($query) => $query->where('user_id', $userId))
+        ->whereDate('created_at', '>=', now()->subDays(7))
+        ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
+        ->groupBy('day')
+        ->orderBy('day')
+        ->get()
+        ->keyBy('day');
+    return collect(range(1, 7))->map(fn($day) => $visits[$day]->total_visits ?? 0)->values();
+    }
+
+    /**
+     * Get visit history based on filter.
+     */
+    private function getVisitHistory($linkId, $filter)
+    {
+        $query = Linkvisithistory::where('link_id', $linkId);
+    
+        if ($filter === 'unique') {
+            $query->where('is_unique', true);
+        } elseif ($filter === 'redirected') {
+            $query->where('status', 1);
+        } elseif ($filter === 'rejected') {
+            $query->where('status', 0);
+        }
+    
+        return $query->latest()->paginate(10);
+    }
+    
+
+    /**
+     * Get visit count by status.
+     */
+    private function getVisitCount($linkId, $status)
+    {
+        return Linkvisithistory::where('link_id', $linkId)
+            ->where('status', $status)
+            ->count();
+    }
+
+    /**
+     * Authorize link access.
+     */
+    private function authorizeLink(Link $link)
+    {
+        if ($link->user_id !== Auth::id()) {
+            abort(403);
+        }
+    }
 }
