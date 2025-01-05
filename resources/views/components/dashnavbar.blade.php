@@ -36,6 +36,7 @@
               <span class="hide-menu">Profile</span>
             </a>
           </li>
+          @can('admin')
           <li class="sidebar-item">
             <a class="sidebar-link "  href="/dashboard/posts" aria-expanded="false">
               <span>
@@ -53,12 +54,14 @@
               <span class="hide-menu">Create Post</span>
             </a>
           </li>
+          @endcan
+          
           <li class="sidebar-item">
             <a class="sidebar-link" href="/dashboard/link" aria-expanded="false">
               <span>
                 <iconify-icon icon="solar:link-bold-duotone" class="fs-6"></iconify-icon>
               </span>
-              <span class="hide-menu">Shorten Link
+              <span class="hide-menu">Links Hub
             </span>
             </a>
           </li>

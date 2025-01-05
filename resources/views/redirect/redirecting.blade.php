@@ -62,7 +62,7 @@
             font-size: 1rem;
             line-height: 1.3rem;
             color: #6d6d6d;
-            margin: 30px auto;
+            margin: 10px auto;
             max-width: 80%;
             text-align: center;
         }
@@ -167,6 +167,11 @@
                 You are being redirected to:<br>
                 <strong>{{ $targetUrl }}</strong><br>
                 in <span id="countdown">5</span> seconds...
+            </p>
+        </div>
+        <div class="text-container">
+            <p>
+                Domain Trust: <strong id="domain-trust">Safe</strong>
             </p>
         </div>
         <button id="stay-button">Stay on Page</button>

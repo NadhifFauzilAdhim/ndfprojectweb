@@ -161,10 +161,14 @@ class ApiLinkController extends Controller
 
     private function getUserLinkStatistics($userId)
     {
+        $totals = Link::where('user_id', $userId)
+        ->selectRaw('COUNT(*) as total_links, SUM(visits) as total_visits, SUM(unique_visits) as total_unique_visits')
+        ->first();
+
         return [
-            'totalLinks' => Link::where('user_id', $userId)->count(),
-            'totalVisit' => Link::where('user_id', $userId)->sum('visits'),
-            'totalUniqueVisit' => Link::where('user_id', $userId)->sum('unique_visits'),
+            'totalLinks' => (int)$totals->total_links,
+            'totalVisit' =>  (int)$totals->total_visits,
+            'totalUniqueVisit' => (int)$totals->total_unique_visits,
         ];
     }
 

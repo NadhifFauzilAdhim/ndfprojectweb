@@ -1,9 +1,8 @@
 function copyFunction(slug) {
     var copyText = document.getElementById("linkInput-" + slug);
-    copyText.select();
-    copyText.setSelectionRange(0, 99999);
+    var fullLink = "https://" + copyText.value; // Tambahkan https:// di depan teks
 
-    navigator.clipboard.writeText(copyText.value).then(function() {
+    navigator.clipboard.writeText(fullLink).then(function() {
         Swal.fire({
             title: 'Tautan Disalin!',
             text: 'Tautan berhasil disalin ke clipboard.',

@@ -100,29 +100,29 @@
   
           <div class="row justify-content-md-center no-gutters">
   
-            <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch" data-aos="fade-up">
-              <div class="count-box">
-                <i class="bi bi-newspaper"></i>
-                <span data-purecounter-start="0" data-purecounter-end="8" data-purecounter-duration="1" class="purecounter"></span>
-                <p><strong>Certificate</strong></p>
-              </div>
-            </div>
-  
-            <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch" data-aos="fade-up" data-aos-delay="100">
-              <div class="count-box">
-                <i class="bi bi-file-arrow-up"></i>
-                <span data-purecounter-start="0" data-purecounter-end="5" data-purecounter-duration="1" class="purecounter"></span>
-                <p><strong>Projects</strong></p>
-              </div>
-            </div>
-  
-            <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch" data-aos="fade-up" data-aos-delay="200">
-              <div class="count-box">
-                <i class="bi bi-people"></i>
-                <span data-purecounter-start="0" data-purecounter-end="5" data-purecounter-duration="1" class="purecounter"></span>
-                <p><strong>Member</strong><br>Arabis Group</p>
-              </div>
-            </div>
+                <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch" data-aos="fade-up">
+                    <div class="count-box">
+                        <i class="bi bi-trophy"></i>
+                        <span data-purecounter-start="0" data-purecounter-end="16" data-purecounter-duration="1" class="purecounter"></span>
+                        <p><strong>Certificate</strong></p>
+                    </div>
+                </div>
+    
+                <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch" data-aos="fade-up" data-aos-delay="100">
+                    <div class="count-box">
+                        <i class="bi bi-file-arrow-up"></i>
+                        <span data-purecounter-start="0" data-purecounter-end="7" data-purecounter-duration="1" class="purecounter"></span>
+                        <p><strong>Projects</strong></p>
+                    </div>
+                </div>
+    
+                <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch" data-aos="fade-up" data-aos-delay="200">
+                    <div class="count-box">
+                        <i class="bi bi-lightbulb"></i>
+                        <span data-purecounter-start="0" data-purecounter-end="4" data-purecounter-duration="1" class="purecounter"></span>
+                        <p><strong>Skills Mastered</strong></p>
+                    </div>
+                </div>
           </div>
   
         </div>
@@ -142,23 +142,23 @@
             <div class="col-lg-6" data-aos="fade-up">
   
               <div class="progress">
-                <span class="skill">Bootstrap <i class="val">85%</i></span>
+                <span class="skill">Bootstrap <i class="val">95%</i></span>
                 <div class="progress-bar-wrap">
-                  <div class="progress-bar --bs-primary-bg-subtle" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar --bs-primary-bg-subtle" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
   
               <div class="progress">
-                <span class="skill">JavaScript<i class="val">60%</i></span>
+                <span class="skill">JavaScript<i class="val">85%</i></span>
                 <div class="progress-bar-wrap">
-                  <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
   
               <div class="progress">
-                <span class="skill">Laravel<i class="val">70%</i></span>
+                <span class="skill">Laravel<i class="val">90%</i></span>
                 <div class="progress-bar-wrap">
-                  <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
   
@@ -167,16 +167,16 @@
             <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
   
               <div class="progress">
-                <span class="skill">PHP <i class="val">80%</i></span>
+                <span class="skill">PHP <i class="val">95%</i></span>
                 <div class="progress-bar-wrap">
-                  <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
   
               <div class="progress">
-                <span class="skill">MySql <i class="val">70%</i></span>
+                <span class="skill">MySql <i class="val">95%</i></span>
                 <div class="progress-bar-wrap">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
   
@@ -187,9 +187,9 @@
                 </div>
               </div>
               <div class="progress">
-                <span class="skill">C++ &amp; C# <i class="val">60%</i></span>
+                <span class="skill">C++ &amp; C# <i class="val">70%</i></span>
                 <div class="progress-bar-wrap">
-                  <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
   
@@ -443,6 +443,16 @@
                 </div>
               </div>
             </div>
+            <div class="col-lg-4 col-md-6 portfolio-item Web-dev ">
+              <div class="portfolio-wrap">
+                <img src="certificate/SertifikatReact.png" class="img-fluid" alt="">
+                <div class="portfolio-links">
+                  <a href="https://www.dicoding.com/certificates/N9ZOY11VYPG5" target="_blank"><i class="bi bi-check2-square"> </i>
+                    <h6>Check Credential</h6>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         
       </section><!-- End Portfolio Section -->
@@ -525,20 +535,21 @@
                           <div class="col-lg-6 col-xl-4 wow fadeInUp" data-aos-delay="100">
                               <div class="blog-item">
                                   <div class="blog-img">
-                                      <img src="img/project/comingsoon.png" class="img-fluid rounded-top w-100" alt="">
+                                      <img src="img/project/linkhub.png" class="img-fluid rounded-top w-100" alt="">
                                       <div class="blog-categiry py-2 px-4">
-                                          <span>Web Apps</span>
+                                          <span>OpenAPI</span>
                                       </div>
                                   </div>
                                   <div class="blog-content p-4">
                                       <div class="blog-comment d-flex justify-content-between mb-3">
                                       <div class="small"><span class="bi bi-code-slash text-primary"></span> Nadhif Fauzil A</div>
-                                          <div class="small"><span class="bi bi-globe-americas text-primary"></span> -</div>
-                                          <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Now</div>
+                                          <div class="small"><span class="bi bi-globe-americas text-primary"></span> Open Source</div>
+                                          <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Desember 2024</div>
                                       </div>
-                                      <a href="#" class="h4 d-inline-block mb-3">Comming Soon</a>
-                                      <p class="mb-3"></p>
-                                      <a href="#" class="btn p-0">Read More  <i class="fa fa-arrow-right"></i></a>
+                                      <a href="{{ route('ipdocuments') }}" class="h4 d-inline-block mb-3">LinkHub OpenAPI Project <br> <br></a>
+                                      <br>
+                                      <p class="mb-3">This API is designed for managing shortened links and tracking their performance. It provides various endpoints to create, update, retrieve, and delete links, as well as monitor link activities.</p>
+                                      <a href="{{ route('ipdocuments') }}" class="btn p-0">Read More  <i class="bi bi-arrow-right"></i></a>
                                   </div>
                               </div>
                           </div>

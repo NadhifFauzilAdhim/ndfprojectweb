@@ -41,8 +41,14 @@
                 </script>
 
                 <div class="row">
-                    <div class="col-lg-8">
-                        <div class="card">
+                    <div class="col-lg-12">
+                        <div class="alert alert-primary d-flex align-items-center justify-content-center gap-2" role="alert">
+                            <iconify-icon icon="solar:check-circle-bold" class="fs-4"></iconify-icon>
+                            <span>Open API is ready! <a href="{{ route('ipdocuments') }}" class="fw-bold text-decoration-none">Click here to check it out.</a></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 d-flex align-items-stretch">
+                        <div class="card w-100">
                             <div class="card-body shadow-sm">
                                 <h5 class="card-title d-flex align-items-center gap-2 mb-4">
                                     Traffic Overview
@@ -57,10 +63,10 @@
                             
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="card">
-                          <div class="card-body">
-                            <h5 class="card-title d-flex align-items-center gap-2 mb-5 pb-3">Link Static<span><iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Locations"></iconify-icon></span>
+                    <div class="col-lg-4 d-flex align-items-stretch">
+                        <div class="card w-100">
+                          <div class="card-body shadow-sm">
+                            <h5 class="card-title d-flex align-items-center gap-2 pb-3">Link Static<span><iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Locations"></iconify-icon></span>
                             </h5>
                             <div class="row">
                               <div class="col-4">
@@ -80,19 +86,34 @@
                               </div>
                             </div>
               
-                            <div class="vstack gap-4 mt-7 pt-2">
-                               @forelse ($topLinks as $link) 
-                               <div>
-                                <div class="hstack justify-content-between">
-                                  <iconify-icon icon="solar:link-round-angle-bold-duotone" class="fs-3 d-flex text-primary"></iconify-icon>
-                                  <span class="fs-3 fw-medium"><a href="{{ url('dashboard/link/').'/'.$link->slug }}">{{ $link->slug }}</a></span>
-                                  <h6 class="fs-3 fw-medium text-dark lh-base mb-0">{{ $link->visits }}</h6>
+                             <div class="vstack gap-4 ">
+                                <div class="vstack gap-4 mt-7 pt-2">
+                                    @forelse ($topLinks as $link) 
+                                        <div class="mt-1">
+                                            <div class="hstack justify-content-between">
+                                                <iconify-icon 
+                                                    icon="solar:link-round-angle-bold-duotone" 
+                                                    class="fs-3 d-flex text-primary">
+                                                </iconify-icon>
+                                                <span class="fs-3 fw-medium">
+                                                    <a href="{{ url('dashboard/link/').'/'.$link->slug }}">{{ $link->slug }}</a>
+                                                </span>
+                                                <h6 class="fs-3 fw-medium text-dark lh-base mb-0  " style="width: 12px">
+                                                    <div class="d-flex justify-content-between">
+                                                        <small>{{ $link->visits }}</small>
+                                                        <small class="text-success">
+                                                            +{{ $link->visits_last_7_days ? $link->visits_last_7_days : '-' }}
+                                                        </small>
+                                                    </div>
+                                                </h6>
+                                            </div>
+                                        </div>  
+                                    @empty
+                                        <h6 class="fs-3 fw-medium text-dark lh-base mb-0 text-center">
+                                            No Data
+                                        </h6>
+                                    @endforelse
                                 </div>
-                              </div>  
-                               @empty
-                               <h6 class="fs-3 fw-medium text-dark lh-base mb-0">No Data</h6>
-                               @endforelse
-                              
                             </div>
                           </div>
                         </div>
@@ -132,7 +153,7 @@
                                 <div class="col-12 col-md-4">
                                     <form action="/dashboard/link" method="GET">
                                         <div class="input-group">
-                                            <input type="text" name="search" class="form-control" placeholder="Search Post" aria-label="Search" aria-describedby="button-addon2" value="{{ request('search') }}">
+                                            <input type="text" name="search" class="form-control" placeholder="Search Link" aria-label="Search" aria-describedby="button-addon2" value="{{ request('search') }}">
                                             <button class="btn btn-outline-primary" type="submit" id="button-addon2">Search</button>
                                         </div>
                                     </form>
@@ -159,7 +180,7 @@
                                         <div class="mb-4">
                                             <label for="short_link" class="form-label fw-bold">Shortened Link</label>
                                             <div class="input-group">
-                                                <span class="input-group-text bg-light text-secondary" id="basic-addon3">{{ url('r/') }}</span>
+                                                <span class="input-group-text bg-light " id="basic-addon3">{{ url('r/') }}</span>
                                                 <input type="text" class="form-control @error('slug') is-invalid @enderror shadow-sm" id="short_link" name="slug" placeholder="custom-slug" value="{{ old('slug') }}" aria-describedby="basic-addon3">
                                                 @error('slug')
                                                 <div class="invalid-feedback">
@@ -216,83 +237,87 @@
                     </div>
                     @forelse ($links as $link)
                     <div class="col-md-4 d-flex align-items-stretch">
-                        <div class="card shadow w-100">
-                            <div class="card-header" data-bs-theme="dark">
-                                <h6 class="card-title d-flex align-items-center gap-2">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control text-dark shadow-sm bg-white" aria-label="link" id="linkInput-{{ $link->slug }}" value="{{ url('r/' . $link->slug) }}">
-                                        <button class="btn btn-sm {{ $link->active ? 'btn-success' : 'btn-danger' }}" id="button-addon2" onclick="copyFunction('{{ $link->slug }}')">
-                                            <i class="bi bi-copy me-1"></i>
-                                        </button>
+                        <div class="card shadow border-0 w-100 card-hover">
+                            <div class="card-body ">
+                                <div class="row d-flex align-items-center mb-2">
+                                    <div class="text-center mb-3">
+                                        <a href="{{ $link->target_url }}"><h5 class="fw-bold text-dark text-truncate" title="{{ $link->title }}">{{ $link->title }}</h5></a>
                                     </div>
-                                </h6>
-                            </div>
-                            <div class="card-body">
-                                <h6 class="card-subtitle mb-2">Url Destination</h6>
-                                <p class="card-text">
-                                    <a href="{{ $link->target_url }}" target="_blank" class="text-dark link-success">{{ Str::limit(strip_tags($link->target_url), 80) }}</a>
-                                </p>
-                                <div class="row mb-4">
-                                    <div class="col-12 mb-1">
-                                        <p class="card-text d-flex align-items-center">
-                                            <iconify-icon icon="solar:archive-down-minimlistic-line-duotone" class="fs-6 me-2"></iconify-icon>
-                                            Created {{ $link->created_at }}
-                                        </p>
+                                    <div class="col-10">
+                                        <h6 class="card-title text-truncate mb-0">
+                                            <input type="text" class="form-control border-0 p-0 text-dark fw-bold" id="linkInput-{{ $link->slug }}" 
+                                            value="{{ request()->getHost() . '/r/' . $link->slug }}" readonly>
+                                        </h6>
                                     </div>
-                                    <div class="col-12 mb-1">
-                                        <p class="card-text d-flex align-items-center">
-                                            <iconify-icon icon="solar:chart-square-linear" class="fs-6 me-2"></iconify-icon>
-                                            <b class="me-1">{{ $link->visits }}</b>Visits <b class="mx-1">{{ $link->unique_visits }}</b> Unique
-                                        </p>
+                                    <div class="col-2">
+                                            <button class="btn {{ $link->active ? 'btn-outline-primary' : 'btn-outline-danger' }}  btn-sm" onclick="copyFunction('{{ $link->slug }}')">
+                                                <i class="bi bi-clipboard"></i>
+                                            </button>
                                     </div>
-                                    <div class="col-12">
-                                        <p class="card-text d-flex align-items-center">
-                                            @if($link->password_protected)
-                                                <iconify-icon icon="solar:lock-keyhole-minimalistic-linear" class="fs-6 me-2"></iconify-icon>
-                                            @else
-                                                <iconify-icon icon="solar:lock-unlocked-broken" class="fs-6 me-2"></iconify-icon>
-                                            @endif
-                                            <b class="me-1">{{ $link->password_protected ? 'Protected' : 'Unprotected' }}</b>
-                                        </p>
+                                    
+                                </div>
+                            
+                                <p class="text-muted small mb-2">Destination:</p>
+                                <a href="{{ $link->target_url }}" target="_blank" class="d-block text-truncate link-dark">
+                                    {{ Str::limit(strip_tags($link->target_url), 80) }}
+                                </a>
+                                <div class="d-flex justify-content-between mt-3">
+                                    <div class="text-muted small">
+                                        <i class="bi bi-calendar me-1"></i> {{ $link->created_at->format('d M Y') }}
+                                    </div>
+                                    <div class="text-muted small">
+                                        <i class="bi bi-graph-up-arrow me-1"></i> <b>{{ $link->visits }}</b> visits
+                                    </div>
+                                    <div class="text-muted small">
+                                        <i class="bi bi-person-check"></i> <b>{{ $link->unique_visits }}</b> unique
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-between">
-                                    <div class="dropdown">
-                                        <button class="btn btn-outline-warning btn-sm dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Actions
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <li>
-                                                <a class="dropdown-item text-primary bg-transparent" href="/dashboard/link/{{ $link->slug }}">
-                                                    <i class="bi bi-card-checklist"></i> <strong>Detail</strong>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <button class="dropdown-item text-primary bg-transparent" data-bs-toggle="modal" data-bs-target="#qrCodeModal" onclick="showQRCode('{{ url('r/' . $link->slug) }}')">
-                                                    <i class="bi bi-qr-code me-1"></i> Generate QR
-                                                </button>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item text-primary bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $link->slug }}" data-target-url="{{ $link->target_url }}" data-active="{{ $link->active }}">
-                                                    <i class="bi bi-pencil-square"></i> Quick Action
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item text-danger bg-transparent" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $link->slug }}">
-                                                    <i class="bi bi-trash-fill"></i> Delete
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+
+                                <div class="d-flex align-items-center mt-3 justify-content-between">
+                                    @if($link->password_protected)
+                                        <i class="bi bi-lock-fill text-danger me-2">  <span class="text-danger small">Protected</span></i>
+                                    @else
+                                        <i class="bi bi-unlock text-success me-2"> <span class="text-success small">Unprotected</span></i>
+                                    @endif
+                                    <div class="badge rounded-pill" style="background-color: {{ $link->active ? '#2f80ed' : '#ff7eb3' }}; color: white;"><small>{{ $link->active ? 'Active' : 'Inactive' }}</small></div>
                                 </div>
-                            </div>
+                            
+                            
+                                <div class="d-flex justify-content-end mt-3 position-relative dropup">
+                                    <button class="btn btn-outline-secondary btn-sm rounded-pill" data-bs-toggle="dropdown">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end" style="z-index: 1050;">
+                                        <li>
+                                            <a class="dropdown-item text-primary" href="/dashboard/link/{{ $link->slug }}">
+                                                <i class="bi bi-info-circle me-2"></i> Detail
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <button class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#qrCodeModal" onclick="showQRCode('{{ url('r/' . $link->slug) }}')">
+                                                <i class="bi bi-qr-code me-2"></i> Generate QR
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $link->slug }}" data-target-url="{{ $link->target_url }}" data-active="{{ $link->active }}">
+                                                <i class="bi bi-pencil me-2"></i> Quick Edit
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $link->slug }}">
+                                                <i class="bi bi-trash me-2"></i> Delete
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>  
                         </div>
                     </div>
-                @empty
-                <div class="empty-container text-center">
-                    <p>Ups! No links found.</p>
-                </div>
-                @endforelse
+                    @empty
+                    <div class="empty-container text-center">
+                        <p>No links found.</p>
+                    </div>
+                    @endforelse
                 
                 </div>
 

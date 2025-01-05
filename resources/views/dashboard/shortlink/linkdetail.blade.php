@@ -56,23 +56,33 @@
                                     <span>Password Protection is Enabled</span>
                                 </div>
                                 @endif
-                                <h5 class="card-title fw-bold mb-4"><i class="bi bi-graph-up-arrow"></i> Visit Statistics</h5>
+                                <div class="text-center mt-4 mb-4">
+                                    <h5>{{ $link->title }}</h5>
+                                </div>
+                               
                                 <div class="row">
-                                    <div class="card mb-5 col-lg-8 ">
-                                        <div id="traffic-overview" ></div>
+                                    <div class=" mb-5 col-lg-8 d-flex align-items-stretch">
+                                        <div class="card-body ">
+                                            <h5 class="card-title d-flex align-items-center gap-2 mb-4">
+                                                    Traffic Overview
+                                                <span>
+                                                    <iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Traffic Overview"></iconify-icon>
+                                                </span>
+                                            </h5>
+                                                <div id="traffic-overview"></div>
+                                        </div>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div class="card same-height">
-                                            <div class="card-body">
+                                    <div class="col-lg-4 d-flex align-items-stretch">
+                                            <div class="card-body w-100">
                                                 <h5 class="card-title">Top Referers</h5>
                                                 @forelse($topReferers as $referer)
                                                     <div class="card mb-2">
                                                         <div class="card-body p-3 d-flex align-items-center">
                                                             <i class="bi bi-link-45deg text-primary me-3" style="font-size: 1.5rem;"></i>
                                                             <div>
-                                                                <h6 class="card-subtitle text-truncate mb-1">
+                                                                <small class="card-subtitle text-truncate mb-1">
                                                                     {{ $referer->referer_url ?? 'Direct' }}
-                                                                </h6>
+                                                                </small>
                                                                 <p class="card-text mb-0">
                                                                     Visits: <span class="fw-bold">{{ $referer->visit_count }}</span>
                                                                 </p>
@@ -86,7 +96,6 @@
                                                     </div>
                                                 @endforelse
                                             </div>
-                                        </div>
                                     </div>
                                     
                                     <div class="col-3 text-center">

@@ -17,7 +17,6 @@ use App\Http\Controllers\LinkController;
 use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\TodoController;
 
-
 // Public routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/blog', [HomeController::class, 'blog']);
@@ -59,8 +58,7 @@ Route::middleware('auth')->group(function() {
 Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Posts 
-    Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'checkSlug']);
-    Route::resource('/dashboard/posts', DashboardPostController::class);
+   
 // Profile
     Route::resource('/dashboard/profile', UserProfileController::class)->only(['index', 'update'])->parameters(['profile' => 'user:username']);
     Route::put('/dashboard/profile/{user:username}/change-image', [UserProfileController::class, 'changeProfileImage']);
@@ -86,6 +84,8 @@ Route::middleware(['auth', 'verified'])->group(function() {
 });
 // Dashboard Admin routes
 Route::middleware(['auth', 'admin', 'verified'])->group(function() {
+    Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'checkSlug']);
+    Route::resource('/dashboard/posts', DashboardPostController::class);
     Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show');
     Route::delete('/dashboard/postmanagement/{post:slug}', [AdminPostController::class, 'destroy'])->name('postmanagement.destroy');
     Route::resource('/dashboard/postmanagement', AdminPostController::class)->only(['index','destroy']);

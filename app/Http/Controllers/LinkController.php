@@ -8,6 +8,8 @@ use App\Models\Linkvisithistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 
 class LinkController extends Controller
 {
@@ -18,22 +20,42 @@ class LinkController extends Controller
     {
         $userId = Auth::id();
 
-        $totalLinks = Link::where('user_id', $userId)->count();
-        $totalVisit = Link::where('user_id', $userId)->sum('visits');
-        $totalUniqueVisit = Link::where('user_id', $userId)->sum('unique_visits');
+        $totals = Link::where('user_id', $userId)
+        ->selectRaw('COUNT(*) as total_links, SUM(visits) as total_visits, SUM(unique_visits) as total_unique_visits')
+        ->first();
+
+        $totalLinks = (int)$totals->total_links;
+        $totalVisit = (int)$totals->total_visits;
+        $totalUniqueVisit = (int)$totals->total_unique_visits;
         $search = $request->input('search');
 
         $links = Link::where('user_id', $userId)
-            ->when($search, fn($query) => $query->where('slug', 'like', "%{$search}%"))
-            ->latest()
-            ->paginate(6);
+        ->when($search, function ($query) use ($search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('slug', 'like', "%{$search}%")
+                    ->orWhere('title', 'like', "%{$search}%");
+            });
+        })
+        ->latest()
+        ->paginate(6);
 
-        $topLinks = Link::where('user_id', $userId)
+            $sevenDaysAgo = Carbon::now()->subDays(7);
+            $topLinks = Link::where('user_id', $userId)
             ->orderByDesc('visits')
-            ->take(4)
-            ->get();
+            ->take(5)
+            ->get()
+            ->load(['visithistory' => function ($query) use ($sevenDaysAgo) {
+                $query->where('created_at', '>=', $sevenDaysAgo);
+            }]);
+        
+        foreach ($topLinks as $link) {
+            $link->visits_last_7_days = $link->visithistory->count();
+        }
+        
 
         $visitData = $this->getAllVisitData($userId);
+
+        $lastVisitData = $this->getSingleLinkStatistic($userId);
 
         return view('dashboard.shortlink.index', compact(
             'totalLinks',
@@ -90,18 +112,37 @@ class LinkController extends Controller
 
         $validatedData = $request->validate([
             'target_url' => 'required|max:255|url',
-            'slug' => 'required|max:255|unique:links,slug,' . $link->id,
+            'slug' => 'nullable|max:255|unique:links,slug,' . $link->id,
             'password' => 'nullable|min:6|max:255',
         ]);
 
-        $oldSlug = $link->slug;
+        if ($request->has('quickedit')) {
+            $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
+            $validatedData['active'] = $request->has('active') ? 1 : 0;
 
+            // Ambil title jika URL berubah
+            if ($link->target_url !== $validatedData['target_url']) {
+                $websiteTitle = $this->fetchWebsiteTitle($validatedData['target_url']);
+                $validatedData['title'] = $websiteTitle ?? 'No Title Found';
+            }
+
+            $link->update($validatedData);
+
+            return redirect()->back()->with('success', 'Link updated successfully!');
+        }
+
+        $oldSlug = $link->slug;
         $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
         $validatedData['password_protected'] = $request->has('password_protected') ? 1 : 0;
         $validatedData['password'] = $validatedData['password_protected']
             ? bcrypt($request->input('password', $link->password))
             : null;
         $validatedData['active'] = $request->has('active') ? 1 : 0;
+
+        if ($link->target_url !== $validatedData['target_url']) {
+            $websiteTitle = $this->fetchWebsiteTitle($validatedData['target_url']);
+            $validatedData['title'] = $websiteTitle ?? 'No Title Found';
+        }
 
         $link->update($validatedData);
 
@@ -123,13 +164,41 @@ class LinkController extends Controller
             'target_url' => 'required|max:255|url',
             'slug' => 'required|max:255|unique:links',
         ]);
-
+    
         $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
         $validatedData['user_id'] = Auth::id();
-
+    
+        // Ambil title dari target_url
+        $websiteTitle = $this->fetchWebsiteTitle($validatedData['target_url']);
+        if ($websiteTitle) {
+            $validatedData['title'] = $websiteTitle; 
+        } else {
+            $validatedData['title'] = 'No Title Found'; 
+        }
+    
+        // Simpan data ke database
         Link::create($validatedData);
-
+    
         return redirect()->back()->with('success', 'Link Berhasil Ditambahkan');
+    }
+
+    private function fetchWebsiteTitle($url)
+    {
+        try {
+            $response = Http::get($url);
+            if ($response->successful()) {
+                $htmlContent = $response->body();
+                $doc = new \DOMDocument();
+                @$doc->loadHTML($htmlContent); 
+                $titleNodes = $doc->getElementsByTagName('title');
+
+                return $titleNodes->length > 0 ? $titleNodes->item(0)->nodeValue : null;
+            }
+
+            return null;
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
     /**
@@ -162,16 +231,18 @@ class LinkController extends Controller
     }
 
 
-    private function getAllVisitData($userId){
+    private function getAllVisitData($userId) {
         $visits = Linkvisithistory::whereHas('link', fn($query) => $query->where('user_id', $userId))
-        ->whereDate('created_at', '>=', now()->subDays(7))
-        ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
-        ->groupBy('day')
-        ->orderBy('day')
-        ->get()
-        ->keyBy('day');
-    return collect(range(1, 7))->map(fn($day) => $visits[$day]->total_visits ?? 0)->values();
+            ->whereDate('created_at', '>=', now()->subDays(6)->startOfDay())
+            ->whereDate('created_at', '<=', now()->endOfDay())
+            ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
+            ->groupBy('day')
+            ->orderBy('day')
+            ->get()
+            ->keyBy('day');
+        return collect(range(1, 7))->map(fn($day) => $visits[$day]->total_visits ?? 0)->values();
     }
+    
 
     /**
      * Get visit history based on filter.
