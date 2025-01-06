@@ -9,6 +9,7 @@ use App\Models\Linkvisithistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class ApiLinkController extends Controller
 {
@@ -21,8 +22,7 @@ class ApiLinkController extends Controller
 
             $links = Link::where('user_id', $userId)
                 ->when($request->input('search'), fn($query, $search) => $query->where('slug', 'like', "%{$search}%"))
-                ->latest()
-                ->paginate(6);
+                ->latest()->paginate(20);
 
             $topLinks = Link::where('user_id', $userId)
                 ->orderByDesc('visits')
@@ -257,7 +257,25 @@ class ApiLinkController extends Controller
             ? (!empty($request->password) ? bcrypt($request->password) : $link->password)
             : null;
         $validatedData['active'] = $validatedData['active'] ?? 1;
-        
+        $validatedData['title'] = $this->fetchWebsiteTitle($validatedData['target_url']);
         return $validatedData;
+    }
+    private function fetchWebsiteTitle($url)
+    {
+        try {
+            $response = Http::get($url);
+            if ($response->successful()) {
+                $htmlContent = $response->body();
+                $doc = new \DOMDocument();
+                @$doc->loadHTML($htmlContent); 
+                $titleNodes = $doc->getElementsByTagName('title');
+
+                return $titleNodes->length > 0 ? $titleNodes->item(0)->nodeValue : null;
+            }
+
+            return null;
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 }

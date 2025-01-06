@@ -204,3 +204,58 @@ function confirmDelete(slug) {
         }
     });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const titleInputs = document.querySelectorAll('.form-control[data-link-slug]'); // Pilih semua input judul dengan data-link-slug
+
+    titleInputs.forEach(input => {
+        input.addEventListener('blur', async (event) => {
+            const newTitle = event.target.value.trim();
+            const linkSlug = event.target.dataset.linkSlug; 
+            const previousTitle = input.dataset.previousTitle?.trim(); // Ambil judul sebelumnya
+
+            if (newTitle === previousTitle) {
+                showToast('Title is unchanged.', 'info');
+                return;
+            }
+
+            if (newTitle && linkSlug) {
+                try {
+                    const response = await fetch(`/dashboard/link/${linkSlug}/update-title`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        },
+                        body: JSON.stringify({ title: newTitle })
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok && result.success) {
+                        showToast('Title updated successfully!');
+                    } else {
+                        console.error(result.message || 'Failed to update title.');
+                        alert(result.message || 'An error occurred while updating the title.');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred while updating the title. Please try again later.');
+                }
+            }
+        });
+    });
+});
+
+
+function showToast(message, type = 'success') {
+    Swal.fire({
+        text: message,
+        icon: type, // Tipe icon: 'success', 'error', 'warning', 'info', atau 'question'
+        toast: true,
+        position: 'top-end', // Posisi notifikasi
+        showConfirmButton: false,
+        timer: 3000, // Durasi dalam milidetik
+        timerProgressBar: true,
+    });
+}

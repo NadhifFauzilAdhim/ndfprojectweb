@@ -74,6 +74,8 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::delete('/commentReply/{reply}', [CommentController::class, 'destroyReply'])->name('commentReply.destroy');
     // Link Redirected
     Route::resource('/dashboard/link', LinkController::class)->only(['index', 'store', 'show', 'destroy','update']);
+    Route::post('/dashboard/link/{link}/update-title', [LinkController::class, 'updateTitle']);
+
     // Blocked IPs
     Route::post('/block-ip', [BlockedIpController::class, 'block'])->name('block.ip');
     Route::delete('/unblock-ip/{id}', [BlockedIpController::class, 'unblock'])->name('unblock.ip');

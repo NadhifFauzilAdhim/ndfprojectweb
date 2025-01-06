@@ -91,10 +91,10 @@
                                     @forelse ($topLinks as $link) 
                                         <div class="mt-1">
                                             <div class="hstack justify-content-between">
-                                                <iconify-icon 
-                                                    icon="solar:link-round-angle-bold-duotone" 
-                                                    class="fs-3 d-flex text-primary">
-                                                </iconify-icon>
+                                                <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=16" 
+                                             alt="Favicon" 
+                                             class="rounded me-2" 
+                                             style="width: 16px; height: 16px; flex-shrink: 0;">
                                                 <span class="fs-3 fw-medium">
                                                     <a href="{{ url('dashboard/link/').'/'.$link->slug }}">{{ $link->slug }}</a>
                                                 </span>
@@ -238,29 +238,51 @@
                     @forelse ($links as $link)
                     <div class="col-md-4 d-flex align-items-stretch">
                         <div class="card shadow border-0 w-100 card-hover">
-                            <div class="card-body ">
-                                <div class="row d-flex align-items-center mb-2">
-                                    <div class="text-center mb-3">
-                                        <a href="{{ $link->target_url }}"><h5 class="fw-bold text-dark text-truncate" title="{{ $link->title }}">{{ $link->title }}</h5></a>
+                            <div class="card-body">
+                                <!-- Header with Favicon and Title -->
+                                <div class="row d-flex align-items-center mb-3">
+                                    <div class="col-12 d-flex align-items-center">
+                                        <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=32" 
+                                             alt="Favicon" 
+                                             class="rounded me-2" 
+                                             style="width: 32px; height: 32px; flex-shrink: 0;">
+                                             <input type="text" 
+                                             class="form-control border-0 p-0 text-dark fw-bold fs-5" 
+                                             value="{{ $link->title }}" 
+                                            @if ($link->title)
+                                             placeholder="Type Here To Change Title"
+                                            @endif
+                                             data-link-slug="{{ $link->slug }}" 
+                                             data-previous-title="{{ $link->title }}">
                                     </div>
+                                </div>
+                    
+                                <!-- Shortened Link -->
+                                <div class="row d-flex align-items-center mb-2">
                                     <div class="col-10">
                                         <h6 class="card-title text-truncate mb-0">
-                                            <input type="text" class="form-control border-0 p-0 text-dark fw-bold" id="linkInput-{{ $link->slug }}" 
-                                            value="{{ request()->getHost() . '/r/' . $link->slug }}" readonly>
+                                            <input type="text" 
+                                                   class="form-control border-0 p-0 text-dark fw-bold" 
+                                                   id="linkInput-{{ $link->slug }}" 
+                                                   value="{{ request()->getHost() . '/r/' . $link->slug }}" 
+                                                   readonly>
                                         </h6>
                                     </div>
                                     <div class="col-2">
-                                            <button class="btn {{ $link->active ? 'btn-outline-primary' : 'btn-outline-danger' }}  btn-sm" onclick="copyFunction('{{ $link->slug }}')">
-                                                <i class="bi bi-clipboard"></i>
-                                            </button>
+                                        <button class="btn {{ $link->active ? 'btn-outline-primary' : 'btn-outline-danger' }} btn-sm" 
+                                                onclick="copyFunction('{{ $link->slug }}')">
+                                            <i class="bi bi-clipboard"></i>
+                                        </button>
                                     </div>
-                                    
                                 </div>
-                            
+                    
+                                <!-- Destination URL -->
                                 <p class="text-muted small mb-2">Destination:</p>
                                 <a href="{{ $link->target_url }}" target="_blank" class="d-block text-truncate link-dark">
                                     {{ Str::limit(strip_tags($link->target_url), 80) }}
                                 </a>
+                    
+                                <!-- Statistics -->
                                 <div class="d-flex justify-content-between mt-3">
                                     <div class="text-muted small">
                                         <i class="bi bi-calendar me-1"></i> {{ $link->created_at->format('d M Y') }}
@@ -272,17 +294,24 @@
                                         <i class="bi bi-person-check"></i> <b>{{ $link->unique_visits }}</b> unique
                                     </div>
                                 </div>
-
+                    
+                                <!-- Security Status -->
                                 <div class="d-flex align-items-center mt-3 justify-content-between">
                                     @if($link->password_protected)
-                                        <i class="bi bi-lock-fill text-danger me-2">  <span class="text-danger small">Protected</span></i>
+                                    <i class="bi bi-lock-fill text-danger me-2">  
+                                        <span class="text-danger small">Protected</span>
+                                    </i>
                                     @else
-                                        <i class="bi bi-unlock text-success me-2"> <span class="text-success small">Unprotected</span></i>
+                                    <i class="bi bi-unlock text-success me-2"> 
+                                        <span class="text-success small">Unprotected</span>
+                                    </i>
                                     @endif
-                                    <div class="badge rounded-pill" style="background-color: {{ $link->active ? '#2f80ed' : '#ff7eb3' }}; color: white;"><small>{{ $link->active ? 'Active' : 'Inactive' }}</small></div>
+                                    <div class="badge rounded-pill" style="background-color: {{ $link->active ? '#2f80ed' : '#ff7eb3' }}; color: white;">
+                                        <small>{{ $link->active ? 'Active' : 'Inactive' }}</small>
+                                    </div>
                                 </div>
-                            
-                            
+                    
+                                <!-- Dropdown Options -->
                                 <div class="d-flex justify-content-end mt-3 position-relative dropup">
                                     <button class="btn btn-outline-secondary btn-sm rounded-pill" data-bs-toggle="dropdown">
                                         <i class="bi bi-three-dots"></i>
@@ -294,30 +323,44 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <button class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#qrCodeModal" onclick="showQRCode('{{ url('r/' . $link->slug) }}')">
+                                            <button class="dropdown-item text-primary" 
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#qrCodeModal" 
+                                                    onclick="showQRCode('{{ url('r/' . $link->slug) }}')">
                                                 <i class="bi bi-qr-code me-2"></i> Generate QR
                                             </button>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $link->slug }}" data-target-url="{{ $link->target_url }}" data-active="{{ $link->active }}">
+                                            <a class="dropdown-item text-primary" 
+                                               href="#" 
+                                               data-bs-toggle="modal" 
+                                               data-bs-target="#editModal" 
+                                               data-id="{{ $link->slug }}" 
+                                               data-target-url="{{ $link->target_url }}" 
+                                               data-active="{{ $link->active }}">
                                                 <i class="bi bi-pencil me-2"></i> Quick Edit
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $link->slug }}">
+                                            <a class="dropdown-item text-danger" 
+                                               href="#" 
+                                               data-bs-toggle="modal" 
+                                               data-bs-target="#deleteModal" 
+                                               data-id="{{ $link->slug }}">
                                                 <i class="bi bi-trash me-2"></i> Delete
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
-                            </div>  
+                            </div>
                         </div>
-                    </div>
+                    </div>  
                     @empty
                     <div class="empty-container text-center">
                         <p>No links found.</p>
                     </div>
                     @endforelse
+                    
                 
                 </div>
 

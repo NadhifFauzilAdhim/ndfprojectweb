@@ -201,148 +201,162 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <div class="row">
-                    <h5 class="card-title fw-semibold mb-4 text-primary"><i class="bi bi-link-45deg"></i> Detail Link</h5>
+                <h5 class="card-title fw-semibold text-primary mb-4">
+                    <i class="bi bi-link-45deg"></i> Link Details
+                </h5>
+                <div class="row g-4">
                     <div class="col-lg-8">
+                        <!-- Alert for Non-Active Link -->
                         @if(!$link->active)
-                                <div class="alert alert-warning d-flex align-items-center justify-content-center text-center shadow-sm" role="alert">
-                                    <i class="bi bi-exclamation-circle-fill me-2 fs-5"></i>
-                                    <span>Link non-active</span>
-                                </div>
+                        <div class="alert alert-warning text-center shadow-sm" role="alert">
+                            <i class="bi bi-exclamation-circle-fill me-2"></i> Link is inactive
+                        </div>
                         @endif
-                        
+        
+                        <!-- Form for Link Details -->
                         <div class="card shadow-sm border-0">
                             <div class="card-body p-4">
                                 <form id="link-update-form" method="POST" data-update-url="{{ route('link.update', $link->slug) }}">
                                     @csrf
                                     @method('PUT')
-                                
-                                    <div class="mb-4">
-                                        <label for="target_url" class="form-label fw-bold">Long URL</label>
+        
+                                    <div class="mb-3">
+                                        <label for="title" class="form-label">Title</label>
                                         <input 
                                             type="text" 
-                                            class="form-control border-primary shadow-sm" 
+                                            class="form-control shadow-sm" 
+                                            id="title" 
+                                            name="title" 
+                                            value="{{ $link->title }}" 
+                                            placeholder="Enter the title" 
+                                            required>
+                                    </div>
+        
+                                    <div class="mb-3">
+                                        <label for="target_url" class="form-label">Long URL</label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control shadow-sm" 
                                             id="target_url" 
                                             name="target_url" 
                                             value="{{ $link->target_url }}" 
                                             placeholder="Enter the original URL" 
                                             required>
                                     </div>
-                                
-                                    <div class="mb-4">
-                                        <label for="slug" class="form-label fw-bold">Short URL</label>
+        
+                                    <div class="mb-3">
+                                        <label for="slug" class="form-label">Short URL</label>
                                         <div class="input-group">
-                                            <span class="input-group-text bg-light text-primary" id="basic-addon3">{{ url('r/') }}</span>
+                                            <span class="input-group-text bg-light text-primary">{{ url('r/') }}</span>
                                             <input 
                                                 type="text" 
-                                                class="form-control border-primary shadow-sm" 
+                                                class="form-control shadow-sm" 
                                                 id="slug" 
                                                 name="slug" 
                                                 value="{{ $link->slug }}" 
                                                 placeholder="Custom short link" 
                                                 required>
-                                                
                                             <div class="invalid-feedback" id="slug-error"></div>
                                         </div>
                                     </div>
-                                
-                                    <div class="form-check form-switch mt-4">
+        
+                                    <div class="form-check form-switch mt-3">
                                         <input 
                                             class="form-check-input" 
                                             type="checkbox" 
-                                            role="switch" 
                                             id="activeSwitch" 
                                             name="active" 
                                             {{ $link->active ? 'checked' : '' }}>
-                                        <label class="form-check-label fw-bold" for="activeSwitch">
-                                            {{ $link->active ? '🔔 Active' : '🔕 Inactive' }}
+                                        <label class="form-check-label" for="activeSwitch">
+                                            {{ $link->active ? 'Active' : 'Inactive' }}
                                         </label>
                                     </div>
-                                
-                                    <div class="card mt-4 bg-light border-primary shadow-sm rounded">
+        
+                                    <!-- Password Protection -->
+                                    <div class="card mt-4 border-0 shadow-sm">
                                         <div class="card-body">
-                                            <h4 class="mb-3 text-warning"><i class="bi bi-shield-lock"></i> Password Protection</h4>
+                                            <h6 class="text-warning mb-3">
+                                                <i class="bi bi-shield-lock"></i> Password Protection
+                                            </h6>
                                             <div class="form-check form-switch">
                                                 <input 
                                                     class="form-check-input" 
                                                     type="checkbox" 
-                                                    role="switch" 
                                                     id="passwordProtectionSwitch" 
                                                     name="password_protected" 
                                                     {{ $link->password_protected ? 'checked' : '' }}>
-                                                <label class="form-check-label fw-bold" for="passwordProtectionSwitch">Require Password</label>
+                                                <label class="form-check-label" for="passwordProtectionSwitch">Require Password</label>
                                             </div>
-                                            <div class="mt-3">
-                                                <input 
-                                                    type="password" 
-                                                    class="form-control border-primary shadow-sm" 
-                                                    id="password" 
-                                                    name="password" 
-                                                    placeholder="Enter password (optional)">
-                                                <div class="form-text">Leave blank to keep the current password.</div>
-                                            </div>
+                                            <input 
+                                                type="password" 
+                                                class="form-control mt-3 shadow-sm" 
+                                                id="password" 
+                                                name="password" 
+                                                placeholder="Enter password (optional)">
+                                            <div class="form-text">Leave blank to keep the current password.</div>
                                         </div>
                                     </div>
-                                
-                                    <button type="submit" class="btn btn-primary mt-4 w-100 fw-bold shadow">
+        
+                                    <button type="submit" class="btn btn-primary mt-4 w-100 shadow">
                                         <i class="bi bi-save"></i> Update
                                     </button>
                                 </form>
-                                
                             </div>
                         </div>
                     </div>
+        
                     <div class="col-lg-4">
-                        <div class="">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                   <div id="qrCodeContainer" class="qrCodeContainer mb-3"></div>
-                                    <button id="downloadQrCode" class="btn btn-primary mb-3"><i class="bi bi-cloud-arrow-down"></i> Download</button>
-                                </div>
+                        <!-- QR Code Section -->
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body text-center">
+                                <div id="qrCodeContainer" class="qrCodeContainer mb-3"></div>
+                                <button id="downloadQrCode" class="btn btn-primary">
+                                    <i class="bi bi-cloud-arrow-down"></i> Download QR Code
+                                </button>
                             </div>
                         </div>
-                        
-                        <div class="">
-                            <div class="card  shadow-sm border-0">
-                                <div class="card-body text-center">
-                                    <!-- Form Block IP -->
-                                    <form id="block-ip-form" class="text-start" data-block-url="{{ url('/block-ip') }}">
-                                        @csrf
-                                        <h5 class="text-primary fw-bold">Block an IP Address</h5>
-                                        <div class="input-group mb-3">
-                                            <input type="text" class="form-control" name="ip_address" placeholder="Enter IP Address" required>
-                                            <button class="btn btn-danger" type="submit">Block</button>
-                                        </div>
-                                        <input type="hidden" name="link_id" value="{{ $link->id }}">
-                                        <div id="ip-address-error" class="text-danger small"></div>
-                                    </form>                                
-                                    <!-- List of Blocked IPs -->
-                                    <div class="mt-4"
-                                        <h5 class="text-primary fw-bold">Blocked IPs</h5>
-                                        <div id="blocked-ips-container" data-unblock-url="{{ url('/unblock-ip') }}">
-                                            @if($blockedIps->isEmpty())
-                                                <p class="text-muted">No IP addresses are blocked.</p>
-                                            @else
-                                                <ul class="list-group list-group-flush">
-                                                    @foreach($blockedIps as $ip)
-                                                        <li class="list-group-item d-flex justify-content-between align-items-center" id="ip-{{ $ip->id }}">
-                                                            <input type="text" class="form-control me-2" value="{{ $ip->ip_address }}" readonly>
-                                                            <button class="btn btn-sm btn-outline-danger unblock-btn" data-id="{{ $ip->id }}">Unblock</button>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            @endif
-                                        </div>
+        
+                        <!-- Block IP Section -->
+                        <div class="card mt-4 shadow-sm border-0">
+                            <div class="card-body">
+                                <h6 class="text-primary">Block IP Address</h6>
+                                <form id="block-ip-form" data-block-url="{{ url('/block-ip') }}">
+                                    @csrf
+                                    <div class="input-group">
+                                        <input 
+                                            type="text" 
+                                            class="form-control shadow-sm" 
+                                            name="ip_address" 
+                                            placeholder="Enter IP Address" 
+                                            required>
+                                        <button class="btn btn-danger shadow-sm" type="submit">Block</button>
                                     </div>
+                                    <input type="hidden" name="link_id" value="{{ $link->id }}">
+                                </form>
+        
+                                <!-- List of Blocked IPs -->
+                                <h6 class="mt-4 text-primary">Blocked IPs</h6>
+                                <div id="blocked-ips-container" data-unblock-url="{{ url('/unblock-ip') }}">
+                                    @if($blockedIps->isEmpty())
+                                        <p class="text-muted">No IP addresses are blocked.</p>
+                                    @else
+                                        <ul class="list-group list-group-flush">
+                                            @foreach($blockedIps as $ip)
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <span>{{ $ip->ip_address }}</span>
+                                                    <button class="btn btn-sm btn-outline-danger unblock-btn" data-id="{{ $ip->id }}">Unblock</button>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    
                 </div>
             </div>
-          </div>
+        </div>
+        
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {

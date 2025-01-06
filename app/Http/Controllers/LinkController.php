@@ -111,6 +111,7 @@ class LinkController extends Controller
         $this->authorizeLink($link);
 
         $validatedData = $request->validate([
+            'title' => 'nullable|max:255',
             'target_url' => 'required|max:255|url',
             'slug' => 'nullable|max:255|unique:links,slug,' . $link->id,
             'password' => 'nullable|min:6|max:255',
@@ -123,7 +124,7 @@ class LinkController extends Controller
             // Ambil title jika URL berubah
             if ($link->target_url !== $validatedData['target_url']) {
                 $websiteTitle = $this->fetchWebsiteTitle($validatedData['target_url']);
-                $validatedData['title'] = $websiteTitle ?? 'No Title Found';
+                $validatedData['title'] = $websiteTitle ?? null;
             }
 
             $link->update($validatedData);
@@ -139,9 +140,12 @@ class LinkController extends Controller
             : null;
         $validatedData['active'] = $request->has('active') ? 1 : 0;
 
-        if ($link->target_url !== $validatedData['target_url']) {
+        if ($link->target_url !== $validatedData['target_url'] && !$validatedData['title']) {
             $websiteTitle = $this->fetchWebsiteTitle($validatedData['target_url']);
-            $validatedData['title'] = $websiteTitle ?? 'No Title Found';
+            $validatedData['title'] = $websiteTitle ?? null;
+        }
+        if($link->title !== $validatedData['title']) {
+            $validatedData['title'] = $validatedData['title'] ?? null;
         }
 
         $link->update($validatedData);
@@ -153,6 +157,17 @@ class LinkController extends Controller
                 'redirect' => route('link.show', ['link' => $link->slug]),
             ])
             : response()->json(['success' => true, 'message' => 'Link updated successfully!']);
+    }
+
+    public function updateTitle(Request $request, Link $link)
+    {
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+        ]);
+
+        $link->update(['title' => $validated['title']]);
+
+        return response()->json(['success' => true, 'message' => 'Title updated successfully!']);
     }
 
     /**
@@ -173,7 +188,7 @@ class LinkController extends Controller
         if ($websiteTitle) {
             $validatedData['title'] = $websiteTitle; 
         } else {
-            $validatedData['title'] = 'No Title Found'; 
+            $validatedData['title'] = null; 
         }
     
         // Simpan data ke database

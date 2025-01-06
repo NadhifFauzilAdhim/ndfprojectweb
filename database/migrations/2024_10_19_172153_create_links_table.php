@@ -17,7 +17,7 @@ return new class extends Migration
                 table : 'users',
                 indexName : 'links_user_id'
             );
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->string('slug');
             $table->string('target_url');
             $table->integer('visits')->default(0);

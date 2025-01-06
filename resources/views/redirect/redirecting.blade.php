@@ -55,7 +55,7 @@
             line-height: 2.2rem;
             color: #4d4d4d;
             font-weight: bold;
-            margin: 30px 0;
+            margin: 10px 0;
         }
 
         p {
@@ -163,11 +163,15 @@
         </div>
         <h3>Redirect Notice</h3>
         <div class="text-container">
+            <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($targetUrl) }}&size=32" 
+                alt="Favicon" >
             <p>
                 You are being redirected to:<br>
+                
                 <strong>{{ $targetUrl }}</strong><br>
                 in <span id="countdown">5</span> seconds...
             </p>
+            
         </div>
         <div class="text-container">
             <p>

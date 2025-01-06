@@ -4,18 +4,23 @@ function copyFunction(slug) {
 
     navigator.clipboard.writeText(fullLink).then(function() {
         Swal.fire({
-            title: 'Tautan Disalin!',
-            text: 'Tautan berhasil disalin ke clipboard.',
+            text: "Tautan disalin!",
             icon: 'success',
+            toast: true,
+            position: 'top-end',
             showConfirmButton: false,
-            timer: 1500
+            timer: 3000,
+            timerProgressBar: true,
         });
     }).catch(function(error) {
         Swal.fire({
-            title: 'Gagal Menyalin!',
-            text: 'Terjadi kesalahan saat menyalin teks.',
+            text: "Gagal menyalin tautan!",
             icon: 'error',
-            confirmButtonText: 'OK'
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
         });
         console.error("Error copying text: ", error);
     });
