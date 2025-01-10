@@ -55,10 +55,8 @@
                                     <span>
                                         <iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Traffic Overview"></iconify-icon>
                                     </span>
-                                    
                                 </h5>
-                                
-                                <div id="traffic-overview"></div>
+                                 <div id="traffic-overview"></div>
                             </div>
                             
                         </div>
@@ -306,12 +304,16 @@
                                         <span class="text-success small">Unprotected</span>
                                     </i>
                                     @endif
-                                    <div class="badge rounded-pill" style="background-color: {{ $link->active ? '#2f80ed' : '#ff7eb3' }}; color: white;">
-                                        <small>{{ $link->active ? 'Active' : 'Inactive' }}</small>
+                                    <div class="badge rounded-pill"  
+                                        style="background-color: {{ $link->active ? '#2f80ed' : '#ff7eb3' }}; color: white;" 
+                                        data-bs-toggle="popover" 
+                                        data-bs-trigger="hover focus"
+                                        data-bs-title="{{ $link->active ? 'Public Link' : 'Private Link' }}" 
+                                        data-bs-content="{{ $link->active ? 'This link is publicly accessible.' : 'This link is private and only accessible to you.' }}">
+                                        <small>{{ $link->active ? 'Public' : 'Private' }}</small>
                                     </div>
                                 </div>
                     
-                                <!-- Dropdown Options -->
                                 <div class="d-flex justify-content-end mt-3 position-relative dropup">
                                     <button class="btn btn-outline-secondary btn-sm rounded-pill" data-bs-toggle="dropdown">
                                         <i class="bi bi-three-dots"></i>
@@ -377,19 +379,27 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Are you sure you want to delete this link?
+                        <p>Are you sure you want to delete this link?</p>
+                        <p>Type <strong>DELETE</strong> below to confirm:</p>
+                        <input
+                            type="text"
+                            id="deleteConfirmationInput"
+                            class="form-control"
+                            placeholder="Type DELETE to confirm"
+                        />
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <form id="deleteForm" action="" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-danger" id="deleteButton" disabled>Delete</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <!-- Edit Modal -->
         <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">

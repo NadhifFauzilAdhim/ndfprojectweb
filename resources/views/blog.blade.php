@@ -17,7 +17,7 @@
       </div>
   </div>
   <div class="bloghero overlay inner-page">
-        <img src="{{ asset('img/blob.svg') }}" alt="" class="img-fluid blob">
+        <img src="{{ asset('img/puppet.png') }}" alt="" class="img-fluid blob">
       <div class="container">
           <div class="row align-items-center justify-content-center text-center pt-5">
               <div class="col-lg-10 mt-5">
@@ -31,7 +31,7 @@
                   @elseif($type == 'all')
                      <div class="row align-items-center justify-content-center">
                       <div class="col-lg-6">
-                        <img src="{{ asset('img/project/ndfproject-logo-white.png') }}" alt="" class="img-fluid ">
+                        <img src="{{ asset('img/myspace.png') }}" alt="" class="img-fluid ">
                       </div>
                      </div>
                       
@@ -80,48 +80,34 @@
           <div class="container py-5" data-aos="fade-up">
               <div class="row g-4">
                   @forelse ($posts as $item)
-                      <div class="col-lg-6 col-xl-4 col-md-6 wow fadeInUp" data-aos-delay="100">
-                          <div class="blog-item">
-                              <div class="blog-img">
-                                 @if($item->image)
-                                      <img src="{{ asset('storage/' . $item->image) }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
-                                  @else
-                                  <img 
-                                  src="{{ $item->category->image ? $item->category->image : asset('img/programmer_text_2.jpg') }}" 
-                                  class="img-fluid rounded-top w-100 fixed-size" 
-                                  alt="Category Image">
-                                  @endif
-                                  <!-- <img src="img/project/kostifyadv.png" class="img-fluid rounded-top w-100" alt=""> -->
-                                  {{-- <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                                    <div class="carousel-inner">
-                                      <div class="carousel-item active">
-                                      <img src="img/project/kostifyadv.png" class="img-fluid rounded-top w-100" alt="">
-                                      </div>
-                                      <div class="carousel-item">
-                                      <img src="img/project/kostifyadv1.png" class="img-fluid rounded-top w-100" alt="">
-                                      </div>
-                                      <div class="carousel-item">
-                                      <img src="img/project/kostifyadv2.png" class="img-fluid rounded-top w-100" alt="">
-                                      </div>
-                                    </div>
-                                  </div> --}}
-                                  <div class="blog-categiry py-2 px-4">
-                                      <a href="/blog?category={{ $item->category->slug }}">
-                                          <span class="text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">{{ $item->category->name }}</span>
-                                      </a>
-                                  </div>
-                              </div>
-                              <div class="blog-content p-4">
-                                  <div class="blog-comment d-flex justify-content-between mb-3">
-                                      <div class="small"><a href="/blog?author={{ $item->author->username }}"><i class="bi bi-feather"></i> {{ $item->author->name }}</a></div>
-                                      <div class="small"><i class="bi bi-clock-history"></i> {{ $item['created_at']->diffForHumans() }}</div>
-                                  </div>
-                                  <a href="/blog/{{ $item['slug'] }}" class="h4 d-inline-block mb-3">{{ Str::limit(strip_tags($item['title']), 70) }}</a>
-                                  <p class="mb-3">{{ Str::limit(strip_tags($item['body']), 100) }}</p>
-                                  <a href="/blog/{{ $item['slug'] }}" class="btn p-0">Read more <i class="bi bi-arrow-right"></i></a>
-                              </div>
-                          </div>
-                      </div>
+                  <div class="col-lg-6 col-xl-4 col-md-6 wow fadeInUp d-flex align-items-stretch" data-aos-delay="100">
+                    <div class="blog-item h-100 d-flex flex-column">
+                        <div class="blog-img">
+                            @if($item->image)
+                                <img src="{{ asset('storage/' . $item->image) }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
+                            @else
+                                <img src="{{ $item->category->image ? $item->category->image : asset('img/programmer_text_2.jpg') }}" class="img-fluid rounded-top w-100 fixed-size" alt="Category Image">
+                            @endif
+                            <div class="blog-categiry py-2 px-4">
+                                <a href="/blog?category={{ $item->category->slug }}">
+                                    <span class="text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">{{ $item->category->name }}</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="blog-content p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="blog-comment d-flex justify-content-between mb-3">
+                                    <div class="small"><a href="/blog?author={{ $item->author->username }}"><i class="bi bi-feather"></i> {{ $item->author->name }}</a></div>
+                                    <div class="small"><i class="bi bi-clock-history"></i> {{ $item['created_at']->diffForHumans() }}</div>
+                                </div>
+                                <a href="/blog/{{ $item['slug'] }}" class="h4 d-inline-block mb-3">{{ Str::limit(strip_tags($item['title']), 70) }}</a>
+                                <p class="mb-3">{{ Str::limit(strip_tags($item['body']), 100) }}</p>
+                            </div>
+                            <a href="/blog/{{ $item['slug'] }}" class="btn p-0 mt-auto">Read more <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
                   @empty
                       <div class="text-center">
                           <h1 class="home__title">Nampaknya tidak ada &#129300;</h1>

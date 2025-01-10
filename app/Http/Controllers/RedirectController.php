@@ -12,6 +12,8 @@ class RedirectController extends Controller
 {
     public function __invoke(Request $request, Link $link)
     {
+        return redirect('https://linksy.site/' . $link->slug);
+
         if (!$link->active) {
             return view('redirect.inactive', [
                 'title' => "Link Inactive",
@@ -49,7 +51,10 @@ class RedirectController extends Controller
 
         $this->recordVisit($link, true, $ipAddress, $userAgent, $refererUrl, $location, $request);
 
-        return view('redirect.redirecting', ['targetUrl' => $link->target_url]);
+        return view('redirect.redirecting', [
+            'targetUrl' => $link->target_url,
+            'title' => $link->title
+        ]);
     }
 
     private function getLocationFromIp($ip)
@@ -81,7 +86,7 @@ class RedirectController extends Controller
                 'status' => $status,
                 'ip_address' => $ipAddress,
                 'user_agent' => $userAgent,
-                'referer_url' => $refererUrl,
+                'referer_url' => $refererUrl ?? 'Direct',
                 'location' => $location,
                 'is_unique' => true,
             ]);

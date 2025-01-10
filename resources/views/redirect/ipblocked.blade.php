@@ -3,60 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title }}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #2c5364, #203a43, #0f2027);
-            color: #ffffff;
-            margin: 0;
-        }
-        .password-card {
-            background: rgba(31, 41, 55, 0.85);
-            padding: 2rem;
-            border-radius: 12px;
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-        }
-        .password-card input {
-            width: 100%;
-            padding: 0.5rem;
-            margin-top: 1rem;
-            border-radius: 8px;
-            border: none;
-        }
-        .password-card button {
-            margin-top: 1rem;
-            padding: 0.5rem 1rem;
-            background-color: #1d4ed8;
-            color: #ffffff;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .password-card button:hover {
-            background-color: #2563eb;
-        }
-        .error-message {
-            color: #f87171;
-            margin-top: 1rem;
-        }
-        .img-logo{
-            width: 200px;
-        }
-    </style>
+    <link rel="shortcut icon" type="image/png" href="{{ asset('img/favicon.ico') }}" />
+    <title>Access Denied</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.4/lottie.min.js"></script>
 </head>
-<body >
-    <div class="password-card">
-        <h2>Access Denied</h2>
-        <p>{{ $message }}</p>
+<body>
+    <div class="card">
+        <div class="logo">
+            <img src="{{ asset('img/linksy.png') }}" alt="Logo">
+        </div>
+        <div class="ilustration">
+            <lottie-player src="https://assets5.lottiefiles.com/packages/lf20_pNx6yH.json" background="white" speed="1" loop autoplay></lottie-player>
+        </div>
+        <h3>Access Denied</h3>
+        <div class="text-container">
+            <p>
+                Your IP address has been blocked due to suspicious activity or policy violations.
+            </p>
+            <p>
+                If you believe this is a mistake, please contact support for further assistance.
+            </p>
+        </div>
+        <button onclick="window.location.href='{{ url('/support') }}'">Contact Support</button>
     </div>
+
+    <div class="cookie-popup" id="cookie-popup">
+        <p>
+            We use cookies to analyze our traffic. By using this site, you accept our use of cookies.
+        </p>
+        <button id="accept-cookies">Accept</button>
+    </div>
+
+    <script>
+        const cookiePopup = document.getElementById('cookie-popup');
+        const acceptCookiesButton = document.getElementById('accept-cookies');
+
+        function showCookiePopup() {
+            if (!document.cookie.includes("cookiesAccepted=true")) {
+                cookiePopup.style.display = 'block';
+            }
+        }
+
+        acceptCookiesButton.addEventListener('click', () => {
+            document.cookie = "cookiesAccepted=true; path=/; max-age=" + 60 * 60 * 24 * 365;
+            cookiePopup.style.display = 'none';
+        });
+
+        showCookiePopup();
+    </script>
 </body>
 </html>

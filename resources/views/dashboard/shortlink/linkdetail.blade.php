@@ -72,30 +72,16 @@
                                                 <div id="traffic-overview"></div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 d-flex align-items-stretch">
-                                            <div class="card-body w-100">
-                                                <h5 class="card-title">Top Referers</h5>
-                                                @forelse($topReferers as $referer)
-                                                    <div class="card mb-2">
-                                                        <div class="card-body p-3 d-flex align-items-center">
-                                                            <i class="bi bi-link-45deg text-primary me-3" style="font-size: 1.5rem;"></i>
-                                                            <div>
-                                                                <small class="card-subtitle text-truncate mb-1">
-                                                                    {{ $referer->referer_url ?? 'Direct' }}
-                                                                </small>
-                                                                <p class="card-text mb-0">
-                                                                    Visits: <span class="fw-bold">{{ $referer->visit_count }}</span>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @empty
-                                                    <div class="text-center text-muted">
-                                                        <i class="bi bi-exclamation-circle me-2"></i>
-                                                        No referer data available.
-                                                    </div>
-                                                @endforelse
-                                            </div>
+                                    <div class=" mb-5 col-lg-4 d-flex align-items-stretch">
+                                        <div class="card-body ">
+                                            <h5 class="card-title d-flex align-items-center gap-2 mb-4">
+                                                    Top Referrers
+                                                <span>
+                                                    <iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Traffic Overview"></iconify-icon>
+                                                </span>
+                                            </h5>
+                                                <div id="chart"></div>
+                                        </div>
                                     </div>
                                     
                                     <div class="col-3 text-center">
@@ -363,7 +349,11 @@
             showQRCode('{{ url('r/' . $link->slug) }}'); 
         });
     </script>
-    <script>const visitDataGlobal = @json($chartData);</script>
+    <script>
+        const visitDataGlobal = @json($chartData);
+        const toprefDataGlobal = @json($topReferers);
+        console.log(toprefDataGlobal);
+    </script>
     <script src="{{ asset('js/dashjs/linkdetail.js') }}"></script>
     
     

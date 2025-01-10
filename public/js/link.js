@@ -1,10 +1,25 @@
 var deleteModal = document.getElementById('deleteModal');
+var deleteInput = deleteModal.querySelector('#deleteConfirmationInput');
+var deleteButton = deleteModal.querySelector('#deleteButton');
+
 deleteModal.addEventListener('show.bs.modal', function (event) {
-    var button = event.relatedTarget;
+    var button = event.relatedTarget; 
     var linkId = button.getAttribute('data-id'); 
     var form = deleteModal.querySelector('#deleteForm');
-    form.action = '/dashboard/link/' + linkId; 
+    form.action = '/dashboard/link/' + linkId;
+
+    deleteInput.value = '';
+    deleteButton.disabled = true;
 });
+
+deleteInput.addEventListener('input', function () {
+    if (deleteInput.value === 'DELETE') {
+        deleteButton.disabled = false;
+    } else {
+        deleteButton.disabled = true;
+    }
+});
+
 
 var editModal = document.getElementById('editModal');
 editModal.addEventListener('show.bs.modal', function (event) {
@@ -54,11 +69,8 @@ function confirmDelete(slug) {
 }
 
 
-
-
 $(function () {
     var visitData = visitDataGlobal;
-
     var chart = {
         series: [
             {
@@ -70,31 +82,52 @@ $(function () {
             toolbar: {
                 show: false,
             },
-            type: "line",
+            type: "area",
             fontFamily: "inherit",
             foreColor: "#adb0bb",
             height: 320,
-            stacked: false,
+            animations: {
+                enabled: true,
+                easing: "easeinout",
+                speed: 800,
+            },
         },
-        colors: ["#007bff"], // Blue color for the line
-        plotOptions: {},
+        colors: ["#007bff"], 
+        stroke: {
+            width: 3,
+            curve: "smooth",
+        },
+        markers: {
+            size: 5,
+            colors: ["#ffffff"], // Warna putih untuk isi marker
+            strokeColors: "#007bff", // Warna biru untuk pinggiran marker
+            strokeWidth: 2,
+            hover: {
+                size: 7,
+            },
+        },
         dataLabels: {
             enabled: false,
         },
         legend: {
-            show: false,
-        },
-        stroke: {
-            width: 2,
-            curve: "smooth",
-            dashArray: [0], // Solid line (no dashes)
+            show: true,
+            position: "top",
+            horizontalAlign: "right",
+            markers: {
+                radius: 12,
+            },
         },
         grid: {
             borderColor: "rgba(0,0,0,0.1)",
             strokeDashArray: 3,
             xaxis: {
                 lines: {
-                    show: false,
+                    show: true,
+                },
+            },
+            yaxis: {
+                lines: {
+                    show: true,
                 },
             },
         },
@@ -108,23 +141,45 @@ $(function () {
             categories: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         },
         yaxis: {
-            tickAmount: 4,
-        },
-        markers: {
-            strokeColor: ["#007bff"],
-            strokeWidth: 2,
+            tickAmount: 5,
+            labels: {
+                formatter: function(val) {
+                    return val + "k"; 
+                },
+            },
         },
         tooltip: {
             theme: "dark",
+            x: {
+                show: true,
+            },
+            y: {
+                formatter: function(val) {
+                    return val + " Visits";
+                },
+            },
+        },
+        fill: {
+            type: "gradient",
+            gradient: {
+                shade: "light",
+                type: "vertical",
+                shadeIntensity: 0.25,
+                gradientToColors: ["#80d0ff"], 
+                inverseColors: true,
+                opacityFrom: 1,
+                opacityTo: 0.3,
+            },
         },
     };
-
+    
     var chart = new ApexCharts(
         document.querySelector("#traffic-overview"),
         chart
     );
     chart.render();
 });
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const toastElList = [].slice.call(document.querySelectorAll('.toast:not(.copy-toast)'));

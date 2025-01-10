@@ -1,43 +1,63 @@
 $(function () {
     // Data untuk diagram
     var visitData = visitDataGlobal;
-
     var chart = {
         series: [
             {
                 name: "Visits",
-                data: visitData, 
+                data: visitData,
             }
         ],
         chart: {
             toolbar: {
                 show: false,
             },
-            type: "line",
+            type: "area",
             fontFamily: "inherit",
             foreColor: "#adb0bb",
             height: 320,
-            stacked: false,
+            animations: {
+                enabled: true,
+                easing: "easeinout",
+                speed: 800,
+            },
         },
         colors: ["#007bff"], 
-        plotOptions: {},
+        stroke: {
+            width: 3,
+            curve: "smooth",
+        },
+        markers: {
+            size: 5,
+            colors: ["#ffffff"], // Warna putih untuk isi marker
+            strokeColors: "#007bff", // Warna biru untuk pinggiran marker
+            strokeWidth: 2,
+            hover: {
+                size: 7,
+            },
+        },
         dataLabels: {
             enabled: false,
         },
         legend: {
-            show: false,
-        },
-        stroke: {
-            width: 2,
-            curve: "smooth",
-            dashArray: [0], 
+            show: true,
+            position: "top",
+            horizontalAlign: "right",
+            markers: {
+                radius: 12,
+            },
         },
         grid: {
             borderColor: "rgba(0,0,0,0.1)",
             strokeDashArray: 3,
             xaxis: {
                 lines: {
-                    show: false,
+                    show: true,
+                },
+            },
+            yaxis: {
+                lines: {
+                    show: true,
                 },
             },
         },
@@ -48,26 +68,78 @@ $(function () {
             axisTicks: {
                 show: false,
             },
-            categories: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], // Hari dalam seminggu
+            categories: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         },
         yaxis: {
-            tickAmount: 4,
-        },
-        markers: {
-            strokeColor: ["#007bff"],
-            strokeWidth: 2,
+            tickAmount: 5,
+            labels: {
+                formatter: function(val) {
+                    return val + "k"; 
+                },
+            },
         },
         tooltip: {
             theme: "dark",
+            x: {
+                show: true,
+            },
+            y: {
+                formatter: function(val) {
+                    return val + " Visits";
+                },
+            },
+        },
+        fill: {
+            type: "gradient",
+            gradient: {
+                shade: "light",
+                type: "vertical",
+                shadeIntensity: 0.25,
+                gradientToColors: ["#80d0ff"], 
+                inverseColors: true,
+                opacityFrom: 1,
+                opacityTo: 0.3,
+            },
         },
     };
-
+    
     var chart = new ApexCharts(
         document.querySelector("#traffic-overview"),
         chart
     );
     chart.render();
 });
+
+$(function () {
+    // Data dari controller
+    var topReferers = toprefDataGlobal;
+    topReferers.labels = topReferers.labels.map(label => label ?? 'Direct');
+    var options = {
+        series: topReferers.data, 
+        chart: {
+            width: 330,
+            type: 'pie',
+        },
+        labels: topReferers.labels, 
+        legend: {
+            position: 'bottom', 
+        },
+        responsive: [{
+            breakpoint: 300,
+            options: {
+                chart: {
+                    width: 100,
+                },
+                legend: {
+                    position: 'bottom', 
+                },
+            },
+        }],
+    };
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
+});
+
 
 
 function applyFilter() {

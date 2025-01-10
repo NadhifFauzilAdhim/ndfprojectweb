@@ -465,8 +465,8 @@
                           </p>
                       </div>
                       <div class="row g-4 justify-content-center">
-                          <div class="col-lg-6 col-xl-4 wow fadeInUp" data-aos-delay="100">
-                              <div class="blog-item">
+                          <div class="col-lg-6 col-xl-4 wow fadeInUp d-flex align-items-stretch" data-aos-delay="100">
+                              <div class="blog-item w-100">
                                   <div class="blog-img">
                                       <!-- <img src="img/project/kostifyadv.png" class="img-fluid rounded-top w-100" alt=""> -->
                                       <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
@@ -492,14 +492,14 @@
                                           <div class="small"><span class="bi bi-globe-americas text-primary"></span> Open Source</div>
                                           <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Juni 2024</div>
                                       </div>
-                                      <a href="https://github.com/NadhifFauzilAdhim/KostifyNative" class="h4 d-inline-block mb-3">Kostify: Cari Tempat Tinggal Dan Property dengan mudah</a>
+                                      <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="h4 d-inline-block mb-3">Kostify: Cari Tempat Tinggal Dan Property dengan mudah</a>
                                       <p class="mb-3"> tememukan kost atau tempat tinggal ideal Anda hanya dengan beberapa klik saja. Nikmati kemudahan dan kecepatan dalam mencari tempat tinggal impian Anda tanpa ribet.</p>
-                                      <a href="https://github.com/NadhifFauzilAdhim/KostifyNative" class="btn p-0">Github  <i class="bi bi-arrow-right"></i></a>
+                                      <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="btn p-0">Github  <i class="bi bi-arrow-right"></i></a>
                                   </div>
                               </div>
                           </div>
-                          <div class="col-lg-6 col-xl-4 wow fadeInUp" data-aos-delay="100">
-                              <div class="blog-item">
+                          <div class="col-lg-6 col-xl-4 wow fadeInUp d-flex align-items-stretch" data-aos-delay="100">
+                              <div class="blog-item w-100">
                                   <div class="blog-img">
                                       <!-- <img src="img/project/hydroeaselogo.png" class="img-fluid rounded-top w-100" alt=""> -->
                                       <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
@@ -532,10 +532,10 @@
                                   </div>
                               </div>
                           </div>
-                          <div class="col-lg-6 col-xl-4 wow fadeInUp" data-aos-delay="100">
-                              <div class="blog-item">
+                          <div class="col-lg-6 col-xl-4 wow fadeInUp d-flex align-items-stretch" data-aos-delay="100">
+                              <div class="blog-item w-100">
                                   <div class="blog-img">
-                                      <img src="img/project/linkhub.png" class="img-fluid rounded-top w-100" alt="">
+                                      <img src="img/project/linksy-logo.png" class="img-fluid rounded-top w-100" alt="">
                                       <div class="blog-categiry py-2 px-4">
                                           <span>OpenAPI</span>
                                       </div>
@@ -546,9 +546,10 @@
                                           <div class="small"><span class="bi bi-globe-americas text-primary"></span> Open Source</div>
                                           <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Desember 2024</div>
                                       </div>
-                                      <a href="{{ route('ipdocuments') }}" class="h4 d-inline-block mb-3">LinkHub OpenAPI Project <br> <br></a>
+                                      <a href="{{ route('ipdocuments') }}" class="h4 d-inline-block mb-3">Linksy OpenAPI Project</a>
                                       <br>
-                                      <p class="mb-3">This API is designed for managing shortened links and tracking their performance. It provides various endpoints to create, update, retrieve, and delete links, as well as monitor link activities.</p>
+                                      <p class="mb-5">This API is designed for managing shortened links and tracking their performance. It provides various endpoints to create, update, retrieve, and delete links, as well as monitor link activities.</p>
+
                                       <a href="{{ route('ipdocuments') }}" class="btn p-0">Read More  <i class="bi bi-arrow-right"></i></a>
                                   </div>
                               </div>
@@ -571,7 +572,7 @@
                 <div class="testimonial-item" data-aos="fade-up">
                   <img src="img/member/nadhif.png" class="testimonial-img" alt="">
                   <h3>Nadhif Fauzil Adhim</h3>
-                  <h4>Informatics Student</h4>
+                  <h4>Backend Developer</h4>
                 </div>
               </div><!-- End testimonial item -->
   
@@ -587,7 +588,7 @@
                 <div class="testimonial-item" data-aos="fade-up" data-aos-delay="200">
                   <img src="img/member/julian.png" class="testimonial-img" alt="">
                   <h3>Julian Kiyosaki H</h3>
-                  <h4>Informatics Student</h4>
+                  <h4>Mobile Developer</h4>
                 </div>
               </div><!-- End testimonial item -->
   
@@ -595,7 +596,7 @@
                 <div class="testimonial-item" data-aos="fade-up" data-aos-delay="300">
                   <img src="img/member/aji.png" class="testimonial-img" alt="">
                   <h3>Muhajir Faturrahman</h3>
-                  <h4>Informatics Student</h4>
+                  <h4>Multimedia</h4>
                 </div>
               </div><!-- End testimonial item -->
   

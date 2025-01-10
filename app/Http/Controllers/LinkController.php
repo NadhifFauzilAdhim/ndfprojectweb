@@ -82,12 +82,18 @@ class LinkController extends Controller
 
         $blockedIps = BlockedIp::where('link_id', $link->id)->get();
 
-        $topReferers = Linkvisithistory::where('link_id', $link->id)
+        $topReferersRaw = Linkvisithistory::where('link_id', $link->id)
             ->select('referer_url', DB::raw('COUNT(*) as visit_count'))
             ->groupBy('referer_url')
             ->orderByDesc('visit_count')
             ->limit(5)
             ->get();
+
+        // Format data untuk chart
+        $topReferers = [
+            'labels' => $topReferersRaw->pluck('referer_url')->toArray(),
+            'data' => $topReferersRaw->pluck('visit_count')->toArray(),
+        ];
 
         $chartData = $this->getSingleLinkStatistic($link->id, false);
 
@@ -99,10 +105,9 @@ class LinkController extends Controller
             'blockedIps',
             'filter',
             'chartData',
-            'topReferers'
+            'topReferers' 
         ))->with('title', 'Detail Link');
     }
-
     /**
      * Update the specified resource in storage.
      */
@@ -179,7 +184,7 @@ class LinkController extends Controller
             'target_url' => 'required|max:255|url',
             'slug' => 'required|max:255|unique:links',
         ]);
-    
+        
         $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
         $validatedData['user_id'] = Auth::id();
     
@@ -190,10 +195,7 @@ class LinkController extends Controller
         } else {
             $validatedData['title'] = null; 
         }
-    
-        // Simpan data ke database
         Link::create($validatedData);
-    
         return redirect()->back()->with('success', 'Link Berhasil Ditambahkan');
     }
 

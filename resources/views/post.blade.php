@@ -1,7 +1,7 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
     <div class="bloghero overlay inner-page">
-        <img src="{{ asset('img/blob.svg') }}" alt="" class="img-fluid blob">
+        <img src="{{ asset('img/puppet.') }}" alt="" class="img-fluid blob">
         <div class="container">
           <div class="row align-items-center justify-content-center text-center pt-5">
             <div class="col-lg-6">

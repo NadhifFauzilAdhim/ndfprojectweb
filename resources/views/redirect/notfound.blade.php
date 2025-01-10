@@ -1,21 +1,57 @@
-<x-errorlayout>
-    <x-slot:title>{{ $title }}</x-slot:title>
-        <div class="home__container container">
-            <div class="home__data">
-                <span class="home__subtitle"></span>
-                <h1 class="home__title">{{ $message }}</h1>
-                <p class="home__description">
-                    Oops! It looks like this link is no longer active or doesn't exist. <br> 
-                    Please check the URL or return to the homepage.
-                </p>
-                <a href="{{ route('home') }}" class="home__button">
-                    Go Home
-                </a>
-            </div>
-
-            <div class="home__img">
-                <img src="{{ asset('img/ghost-img.png') }}" alt="">
-                <div class="home__shadow"></div>
-            </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('img/favicon.ico') }}" />
+    <title>404 Not Found</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/linksy.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.4/lottie.min.js"></script>
+</head>
+<body>
+    <div class="card">
+        <div class="logo">
+            <img src="{{ asset('img/linksy.png') }}" alt="Logo">
         </div>
-</x-errorlayout>
+        <div class="ilustration">
+            <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_QKRDTz.json" background="white" speed="1" loop autoplay></lottie-player>
+        </div>
+        <h3>404 Not Found</h3>
+        <div class="text-container">
+            <p>
+                The link you are trying to access does not exist or has been removed.
+            </p>
+            <p>
+                Please check the URL or return to the <a href="{{ url('/') }}">homepage</a>.
+            </p>
+        </div>
+        <button onclick="window.location.href='{{ url('/') }}'">Go to Homepage</button>
+    </div>
+
+    <div class="cookie-popup" id="cookie-popup">
+        <p>
+            We use cookies to analyze our traffic. By using this site, you accept our use of cookies.
+        </p>
+        <button id="accept-cookies">Accept</button>
+    </div>
+
+    <script>
+        const cookiePopup = document.getElementById('cookie-popup');
+        const acceptCookiesButton = document.getElementById('accept-cookies');
+
+        function showCookiePopup() {
+            if (!document.cookie.includes("cookiesAccepted=true")) {
+                cookiePopup.style.display = 'block';
+            }
+        }
+
+        acceptCookiesButton.addEventListener('click', () => {
+            document.cookie = "cookiesAccepted=true; path=/; max-age=" + 60 * 60 * 24 * 365;
+            cookiePopup.style.display = 'none';
+        });
+
+        showCookiePopup();
+    </script>
+</body>
+</html>

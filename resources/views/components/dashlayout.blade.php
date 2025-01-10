@@ -8,7 +8,8 @@
   <link rel="shortcut icon" type="image/png" href="{{ asset('img/favicon.png') }}" />
   <link rel="stylesheet" href="{{ asset('css/dash.css') }}" />
   <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
   <!-- Summernote CSS -->
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
   

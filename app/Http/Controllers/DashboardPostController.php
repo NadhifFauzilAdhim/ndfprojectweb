@@ -62,6 +62,7 @@ class DashboardPostController extends Controller
         
     }
 
+
     /**
      * Display the specified resource.
      */
