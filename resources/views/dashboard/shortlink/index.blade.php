@@ -237,7 +237,6 @@
                     <div class="col-md-4 d-flex align-items-stretch">
                         <div class="card shadow border-0 w-100 card-hover">
                             <div class="card-body">
-                                <!-- Header with Favicon and Title -->
                                 <div class="row d-flex align-items-center mb-3">
                                     <div class="col-12 d-flex align-items-center">
                                         <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=32" 
@@ -246,7 +245,7 @@
                                              style="width: 32px; height: 32px; flex-shrink: 0;">
                                              <input type="text" 
                                              class="form-control border-0 p-0 text-dark fw-bold fs-5" 
-                                             value="{{ $link->title }}" 
+                                             value="{{ $link->title  }}" 
                                             @if ($link->title)
                                              placeholder="Type Here To Change Title"
                                             @endif

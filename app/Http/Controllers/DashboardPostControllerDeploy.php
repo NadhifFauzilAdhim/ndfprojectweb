@@ -73,7 +73,7 @@ class DashboardPostController extends Controller
     
                 $imgManager = new ImageManager(new Driver);
                 $filteredImage = $imgManager->read($fullPath);
-                $filteredImage->resize(456, 200)->save($fullPath);
+                $filteredImage->resize(600, 315)->save($fullPath);
     
                 $validatedData['image'] = 'post-image/' . $imageName;
             } catch (\Exception $e) {
@@ -130,12 +130,10 @@ class DashboardPostController extends Controller
     
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             try {
-                // Hapus gambar lama jika ada
                 if ($post->image && file_exists(base_path('../public/' . $post->image))) {
                     unlink(base_path('../public/' . $post->image));
                 }
     
-                // Proses file gambar baru
                 $file = $request->file('image');
                 $imageName = uniqid() . '.' . $file->getClientOriginalExtension();
                 $destinationPath = base_path('../public/post-image');
@@ -144,33 +142,23 @@ class DashboardPostController extends Controller
                     mkdir($destinationPath, 0755, true);
                 }
     
-                // Pindahkan file ke lokasi sementara
                 $file->move($destinationPath, $imageName);
-    
-                // Path lengkap untuk gambar
                 $fullPath = $destinationPath . '/' . $imageName;
-    
-                // Resize gambar menggunakan Intervention Image
                 $imgManager = new ImageManager(new Driver);
                 $filteredImage = $imgManager->read($fullPath);
-                $filteredImage->resize(456, 200)->save($fullPath);
+                $filteredImage->resize(600, 315)->save($fullPath);
     
-                // Simpan path relatif gambar di database
                 $validatedData['image'] = 'post-image/' . $imageName;
             } catch (\Exception $e) {
                 return redirect()->back()->with('error', 'Error processing image: ' . $e->getMessage());
             }
         }
     
-        // Tetapkan author_id
         $validatedData['author_id'] = Auth::id();
-    
-        // Perbarui data post
         $post->update($validatedData);
     
         return redirect('/dashboard/posts')->with('success', 'Post Berhasil Diubah');
     }
-    
 
     /**
      * Remove the specified resource from storage.
@@ -178,12 +166,9 @@ class DashboardPostController extends Controller
     public function destroy(Post $post)
     {
         try {
-            // Periksa dan hapus file gambar jika ada
             if ($post->image && file_exists(base_path('../public/' . $post->image))) {
                 unlink(base_path('../public/' . $post->image));
             }
-    
-            // Hapus data post dari database
             $post->delete();
     
             return redirect('/dashboard/posts')->with('success', 'Post berhasil dihapus.');
@@ -191,7 +176,6 @@ class DashboardPostController extends Controller
             return redirect()->back()->with('error', 'Gagal menghapus post: ' . $e->getMessage());
         }
     }
-    
 
     public function checkSlug(Request $request)
     {

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\Storage;
+use Gemini\Laravel\Facades\Gemini;
 
 class DashboardPostController extends Controller
 {
@@ -131,4 +132,34 @@ class DashboardPostController extends Controller
         $slug = SlugService::createSlug(Post::class,'slug', $request->title);
         return response()->json(['slug'=>$slug]);
     }
+
+    public function generatePost(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|max:255',
+            'language' => 'required|in:id,en',
+        ]);
+        $title = $request->input('title');
+        $language = $request->input('language');
+    
+        try {
+            $result = Gemini::geminiPro()->generateContent("Buatkan artikel tentang '$title' dengan format HTML. Sertakan <h1> untuk judul, <p> untuk paragraf, dan pastikan kontennya terstruktur dengan rapi. Hindari penggunaan tag yang tidak perlu. Gunakan bahasa '$language' buat artikel dengan detail.");
+
+            $generatedContent = $result->text();
+    
+            return response()->json([
+                'success' => true,
+                'title' => $title,
+                'body' => $generatedContent,
+            ], 200, ['Content-Type' => 'application/json']);
+    
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error generating post: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+    
+    
 }

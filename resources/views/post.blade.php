@@ -1,7 +1,7 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
     <div class="bloghero overlay inner-page">
-        <img src="{{ asset('img/puppet.') }}" alt="" class="img-fluid blob">
+        <img src="{{ asset('img/puppet.png') }}" alt="" class="img-fluid blob">
         <div class="container">
           <div class="row align-items-center justify-content-center text-center pt-5">
             <div class="col-lg-6">
@@ -22,11 +22,7 @@
           <div class="row justify-content-center align-items-stretch">
     
             <article class="col-lg-8 order-lg-2 px-lg-5">
-              @if($post['image'])
-              <img class="img-fluid" src="{{ asset('storage/' . $post['image']) }}" alt="">
-              @else
-              <img class="img-fluid" src="{{ asset('img/programmer_text_2.jpg')  }}" alt="">
-              @endif
+             
               <p>{!! $post['body'] !!}</p>
               <div class="pt-5 categories_tags ">
                 <p>Categories:  <a href="#">{{ $post->category->name }}</a></p>

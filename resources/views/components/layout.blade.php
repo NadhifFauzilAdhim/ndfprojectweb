@@ -50,7 +50,7 @@
       <div class="spinner-grow spinner-grow-sm text-info" style="width: 1rem; height: 1rem;" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
-      <p class="text-info ms-2" style="font-family: 'Courier New', Courier, monospace">Loading Assets...</p>
+      <p class="text-info ms-2" style="font-family: 'Courier New', Courier, monospace">wait, let me finish...</p>
     </div>
   </div>
 

@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\ImageManager;
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Facades\Log;
 
@@ -75,29 +74,24 @@ class UserProfileController extends Controller
                 }
 
                 if ($user->avatar && file_exists(base_path('../public/' . $user->avatar))) {
-                    unlink(base_path('../public/' . $user->avatar)); // Hapus file sebelumnya
+                    unlink(base_path('../public/' . $user->avatar)); 
                 }
-
-                // Pindahkan file ke lokasi sementara
                 $tempPath = $file->move($destinationPath, $imageName);
-
-                // Resize gambar menggunakan Intervention Image
-                $fullPath = $destinationPath . '/' . $imageName; // Path lengkap file
+                $fullPath = $destinationPath . '/' . $imageName; 
                 $imgManager = new ImageManager(new Driver);
                 $filteredImage = $imgManager->read($fullPath);
-                $filteredImage->resize(500, 500)->save($fullPath); // Resize dan simpan ulang
+                $filteredImage->resize(500, 500)->save($fullPath);
 
-                // Simpan path relatif di database
                 $imagePath = 'avatars/' . $imageName;
                 $user->avatar = $imagePath;
                 $user->save();
 
                 return redirect('/dashboard/profile')->with('success', 'Profile image updated successfully.');
             } catch (\Exception $e) {
-                return redirect()->back()->withErrors('Error processing image: ' . $e->getMessage());
+                return redirect()->back()->with('error','Error processing image: ' . $e->getMessage());
             }
         } else {
-            return redirect()->back()->withErrors('File not uploaded or invalid.');
+            return redirect()->back()->with('error','File not uploaded or invalid.');
         }
     }
 
@@ -119,7 +113,6 @@ class UserProfileController extends Controller
         return redirect('/dashboard/profile')->with('success', 'Link untuk mengganti password telah dikirimkan ke email Anda');
     }
 
-
     public function showResetPasswordForm(Request $request)
     {
         $token = $request->query('token');
@@ -133,7 +126,6 @@ class UserProfileController extends Controller
             'user' => Auth::user()
         ]);
     }
-
 
     public function updatePassword(Request $request)
     {
@@ -159,6 +151,4 @@ class UserProfileController extends Controller
         Log::info('Password updated for user id: ' . $user->id);
         return redirect('/dashboard/profile')->with('success', 'Password Anda telah berhasil diperbarui');
     }
-    
-    
 }

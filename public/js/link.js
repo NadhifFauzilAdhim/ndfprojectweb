@@ -193,20 +193,14 @@ function showQRCode(url) {
     const qrCodeContainer = document.getElementById('qrCodeContainer');
     const downloadButton = document.getElementById('downloadQrCode');
 
-    // Hapus QR Code lama jika ada
     qrCodeContainer.innerHTML = '';
-
-    // Generate URL QR Code menggunakan API eksternal
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
-
-    // Tampilkan QR Code di modal
     const qrCodeImg = document.createElement('img');
     qrCodeImg.src = qrCodeUrl;
     qrCodeImg.alt = 'QR Code';
     qrCodeImg.classList.add('img-fluid');
     qrCodeContainer.appendChild(qrCodeImg);
 
-    // Atur aksi tombol untuk mengunduh QR Code
     downloadButton.onclick = function () {
         const link = document.createElement('a');
         link.href = qrCodeUrl;

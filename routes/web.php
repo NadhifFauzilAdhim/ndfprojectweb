@@ -88,6 +88,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
 Route::middleware(['auth', 'admin', 'verified'])->group(function() {
     Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'checkSlug']);
     Route::resource('/dashboard/posts', DashboardPostController::class);
+    Route::post('/dashboard/posts/generate', [DashboardPostController::class, 'generatePost'])->name('posts.generate');
     Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show');
     Route::delete('/dashboard/postmanagement/{post:slug}', [AdminPostController::class, 'destroy'])->name('postmanagement.destroy');
     Route::resource('/dashboard/postmanagement', AdminPostController::class)->only(['index','destroy']);
@@ -96,7 +97,9 @@ Route::middleware(['auth', 'admin', 'verified'])->group(function() {
 Route::middleware(['auth', 'owner', 'verified'])->group(function() {
     Route::resource('/dashboard/usersetting', AdminUserController::class)->only(['index', 'update']);
     Route::patch('/dashboard/usersetting/{user}/toggle-verification', [AdminUserController::class, 'update'])->name('usersetting.toggleVerification');
-    
 });
+
+    
+
 
 
