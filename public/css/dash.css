@@ -17019,4 +17019,56 @@ ul {
       text-overflow: ellipsis;
   }
 
-    
+
+/* Custom CSS untuk bottom navigation bar yang menarik */
+.navbar.fixed-bottom {
+  background-color: #ffffff !important; /* Warna background putih */
+  box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.1); /* Shadow untuk efek melayang */
+  border-radius: 20px 20px 0 0; /* Border rounded di bagian atas */
+  padding: 10px 0;
+  margin: 0 10px; /* Memberikan jarak dari sisi layar */
+  border: 1px solid #e0e0e0; /* Border tipis untuk detail */
+}
+
+.navbar .container-fluid {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Pusatkan ikon dan teks secara horizontal */
+  justify-content: center; /* Pusatkan ikon dan teks secara vertikal */
+  color: #1976d2 !important; /* Warna biru tua untuk teks dan ikon */
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 12px; /* Border rounded untuk setiap link */
+}
+
+.nav-link iconify-icon {
+  font-size: 1.5rem; /* Ukuran ikon */
+  margin-bottom: 5px; /* Jarak antara ikon dan teks */
+}
+
+.nav-link span {
+  font-size: 0.8rem; /* Ukuran teks */
+}
+
+.nav-link:hover {
+  color: #ffffff !important; 
+  background-color: #1976d2; 
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(25, 118, 210, 0.2); 
+}
+
+/* Efek aktif */
+.nav-link.active {
+  color: #ffffff !important; 
+  background-color: #1976d2;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3); 
+}  
+

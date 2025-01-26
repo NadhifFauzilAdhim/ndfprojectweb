@@ -38,7 +38,7 @@
           </li>
           @can('admin')
           <li class="sidebar-item">
-            <a class="sidebar-link "  href="/dashboard/posts" aria-expanded="false">
+            <a class="sidebar-link " href="/dashboard/posts" aria-expanded="false">
               <span>
                
                 <iconify-icon icon="solar:file-text-bold-duotone" class="fs-6"></iconify-icon>
@@ -112,11 +112,31 @@
             </a>
           </li>
           @endcan
-          
-          
-          
         </ul>
         
       </nav>
     </div>
   </aside>
+
+  <nav class="navbar fixed-bottom navbar-light bg-light d-block d-lg-none">
+    <div class="container-fluid justify-content-around">
+        <a class="nav-link text-center {{ request()->is('dashboard') ? 'active' : '' }}" href="/dashboard">
+            <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-5"></iconify-icon>
+            <span class="d-block">Home</span>
+        </a>
+        <a class="nav-link text-center {{ request()->is('dashboard/link*') ? 'active' : '' }}" href="/dashboard/link">
+            <iconify-icon icon="solar:link-bold-duotone" class="fs-5"></iconify-icon>
+            <span class="d-block">Linksy</span>
+        </a>
+        @can('admin')
+        <a class="nav-link text-center {{ request()->is('dashboard/posts*') ? 'active' : '' }}" href="/dashboard/posts">
+            <iconify-icon icon="solar:text-field-focus-bold-duotone" class="fs-5"></iconify-icon>
+            <span class="d-block">Post</span>
+        </a>
+        @endcan
+        <a class="nav-link text-center {{ request()->is('dashboard/profile') ? 'active' : '' }}" href="/dashboard/profile">
+            <iconify-icon icon="solar:user-bold-duotone" class="fs-5"></iconify-icon>
+            <span class="d-block">Profile</span>
+        </a>
+    </div>
+</nav>

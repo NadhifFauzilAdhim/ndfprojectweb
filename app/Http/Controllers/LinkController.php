@@ -249,16 +249,20 @@ class LinkController extends Controller
 
 
     private function getAllVisitData($userId) {
+        $startOfWeek = now()->startOfWeek();
+        $endOfWeek = $startOfWeek->copy()->endOfWeek(); 
         $visits = Linkvisithistory::whereHas('link', fn($query) => $query->where('user_id', $userId))
-            ->whereDate('created_at', '>=', now()->subDays(6)->startOfDay())
-            ->whereDate('created_at', '<=', now()->endOfDay())
+            ->whereDate('created_at', '>=', $startOfWeek)
+            ->whereDate('created_at', '<=', $endOfWeek)
             ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
             ->groupBy('day')
             ->orderBy('day')
             ->get()
             ->keyBy('day');
+            
         return collect(range(1, 7))->map(fn($day) => $visits[$day]->total_visits ?? 0)->values();
     }
+    
     
 
     /**

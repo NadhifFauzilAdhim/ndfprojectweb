@@ -156,7 +156,6 @@ class DashboardPostController extends Controller
     
         $validatedData['author_id'] = Auth::id();
         $post->update($validatedData);
-    
         return redirect('/dashboard/posts')->with('success', 'Post Berhasil Diubah');
     }
 

@@ -7,7 +7,11 @@
         <div class="col-lg-4">
           <div class="card">
             <div class="card-body text-center card-fixed-size">
-              <img src="{{ asset('img/product-tip.png') }}" alt="image" class="img-fluid" width="205">
+              @if(Auth::user()->avatar)
+              <img src="{{ asset('storage/'. auth()->user()->avatar) }}" alt="image" class="img-fluid img-fluid rounded-circle" width="205">
+              @else
+               <img src="https://img.icons8.com/color/500/user-male-circle--v1.png" alt="image" class="img-fluid img-fluid rounded-circle" width="205">
+              @endif
               <h4 class="mt-7"><small>Welcome !</small> <br> {{ Auth::user()->name }}</h4>
               <p class="card-subtitle mt-2 mb-1 fs-2">We're glad to have you here. Explore the features and tools available on your dashboard to make the most out of your experience.</p>
               

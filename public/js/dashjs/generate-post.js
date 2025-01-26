@@ -19,6 +19,10 @@ $(document).ready(function () {
                 language: language,
                 _token: $('meta[name="csrf-token"]').attr('content'),
             },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'Accept': 'application/json',
+            },
             success: function (response) {
                 if (response.success) {
                     $('#summernote').summernote('code', response.body);
