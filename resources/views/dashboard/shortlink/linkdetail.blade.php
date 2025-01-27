@@ -76,6 +76,17 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-12 mb-5">
+                                        <div class="card-body">
+                                            <h5 class="card-title d-flex align-items-center gap-2 mb-4">
+                                                Traffic Overview
+                                                <span>
+                                                    <iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Traffic Overview"></iconify-icon>
+                                                </span>
+                                            </h5>
+                                            <div id="location-chart"></div>
+                                        </div>
+                                    </div>
                                     <div class="col-3 text-center">
                                         <i class="bi bi-cloud-check-fill text-primary fs-6"></i>
                                         <span class="fs-6 mt-2 d-block text-secondary d-none d-sm-block">Records</span>
@@ -280,7 +291,6 @@
             </div>
         </div>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             showQRCode('{{ url('r/' . $link->slug) }}');
@@ -289,7 +299,7 @@
     <script>
         const visitDataGlobal = @json($chartData);
         const toprefDataGlobal = @json($topReferers);
-        console.log(toprefDataGlobal);
+        const locationData = @json($location);
     </script>
     <script src="{{ asset('js/dashjs/linkdetail.js') }}"></script>
 </x-dashlayout>

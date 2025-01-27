@@ -140,6 +140,82 @@ $(function () {
     chart.render();
 });
 
+$(function () {
+    const locationLabels = Object.keys(locationData); 
+    const locationSeries = Object.values(locationData); 
+
+    // Konfigurasi chart
+    var options = {
+        series: [{
+            name: 'Visits',
+            data: locationSeries 
+        }],
+        chart: {
+            type: 'bar', 
+            height: 350, 
+            toolbar: {
+                show: false 
+            }
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false, 
+                columnWidth: '55%', 
+                endingShape: 'rounded' 
+            },
+        },
+        dataLabels: {
+            enabled: false 
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent'] 
+        },
+        xaxis: {
+            categories: locationLabels, 
+            labels: {
+                style: {
+                    colors: '#6b7280', 
+                    fontSize: '12px'
+                }
+            }
+        },
+        yaxis: {
+            title: {
+                text: 'Visits', 
+                style: {
+                    color: '#6b7280',
+                    fontSize: '12px'
+                }
+            },
+            labels: {
+                style: {
+                    colors: '#6b7280',
+                    fontSize: '12px'
+                }
+            }
+        },
+        fill: {
+            opacity: 1 
+        },
+        tooltip: {
+            y: {
+                formatter: function (val) {
+                    return val + " visits"; 
+                }
+            }
+        },
+        colors: ['#3b82f6'] 
+    };
+
+    // Render chart
+    var chart = new ApexCharts(document.querySelector("#location-chart"), options);
+    chart.render();
+});
+
+
+
 
 
 function applyFilter() {

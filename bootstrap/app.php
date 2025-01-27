@@ -30,4 +30,8 @@ return Application::configure(basePath: dirname(__DIR__))
             }
             
         });
+    })
+    ->withSchedule(function (\Illuminate\Console\Scheduling\Schedule $schedule) {
+        // Jadwalkan command untuk menghapus visit history setiap hari
+        $schedule->command('visit-history:cleanup')->daily();
     })->create();

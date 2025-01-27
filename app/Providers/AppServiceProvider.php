@@ -7,6 +7,9 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
+use App\Models\Linkvisithistory;
+use App\Observers\VisitHistoryObserver;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -39,6 +42,5 @@ class AppServiceProvider extends ServiceProvider
                 ->line('Jika Anda tidak mendaftar di platform kami, Anda bisa mengabaikan pesan ini.')
                 ->salutation('Terima kasih atas kepercayaan Anda, Tim Support');
         });
-        
     }
 }

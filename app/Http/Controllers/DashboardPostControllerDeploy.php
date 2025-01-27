@@ -118,7 +118,7 @@ class DashboardPostController extends Controller
         $datarules = [
             'title' => 'required|max:255',
             'category_id' => 'required',
-            'image' => 'nullable|image|file|max:2048', // Gambar opsional
+            'image' => 'nullable|image|file|max:2048', 
             'body' => 'required',
         ];
     
