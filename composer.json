@@ -9,9 +9,12 @@
         "cviebrock/eloquent-sluggable": "^11.0",
         "google-gemini-php/laravel": "^1.0",
         "intervention/image": "^3.8",
+        "jantinnerezo/livewire-alert": "^3.0",
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "piwik/device-detector": "^6.4",
+        "realrashid/sweet-alert": "^7.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",

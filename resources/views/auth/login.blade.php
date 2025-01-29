@@ -10,7 +10,7 @@
           <div class="card mb-0">
             <div class="card-body">
               <a href="/" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                <img src="{{ asset('img/project/nprojectlogoblue.png') }}" style="width: 250px;" alt="logo">
+                <img src="{{ asset('img/linksy-ndfproject.png') }}" style="width: 250px;" alt="logo">
               </a>
               @if (session('success'))
               <div class="alert alert-success text-center">

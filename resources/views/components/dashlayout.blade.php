@@ -26,6 +26,7 @@
       d.getElementsByTagName("head")[0].appendChild(s);
     })();
   </script>
+    @include('sweetalert::alert')
 </head>
 <body>
   <div id="spinner" class="spinner-wrapper">

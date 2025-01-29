@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class LinkController extends Controller
 {
@@ -61,6 +63,9 @@ class LinkController extends Controller
         });
 
         $visitData = $this->getAllVisitData($userId);
+        if(session()->has('success')) {
+            Alert::success('Success', "test");
+        }
 
         return view('dashboard.shortlink.index', compact(
             'totalLinks',
@@ -194,7 +199,6 @@ class LinkController extends Controller
         $validatedData['title'] = $websiteTitle ?? null;
 
         Link::create($validatedData);
-
         return redirect()->back()->with('success', 'Link Berhasil Ditambahkan');
     }
 
@@ -223,9 +227,7 @@ class LinkController extends Controller
     public function destroy(Link $link)
     {
         $this->authorizeLink($link);
-
         $link->delete();
-
         return redirect()->back()->with('success', 'Link Berhasil Dihapus');
     }
 
@@ -291,6 +293,7 @@ class LinkController extends Controller
             ->get();
         return $locations->pluck('visit_count', 'location')->toArray();
     }
+
 
     /**
      * Get visit count by status.

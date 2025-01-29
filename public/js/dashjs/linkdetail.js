@@ -209,7 +209,6 @@ $(function () {
         colors: ['#3b82f6'] 
     };
 
-    // Render chart
     var chart = new ApexCharts(document.querySelector("#location-chart"), options);
     chart.render();
 });

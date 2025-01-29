@@ -2,29 +2,6 @@
     <x-slot:title>{{ $title }}</x-slot:title>
     <div class="container-fluid">
         <!-- Toast Notifications -->
-        @if(session()->has('success'))
-            <div class="toast-container position-fixed top-0 end-0 p-3">
-                <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            <i class="bi bi-check-circle-fill me-3"></i>{{ session('success') }}
-                        </div>
-                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                </div>
-            </div>
-        @elseif(session()->has('error'))
-            <div class="toast-container position-fixed top-0 end-0 p-3">
-                <div class="toast align-items-center text-bg-warning border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            <i class="bi bi-exclamation-diamond-fill me-3"></i> {{ session('error') }}
-                        </div>
-                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                </div>
-            </div>
-        @endif
 
         <!-- Breadcrumb Navigation -->
         <nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -79,7 +56,7 @@
                                     <div class="col-lg-12 mb-5">
                                         <div class="card-body">
                                             <h5 class="card-title d-flex align-items-center gap-2 mb-4">
-                                                Traffic Overview
+                                                Location
                                                 <span>
                                                     <iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Traffic Overview"></iconify-icon>
                                                 </span>
@@ -114,10 +91,17 @@
                 </div>
             </div>
         </div>
-
-        <!-- Visit History Section -->
         <div class="card shadow-sm mb-4">
             <div class="card-body">
+                <div class="alert alert-primary" role="alert">
+                    <div class=" text-center">
+                      <div class="flex-grow-1 ms-3">
+                        <p class="mb-0">
+                            <i class="bi bi-info-circle-fill"></i> <span class="fw-bold">Visit History</span> - View this link's visit history. History will be deleted after 60 days.
+                        </p>
+                      </div>
+                  </div>
+                </div>
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div>
                         <label for="filterUnique" class="me-2 fw-bold"></label>
@@ -218,7 +202,7 @@
                                     <div class="mb-3">
                                         <label for="slug" class="form-label">Short URL</label>
                                         <div class="input-group">
-                                            <span class="input-group-text bg-light text-primary">{{ url('r/') }}</span>
+                                            <span class="input-group-text bg-light text-primary">linksy.site/</span>
                                             <input type="text" class="form-control shadow-sm" id="slug" name="slug" value="{{ $link->slug }}" placeholder="Custom short link" required>
                                             <div class="invalid-feedback" id="slug-error"></div>
                                         </div>

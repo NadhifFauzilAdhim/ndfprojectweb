@@ -13,5 +13,6 @@ class Linkvisithistory extends Model
     {
         return $this->belongsTo(Link::class);
     }
+    
 
 }
