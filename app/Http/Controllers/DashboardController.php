@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Link;
 use App\Models\Post;
 use App\Models\Comment;
-use App\Models\Link;
 use Illuminate\Http\Request;
+use App\Models\Linkvisithistory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -17,7 +19,7 @@ class DashboardController extends Controller
         $posts = Post::with(['author', 'category'])
             ->where('author_id', $userId)
             ->latest()
-            ->paginate(4);
+            ->paginate(3);
 
         $comments = Comment::with(['user', 'post.category', 'post.author'])
             ->whereIn('post_id', $posts->pluck('id'))
@@ -31,6 +33,13 @@ class DashboardController extends Controller
         $totalLinks = (int) $totals->total_links;
         $totalVisit = (int) $totals->total_visits;
         $totalUniqueVisit = (int) $totals->total_unique_visits;
+        $visitData = $this->getAllVisitData($userId);
+
+        $lastLinkVisit = Linkvisithistory::with('link') 
+        ->whereHas('link', fn($query) => $query->where('user_id', $userId))
+        ->latest()
+        ->take(6)
+        ->get();
 
         $topLinks = Link::with('user') 
             ->where('user_id', $userId)
@@ -45,7 +54,27 @@ class DashboardController extends Controller
             'topLinks' => $topLinks,
             'totalLinks' => $totalLinks,
             'totalVisit' => $totalVisit,
-            'totalUniqueVisit' => $totalUniqueVisit
+            'totalUniqueVisit' => $totalUniqueVisit,
+            'lastLinkVisit' => $lastLinkVisit,
+            'visitData' => $visitData
         ]);
+
+        
+    }
+
+    private function getAllVisitData($userId)
+    {
+        $startOfWeek = now()->startOfWeek();
+        $endOfWeek = $startOfWeek->copy()->endOfWeek();
+
+        $visits = Linkvisithistory::whereHas('link', fn($query) => $query->where('user_id', $userId))
+            ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
+            ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
+            ->groupBy('day')
+            ->orderBy('day')
+            ->get()
+            ->keyBy('day');
+
+        return collect(range(1, 7))->map(fn($day) => $visits[$day]->total_visits ?? 0)->values();
     }
 }

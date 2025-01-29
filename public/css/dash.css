@@ -17020,55 +17020,89 @@ ul {
   }
 
 
-/* Custom CSS untuk bottom navigation bar yang menarik */
-.navbar.fixed-bottom {
-  background-color: #ffffff !important; /* Warna background putih */
-  box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.1); /* Shadow untuk efek melayang */
-  border-radius: 20px 20px 0 0; /* Border rounded di bagian atas */
-  padding: 10px 0;
-  margin: 0 10px; /* Memberikan jarak dari sisi layar */
-  border: 1px solid #e0e0e0; /* Border tipis untuk detail */
+  .mobile-nav {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(10px);
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    height: 65px;
+    padding: 8px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.navbar .container-fluid {
+.nav-item {
+  text-align: center;
+  color: #666;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  padding: 8px 12px;
+  border-radius: 12px;
+  position: relative;
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
   align-items: center;
 }
 
-.nav-link {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Pusatkan ikon dan teks secara horizontal */
-  justify-content: center; /* Pusatkan ikon dan teks secara vertikal */
-  color: #1976d2 !important; /* Warna biru tua untuk teks dan ikon */
-  text-decoration: none;
-  transition: all 0.3s ease;
-  padding: 8px 12px;
-  border-radius: 12px; /* Border rounded untuk setiap link */
+.nav-item.active {
+    color: #0d6efd;
 }
 
-.nav-link iconify-icon {
-  font-size: 1.5rem; /* Ukuran ikon */
-  margin-bottom: 5px; /* Jarak antara ikon dan teks */
+.nav-item.active .nav-icon {
+    transform: translateY(-5px);
 }
 
-.nav-link span {
-  font-size: 0.8rem; /* Ukuran teks */
+.nav-icon {
+  font-size: 1.6rem;
+  transition: all 0.2s ease;
+  position: relative;
+  width: 40px; /* Tambahkan fixed width */
+  height: 40px; /* Tambahkan fixed height */
+  display: flex; /* Untuk pusatkan ikon */
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; /* Pastikan lingkaran sempurna */
 }
 
-.nav-link:hover {
-  color: #ffffff !important; 
-  background-color: #1976d2; 
-  transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(25, 118, 210, 0.2); 
+.nav-icon::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; /* Gunakan width 100% dari parent */
+  height: 100%; /* Gunakan height 100% dari parent */
+  background: rgba(13, 110, 253, 0.1);
+  border-radius: 50%; /* Pastikan lingkaran sempurna */
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: -1; /* Letakkan di belakang ikon */
 }
 
-/* Efek aktif */
-.nav-link.active {
-  color: #ffffff !important; 
-  background-color: #1976d2;
-  font-weight: bold;
-  box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3); 
-}  
+.nav-item.active .nav-icon::after {
+    opacity: 1;
+}
 
+.nav-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-top: 4px;
+  transition: color 0.2s ease;
+}
+
+/* Animation on click */
+.nav-item:active .nav-icon {
+    transform: scale(0.9);
+}
+
+/* Active state indicator */
+.nav-item.active::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 3px;
+    background: #0d6efd;
+    border-radius: 2px;
+}

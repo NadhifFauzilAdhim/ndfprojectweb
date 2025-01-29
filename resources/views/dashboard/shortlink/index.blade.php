@@ -25,7 +25,7 @@
                                 showConfirmButton: false,
                                 timer: 3000,
                                 timerProgressBar: true,
-                            });
+                                });
                         @elseif(session()->has('error'))
                             Swal.fire({
                                 text: "{{ session('error') }}",

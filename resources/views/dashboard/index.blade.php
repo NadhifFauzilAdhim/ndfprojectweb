@@ -33,7 +33,102 @@
               </div>
           </div>
       
-      <div class="col-lg-8 d-flex align-items-stretch">
+          <div class="col-lg-4 d-flex align-items-stretch">
+            <div class="card w-100">
+              <div class="card-body">
+                <h5 class="card-title d-flex align-items-center gap-2 pb-3">Link Static<span><iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Locations"></iconify-icon></span>
+                </h5>
+                <div class="row">
+                  <div class="col-4">
+                    <iconify-icon icon="solar:link-bold-duotone" class="fs-7 d-flex text-primary"></iconify-icon>
+                    <span class="fs-11 mt-2 d-block text-nowrap">Link Created</span>
+                    <h4 class="mb-0 mt-1">{{ $totalLinks }}</h4>
+                  </div>
+                  <div class="col-4">
+                    <iconify-icon icon="solar:cursor-line-duotone" class="fs-7 d-flex text-secondary"></iconify-icon>
+                    <span class="fs-11 mt-2 d-block text-nowrap">Total Visit</span>
+                    <h4 class="mb-0 mt-1">{{ $totalVisit }}</h4>
+                  </div>
+                  <div class="col-4">
+                    <iconify-icon icon="solar:shield-user-broken" class="fs-7 d-flex text-success"></iconify-icon>
+                    <span class="fs-11 mt-2 d-block text-nowrap">Unique Visit</span>
+                    <h4 class="mb-0 mt-1">{{ $totalUniqueVisit }}</h4>
+                  </div>
+                </div>
+    
+                <div class="vstack gap-4 mt-7 pt-2">
+                    <div class="vstack gap-4 ">
+                        @forelse ($topLinks as $link) 
+                            <div class="mt-1">
+                                <div class="hstack justify-content-between">
+                                    <iconify-icon 
+                                        icon="solar:link-round-angle-bold-duotone" 
+                                        class="fs-3 d-flex text-primary">
+                                    </iconify-icon>
+                                    <span class="fs-3 fw-medium">
+                                        <a href="{{ url('dashboard/link/').'/'.$link->slug }}">{{ $link->slug }}</a>
+                                    </span>
+                                    <h6 class="fs-3 fw-medium text-dark lh-base mb-0 w-4">
+                                        <div class="d-flex justify-content-between">
+                                            <small>{{ $link->visits }}</small>
+                                            <small class="text-success">
+                                                +{{ $link->visits_last_7_days ? $link->visits_last_7_days : '-' }}
+                                            </small>
+                                        </div>
+                                    </h6>
+                                </div>
+                            </div>  
+                        @empty
+                            <h6 class="fs-3 fw-medium text-dark lh-base mb-0 text-center">
+                                No Data
+                            </h6>
+                        @endforelse
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+   
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Last Visits History</h5>
+            <div class="table-responsive">
+              <table class="table text-nowrap align-middle mb-0">
+                <thead>
+                  <tr class="border-2 border-bottom border-primary border-0"> 
+                    <th scope="col" class="ps-0">Link</th>
+                    <th scope="col" class="text-center">Date</th>
+                    <th scope="col" class="ps-0">Detail</th>
+                   
+                  </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                  @forelse ($lastLinkVisit as $visit )
+                  <tr>
+                    <th scope="row" class="ps-0 fw-medium">
+                      <span class="table-link1 text-truncate d-block"><small>{{ $visit->link->title }}</small></span>
+                    </th> 
+                    <td class="text-center fw-medium"><small>{{  $visit->created_at->diffForHumans() }}</small></td>
+                    <td>
+                      <a href="/dashboard/link/{{ $visit->link->slug }}" class="link-primary text-dark fw-medium d-block"><small>Detail</small></a>
+                    </td>
+                  </tr>
+              
+                  @empty
+                  <td colspan="3" class="text-center">Tidak ada data &#129300;</td>
+                  @endforelse
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+     
+
+      <div class="col-lg-4 d-flex align-items-stretch">
         <div class="card w-100">
           <div class="card-body card-fixed-size">
             <h5 class="card-title">Your post comment</h5>
@@ -77,62 +172,6 @@
         </div>
       </div>
       
-      <div class="col-lg-4 d-flex align-items-stretch">
-        <div class="card w-100">
-          <div class="card-body">
-            <h5 class="card-title d-flex align-items-center gap-2 pb-3">Link Static<span><iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Locations"></iconify-icon></span>
-            </h5>
-            <div class="row">
-              <div class="col-4">
-                <iconify-icon icon="solar:link-bold-duotone" class="fs-7 d-flex text-primary"></iconify-icon>
-                <span class="fs-11 mt-2 d-block text-nowrap">Link Created</span>
-                <h4 class="mb-0 mt-1">{{ $totalLinks }}</h4>
-              </div>
-              <div class="col-4">
-                <iconify-icon icon="solar:cursor-line-duotone" class="fs-7 d-flex text-secondary"></iconify-icon>
-                <span class="fs-11 mt-2 d-block text-nowrap">Total Visit</span>
-                <h4 class="mb-0 mt-1">{{ $totalVisit }}</h4>
-              </div>
-              <div class="col-4">
-                <iconify-icon icon="solar:shield-user-broken" class="fs-7 d-flex text-success"></iconify-icon>
-                <span class="fs-11 mt-2 d-block text-nowrap">Unique Visit</span>
-                <h4 class="mb-0 mt-1">{{ $totalUniqueVisit }}</h4>
-              </div>
-            </div>
-
-            <div class="vstack gap-4 mt-7 pt-2">
-                <div class="vstack gap-4 ">
-                    @forelse ($topLinks as $link) 
-                        <div class="mt-1">
-                            <div class="hstack justify-content-between">
-                                <iconify-icon 
-                                    icon="solar:link-round-angle-bold-duotone" 
-                                    class="fs-3 d-flex text-primary">
-                                </iconify-icon>
-                                <span class="fs-3 fw-medium">
-                                    <a href="{{ url('dashboard/link/').'/'.$link->slug }}">{{ $link->slug }}</a>
-                                </span>
-                                <h6 class="fs-3 fw-medium text-dark lh-base mb-0 w-4">
-                                    <div class="d-flex justify-content-between">
-                                        <small>{{ $link->visits }}</small>
-                                        <small class="text-success">
-                                            +{{ $link->visits_last_7_days ? $link->visits_last_7_days : '-' }}
-                                        </small>
-                                    </div>
-                                </h6>
-                            </div>
-                        </div>  
-                    @empty
-                        <h6 class="fs-3 fw-medium text-dark lh-base mb-0 text-center">
-                            No Data
-                        </h6>
-                    @endforelse
-                </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
       
       @forelse($posts as $post)
       <div class="col-lg-4 d-flex align-items-stretch">
@@ -172,4 +211,5 @@
      
     </div>
     <script src="{{ asset('js/dashjs/dashboard.js') }}"></script>
+    <script> const visitDataGlobal = @json($visitData);</script>
 </x-dashlayout>

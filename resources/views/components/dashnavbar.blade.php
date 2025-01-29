@@ -118,25 +118,39 @@
     </div>
   </aside>
 
-  <nav class="navbar fixed-bottom navbar-light bg-light d-block d-lg-none">
-    <div class="container-fluid justify-content-around">
-        <a class="nav-link text-center {{ request()->is('dashboard') ? 'active' : '' }}" href="/dashboard">
-            <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-5"></iconify-icon>
-            <span class="d-block">Home</span>
-        </a>
-        <a class="nav-link text-center {{ request()->is('dashboard/link*') ? 'active' : '' }}" href="/dashboard/link">
-            <iconify-icon icon="solar:link-bold-duotone" class="fs-5"></iconify-icon>
-            <span class="d-block">Linksy</span>
-        </a>
-        @can('admin')
-        <a class="nav-link text-center {{ request()->is('dashboard/posts*') ? 'active' : '' }}" href="/dashboard/posts">
-            <iconify-icon icon="solar:text-field-focus-bold-duotone" class="fs-5"></iconify-icon>
-            <span class="d-block">Post</span>
-        </a>
-        @endcan
-        <a class="nav-link text-center {{ request()->is('dashboard/profile') ? 'active' : '' }}" href="/dashboard/profile">
-            <iconify-icon icon="solar:user-bold-duotone" class="fs-5"></iconify-icon>
-            <span class="d-block">Profile</span>
-        </a>
+  <nav class="navbar fixed-bottom navbar-light d-block d-lg-none mobile-nav">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center w-100 px-2">
+            <a class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}" href="/dashboard">
+                <div class="nav-icon">
+                    <iconify-icon icon="solar:home-smile-bold-duotone"></iconify-icon>
+                </div>
+                <span class="nav-label">Home</span>
+            </a>
+            
+            <a class="nav-item {{ request()->is('dashboard/link*') ? 'active' : '' }}" href="/dashboard/link">
+                <div class="nav-icon">
+                    <iconify-icon icon="solar:link-bold-duotone"></iconify-icon>
+                </div>
+                <span class="nav-label">Links</span>
+            </a>
+            
+            @can('admin')
+            <a class="nav-item {{ request()->is('dashboard/posts*') ? 'active' : '' }}" href="/dashboard/posts">
+                <div class="nav-icon">
+                    <iconify-icon icon="solar:text-field-focus-bold-duotone"></iconify-icon>
+                </div>
+                <span class="nav-label">Post</span>
+            </a>
+            @endcan
+            
+            <a class="nav-item {{ request()->is('dashboard/profile') ? 'active' : '' }}" href="/dashboard/profile">
+                <div class="nav-icon">
+                    <iconify-icon icon="solar:user-bold-duotone"></iconify-icon>
+                </div>
+                <span class="nav-label">Profile</span>
+            </a>
+        </div>
     </div>
 </nav>
+

@@ -1,85 +1,113 @@
 $(function () {
-// -----------------------------------------------------------------------
-  // Traffic Overview
-  // -----------------------------------------------------------------------
-
+  var visitData = visitDataGlobal;
   var chart = {
-    series: [
-      {
-        name: "New Users",
-        data: [5, 1, 17, 6, 15, 9, 6],
+      series: [
+          {
+              name: "Visits",
+              data: visitData,
+          }
+      ],
+      chart: {
+          toolbar: {
+              show: false,
+          },
+          type: "area",
+          fontFamily: "inherit",
+          foreColor: "#adb0bb",
+          height: 320,
+          animations: {
+              enabled: true,
+              easing: "easeinout",
+              speed: 800,
+          },
       },
-      {
-        name: "Users",
-        data: [7, 11, 4, 16, 10, 14, 10],
+      colors: ["#007bff"], 
+      stroke: {
+          width: 3,
+          curve: "smooth",
       },
-    ],
-    chart: {
-      toolbar: {
-        show: false,
+      markers: {
+          size: 5,
+          colors: ["#ffffff"], // Warna putih untuk isi marker
+          strokeColors: "#007bff", // Warna biru untuk pinggiran marker
+          strokeWidth: 2,
+          hover: {
+              size: 7,
+          },
       },
-      type: "line",
-      fontFamily: "inherit",
-      foreColor: "#adb0bb",
-      height: 320,
-      stacked: false,
-    },
-    colors: ["var(--bs-gray-300)", "var(--bs-primary)"],
-    plotOptions: {},
-    dataLabels: {
-      enabled: false,
-    },
-    legend: {
-      show: false,
-    },
-    stroke: {
-      width: 2,
-      curve: "smooth",
-      dashArray: [8, 0],
-    },
-    grid: {
-      borderColor: "rgba(0,0,0,0.1)",
-      strokeDashArray: 3,
+      dataLabels: {
+          enabled: false,
+      },
+      legend: {
+          show: true,
+          position: "top",
+          horizontalAlign: "right",
+          markers: {
+              radius: 12,
+          },
+      },
+      grid: {
+          borderColor: "rgba(0,0,0,0.1)",
+          strokeDashArray: 3,
+          xaxis: {
+              lines: {
+                  show: true,
+              },
+          },
+          yaxis: {
+              lines: {
+                  show: true,
+              },
+          },
+      },
       xaxis: {
-        lines: {
-          show: false,
-        },
+          axisBorder: {
+              show: false,
+          },
+          axisTicks: {
+              show: false,
+          },
+          categories: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
       },
-    },
-    yaxis: {
-      title: {
-        // text: 'Age',
+      yaxis: {
+          tickAmount: 5,
+          labels: {
+              formatter: function(val) {
+                  return val + "k"; 
+              },
+          },
       },
-    },
-    xaxis: {
-      axisBorder: {
-        show: false,
+      tooltip: {
+          theme: "dark",
+          x: {
+              show: true,
+          },
+          y: {
+              formatter: function(val) {
+                  return val + " Visits";
+              },
+          },
       },
-      axisTicks: {
-        show: false,
+      fill: {
+          type: "gradient",
+          gradient: {
+              shade: "light",
+              type: "vertical",
+              shadeIntensity: 0.25,
+              gradientToColors: ["#80d0ff"], 
+              inverseColors: true,
+              opacityFrom: 1,
+              opacityTo: 0.3,
+          },
       },
-      categories: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    },
-    yaxis: {
-      tickAmount: 4,
-    },
-    markers: {
-      strokeColor: ["var(--bs-gray-300)", "var(--bs-primary)"],
-      strokeWidth: 2,
-    },
-    tooltip: {
-      theme: "dark",
-    },
   };
-
+  
   var chart = new ApexCharts(
-    document.querySelector("#traffic-overview"),
-    chart
+      document.querySelector("#traffic-overview"),
+      chart
   );
   chart.render();
-
-
-})
+});
 
 document.addEventListener("DOMContentLoaded", function() {
   const toastElList = [].slice.call(document.querySelectorAll('.toast'));
