@@ -143,7 +143,13 @@ class DashboardPostController extends Controller
         $language = $request->input('language');
     
         try {
-            $result = Gemini::geminiPro()->generateContent("Buatkan artikel tentang '$title' dengan format HTML. Sertakan <h1> untuk judul, <p> untuk paragraf, dan pastikan kontennya terstruktur dengan rapi. Hindari penggunaan tag yang tidak perlu. Gunakan bahasa '$language' buat artikel dengan detail.");
+            $prompt = "Write a well-structured article about '$title' in '$language'. 
+            The article should include:
+            - A clear and informative title using <h1>.
+            - Well-organized paragraphs using <p>.
+            - Proper structure with an introduction, main content, and conclusion.
+            - Avoid unnecessary tags.";
+            $result = Gemini::geminiPro()->generateContent($prompt);
 
             $generatedContent = $result->text();
     

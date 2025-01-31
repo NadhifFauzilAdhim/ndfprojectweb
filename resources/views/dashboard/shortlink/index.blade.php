@@ -327,7 +327,7 @@
                                             <button class="dropdown-item text-primary" 
                                                     data-bs-toggle="modal" 
                                                     data-bs-target="#qrCodeModal" 
-                                                    onclick="showQRCode('{{ url('r/' . $link->slug) }}')">
+                                                    onclick="showQRCode('https://linksy.site/{{ $link->slug }}')">
                                                 <i class="bi bi-qr-code me-2"></i> Generate QR
                                             </button>
                                         </li>

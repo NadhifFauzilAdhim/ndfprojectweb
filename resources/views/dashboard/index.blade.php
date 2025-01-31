@@ -12,7 +12,7 @@
               @else
                <img src="https://img.icons8.com/color/500/user-male-circle--v1.png" alt="image" class="img-fluid img-fluid rounded-circle" width="205">
               @endif
-              <h4 class="mt-7"><small>Welcome !</small> <br> {{ Auth::user()->name }}</h4>
+              <h4 class="mt-7"><small>Welcome !</small> <br> {{ Auth::user()->name }} <i class="bi bi-patch-check-fill me-1 text-primary"></i></h4>
               <p class="card-subtitle mt-2 mb-1 fs-2">We're glad to have you here. Explore the features and tools available on your dashboard to make the most out of your experience.</p>
               
             </div>

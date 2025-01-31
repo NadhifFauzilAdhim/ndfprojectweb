@@ -95,7 +95,7 @@
   
           <div class="section-title">
             <h2>Static</h2>
-            <p>Static overview detailing the number of projects, certificates, and memberships that I have successfully completed, providing a comprehensive snapshot of my accomplishments in these areas.</p>
+            <p>Static overview detailing the number of projects, certificates, and skills that I have successfully completed, providing a comprehensive snapshot of my accomplishments in these areas.</p>
           </div>
   
           <div class="row justify-content-md-center no-gutters">
@@ -225,8 +225,12 @@
               <h3 class="resume-title">Education</h3>
               <div class="resume-item">
                 <h4>Bachelor of informatics</h4>
+                
                 <h5>2022 </h5>
                 <p><em>Universitas Amikom Yogyakarta</em></p>
+             
+                  <p>GPA: 3.8/4.0</p>
+             
                 <p>
                   Currently pursuing my Bachelor's degree in Informatics at Universitas Amikom Yogyakarta, I am developing a strong foundation in computer science principles and gaining practical insights to thrive in the evolving field of Information Technology.
                 </p>
@@ -492,9 +496,16 @@
                                           <div class="small"><span class="bi bi-globe-americas text-primary"></span> Open Source</div>
                                           <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Juni 2024</div>
                                       </div>
+                                      
                                       <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="h4 d-inline-block mb-3">Kostify: Cari Tempat Tinggal Dan Property dengan mudah</a>
                                       <p class="mb-3"> tememukan kost atau tempat tinggal ideal Anda hanya dengan beberapa klik saja. Nikmati kemudahan dan kecepatan dalam mencari tempat tinggal impian Anda tanpa ribet.</p>
-                                      <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="btn p-0">Github  <i class="bi bi-arrow-right"></i></a>
+                                      {{-- <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="btn p-0">Github  <i class="bi bi-arrow-right"></i></a> --}}
+                                      <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="btn btn-sm btn-outline-dark me-2">
+                                        <i class="bi bi-github"></i> Source Code
+                                      </a>
+                                      <a href="https://kostify.my.id" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-eye"></i> Live Demo
+                                      </a>
                                   </div>
                               </div>
                           </div>
@@ -528,7 +539,10 @@
                                       </div>
                                       <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="h4 d-inline-block mb-3">HydroEase: Hydroponic Efficiency Automated System</a>
                                       <p class="mb-3">HydroEase menggabungkan hidroponik dengan kenyamanan IoT, mengajak Anda untuk menanam tanaman yang lebih sehat dan berkelanjutan dengan mudah. </p>
-                                      <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="btn p-0">Read More  <i class="bi bi-arrow-right"></i></a>
+                                      <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="btn btn-sm btn-outline-dark me-2">
+                                        <i class="bi bi-file-earmark-code"></i> Documentation
+                                      </a>
+                                     
                                   </div>
                               </div>
                           </div>
@@ -550,7 +564,12 @@
                                       <br>
                                       <p class="mb-5">This API is designed for managing shortened links and tracking their performance. It provides various endpoints to create, update, retrieve, and delete links, as well as monitor link activities.</p>
 
-                                      <a href="{{ route('ipdocuments') }}" class="btn p-0">Read More  <i class="bi bi-arrow-right"></i></a>
+                                      <a href="https://linksy.site/apidocumentation" class="btn btn-sm btn-outline-dark me-2">
+                                        <i class="bi bi-file-earmark-code"></i> Documentation
+                                      </a>
+                                      <a href="https://linksy.site" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-eye"></i> Live Demo
+                                      </a>
                                   </div>
                               </div>
                           </div>
