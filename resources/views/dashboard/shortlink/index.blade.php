@@ -239,9 +239,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    
-                
                     <div class="col-lg-12 mt-4 tab-content">
                         <!-- Your Links -->
                         <div class="tab-pane fade show active" id="your-links" role="tabpanel" aria-labelledby="your-links-tab">
@@ -394,7 +391,7 @@
                                     <div class="card shadow border-0 w-100">
                                         <div class="card-body">
                                             <div class="d-flex align-items-center mb-3">
-                                                <img src="https://t2.gstatic.com/faviconV2?url={{ urlencode($link->target_url) }}&size=32" alt="Favicon" class="rounded me-2" style="width: 32px; height: 32px;">
+                                                <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=32" alt="Favicon" class="rounded me-2" style="width: 32px; height: 32px;">
                                                 <span class="fw-bold fs-5">{{ $link->title ?? 'Shared Link' }}</span>
                                             </div>
                 
@@ -415,23 +412,35 @@
                         <!-- Links You Shared -->
                         <div class="tab-pane fade" id="links-you-shared" role="tabpanel" aria-labelledby="links-you-shared-tab">
                             <div class="row">
-                                @forelse ($mySharedLinks as $link)
+                                @forelse ($mySharedLinks as $sharedLink)
                                 <div class="col-md-4 d-flex align-items-stretch">
                                     <div class="card shadow border-0 w-100">
-                                        <div class="card-body">
+                                        <div class="card-body d-flex flex-column">
+                                            <!-- Favicon and Link Title -->
                                             <div class="d-flex align-items-center mb-3">
-                                                <img src="https://t2.gstatic.com/faviconV2?url={{ urlencode($link->target_url) }}&size=32" alt="Favicon" class="rounded me-2" style="width: 32px; height: 32px;">
-                                                <span class="fw-bold fs-5">{{ $link->title ?? 'Shared Link' }}</span>
+                                                <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($sharedLink->link->target_url) }}&size=32" 
+                                                    alt="Favicon" class="rounded me-2" style="width: 32px; height: 32px;">
+                                                <span class="fw-bold fs-5 text-truncate" style="max-width: 200px;">{{ $sharedLink->link->title ?? 'Shared Link' }}</span>
                                             </div>
-                
-                                            <p class="text-muted small mb-2">Shared with: 
-                                                @foreach($link->sharedUsers as $user)
-                                                <b>{{ $user->name }}</b>{{ !$loop->last ? ', ' : '' }}
-                                                @endforeach
+                            
+                                            <!-- Shared with User -->
+                                            <p class="text-muted small mb-2">
+                                                Shared with: <b>{{ $sharedLink->sharedWith->name }}</b>
                                             </p>
-                                            <a href="{{ $link->target_url }}" target="_blank" class="d-block text-truncate link-dark">
-                                                {{ Str::limit(strip_tags($link->target_url), 80) }}
+                            
+                                            <!-- Link URL -->
+                                            <a href="{{ $sharedLink->link->target_url }}" target="_blank" class="d-block text-truncate link-dark">
+                                                {{ Str::limit(strip_tags($sharedLink->link->target_url), 80) }}
                                             </a>
+                            
+                                            <!-- Delete Button -->
+                                            <div class="mt-auto d-flex justify-content-end mt-1">
+                                                <form action="{{ route('links.share.delete', $sharedLink->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm "><i class="bi bi-trash"></i></button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -441,6 +450,9 @@
                                 {{ $mySharedLinks->links() }}
                             </div>
                         </div>
+                        
+                        
+                        
                     </div>
                 </div>
                 
@@ -449,7 +461,7 @@
 
                 <!-- Modal for Sharing Link -->
         <div class="modal fade" id="shareLinkModal" tabindex="-1" aria-labelledby="shareLinkModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="shareLinkModalLabel">Share Link</h5>
@@ -465,7 +477,6 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" onclick="shareLink()">Share</button>
                     </div>
                 </div>

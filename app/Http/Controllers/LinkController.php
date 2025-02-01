@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
-use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Validation\ValidationException;
 
 
 class LinkController extends Controller
@@ -58,14 +58,14 @@ class LinkController extends Controller
         ->latest()
         ->paginate(6, ['*'], 'shared_links');
 
-        $mySharedLinks = Link::where('user_id', $userId)
-        ->whereHas('sharedUsers')
-        ->when($search, function ($query) use ($search) {
-            $query->where('slug', 'like', "%{$search}%")
-                ->orWhere('title', 'like', "%{$search}%");
-        })
-        ->latest()
-        ->paginate(6, ['*'], 'my_shared_links');
+        $mySharedLinks = LinkShare::whereHas('link', function ($query) use ($userId, $search) {
+            $query->where('user_id', $userId);
+    
+            if ($search) {
+                $query->where('slug', 'like', "%{$search}%")
+                      ->orWhere('title', 'like', "%{$search}%");
+            }
+         })->with('link','sharedWith') ->latest()->paginate(6, ['*'], 'my_shared_links');
 
         $sevenDaysAgo = Carbon::now()->subDays(7);
         $topLinks = Cache::remember("user_{$userId}_topLinks", 300, function () use ($userId, $sevenDaysAgo) {
@@ -82,10 +82,6 @@ class LinkController extends Controller
         });
 
         $visitData = $this->getAllVisitData($userId);
-        if(session()->has('success')) {
-            Alert::success('Success', "test");
-        }
-
         return view('dashboard.shortlink.index', compact(
             'totalLinks',
             'totalVisit',
@@ -317,38 +313,56 @@ class LinkController extends Controller
 
     public function share(Request $request)
     {
-        $request->validate([
-            'link_id' => 'required|exists:links,slug',
-            'shared_with' => 'required|exists:users,username',
-        ]);
-    
         try {
+            // Validasi input
+            $validated = $request->validate([
+                'link_id' => 'required|exists:links,slug',
+                'shared_with' => 'required|exists:users,username',
+            ]);
+
             $link = Link::where('slug', $request->link_id)->firstOrFail();
             $user = User::where('username', $request->shared_with)->firstOrFail();
 
-            if($user->id == Auth::id()){
+            // Validasi tambahan
+            if ($user->id == Auth::id()) {
                 return response()->json(['error' => 'Anda tidak dapat berbagi link Anda sendiri'], 400);
             }
+
             // Cek otorisasi
             if ($link->user_id !== Auth::id()) {
                 return response()->json(['error' => 'Anda tidak memiliki izin untuk berbagi link ini'], 403);
             }
+
             // Cek apakah sudah dibagikan sebelumnya
             if (LinkShare::where('link_id', $link->id)->where('shared_with', $user->id)->exists()) {
                 return response()->json(['error' => 'Link sudah dibagikan kepada pengguna ini'], 400);
             }
-    
+
             // Simpan ke database
             LinkShare::create([
                 'link_id' => $link->id,
                 'shared_with' => $user->id,
             ]);
-    
+
             return response()->json(['message' => 'Link berhasil dibagikan'], 200);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'error' => $e->errors(),
+            ], 422); // HTTP status 422 untuk unprocessable entity
         } catch (\Exception $e) {
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
     }
-    
+
+
+    public function deleteShare($linkShareId)
+    {
+        $sharedLink = LinkShare::findOrFail($linkShareId);
+        if ($sharedLink->link->user_id !== Auth::id()) {
+            return redirect()->back()->with('error', 'You are not authorized to delete this shared link.');
+        }
+        $sharedLink->delete();
+        return redirect()->back()->with('success', 'Link successfully removed from shared users.');
+    }
 
 }

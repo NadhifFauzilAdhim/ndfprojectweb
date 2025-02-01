@@ -75,6 +75,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::post('/dashboard/link/{link}/update-title', [LinkController::class, 'updateTitle']);
     //Links Share
     Route::post('/dashboard/link/share', [LinkController::class, 'share']);
+    Route::delete('dashboard/link/share/{linkShare}', [LinkController::class, 'deleteShare'])->name('links.share.delete');
 
     // Blocked IPs
     Route::post('/block-ip', [BlockedIpController::class, 'block'])->name('block.ip');

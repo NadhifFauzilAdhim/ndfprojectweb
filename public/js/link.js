@@ -324,8 +324,12 @@ function shareLink() {
             }
         },
         error: function(xhr) {
-            console.error('Error:', xhr);
-            showToast(xhr.responseText, 'error');
+            const response = JSON.parse(xhr.responseText);
+            if (response.error) {
+                showToast(response.error, 'error');
+            } else {
+                showToast('An unknown error occurred.', 'error');
+            }
         }
     });
 }
