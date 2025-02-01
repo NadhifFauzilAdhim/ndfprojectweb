@@ -24,4 +24,8 @@ class Link extends Model
     public function blockedip(){
         return $this->hasMany(BlockedIp::class);
     }
+    public function sharedUsers()
+    {
+        return $this->hasMany(LinkShare::class);
+    }
 }

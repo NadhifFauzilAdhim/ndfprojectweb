@@ -214,158 +214,261 @@
                             </div>
                         </div>
                     </div>
-                    <!-- QR Code Modal -->
-                    <div class="modal fade" id="qrCodeModal" tabindex="-1" aria-labelledby="qrCodeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="qrCodeModalLabel">QR Code</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body text-center">
-                                    <div id="qrCodeContainer">
-                                        <div class="spinner-border text-primary" role="status">
-                                            <span class="visually-hidden">Loading...</span>
-                                          </div>
-                                    </div>
-                                    <button id="downloadQrCode" class="btn btn-primary mt-3">Download QR Code</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @forelse ($links as $link)
-                    <div class="col-md-4 d-flex align-items-stretch">
-                        <div class="card shadow border-0 w-100 card-hover">
-                            <div class="card-body">
-                                <div class="row d-flex align-items-center mb-3">
-                                    <div class="col-12 d-flex align-items-center">
-                                        <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=32" 
-                                             alt="Favicon" 
-                                             class="rounded me-2" 
-                                             style="width: 32px; height: 32px; flex-shrink: 0;">
-                                             <input type="text" 
-                                             class="form-control border-0 p-0 text-dark fw-bold fs-5" 
-                                             value="{{ $link->title  }}" 
-                                            @if ($link->title)
-                                             placeholder="Type Here To Change Title"
-                                            @endif
-                                             data-link-slug="{{ $link->slug }}" 
-                                             data-previous-title="{{ $link->title }}">
-                                    </div>
-                                </div>
-                    
-                                <!-- Shortened Link -->
-                                <div class="row d-flex align-items-center mb-2">
-                                    <div class="col-10">
-                                        <h6 class="card-title text-truncate mb-0">
-                                            <input type="text" 
-                                                   class="form-control border-0 p-0 text-dark fw-bold" 
-                                                   id="linkInput-{{ $link->slug }}" 
-                                                   value="{{ request()->getHost() . '/r/' . $link->slug }}" 
-                                                   readonly>
-                                        </h6>
-                                    </div>
-                                    <div class="col-2">
-                                        <button class="btn {{ $link->active ? 'btn-outline-primary' : 'btn-outline-danger' }} btn-sm" 
-                                                onclick="copyFunction('{{ $link->slug }}')">
-                                            <i class="bi bi-clipboard"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                    
-                                <!-- Destination URL -->
-                                <p class="text-muted small mb-2">Destination:</p>
-                                <a href="{{ $link->target_url }}" target="_blank" class="d-block text-truncate link-dark">
-                                    {{ Str::limit(strip_tags($link->target_url), 80) }}
-                                </a>
-                    
-                                <!-- Statistics -->
-                                <div class="d-flex justify-content-between mt-3">
-                                    <div class="text-muted small">
-                                        <i class="bi bi-calendar me-1"></i> {{ $link->created_at->format('d M Y') }}
-                                    </div>
-                                    <div class="text-muted small">
-                                        <i class="bi bi-graph-up-arrow me-1"></i> <b>{{ $link->visits }}</b> visits
-                                    </div>
-                                    <div class="text-muted small">
-                                        <i class="bi bi-person-check"></i> <b>{{ $link->unique_visits }}</b> unique
-                                    </div>
-                                </div>
-                    
-                                <!-- Security Status -->
-                                <div class="d-flex align-items-center mt-3 justify-content-between">
-                                    @if($link->password_protected)
-                                    <i class="bi bi-lock-fill text-danger me-2">  
-                                        <span class="text-danger small">Protected</span>
-                                    </i>
-                                    @else
-                                    <i class="bi bi-unlock text-success me-2"> 
-                                        <span class="text-success small">Unprotected</span>
-                                    </i>
-                                    @endif
-                                    <div class="badge rounded-pill"  
-                                        style="background-color: {{ $link->active ? '#2f80ed' : '#ff7eb3' }}; color: white;" 
-                                        data-bs-toggle="popover" 
-                                        data-bs-trigger="hover focus"
-                                        data-bs-title="{{ $link->active ? 'Public Link' : 'Private Link' }}" 
-                                        data-bs-content="{{ $link->active ? 'This link is publicly accessible.' : 'This link is private and only accessible to you.' }}">
-                                        <small>{{ $link->active ? 'Public' : 'Private' }}</small>
-                                    </div>
-                                </div>
-                    
-                                <div class="d-flex justify-content-end mt-3 position-relative dropup">
-                                    <button class="btn btn-outline-secondary btn-sm rounded-pill" data-bs-toggle="dropdown">
-                                        <i class="bi bi-three-dots"></i>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end" style="z-index: 1050;">
-                                        <li>
-                                            <a class="dropdown-item text-primary" href="/dashboard/link/{{ $link->slug }}">
-                                                <i class="bi bi-info-circle me-2"></i> Detail
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button class="dropdown-item text-primary" 
-                                                    data-bs-toggle="modal" 
-                                                    data-bs-target="#qrCodeModal" 
-                                                    onclick="showQRCode('https://linksy.site/{{ $link->slug }}')">
-                                                <i class="bi bi-qr-code me-2"></i> Generate QR
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item text-primary" 
-                                               href="#" 
-                                               data-bs-toggle="modal" 
-                                               data-bs-target="#editModal" 
-                                               data-id="{{ $link->slug }}" 
-                                               data-target-url="{{ $link->target_url }}" 
-                                               data-active="{{ $link->active }}">
-                                                <i class="bi bi-pencil me-2"></i> Quick Edit
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item text-danger" 
-                                               href="#" 
-                                               data-bs-toggle="modal" 
-                                               data-bs-target="#deleteModal" 
-                                               data-id="{{ $link->slug }}">
-                                                <i class="bi bi-trash me-2"></i> Delete
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>  
-                    @empty
-                    <div class="empty-container text-center">
-                        <p>No links found.</p>
-                    </div>
-                    @endforelse
-                    
-                
                 </div>
 
-                {{ $links->links() }}
+                <div class="row">
+                    <div class="container">
+                        <div class="row nav nav-tabs justify-content-center d-flex flex-wrap" id="linkTabs" role="tablist">
+                            <div class="col-4 p-1">
+                                <button class="nav-link active btn btn-sm w-100" id="your-links-tab" data-bs-toggle="tab" data-bs-target="#your-links" type="button" role="tab">
+                                    <i class="bi bi-link"></i>
+                                    <span class="d-none d-sm-inline"> Your Links</span>
+                                </button>
+                            </div>
+                            <div class="col-4 p-1">
+                                <button class="nav-link btn btn-sm w-100" id="shared-links-tab" data-bs-toggle="tab" data-bs-target="#shared-links" type="button" role="tab">
+                                    <i class="bi bi-share"></i>
+                                    <span class="d-none d-sm-inline"> Shared Links</span>
+                                </button>
+                            </div>
+                            <div class="col-4 p-1">
+                                <button class="nav-link btn btn-sm w-100" id="links-you-shared-tab" data-bs-toggle="tab" data-bs-target="#links-you-shared" type="button" role="tab">
+                                    <i class="bi bi-send"></i>
+                                    <span class="d-none d-sm-inline"> Links You Shared</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                
+                    <div class="col-lg-12 mt-4 tab-content">
+                        <!-- Your Links -->
+                        <div class="tab-pane fade show active" id="your-links" role="tabpanel" aria-labelledby="your-links-tab">
+                            <div class="row">
+                                @forelse ($links as $link)
+                            <div class="col-md-4 d-flex align-items-stretch " >
+                                <div class="card shadow border-0 w-100 card-hover">
+                                    <div class="card-body">
+                                        <div class="row d-flex align-items-center mb-3">
+                                            <div class="col-12 d-flex align-items-center">
+                                                <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=32" 
+                                                     alt="Favicon" 
+                                                     class="rounded me-2" 
+                                                     style="width: 32px; height: 32px; flex-shrink: 0;">
+                                                     <input type="text" 
+                                                     class="form-control border-0 p-0 text-dark fw-bold fs-5" 
+                                                     value="{{ $link->title  }}" 
+                                                    @if ($link->title)
+                                                     placeholder="Type Here To Change Title"
+                                                    @endif
+                                                     data-link-slug="{{ $link->slug }}" 
+                                                     data-previous-title="{{ $link->title }}">
+                                            </div>
+                                        </div>
+                            
+                                        <!-- Shortened Link -->
+                                        <div class="row d-flex align-items-center mb-2">
+                                            <div class="col-10">
+                                                <h6 class="card-title text-truncate mb-0">
+                                                    <input type="text" 
+                                                           class="form-control border-0 p-0 text-dark fw-bold" 
+                                                           id="linkInput-{{ $link->slug }}" 
+                                                           value="{{ request()->getHost() . '/r/' . $link->slug }}" 
+                                                           readonly>
+                                                </h6>
+                                            </div>
+                                            <div class="col-2">
+                                                <button class="btn {{ $link->active ? 'btn-outline-primary' : 'btn-outline-danger' }} btn-sm" 
+                                                        onclick="copyFunction('{{ $link->slug }}')">
+                                                    <i class="bi bi-clipboard"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                            
+                                        <!-- Destination URL -->
+                                        <p class="text-muted small mb-2">Destination:</p>
+                                        <a href="{{ $link->target_url }}" target="_blank" class="d-block text-truncate link-dark">
+                                            {{ Str::limit(strip_tags($link->target_url), 80) }}
+                                        </a>
+                            
+                                        <!-- Statistics -->
+                                        <div class="d-flex justify-content-between mt-3">
+                                            <div class="text-muted small">
+                                                <i class="bi bi-calendar me-1"></i> {{ $link->created_at->format('d M Y') }}
+                                            </div>
+                                            <div class="text-muted small">
+                                                <i class="bi bi-graph-up-arrow me-1"></i> <b>{{ $link->visits }}</b> visits
+                                            </div>
+                                            <div class="text-muted small">
+                                                <i class="bi bi-person-check"></i> <b>{{ $link->unique_visits }}</b> unique
+                                            </div>
+                                        </div>
+                            
+                                        <!-- Security Status -->
+                                        <div class="d-flex align-items-center mt-3 justify-content-between">
+                                            @if($link->password_protected)
+                                            <i class="bi bi-lock-fill text-danger me-2">  
+                                                <span class="text-danger small">Protected</span>
+                                            </i>
+                                            @else
+                                            <i class="bi bi-unlock text-success me-2"> 
+                                                <span class="text-success small">Unprotected</span>
+                                            </i>
+                                            @endif
+                                            <div class="badge rounded-pill"  
+                                                style="background-color: {{ $link->active ? '#2f80ed' : '#ff7eb3' }}; color: white;" 
+                                                data-bs-toggle="popover" 
+                                                data-bs-trigger="hover focus"
+                                                data-bs-title="{{ $link->active ? 'Public Link' : 'Private Link' }}" 
+                                                data-bs-content="{{ $link->active ? 'This link is publicly accessible.' : 'This link is private and only accessible to you.' }}">
+                                                <small>{{ $link->active ? 'Public' : 'Private' }}</small>
+                                            </div>
+                                        </div>
+                            
+                                        <div class="d-flex justify-content-end mt-3 position-relative dropup">
+                                            <button class="btn btn-outline-secondary btn-sm rounded-pill" data-bs-toggle="dropdown">
+                                                <i class="bi bi-three-dots"></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end" style="z-index: 1050;">
+                                                <li>
+                                                    <a class="dropdown-item text-primary" href="/dashboard/link/{{ $link->slug }}">
+                                                        <i class="bi bi-info-circle me-2"></i> Detail
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <button class="dropdown-item text-primary" 
+                                                            data-bs-toggle="modal" 
+                                                            data-bs-target="#qrCodeModal" 
+                                                            onclick="showQRCode('https://linksy.site/{{ $link->slug }}')">
+                                                        <i class="bi bi-qr-code me-2"></i> Generate QR
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item text-primary" 
+                                                       href="#" 
+                                                       data-bs-toggle="modal" 
+                                                       data-bs-target="#editModal" 
+                                                       data-id="{{ $link->slug }}" 
+                                                       data-target-url="{{ $link->target_url }}" 
+                                                       data-active="{{ $link->active }}">
+                                                        <i class="bi bi-pencil me-2"></i> Quick Edit
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <button class="dropdown-item text-primary" 
+                                                            data-bs-toggle="modal" 
+                                                            data-bs-target="#shareLinkModal" 
+                                                            onclick="prepareShareModal('{{ $link->slug }}')">
+                                                        <i class="bi bi-share me-2"></i> Share Link
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item text-danger" 
+                                                       href="#" 
+                                                       data-bs-toggle="modal" 
+                                                       data-bs-target="#deleteModal" 
+                                                       data-id="{{ $link->slug }}">
+                                                        <i class="bi bi-trash me-2"></i> Delete
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                            @empty
+                            <div class="empty-container text-center">
+                                <p>No links found.</p>
+                            </div>
+                            @endforelse
+                                {{ $links->links() }}
+                            </div>
+                        </div>
+                
+                        <!-- Shared Links -->
+                        <div class="tab-pane fade" id="shared-links" role="tabpanel" aria-labelledby="shared-links-tab">
+                            <div class="row">
+                                @forelse ($sharedLinks as $link)
+                                <div class="col-md-4 d-flex align-items-stretch">
+                                    <div class="card shadow border-0 w-100">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <img src="https://t2.gstatic.com/faviconV2?url={{ urlencode($link->target_url) }}&size=32" alt="Favicon" class="rounded me-2" style="width: 32px; height: 32px;">
+                                                <span class="fw-bold fs-5">{{ $link->title ?? 'Shared Link' }}</span>
+                                            </div>
+                
+                                            <p class="text-muted small mb-2">Shared by: <b>{{ $link->user->name }}</b></p>
+                                            <a href="{{ $link->target_url }}" target="_blank" class="d-block text-truncate link-dark">
+                                                {{ Str::limit(strip_tags($link->target_url), 80) }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                @empty
+                                <div class="text-center w-100"><p>No shared links found.</p></div>
+                                @endforelse
+                                {{ $sharedLinks->links() }}
+                            </div>
+                        </div>
+                
+                        <!-- Links You Shared -->
+                        <div class="tab-pane fade" id="links-you-shared" role="tabpanel" aria-labelledby="links-you-shared-tab">
+                            <div class="row">
+                                @forelse ($mySharedLinks as $link)
+                                <div class="col-md-4 d-flex align-items-stretch">
+                                    <div class="card shadow border-0 w-100">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <img src="https://t2.gstatic.com/faviconV2?url={{ urlencode($link->target_url) }}&size=32" alt="Favicon" class="rounded me-2" style="width: 32px; height: 32px;">
+                                                <span class="fw-bold fs-5">{{ $link->title ?? 'Shared Link' }}</span>
+                                            </div>
+                
+                                            <p class="text-muted small mb-2">Shared with: 
+                                                @foreach($link->sharedUsers as $user)
+                                                <b>{{ $user->name }}</b>{{ !$loop->last ? ', ' : '' }}
+                                                @endforeach
+                                            </p>
+                                            <a href="{{ $link->target_url }}" target="_blank" class="d-block text-truncate link-dark">
+                                                {{ Str::limit(strip_tags($link->target_url), 80) }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                @empty
+                                <div class="text-center w-100"><p>No links shared by you.</p></div>
+                                @endforelse
+                                {{ $mySharedLinks->links() }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+                <!-- Modal for Sharing Link -->
+        <div class="modal fade" id="shareLinkModal" tabindex="-1" aria-labelledby="shareLinkModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="shareLinkModalLabel">Share Link</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="shareLinkForm">
+                            <div class="mb-3">
+                                <label for="sharedWith" class="form-label">Share with User</label>
+                                <input type="text" class="form-control" id="sharedWith" name="shared_with" placeholder="Enter username" required>
+                            </div>
+                            <input type="hidden" id="linkId" name="link_id">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="shareLink()">Share</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -398,7 +501,25 @@
                 </div>
             </div>
         </div>
-
+        <!-- QR Code Modal -->
+        <div class="modal fade" id="qrCodeModal" tabindex="-1" aria-labelledby="qrCodeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="qrCodeModalLabel">QR Code</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <div id="qrCodeContainer">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                              </div>
+                        </div>
+                        <button id="downloadQrCode" class="btn btn-primary mt-3">Download QR Code</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Edit Modal -->
         <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -433,4 +554,10 @@
         const visitDataGlobal = @json($visitData);
     </script>
     <script src="{{ asset('js/link.js') }}"></script>
+    <!-- Tambahkan ini di bagian <head> jika belum ada -->
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 </x-dashlayout>

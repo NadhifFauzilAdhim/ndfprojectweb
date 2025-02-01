@@ -36,9 +36,20 @@ class DatabaseSeeder extends Seeder
 
         ]);
 
+        $user1 = User::create([
+            'name' => 'Nadhif Fauzil Adhim 2',
+            'username' => 'nadhif_f.aa',
+            'email' => 'testing@gmail.com',
+            'is_admin' => 1,
+            'email_verified_at' => now(),
+            'password' => Hash::make('Nadhif2003'),
+            'remember_token' => Str::random(10)
+        ]);
+
         Post::factory(20)->recycle([
             Category::factory(5)->create(),
             $admin,
+            $user1,
             User::factory(2)->create()
         ])->create();
 

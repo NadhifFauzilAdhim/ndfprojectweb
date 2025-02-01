@@ -74,4 +74,8 @@ class User extends Authenticatable implements MustVerifyEmail
     public function todo(){
         return $this->hasMany(Todo::class, 'user_id');
     }
+    public function sharedLinks()
+    {
+        return $this->hasMany(LinkShare::class, 'shared_with');
+    }
 }

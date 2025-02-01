@@ -23,7 +23,8 @@
               <div class="col-lg-10 mt-5">
                   @if(request('author') && $posts->count() > 0)
                       <img src="{{ asset('uploads/' . $posts->first()->author->avatar) }}" alt="" width="150" class="rounded-circle ">
-                      <h1 class="heading text-white mb-3" data-aos="fade-up">{{ $posts->count() }} Article By {{ $posts->first()->author->name }}</h1>  
+                      <h1 class="heading text-white mb-3" data-aos="fade-up">{{ $posts->count() }} Article By {{ $posts->first()->author->name }}</h1> 
+
                       <div class="d-flex justify-content-center" data-aos="fade-up">
                       </div>
                   @elseif(request('category'))
@@ -76,51 +77,58 @@
       </div>
   </div>  
   <div id="blog-section" class="blog">
-      <div class="container-fluid blog py-5">
-          <div class="container py-5" data-aos="fade-up">
-              <div class="row g-4">
-                  @forelse ($posts as $item)
-                  <div class="col-lg-6 col-xl-4 col-md-6 wow fadeInUp d-flex align-items-stretch" data-aos-delay="100">
-                    <div class="blog-item h-100 d-flex flex-column">
-                        <div class="blog-img">
+    <div class="container-fluid py-5">
+        <div class="container py-5" data-aos="fade-up">
+            <div class="row g-4">
+                @forelse ($posts as $item)
+                <div class="col-lg-6 col-xl-4 col-md-6 wow fadeInUp d-flex align-items-stretch" data-aos-delay="100">
+                    <div class="blog-item h-100 d-flex flex-column shadow rounded overflow-hidden">
+                        <div class="blog-img position-relative" style="height: 200px; overflow: hidden;">
                             @if($item->image)
-                                <img src="{{ asset('storage/' . $item->image) }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
+                                <img src="{{ asset('storage/' . $item->image) }}" class="img-fluid w-100 h-100 object-fit-cover" alt="">
                             @else
-                                <img src="{{ $item->category->image ? $item->category->image : asset('img/programmer_text_2.jpg') }}" class="img-fluid rounded-top w-100 fixed-size" alt="Category Image">
+                                <img src="{{ $item->category->image ? $item->category->image : asset('img/programmer_text_2.jpg') }}" class="img-fluid w-100 h-100 object-fit-cover" alt="Category Image">
                             @endif
-                            <div class="blog-categiry py-2 px-4">
+                            <div class="blog-categiry py-2 px-4" >
                                 <a href="/blog?category={{ $item->category->slug }}">
                                     <span class="text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">{{ $item->category->name }}</span>
                                 </a>
                             </div>
                         </div>
-                        <div class="blog-content p-4 flex-grow-1 d-flex flex-column justify-content-between">
-                            <div>
-                                <div class="blog-comment d-flex justify-content-between mb-3">
-                                    <div class="small"><a href="/blog?author={{ $item->author->username }}"><i class="bi bi-feather"></i> {{ $item->author->name }}</a></div>
-                                    <div class="small"><i class="bi bi-clock-history"></i> {{ $item['created_at']->diffForHumans() }}</div>
+                        <div class="blog-content p-4 d-flex flex-column flex-grow-1">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="{{ asset('storage/' . $item->author->avatar) }}" class="rounded-circle me-2" width="40" height="40" alt="Author Image">
+                                <div class="small">
+                                    <a href="/blog?author={{ $item->author->username }}" class="text-dark text-decoration-none fw-bold">
+                                        {{ $item->author->name }}
+                                    </a>
+                                    <div class="text-muted small">
+                                        <i class="bi bi-clock-history"></i> {{ $item['created_at']->diffForHumans() }}
+                                    </div>
                                 </div>
-                                <a href="/blog/{{ $item['slug'] }}" class="h4 d-inline-block mb-3">{{ Str::limit(strip_tags($item['title']), 70) }}</a>
-                                <p class="mb-3">{{ Str::limit(strip_tags($item['body']), 100) }}</p>
                             </div>
-                            <a href="/blog/{{ $item['slug'] }}" class="btn p-0 mt-auto">Read more <i class="bi bi-arrow-right"></i></a>
+                            <a href="/blog/{{ $item['slug'] }}" class="h5 text-decoration-none text-dark fw-bold d-block mb-2 text-truncate" style="max-width: 100%;">
+                                {{ Str::limit(strip_tags($item['title']), 80) }}
+                            </a>
+                            <p class="text-muted flex-grow-1">{{ Str::limit(strip_tags($item['body']), 100) }}</p>
+                            <div class="d-flex justify-content-between mt-auto">
+                                <a href="/blog/{{ $item['slug'] }}" class="btn p-0 fw-bold">Read more <i class="bi bi-arrow-right"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                  @empty
-                      <div class="text-center">
-                          <h1 class="home__title">Nampaknya tidak ada &#129300;</h1>
-                          <p class="home__description">
-                              Cek kembali kata kunci yang anda cari
-                          </p>  
-                      </div>
-                  @endforelse
-                  {{ $posts->links() }}
-              </div>
-          </div>
-      </div>
-  </div>
+                @empty
+                <div class="text-center w-100">
+                    <h1 class="home__title">Nampaknya tidak ada &#129300;</h1>
+                    <p class="home__description">Cek kembali kata kunci yang anda cari</p>
+                </div>
+                @endforelse
+                {{ $posts->links() }}
+            </div>
+        </div>
+    </div>
+</div>
+
   <script>
       document.addEventListener('DOMContentLoaded', function () {
           var toastEl = document.getElementById('toastMessage');

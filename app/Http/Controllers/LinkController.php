@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\BlockedIp;
 use App\Models\Link;
 use App\Models\Linkvisithistory;
+use App\Models\LinkShare;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -44,11 +46,28 @@ class LinkController extends Controller
                 });
             })
             ->latest()
-            ->paginate(6);
+            ->paginate(6, ['*'], 'own_links');
+
+        $sharedLinks = Link::whereHas('sharedUsers', function ($query) use ($userId) {
+            $query->where('shared_with', $userId);
+        })
+        ->when($search, function ($query) use ($search) {
+            $query->where('slug', 'like', "%{$search}%")
+                ->orWhere('title', 'like', "%{$search}%");
+        })
+        ->latest()
+        ->paginate(6, ['*'], 'shared_links');
+
+        $mySharedLinks = Link::where('user_id', $userId)
+        ->whereHas('sharedUsers')
+        ->when($search, function ($query) use ($search) {
+            $query->where('slug', 'like', "%{$search}%")
+                ->orWhere('title', 'like', "%{$search}%");
+        })
+        ->latest()
+        ->paginate(6, ['*'], 'my_shared_links');
 
         $sevenDaysAgo = Carbon::now()->subDays(7);
-
-        // Cache topLinks for 5 minutes
         $topLinks = Cache::remember("user_{$userId}_topLinks", 300, function () use ($userId, $sevenDaysAgo) {
             return Link::where('user_id', $userId)
                 ->orderByDesc('visits')
@@ -73,7 +92,9 @@ class LinkController extends Controller
             'totalUniqueVisit',
             'links',
             'topLinks',
-            'visitData'
+            'visitData',
+            'sharedLinks',
+            'mySharedLinks'
         ))->with('title', 'Short Link');
     }
 
@@ -293,4 +314,41 @@ class LinkController extends Controller
             abort(403);
         }
     }
+
+    public function share(Request $request)
+    {
+        $request->validate([
+            'link_id' => 'required|exists:links,slug',
+            'shared_with' => 'required|exists:users,username',
+        ]);
+    
+        try {
+            $link = Link::where('slug', $request->link_id)->firstOrFail();
+            $user = User::where('username', $request->shared_with)->firstOrFail();
+
+            if($user->id == Auth::id()){
+                return response()->json(['error' => 'Anda tidak dapat berbagi link Anda sendiri'], 400);
+            }
+            // Cek otorisasi
+            if ($link->user_id !== Auth::id()) {
+                return response()->json(['error' => 'Anda tidak memiliki izin untuk berbagi link ini'], 403);
+            }
+            // Cek apakah sudah dibagikan sebelumnya
+            if (LinkShare::where('link_id', $link->id)->where('shared_with', $user->id)->exists()) {
+                return response()->json(['error' => 'Link sudah dibagikan kepada pengguna ini'], 400);
+            }
+    
+            // Simpan ke database
+            LinkShare::create([
+                'link_id' => $link->id,
+                'shared_with' => $user->id,
+            ]);
+    
+            return response()->json(['message' => 'Link berhasil dibagikan'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
+    }
+    
+
 }

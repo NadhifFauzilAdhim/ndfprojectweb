@@ -296,6 +296,40 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+function prepareShareModal(linkSlug) {
+    $('#linkId').val(linkSlug);
+}
+
+function shareLink() {
+    const linkId = $('#linkId').val();
+    const sharedWith = $('#sharedWith').val();
+
+    $.ajax({
+        url: '/dashboard/link/share',
+        type: 'POST',
+        data: JSON.stringify({
+            link_id: linkId,
+            shared_with: sharedWith
+        }),
+        contentType: 'application/json',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            if (response.message) {
+                showToast(response.message, 'success');
+                $('#shareModal').modal('hide'); 
+            } else if (response.error) {
+                showToast(response.error, 'error');
+            }
+        },
+        error: function(xhr) {
+            console.error('Error:', xhr);
+            showToast(xhr.responseText, 'error');
+        }
+    });
+}
+
 
 function showToast(message, type = 'success') {
     Swal.fire({

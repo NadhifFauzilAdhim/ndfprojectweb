@@ -57,8 +57,6 @@ Route::middleware('auth')->group(function() {
 
 Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    // Posts 
-   
 // Profile
     Route::resource('/dashboard/profile', UserProfileController::class)->only(['index', 'update'])->parameters(['profile' => 'user:username']);
     Route::put('/dashboard/profile/{user:username}/change-image', [UserProfileController::class, 'changeProfileImage']);
@@ -72,9 +70,11 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
     Route::post('/comments/{comment}/reply', [CommentController::class, 'reply']);
     Route::delete('/commentReply/{reply}', [CommentController::class, 'destroyReply'])->name('commentReply.destroy');
-    // Link Redirected
+    // Linksy Dashboard
     Route::resource('/dashboard/link', LinkController::class)->only(['index', 'store', 'show', 'destroy','update']);
     Route::post('/dashboard/link/{link}/update-title', [LinkController::class, 'updateTitle']);
+    //Links Share
+    Route::post('/dashboard/link/share', [LinkController::class, 'share']);
 
     // Blocked IPs
     Route::post('/block-ip', [BlockedIpController::class, 'block'])->name('block.ip');
