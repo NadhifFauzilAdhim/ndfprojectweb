@@ -137,11 +137,9 @@ class DashboardPostController extends Controller
                 $file = $request->file('image');
                 $imageName = uniqid() . '.' . $file->getClientOriginalExtension();
                 $destinationPath = base_path('../public/post-image');
-    
                 if (!file_exists($destinationPath)) {
-                    mkdir($destinationPath, 0755, true);
+                    mkdir($destinationPath, 0755, true);    
                 }
-    
                 $file->move($destinationPath, $imageName);
                 $fullPath = $destinationPath . '/' . $imageName;
                 $imgManager = new ImageManager(new Driver);

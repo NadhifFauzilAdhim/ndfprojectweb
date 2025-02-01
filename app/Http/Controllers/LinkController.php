@@ -86,24 +86,19 @@ class LinkController extends Controller
 
         $filter = $request->query('filter', 'all');
         $visithistory = $this->getVisitHistory($link->id, $filter);
-
         $redirectedCount = $this->getVisitCount($link->id, 1);
         $rejectedCount = $this->getVisitCount($link->id, 0);
-
         $blockedIps = BlockedIp::where('link_id', $link->id)->get();
-
         $topReferersRaw = Linkvisithistory::where('link_id', $link->id)
             ->select('referer_url', DB::raw('COUNT(*) as visit_count'))
             ->groupBy('referer_url')
             ->orderByDesc('visit_count')
             ->limit(5)
             ->get();
-
         $topReferers = [
             'labels' => $topReferersRaw->pluck('referer_url')->toArray(),
             'data' => $topReferersRaw->pluck('visit_count')->toArray(),
         ];
-        
         $chartData = $this->getSingleLinkStatistic($link->id, false);
         $location = $this->getLocationStatistic($link->id);
         return view('dashboard.shortlink.linkdetail', compact(
@@ -125,7 +120,6 @@ class LinkController extends Controller
     public function update(Request $request, Link $link)
     {
         $this->authorizeLink($link);
-
         $validatedData = $request->validate([
             'title' => 'nullable|max:255',
             'target_url' => 'required|max:255|url',
@@ -136,14 +130,11 @@ class LinkController extends Controller
         if ($request->has('quickedit')) {
             $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
             $validatedData['active'] = $request->has('active') ? 1 : 0;
-
             if ($link->target_url !== $validatedData['target_url']) {
                 $websiteTitle = $this->fetchWebsiteTitle($validatedData['target_url']);
                 $validatedData['title'] = $websiteTitle ?? null;
             }
-
             $link->update($validatedData);
-
             return redirect()->back()->with('success', 'Link updated successfully!');
         }
 
@@ -159,9 +150,7 @@ class LinkController extends Controller
             $websiteTitle = $this->fetchWebsiteTitle($validatedData['target_url']);
             $validatedData['title'] = $websiteTitle ?? null;
         }
-
         $link->update($validatedData);
-
         return $oldSlug !== $link->slug
             ? response()->json([
                 'success' => true,
@@ -176,9 +165,7 @@ class LinkController extends Controller
         $validated = $request->validate([
             'title' => 'required|max:255',
         ]);
-
         $link->update(['title' => $validated['title']]);
-
         return response()->json(['success' => true, 'message' => 'Title updated successfully!']);
     }
 
@@ -194,10 +181,8 @@ class LinkController extends Controller
 
         $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
         $validatedData['user_id'] = Auth::id();
-
         $websiteTitle = $this->fetchWebsiteTitle($validatedData['target_url']);
         $validatedData['title'] = $websiteTitle ?? null;
-
         Link::create($validatedData);
         return redirect()->back()->with('success', 'Link Berhasil Ditambahkan');
     }
@@ -214,7 +199,6 @@ class LinkController extends Controller
 
                 return $titleNodes->length > 0 ? $titleNodes->item(0)->nodeValue : null;
             }
-
             return null;
         } catch (\Exception $e) {
             return null;
@@ -227,10 +211,13 @@ class LinkController extends Controller
     public function destroy(Link $link)
     {
         $this->authorizeLink($link);
-        $link->delete();
-        return redirect()->back()->with('success', 'Link Berhasil Dihapus');
+        if ($link->exists) {
+            $link->delete();
+            return redirect()->back()->with('success', 'Link Dihapus');
+        }
+        return redirect()->back()->with('error', 'Link sudah dihapus atau tidak ditemukan.');
     }
-
+    
     /**
      * Get visit data by day.
      */
@@ -238,7 +225,6 @@ class LinkController extends Controller
     {
         $startOfWeek = now()->startOfWeek();
         $endOfWeek = $startOfWeek->copy()->endOfWeek();
-
         $query = Linkvisithistory::when($isUser, fn($q) => $q->whereHas('link', fn($q) => $q->where('user_id', $identifier)))
             ->when(!$isUser, fn($q) => $q->where('link_id', $identifier))
             ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
@@ -247,7 +233,6 @@ class LinkController extends Controller
             ->orderBy('day')
             ->get()
             ->keyBy('day');
-
         return collect(range(1, 7))->map(fn($day) => $query[$day]->total_visits ?? 0)->values()->toArray();
     }
 
@@ -263,7 +248,6 @@ class LinkController extends Controller
             ->orderBy('day')
             ->get()
             ->keyBy('day');
-
         return collect(range(1, 7))->map(fn($day) => $visits[$day]->total_visits ?? 0)->values();
     }
 
@@ -273,7 +257,6 @@ class LinkController extends Controller
     private function getVisitHistory($linkId, $filter)
     {
         $query = Linkvisithistory::where('link_id', $linkId);
-
         if ($filter === 'unique') {
             $query->where('is_unique', true);
         } elseif ($filter === 'redirected') {
@@ -281,7 +264,6 @@ class LinkController extends Controller
         } elseif ($filter === 'rejected') {
             $query->where('status', 0);
         }
-
         return $query->latest()->paginate(10);
     }
 
@@ -293,8 +275,6 @@ class LinkController extends Controller
             ->get();
         return $locations->pluck('visit_count', 'location')->toArray();
     }
-
-
     /**
      * Get visit count by status.
      */
@@ -304,7 +284,6 @@ class LinkController extends Controller
             ->where('status', $status)
             ->count();
     }
-
     /**
      * Authorize link access.
      */

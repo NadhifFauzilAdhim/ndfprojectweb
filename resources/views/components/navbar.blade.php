@@ -1,4 +1,4 @@
-<nav id="navbar" class="nav-menu navbar">
+<nav id="navbar" class="nav-menu navbar ">
     <ul>
         <li>
             <a href="/" class="{{ request()->is('/') ? 'nav-link scrollto active' : 'nav-link scrollto' }}">
@@ -10,7 +10,7 @@
         <li><a href="/#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Certificate</span></a></li>
         <li><a href="/#project" class="nav-link scrollto"><i class="bx bx-server"></i> <span>Project</span></a></li>
         <li><a href="/#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
-        <li class="dropdown">
+        <li class="dropdown ">
             <a href="#" class="nav-link scrollto dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                 <i class="bx bx-edit"></i> <span>Discover</span></i>
             </a>
