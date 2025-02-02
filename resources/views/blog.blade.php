@@ -3,7 +3,6 @@
   <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 2000;">
       <div id="toastMessage" class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
           <div class="d-flex">
-           
               <div class="toast-body">
                 @if(!Auth::check())
                 Waktunya berbagi cerita kamu! Login dan mulai blog kamu sekarang!
@@ -35,7 +34,6 @@
                         <img src="{{ asset('img/myspace.png') }}" alt="" class="img-fluid ">
                       </div>
                      </div>
-                      
                   @endif
                   <div class="row justify-content-center">
                       <div class="col-lg-6">
@@ -82,7 +80,7 @@
             <div class="row g-4">
                 @forelse ($posts as $item)
                 <div class="col-lg-6 col-xl-4 col-md-6 wow fadeInUp d-flex align-items-stretch" data-aos-delay="100">
-                    <div class="blog-item h-100 d-flex flex-column shadow rounded overflow-hidden">
+                    <div class="blog-item h-100 d-flex flex-column shadow rounded-5 overflow-hidden">
                         <div class="blog-img position-relative" style="height: 200px; overflow: hidden;">
                             @if($item->image)
                                 <img src="{{ asset('storage/' . $item->image) }}" class="img-fluid w-100 h-100 object-fit-cover" alt="">
@@ -128,7 +126,6 @@
         </div>
     </div>
 </div>
-
   <script>
       document.addEventListener('DOMContentLoaded', function () {
           var toastEl = document.getElementById('toastMessage');
