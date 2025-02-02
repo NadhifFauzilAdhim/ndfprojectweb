@@ -152,7 +152,7 @@
                                     <form action="/dashboard/link" method="GET">
                                         <div class="input-group">
                                             <input type="text" name="search" class="form-control" placeholder="Search Link" aria-label="Search" aria-describedby="button-addon2" value="{{ request('search') }}">
-                                            <button class="btn btn-outline-primary" type="submit" id="button-addon2">Search</button>
+                                            <button class="btn btn-outline-primary" type="submit" id="button-addon2"><i class="bi bi-search"></i></button>
                                         </div>
                                     </form>
                                 </div>
@@ -271,7 +271,7 @@
                                                     <input type="text" 
                                                            class="form-control border-0 p-0 text-dark fw-bold" 
                                                            id="linkInput-{{ $link->slug }}" 
-                                                           value="{{ request()->getHost() . '/r/' . $link->slug }}" 
+                                                           value="{{ 'linksy.site/' . $link->slug }}" 
                                                            readonly>
                                                 </h6>
                                             </div>
@@ -411,78 +411,100 @@
                 
                         <!-- Links You Shared -->
                         <div class="tab-pane fade" id="links-you-shared" role="tabpanel" aria-labelledby="links-you-shared-tab">
-                            <div class="row">
+                            <div class="row g-3">
                                 @forelse ($mySharedLinks as $sharedLink)
-                                <div class="col-md-4 d-flex align-items-stretch">
+                                <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
                                     <div class="card shadow border-0 w-100">
                                         <div class="card-body d-flex flex-column">
                                             <!-- Favicon and Link Title -->
                                             <div class="d-flex align-items-center mb-3">
                                                 <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($sharedLink->link->target_url) }}&size=32" 
                                                     alt="Favicon" class="rounded me-2" style="width: 32px; height: 32px;">
-                                                <span class="fw-bold fs-5 text-truncate" style="max-width: 200px;">{{ $sharedLink->link->title ?? 'Shared Link' }}</span>
+                                                <span class="fw-bold fs-6 text-truncate" style="max-width: 70%;">{{ $sharedLink->link->title ?? 'Shared Link' }}</span>
                                             </div>
-                            
+                                            
                                             <!-- Shared with User -->
                                             <p class="text-muted small mb-2">
-                                                Shared with: <b>{{ $sharedLink->sharedWith->name }}</b>
+                                                Dibagikan dengan: <b>{{ $sharedLink->sharedWith->name }}</b>
                                             </p>
-                            
+                                            
                                             <!-- Link URL -->
-                                            <a href="{{ $sharedLink->link->target_url }}" target="_blank" class="d-block text-truncate link-dark">
-                                                {{ Str::limit(strip_tags($sharedLink->link->target_url), 80) }}
-                                            </a>
-                            
-                                            <!-- Delete Button -->
-                                            <div class="mt-auto d-flex justify-content-end mt-1">
-                                                <form action="{{ route('links.share.delete', $sharedLink->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm "><i class="bi bi-trash"></i></button>
-                                                </form>
+                                            <div class="d-flex align-items-center">
+                                                <a href="{{ $sharedLink->link->target_url }}" target="_blank" class="text-truncate text-decoration-none flex-grow-1">
+                                                    {{ Str::limit(strip_tags($sharedLink->link->target_url), 80) }}
+                                                </a>
+                                                <button class="btn {{ $sharedLink->link->active ? 'btn-outline-primary' : 'btn-outline-danger' }} btn-sm ms-2" 
+                                                        onclick="copyFunction('{{ $sharedLink->link->target_url }}')">
+                                                    <i class="bi bi-clipboard"></i>
+                                                </button>
+                                            </div>
+                                            
+                                            <!-- Actions -->
+                                            <div class="d-flex justify-content-end mt-3">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-outline-secondary btn-sm rounded-pill" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="bi bi-three-dots"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <li>
+                                                            <form action="{{ route('links.share.delete', $sharedLink->id) }}" method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="dropdown-item text-danger">
+                                                                    <i class="bi bi-trash"></i> Hapus
+                                                                </button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 @empty
-                                <div class="text-center w-100"><p>No links shared by you.</p></div>
+                                <div class="text-center w-100">
+                                    <p>Tidak ada tautan yang Anda bagikan.</p>
+                                </div>
                                 @endforelse
+                            </div>
+                            <div class="mt-3">
                                 {{ $mySharedLinks->links() }}
                             </div>
                         </div>
                         
-                        
-                        
                     </div>
                 </div>
-                
             </div>
         </div>
-
-                <!-- Modal for Sharing Link -->
+        <!-- Modal for Sharing Link -->
         <div class="modal fade" id="shareLinkModal" tabindex="-1" aria-labelledby="shareLinkModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="shareLinkModalLabel">Share Link</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-header text-white">
+                        <h5 class="modal-title" id="shareLinkModalLabel">
+                            <i class="bi bi-share me-2"></i> Share Link
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form id="shareLinkForm">
                             <div class="mb-3">
-                                <label for="sharedWith" class="form-label">Share with User</label>
+                                <label for="sharedWith" class="form-label">
+                                        Share with User
+                                </label>
                                 <input type="text" class="form-control" id="sharedWith" name="shared_with" placeholder="Enter username" required>
                             </div>
                             <input type="hidden" id="linkId" name="link_id">
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="shareLink()">Share</button>
+                        <button type="button" class="btn btn-primary" onclick="shareLink()">
+                            <i class="bi bi-send me-2"></i> Share
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-
         <!-- Delete Confirmation Modal -->
         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog">

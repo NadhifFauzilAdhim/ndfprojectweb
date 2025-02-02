@@ -1,6 +1,6 @@
 function copyFunction(slug) {
     var copyText = document.getElementById("linkInput-" + slug);
-    var fullLink = "https://" + copyText.value; // Tambahkan https:// di depan teks
+    var fullLink = "https://" + copyText.value; 
 
     navigator.clipboard.writeText(fullLink).then(function() {
         Swal.fire({
