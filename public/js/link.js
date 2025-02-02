@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const result = await response.json();
 
                     if (response.ok && result.success) {
-                        showToast('Title updated successfully!');
+                        showToast('Title updated!');
                     } else {
                         console.error(result.message || 'Failed to update title.');
                         alert(result.message || 'An error occurred while updating the title.');

@@ -178,7 +178,7 @@
                                         <div class="mb-4">
                                             <label for="short_link" class="form-label fw-bold">Shortened Link</label>
                                             <div class="input-group">
-                                                <span class="input-group-text bg-light " id="basic-addon3">{{ url('r/') }}</span>
+                                                <span class="input-group-text bg-light d-none d-md-block " id="basic-addon3">linksy.site/</span>
                                                 <input type="text" class="form-control @error('slug') is-invalid @enderror shadow-sm" id="short_link" name="slug" placeholder="custom-slug" value="{{ old('slug') }}" aria-describedby="basic-addon3">
                                                 @error('slug')
                                                 <div class="invalid-feedback">
@@ -392,7 +392,10 @@
                                         <div class="card-body">
                                             <div class="d-flex align-items-center mb-3">
                                                 <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=32" alt="Favicon" class="rounded me-2" style="width: 32px; height: 32px;">
-                                                <span class="fw-bold fs-5">{{ $link->title ?? 'Shared Link' }}</span>
+                                                <input type="text" 
+                                                    class="form-control border-0 p-0 text-dark fw-bold fs-5" 
+                                                    value="{{ $link->title  }}" 
+                                                    readonly>
                                             </div>
                 
                                             <p class="text-muted small mb-2">Shared by: <b>{{ $link->user->name }}</b></p>
@@ -408,7 +411,6 @@
                                 {{ $sharedLinks->links() }}
                             </div>
                         </div>
-                
                         <!-- Links You Shared -->
                         <div class="tab-pane fade" id="links-you-shared" role="tabpanel" aria-labelledby="links-you-shared-tab">
                             <div class="row g-3">
@@ -420,25 +422,21 @@
                                             <div class="d-flex align-items-center mb-3">
                                                 <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($sharedLink->link->target_url) }}&size=32" 
                                                     alt="Favicon" class="rounded me-2" style="width: 32px; height: 32px;">
-                                                <span class="fw-bold fs-6 text-truncate" style="max-width: 70%;">{{ $sharedLink->link->title ?? 'Shared Link' }}</span>
+                                                    <input type="text" 
+                                                    class="form-control border-0 p-0 text-dark fw-bold fs-5" 
+                                                    value="{{ $sharedLink->link->title  }}" 
+                                                    readonly>
                                             </div>
-                                            
                                             <!-- Shared with User -->
                                             <p class="text-muted small mb-2">
-                                                Dibagikan dengan: <b>{{ $sharedLink->sharedWith->name }}</b>
+                                                To: <b>{{ $sharedLink->sharedWith->name }}</b>
                                             </p>
-                                            
                                             <!-- Link URL -->
                                             <div class="d-flex align-items-center">
                                                 <a href="{{ $sharedLink->link->target_url }}" target="_blank" class="text-truncate text-decoration-none flex-grow-1">
                                                     {{ Str::limit(strip_tags($sharedLink->link->target_url), 80) }}
                                                 </a>
-                                                <button class="btn {{ $sharedLink->link->active ? 'btn-outline-primary' : 'btn-outline-danger' }} btn-sm ms-2" 
-                                                        onclick="copyFunction('{{ $sharedLink->link->target_url }}')">
-                                                    <i class="bi bi-clipboard"></i>
-                                                </button>
                                             </div>
-                                            
                                             <!-- Actions -->
                                             <div class="d-flex justify-content-end mt-3">
                                                 <div class="dropdown">

@@ -179,13 +179,13 @@
           <div class="position-relative">
             <a href="javascript:void(0)">
              @if($post->image)
-                                    <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
-                                @else
-                                <img 
-                                src="{{ $post->category->image ? $post->category->image : asset('img/programmer_text_2.jpg') }}" 
-                                class="img-fluid rounded-top w-100 fixed-size" 
-                                alt="Category Image">
-                                @endif
+                <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
+            @else
+            <img 
+            src="{{ $post->category->image ? $post->category->image : asset('img/programmer_text_2.jpg') }}" 
+            class="img-fluid rounded-top w-100 fixed-size" 
+            alt="Category Image">
+            @endif
             </a>
             <span class="badge text-bg-light text-dark fs-2 lh-sm mb-9 me-9 py-1 px-2 fw-semibold position-absolute bottom-0 end-0">-
               views</span>

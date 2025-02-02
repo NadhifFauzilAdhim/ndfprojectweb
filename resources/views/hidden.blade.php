@@ -1,9 +1,9 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
     <div class="container mt-5">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white text-center">
-                <h5 class="mb-0">Yeah you found it</h5>
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-info text-white text-center py-4">
+                <h1 class="mb-0">Yeah, You Found It!</h1>
             </div>
             <div class="card-body p-0">
                 <div class="ratio ratio-16x9">
@@ -12,14 +12,15 @@
                         title="YouTube video player" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                         referrerpolicy="strict-origin-when-cross-origin" 
-                        allowfullscreen>
+                        allowfullscreen
+                        class="rounded-bottom">
                     </iframe>
                 </div>
             </div>
         </div>
         <div class="mt-4 text-center">
-            <p class="text-secondary">I've been waiting for </p>
-            <h5 id="timecount" class="text-danger"></h5>
+            <p class="text-muted fs-5">I've been waiting for</p>
+            <h2 id="timecount" class="text-danger fw-bold"></h2>
         </div>
     </div>
 

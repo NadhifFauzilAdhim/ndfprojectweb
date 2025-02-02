@@ -183,7 +183,7 @@ class LinkController extends Controller
             'title' => 'required|max:255',
         ]);
         $link->update(['title' => $validated['title']]);
-        return response()->json(['success' => true, 'message' => 'Title updated successfully!']);
+        return response()->json(['success' => true, 'message' => 'Title updated!']);
     }
 
     /**
@@ -314,31 +314,21 @@ class LinkController extends Controller
     public function share(Request $request)
     {
         try {
-            // Validasi input
             $validated = $request->validate([
                 'link_id' => 'required|exists:links,slug',
                 'shared_with' => 'required|exists:users,username',
             ]);
-
             $link = Link::where('slug', $request->link_id)->firstOrFail();
             $user = User::where('username', $request->shared_with)->firstOrFail();
-
-            // Validasi tambahan
             if ($user->id == Auth::id()) {
                 return response()->json(['error' => 'Anda tidak dapat berbagi link Anda sendiri'], 400);
             }
-
-            // Cek otorisasi
             if ($link->user_id !== Auth::id()) {
                 return response()->json(['error' => 'Anda tidak memiliki izin untuk berbagi link ini'], 403);
             }
-
-            // Cek apakah sudah dibagikan sebelumnya
             if (LinkShare::where('link_id', $link->id)->where('shared_with', $user->id)->exists()) {
                 return response()->json(['error' => 'Link sudah dibagikan kepada pengguna ini'], 400);
             }
-
-            // Simpan ke database
             LinkShare::create([
                 'link_id' => $link->id,
                 'shared_with' => $user->id,
@@ -348,7 +338,7 @@ class LinkController extends Controller
         } catch (ValidationException $e) {
             return response()->json([
                 'error' => $e->errors(),
-            ], 422); // HTTP status 422 untuk unprocessable entity
+            ], 422); 
         } catch (\Exception $e) {
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
