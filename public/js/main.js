@@ -281,6 +281,26 @@
     },
 });
 
+var swiper = new Swiper(".project-slider", {
+  slidesPerView: 3,
+  spaceBetween: 20,
+  loop: true,
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+  },
+  breakpoints: {
+    1024: { slidesPerView: 3 },
+    768: { slidesPerView: 2 },
+    576: { slidesPerView: 1 },
+    320: { slidesPerView: 1 }
+  }
+});
+
   /**
    * Animation on scroll
    */

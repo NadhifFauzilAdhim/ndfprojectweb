@@ -49,13 +49,13 @@
      <section id="about" class="about">
         <div class="container">
   
-          <div class="section-title">
+          <div class="section-title" data-aos="fade-right" data-aos-delay="200">
             <h2>About</h2>
             <p>Hayy!! My name is Nadhif Fauzil Adhim. I am a computer science student at AMIKOM University. I have a strong interest in the world of technology, especially in the fields of Computer Science, Web Develoment, and IoT</p>
           </div>
   
           <div class="row">
-            <div class="col-lg-4" data-aos="fade-right">
+            <div class="col-lg-4" data-aos="fade-right" data-aos="fade-up" data-aos-delay="200">
               <img src="img/author.png" class="img-fluid author-image" alt="">
             </div>
             <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
@@ -93,7 +93,7 @@
       <section id="facts" class="facts">
         <div class="container">
   
-          <div class="section-title">
+          <div class="section-title" data-aos="fade-up" data-aos-delay="200">
             <h2>Static</h2>
             <p>Static overview detailing the number of projects, certificates, and skills that I have successfully completed, providing a comprehensive snapshot of my accomplishments in these areas.</p>
           </div>
@@ -129,86 +129,102 @@
       </section><!-- End Facts Section -->
   
       <!-- ======= Skills Section ======= -->
+     <!-- Skills Section -->
       <section id="skills" class="skills section-bg">
         <div class="container">
-  
-          <div class="section-title">
-            <h2>Learing Progress</h2>
-            <p>Currently expanding my skills through learning initiatives in web development and the Internet of Things (IoT). </p>
+
+          <div class="section-title" data-aos="fade-up" data-aos-delay="200">
+            <h2>Learning Progress</h2>
+            <p>Currently expanding my skills through learning initiatives in web development and the Internet of Things (IoT).</p>
           </div>
-  
-          <div class="row skills-content">
-  
-            <div class="col-lg-6" data-aos="fade-up">
-  
-              <div class="progress">
-                <span class="skill">Bootstrap <i class="val">95%</i></span>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar --bs-primary-bg-subtle" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
+
+          <div class="row">
+
+            <!-- Bootstrap -->
+            <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="200">
+              <div class="skill-box">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/reactbootstrap/reactbootstrap-original.svg" alt="Bootstrap">
+                <h4>Bootstrap</h4>
+                <p>Advanced</p>
               </div>
-  
-              <div class="progress">
-                <span class="skill">JavaScript<i class="val">85%</i></span>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
-  
-              <div class="progress">
-                <span class="skill">Laravel<i class="val">90%</i></span>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
-  
             </div>
-  
-            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-  
-              <div class="progress">
-                <span class="skill">PHP <i class="val">95%</i></span>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
+            <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="300">
+              <div class="skill-box">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" alt="Bootstrap">
+                <h4>Tailwind</h4>
+                <p>Intermediate</p>
               </div>
-  
-              <div class="progress">
-                <span class="skill">MySql <i class="val">95%</i></span>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
-  
-              <div class="progress">
-                <span class="skill">Python <i class="val">70%</i></span>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
-              <div class="progress">
-                <span class="skill">C++ &amp; C# <i class="val">70%</i></span>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
-  
-  
             </div>
-  
+
+            <!-- JavaScript -->
+            <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="400">
+              <div class="skill-box">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="JavaScript">
+                <h4>JavaScript</h4>
+                <p>Intermediate</p>
+              </div>
+            </div>
+
+            <!-- Laravel -->
+            <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="500">
+              <div class="skill-box">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" alt="Laravel">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/livewire/livewire-original.svg" alt="Laravel">
+                <h4>Laravel</h4>
+                <p>Advanced</p>
+              </div>
+            </div>
+
+            <!-- PHP -->
+            <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="600">
+              <div class="skill-box">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP">
+                <h4>PHP</h4>
+                <p>Advanced</p>
+              </div>
+            </div>
+
+            <!-- MySQL -->
+            <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="700">
+              <div class="skill-box">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
+                <h4>MySQL</h4>
+                <p>Advanced</p>
+              </div>
+            </div>
+
+            <!-- Python -->
+            <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="800">
+              <div class="skill-box">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+                <h4>Python</h4>
+                <p>Beginner</p>
+              </div>
+            </div>
+
+            <!-- C++ & C# -->
+            <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="900">
+              <div class="skill-box">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++">
+                <h4>C++ & C#</h4>
+                <p>Intermediate</p>
+              </div>
+            </div>
+
           </div>
-  
+
         </div>
-      </section><!-- End Skills Section -->
+      </section>
+
   
       <!-- ======= Resume Section ======= -->
       <section id="resume" class="resume">
         <div class="container">
   
-          <div class="section-title">
+          <div class="section-title" data-aos="fade-up" data-aos-delay="200">
             <h2>Resume</h2>
           </div>
-  
           <div class="row">
             <div class="col-lg-6" data-aos="fade-up">
               <h3 class="resume-title">Sumary</h3>
@@ -276,7 +292,7 @@
   
         </div>
       </section>
-      <section id="portfolio" class="portfolio section-bg">
+      <section id="portfolio" class="portfolio section-bg" data-aos="fade-up" data-aos-delay="200">
         <div class="container">
             <div class="section-title">
                 <h2>Certificate</h2>
@@ -527,133 +543,95 @@
         </div>
     </section>
     
-  <section id="project" class="project">
-      <div class="container-fluid blog ">
-              <div class="container ">
-                  <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-                      <h1 class="display-4 mb-4">Project</h1>
-                      <p class="mb-0">In the ever-evolving world of technology development, we are dedicated to creating innovative solutions that blend creativity with advanced technology.
-                      </p>
-                  </div>
-                  <div class="row g-4 justify-content-center">
-                      <div class="col-lg-6 col-xl-4 wow fadeInUp d-flex align-items-stretch" data-aos-delay="100">
-                          <div class="blog-item w-100">
-                              <div class="blog-img">
-                                  <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                                    <div class="carousel-inner">
-                                      <div class="carousel-item active">
-                                      <img src="img/project/kostifyadv.png" class="img-fluid rounded-top w-100" alt="">
-                                      </div>
-                                      <div class="carousel-item">
-                                      <img src="img/project/kostifyadv1.png" class="img-fluid rounded-top w-100" alt="">
-                                      </div>
-                                      <div class="carousel-item">
-                                      <img src="img/project/kostifyadv2.png" class="img-fluid rounded-top w-100" alt="">
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="blog-categiry py-2 px-4">
-                                      <span>Web Apps</span>
-                                  </div>
-                              </div>
-                              <div class="blog-content p-4">
-                                  <div class="blog-comment d-flex justify-content-between mb-3">
-                                      <div class="small"><span class="bi bi-code-slash text-primary"></span> Nadhif Fauzil A</div>
-                                      <div class="small"><span class="bi bi-globe-americas text-primary"></span> Open Source</div>
-                                      <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Juni 2024</div>
-                                  </div>
-                                  
-                                  <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="h4 d-inline-block mb-3">Kostify: Cari Tempat Tinggal Dan Property dengan mudah</a>
-                                  <p class="mb-3"> tememukan kost atau tempat tinggal ideal Anda hanya dengan beberapa klik saja. Nikmati kemudahan dan kecepatan dalam mencari tempat tinggal impian Anda tanpa ribet.</p>
-                                  {{-- <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="btn p-0">Github  <i class="bi bi-arrow-right"></i></a> --}}
-                                  <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="btn btn-sm btn-outline-dark me-2">
-                                    <i class="bi bi-github"></i> Source Code
-                                  </a>
-                                  <a href="https://kostify.my.id" class="btn btn-sm btn-outline-primary">
-                                    <i class="bi bi-eye"></i> Website
-                                  </a>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-lg-6 col-xl-4 wow fadeInUp d-flex align-items-stretch" data-aos-delay="100">
-                          <div class="blog-item w-100">
-                              <div class="blog-img">
-                                  <!-- <img src="img/project/hydroeaselogo.png" class="img-fluid rounded-top w-100" alt=""> -->
-                                  <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                                    <div class="carousel-inner">
-                                      <div class="carousel-item active">
-                                      <img src="img/project/hydroeaselogo.png" class="img-fluid rounded-top w-100" alt="">
-                                      </div>
-                                      <div class="carousel-item">
-                                      <img src="img/project/hydroeasepic1.png" class="img-fluid rounded-top w-100" alt="">
-                                      </div>
-                                      <div class="carousel-item">
-                                      <img src="img/project/hydroeasepic2.png" class="img-fluid rounded-top w-100" alt="">
-                                      </div>
-                                    </div>
-                                  
-                                  </div>
-                                  <div class="blog-categiry py-2 px-4">
-                                      <span>IoT</span>
-                                  </div>
-                              </div>
-                              <div class="blog-content p-4">
-                                  <div class="blog-comment d-flex justify-content-between mb-3">
-                                  <div class="small"><span class="bi bi-code-slash text-primary"></span> Arabis Group</div>
-                                  <div class="small"><span class="bi bi-globe-americas text-primary"></span> Open Colab</div>
-                                  <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Februari 2024</div>
-                                  </div>
-                                  <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="h4 d-inline-block mb-3">HydroEase: Hydroponic Efficiency Automated System</a>
-                                  <p class="mb-3">HydroEase menggabungkan hidroponik dengan kenyamanan IoT, mengajak Anda untuk menanam tanaman yang lebih sehat dan berkelanjutan dengan mudah. </p>
-                                  <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="btn btn-sm btn-outline-dark me-2">
-                                    <i class="bi bi-file-earmark-code"></i> Documentation
-                                  </a>
-                                  
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-lg-6 col-xl-4 wow fadeInUp d-flex align-items-stretch" data-aos-delay="100">
-                          <div class="blog-item w-100">
-                              <div class="blog-img">
-                                  <img src="img/project/Linksyproject.png" class="img-fluid rounded-top w-100" alt="">
-                                  <div class="blog-categiry py-2 px-4">
-                                      <span>Web Apps</span>
-                                  </div>
-                              </div>
-                              <div class="blog-content p-4">
-                                  <div class="blog-comment d-flex justify-content-between mb-3">
-                                  <div class="small"><span class="bi bi-code-slash text-primary"></span> Nadhif Fauzil A</div>
-                                      <div class="small"><span class="bi bi-globe-americas text-primary"></span> Open Source</div>
-                                      <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Desember 2024</div>
-                                  </div>
-                                  <a href="{{ route('ipdocuments') }}" class="h4 d-inline-block mb-3">Linksy Link Management</a>
-                                  <br>
-                                  <p class="mb-5">Linksy transforms your URLs into powerful, shareable links. Whether you're tracking campaigns or simplifying sharing, we’ve got you covered with the smartest link management tool.</p>
-
-                                  <a href="https://linksy.site/apidocumentation" class="btn btn-sm btn-outline-dark me-2">
-                                    <i class="bi bi-file-earmark-code"></i> Documentation
-                                  </a>
-                                  <a href="https://linksy.site" class="btn btn-sm btn-outline-primary">
-                                    <i class="bi bi-eye"></i> Website
-                                  </a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+    <section id="projects" class="projects section-bg" data-aos="fade-up" data-aos-delay="200">
+      <div class="container">
+        
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+          <h1 class="display-4 mb-4">My Projects</h1>
+          <p class="mb-0">Building innovative solutions by combining creativity and advanced technology.</p>
+        </div>
+    
+        <!-- Swiper Container -->
+        <div class="swiper project-slider">
+          <div class="swiper-wrapper">
+    
+            <!-- Project 1: Kostify -->
+            <div class="swiper-slide project-card">
+              <div class="project-img">
+                <img src="img/project/kostifyadv.png" class="img-fluid rounded-top w-100" alt="Kostify">
               </div>
+              <div class="project-content">
+                <h4>Kostify: Cari Kost dengan Mudah</h4>
+                <p>Temukan tempat tinggal  Anda dengan cepat dan mudah.</p>
+                <div class="project-links">
+                  <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="btn btn-sm btn-dark">
+                    <i class="bi bi-github"></i> Source Code
+                  </a>
+                  <a href="https://kostify.my.id" class="btn btn-sm btn-primary">
+                    <i class="bi bi-eye"></i> Live Demo
+                  </a>
+                </div>
+              </div>
+            </div>
+    
+            <!-- Project 2: HydroEase -->
+            <div class="swiper-slide project-card">
+              <div class="project-img">
+                <img src="img/project/hydroeaselogo.png" class="img-fluid rounded-top w-100" alt="HydroEase">
+              </div>
+              <div class="project-content">
+                <h4>HydroEase: Hydroponic IoT System</h4>
+                <p>Solusi otomatisasi hidroponik dengan teknologi IoT.</p>
+                <div class="project-links">
+                  <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="btn btn-sm btn-dark">
+                    <i class="bi bi-file-earmark-code"></i> Documentation
+                  </a>
+                </div>
+              </div>
+            </div>
+    
+            <!-- Project 3: Linksy -->
+            <div class="swiper-slide project-card">
+              <div class="project-img">
+                <img src="img/project/Linksyproject.png" class="img-fluid rounded-top w-100" alt="Linksy">
+              </div>
+              <div class="project-content">
+                <h4>Linksy: Smart Link Management</h4>
+                <p>Transform your URLs into powerful, shareable links.</p>
+                <div class="project-links">
+                  <a href="https://linksy.site/apidocumentation" class="btn btn-sm btn-dark">
+                    <i class="bi bi-file-earmark-code"></i> Documentation
+                  </a>
+                  <a href="https://linksy.site" class="btn btn-sm btn-primary">
+                    <i class="bi bi-eye"></i> Live Demo
+                  </a>
+                </div>
+              </div>
+            </div>
+    
           </div>
-      </section>
+    
+          <!-- Swiper Navigation -->
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+    
+          <!-- Swiper Pagination -->
+          <div class="swiper-pagination"></div>
+        </div>
+    
+      </div>
+    </section>
       <section id="testimonials" class="testimonials section-bg">
         <div class="container">
   
-          <div class="section-title">
+          <div class="section-title" data-aos="fade-up" data-aos-delay="200">
             <h2>Arabis Group Member</h2>
             <p>Arabis Group is a team of computer science students who are driven by passion and share a common objective of personal growth and making significant contributions to the field of information technology. As a group, we strive to create a dynamic environment where members can learn, collaborate, and excel in their respective areas of interest within the realm of technology. We firmly believe that by coming together, we can achieve far greater heights than we could individually.</p>
           </div>
   
-          <div class="testimonials-slider " data-aos="fade-up" data-aos-delay="100">
+          <div class="testimonials-slider " data-aos="fade-up" data-aos-delay="300">
             <div class="swiper-wrapper">
-              <div class="swiper-slide">
+              <div class="swiper-slide member-card">
                 <div class="testimonial-item" data-aos="fade-up">
                   <img src="img/member/nadhif.png" class="testimonial-img" alt="">
                   <h3>Nadhif Fauzil Adhim</h3>
@@ -661,7 +639,7 @@
                 </div>
               </div><!-- End testimonial item -->
   
-              <div class="swiper-slide">
+              <div class="swiper-slide member-card">
                 <div class="testimonial-item" data-aos="fade-up" data-aos-delay="100">
                   <img src="img/member/ferdi.png" class="testimonial-img" alt="">
                   <h3>Dwi Ferdiyanto</h3>
@@ -669,7 +647,7 @@
                 </div>
               </div><!-- End testimonial item -->
   
-              <div class="swiper-slide">
+              <div class="swiper-slide member-card">
                 <div class="testimonial-item" data-aos="fade-up" data-aos-delay="200">
                   <img src="img/member/julian.png" class="testimonial-img" alt="">
                   <h3>Julian Kiyosaki H</h3>
@@ -677,7 +655,7 @@
                 </div>
               </div><!-- End testimonial item -->
   
-              <div class="swiper-slide">
+              <div class="swiper-slide member-card">
                 <div class="testimonial-item" data-aos="fade-up" data-aos-delay="300">
                   <img src="img/member/aji.png" class="testimonial-img" alt="">
                   <h3>Muhajir Faturrahman</h3>
@@ -685,7 +663,7 @@
                 </div>
               </div><!-- End testimonial item -->
   
-              <div class="swiper-slide">
+              <div class="swiper-slide member-card">
                 <div class="testimonial-item" data-aos="fade-up" data-aos-delay="400">
   
                   <img src="img/member/arip.png" class="testimonial-img" alt="">

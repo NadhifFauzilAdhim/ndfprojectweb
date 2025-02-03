@@ -31,11 +31,9 @@ class LinkController extends Controller
                 ->selectRaw('COUNT(*) as total_links, SUM(visits) as total_visits, SUM(unique_visits) as total_unique_visits')
                 ->first();
         });
-
         $totalLinks = (int)$totals->total_links;
         $totalVisit = (int)$totals->total_visits;
         $totalUniqueVisit = (int)$totals->total_unique_visits;
-
         $search = $request->input('search');
 
         $links = Link::where('user_id', $userId)
@@ -60,7 +58,6 @@ class LinkController extends Controller
 
         $mySharedLinks = LinkShare::whereHas('link', function ($query) use ($userId, $search) {
             $query->where('user_id', $userId);
-    
             if ($search) {
                 $query->where('slug', 'like', "%{$search}%")
                       ->orWhere('title', 'like', "%{$search}%");
