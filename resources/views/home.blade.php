@@ -276,307 +276,373 @@
   
         </div>
       </section>
-  
       <section id="portfolio" class="portfolio section-bg">
         <div class="container">
-  
-          <div class="section-title">
-            <h2>Certificate</h2>
-            <p>These certificates reflect a commitment to continuous learning</p>
-          </div>
-  
-          <div class="row" data-aos="fade-up">
-            <div class="col-lg-12 d-flex justify-content-center">
-              <ul id="portfolio-flters">
-                <li data-filter="*" >All</li>
-                <li data-filter=".featured" class="filter-active">Featured</li>
-                <li data-filter=".IoT">IoT</li>
-                <li data-filter=".Web-dev">Web Dev</li>
-              </ul>
+            <div class="section-title">
+                <h2>Certificate</h2>
+                <p>These certificates reflect a commitment to continuous learning</p>
             </div>
-          </div>
-  
-          <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
-            <div class="col-lg-4 col-md-6 portfolio-item Web-dev">
-              <div class="portfolio-wrap">
-                <img src="certificate/SertifikatAMCC.jpeg" class="img-fluid" alt="">
-                <div class="portfolio-links">
-                  <a href="https://amcc.or.id" target="_blank"><i class="bi bi-check2-square"> </i>
-                    <h6>Check Credential</h6>
-                  </a>
-  
-                </div>
-              </div>
-            </div>
-  
-            <div class="col-lg-4 col-md-6 portfolio-item featured">
-              <div class="portfolio-wrap">
-                <img src="certificate/SertifikatAsisten.jpeg" class="img-fluid" alt="">
-                <div class="portfolio-links">
-                  <a  target="_blank"><i class="bi bi-check2-square"> </i>
-                    <h6>Check Credential</h6>
-                  </a>
-                </div>
-              </div>
-            </div>
+    
+            <!-- Slider main container -->
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide">
+                        <div class="portfolio-item Web-dev featured">
+                            <div class="portfolio-wrap">
+                                <img src="certificate/SertifikatAMCC.jpeg" class="img-fluid" alt="">
+                                <div class="portfolio-links">
+                                    <a href="https://amcc.or.id" target="_blank">
+                                        <i class="bi bi-check2-square"></i>
+                                        <h6>Check Credential</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                   
+                    <!-- Contoh slide kedua -->
+                    <div class="swiper-slide">
+                        <div class="portfolio-item featured">
+                            <div class="portfolio-wrap">
+                                <img src="certificate/SertifikatAsisten.jpeg" class="img-fluid" alt="">
+                                <div class="portfolio-links">
+                                    <a href="https://forumasisten.or.id/sertifikat/4871198960f1f156a5/show" target="_blank">
+                                        <i class="bi bi-check2-square"></i>
+                                        <h6>Check Credential</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-            <div class="col-lg-4 col-md-6 portfolio-item featured IoT">
-              <div class="portfolio-wrap">
-                <img src="certificate/SICStage1.png" class="img-fluid" alt="">
-                <div class="portfolio-links">
-                  <a  target="_blank"><i class="bi bi-check2-square"> </i>
-                    <h6>Check Credential</h6>
-                  </a>
-                </div>
-              </div>
-            </div>
-  
-
-            <div class="col-lg-4 col-md-6 portfolio-item featured IoT">
-              <div class="portfolio-wrap">
-                <img src="certificate/SICStage2.png" class="img-fluid" alt="">
-                <div class="portfolio-links">
-                  <a  target="_blank"><i class="bi bi-check2-square"> </i>
-                    <h6>Check Credential</h6>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item featured IoT">
-              <div class="portfolio-wrap">
-                <img src="certificate/SICStage3.png" class="img-fluid" alt="">
-                <div class="portfolio-links">
-                  <a href="https://forumasisten.or.id/sertifikat/4871198960f1f156a5/show" target="_blank"><i class="bi bi-check2-square"> </i>
-                    <h6>Check Credential</h6>
-                  </a>
-                </div>
-              </div>
-            </div>
-  
-  
-            <div class="col-lg-4 col-md-6 portfolio-item ">
-              <div class="portfolio-wrap">
-                <img src="certificate/SertifikatPythonAlgorithm.png" class="img-fluid" alt="">
-                <div class="portfolio-links">
-                  <a href="https://badgr.com/public/assertions/-5JsF-_9TjC-ITtVvv_8rg?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
-                    <h6>Check Credential</h6>
-                  </a>
-                </div>
-              </div>
-            </div>
-  
-            <div class="col-lg-4 col-md-6 portfolio-item IoT ">
-              <div class="portfolio-wrap">
-                <img src="certificate/SertifikatPythonDasar.png" class="img-fluid" alt="">
-                <div class="portfolio-links">
-                  <a href="https://badgr.com/public/assertions/fhm-f9N4RkWAtFsj1h9w7w?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
-                    <h6>Check Credential</h6>
-                  </a>
-                </div>
-              </div>
-            </div>
-  
-            <div class="col-lg-4 col-md-6 portfolio-item IoT ">
-              <div class="portfolio-wrap">
-                <img src="certificate/SertifikatPythonLanjut.png" class="img-fluid" alt="">
-                <div class="portfolio-links">
-                  <a href="https://badgr.com/public/assertions/M6e1x0CoRFK9JkCoJecclw?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
-                    <h6>Check Credential</h6>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6 portfolio-item IoT ">
-              <div class="portfolio-wrap">
-                <img src="certificate/SertifikatIoT.png" class="img-fluid" alt="">
-                <div class="portfolio-links">
-                  <a href="https://badgr.com/public/assertions/LK1xozEMTHSsqSI38ch93A?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
-                    <h6>Check Credential</h6>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6 portfolio-item IoT ">
-              <div class="portfolio-wrap">
-                <img src="certificate/SertifikatIoTFundamental.png" class="img-fluid" alt="">
-                <div class="portfolio-links">
-                  <a href="https://badgr.com/public/assertions/LK1xozEMTHSsqSI38ch93A?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
-                    <h6>Check Credential</h6>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6 portfolio-item IoT ">
-              <div class="portfolio-wrap">
-                <img src="certificate/SertifikatIoTSoftware.png" class="img-fluid" alt="">
-                <div class="portfolio-links">
-                  <a href="https://badgr.com/public/assertions/z_YkmXG6RPuXybWMOUgUJw?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
-                    <h6>Check Credential</h6>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6 portfolio-item Web-dev ">
-              <div class="portfolio-wrap">
-                <img src="certificate/SertifikatFrontEnd.png" class="img-fluid" alt="">
-                <div class="portfolio-links">
-                  <a href="https://www.dicoding.com/certificates/2VX34365NZYQ" target="_blank"><i class="bi bi-check2-square"> </i>
-                    <h6>Check Credential</h6>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6 portfolio-item IoT ">
-              <div class="portfolio-wrap">
-                <img src="certificate/SertifikatIoTHealthMonitoringSystem.png" class="img-fluid" alt="">
-                <div class="portfolio-links">
-                  <a href="https://badgr.com/public/assertions/1ey6ROu9T3C6yRBtcc1tUQ?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
-                    <h6>Check Credential</h6>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6 portfolio-item Web-dev ">
-              <div class="portfolio-wrap">
-                <img src="certificate/SertifikatFrontEndJavascript.png" class="img-fluid" alt="">
-                <div class="portfolio-links">
-                  <a href="https://www.dicoding.com/certificates/EYX4J09JWZDL" target="_blank"><i class="bi bi-check2-square"> </i>
-                    <h6>Check Credential</h6>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6 portfolio-item Web-dev ">
-              <div class="portfolio-wrap">
-                <img src="certificate/SertifikatReact.png" class="img-fluid" alt="">
-                <div class="portfolio-links">
-                  <a href="https://www.dicoding.com/certificates/N9ZOY11VYPG5" target="_blank"><i class="bi bi-check2-square"> </i>
-                    <h6>Check Credential</h6>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        
-      </section><!-- End Portfolio Section -->
-      <section id="project" class="project">
-          <div class="container-fluid blog ">
-                  <div class="container ">
-                      <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-                          <h1 class="display-4 mb-4">Project</h1>
-                          <p class="mb-0">In the ever-evolving world of technology development, we are dedicated to creating innovative solutions that blend creativity with advanced technology.
-                          </p>
+                    <div class="swiper-slide">
+                      <div class="portfolio-item featured">
+                        <div class="portfolio-wrap">
+                          <img src="certificate/SertifikatAsisten.jpeg" class="img-fluid" alt="">
+                          <div class="portfolio-links">
+                            <a  href="https://forumasisten.or.id/sertifikat/4871198960f1f156a5/show" target="_blank"><i class="bi bi-check2-square"> </i>
+                              <h6>Check Credential</h6>
+                            </a>
+                          </div>
+                        </div>
                       </div>
-                      <div class="row g-4 justify-content-center">
-                          <div class="col-lg-6 col-xl-4 wow fadeInUp d-flex align-items-stretch" data-aos-delay="100">
-                              <div class="blog-item w-100">
-                                  <div class="blog-img">
-                                      <!-- <img src="img/project/kostifyadv.png" class="img-fluid rounded-top w-100" alt=""> -->
-                                      <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                                        <div class="carousel-inner">
-                                          <div class="carousel-item active">
-                                          <img src="img/project/kostifyadv.png" class="img-fluid rounded-top w-100" alt="">
-                                          </div>
-                                          <div class="carousel-item">
-                                          <img src="img/project/kostifyadv1.png" class="img-fluid rounded-top w-100" alt="">
-                                          </div>
-                                          <div class="carousel-item">
-                                          <img src="img/project/kostifyadv2.png" class="img-fluid rounded-top w-100" alt="">
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div class="blog-categiry py-2 px-4">
-                                          <span>Web Apps</span>
-                                      </div>
-                                  </div>
-                                  <div class="blog-content p-4">
-                                      <div class="blog-comment d-flex justify-content-between mb-3">
-                                          <div class="small"><span class="bi bi-code-slash text-primary"></span> Nadhif Fauzil A</div>
-                                          <div class="small"><span class="bi bi-globe-americas text-primary"></span> Open Source</div>
-                                          <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Juni 2024</div>
-                                      </div>
-                                      
-                                      <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="h4 d-inline-block mb-3">Kostify: Cari Tempat Tinggal Dan Property dengan mudah</a>
-                                      <p class="mb-3"> tememukan kost atau tempat tinggal ideal Anda hanya dengan beberapa klik saja. Nikmati kemudahan dan kecepatan dalam mencari tempat tinggal impian Anda tanpa ribet.</p>
-                                      {{-- <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="btn p-0">Github  <i class="bi bi-arrow-right"></i></a> --}}
-                                      <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="btn btn-sm btn-outline-dark me-2">
-                                        <i class="bi bi-github"></i> Source Code
-                                      </a>
-                                      <a href="https://kostify.my.id" class="btn btn-sm btn-outline-primary">
-                                        <i class="bi bi-eye"></i> Live Demo
-                                      </a>
-                                  </div>
-                              </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="portfolio-item featured">
+                        <div class="portfolio-wrap">
+                          <img src="certificate/SertifikatMikro.png" class="img-fluid" alt="">
+                          <div class="portfolio-links">
+                            <a  href="https://forumasisten.or.id/sertifikat/5601646117cee6daa5d/show" target="_blank"><i class="bi bi-check2-square"> </i>
+                              <h6>Check Credential</h6>
+                            </a>
                           </div>
-                          <div class="col-lg-6 col-xl-4 wow fadeInUp d-flex align-items-stretch" data-aos-delay="100">
-                              <div class="blog-item w-100">
-                                  <div class="blog-img">
-                                      <!-- <img src="img/project/hydroeaselogo.png" class="img-fluid rounded-top w-100" alt=""> -->
-                                      <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                                        <div class="carousel-inner">
-                                          <div class="carousel-item active">
-                                          <img src="img/project/hydroeaselogo.png" class="img-fluid rounded-top w-100" alt="">
-                                          </div>
-                                          <div class="carousel-item">
-                                          <img src="img/project/hydroeasepic1.png" class="img-fluid rounded-top w-100" alt="">
-                                          </div>
-                                          <div class="carousel-item">
-                                          <img src="img/project/hydroeasepic2.png" class="img-fluid rounded-top w-100" alt="">
-                                          </div>
-                                        </div>
-                                      
-                                      </div>
-                                      <div class="blog-categiry py-2 px-4">
-                                          <span>IoT</span>
-                                      </div>
-                                  </div>
-                                  <div class="blog-content p-4">
-                                      <div class="blog-comment d-flex justify-content-between mb-3">
-                                      <div class="small"><span class="bi bi-code-slash text-primary"></span> Arabis Group</div>
-                                      <div class="small"><span class="bi bi-globe-americas text-primary"></span> Open Colab</div>
-                                      <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Februari 2024</div>
-                                      </div>
-                                      <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="h4 d-inline-block mb-3">HydroEase: Hydroponic Efficiency Automated System</a>
-                                      <p class="mb-3">HydroEase menggabungkan hidroponik dengan kenyamanan IoT, mengajak Anda untuk menanam tanaman yang lebih sehat dan berkelanjutan dengan mudah. </p>
-                                      <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="btn btn-sm btn-outline-dark me-2">
-                                        <i class="bi bi-file-earmark-code"></i> Documentation
-                                      </a>
-                                     
-                                  </div>
-                              </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="portfolio-item featured">
+                        <div class="portfolio-wrap">
+                          <img src="certificate/SertifikatSBD.png" class="img-fluid" alt="">
+                          <div class="portfolio-links">
+                            <a  href="https://forumasisten.or.id/sertifikat/707151011e6d5f4f3c8/show" target="_blank"><i class="bi bi-check2-square"> </i>
+                              <h6>Check Credential</h6>
+                            </a>
                           </div>
-                          <div class="col-lg-6 col-xl-4 wow fadeInUp d-flex align-items-stretch" data-aos-delay="100">
-                              <div class="blog-item w-100">
-                                  <div class="blog-img">
-                                      <img src="img/project/linksy-logo.png" class="img-fluid rounded-top w-100" alt="">
-                                      <div class="blog-categiry py-2 px-4">
-                                          <span>OpenAPI</span>
-                                      </div>
-                                  </div>
-                                  <div class="blog-content p-4">
-                                      <div class="blog-comment d-flex justify-content-between mb-3">
-                                      <div class="small"><span class="bi bi-code-slash text-primary"></span> Nadhif Fauzil A</div>
-                                          <div class="small"><span class="bi bi-globe-americas text-primary"></span> Open Source</div>
-                                          <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Desember 2024</div>
-                                      </div>
-                                      <a href="{{ route('ipdocuments') }}" class="h4 d-inline-block mb-3">Linksy OpenAPI Project</a>
-                                      <br>
-                                      <p class="mb-5">This API is designed for managing shortened links and tracking their performance. It provides various endpoints to create, update, retrieve, and delete links, as well as monitor link activities.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="portfolio-item featured IoT">
+                        <div class="portfolio-wrap">
+                          <img src="certificate/SICStage1.png" class="img-fluid" alt="">
+                          <div class="portfolio-links">
+                            <a href=" " target="_blank"><i class="bi bi-check2-square"> </i>
+                              <h6>Check Credential</h6>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="portfolio-item featured IoT">
+                        <div class="portfolio-wrap">
+                          <img src="certificate/SICStage2.png" class="img-fluid" alt="">
+                          <div class="portfolio-links">
+                            <a href=" " target="_blank"><i class="bi bi-check2-square"> </i>
+                              <h6>Check Credential</h6>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="portfolio-item featured IoT">
+                        <div class="portfolio-wrap">
+                          <img src="certificate/SICStage3.png" class="img-fluid" alt="">
+                          <div class="portfolio-links">
+                            <a href=" " target="_blank"><i class="bi bi-check2-square"> </i>
+                              <h6>Check Credential</h6>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="portfolio-item">
+                        <div class="portfolio-wrap">
+                          <img src="certificate/SertifikatPythonAlgorithm.png" class="img-fluid" alt="">
+                          <div class="portfolio-links">
+                            <a href="https://badgr.com/public/assertions/-5JsF-_9TjC-ITtVvv_8rg?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
+                              <h6>Check Credential</h6>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-                                      <a href="https://linksy.site/apidocumentation" class="btn btn-sm btn-outline-dark me-2">
-                                        <i class="bi bi-file-earmark-code"></i> Documentation
-                                      </a>
-                                      <a href="https://linksy.site" class="btn btn-sm btn-outline-primary">
-                                        <i class="bi bi-eye"></i> Live Demo
-                                      </a>
+                    <div class="swiper-slide">
+
+                      <div class="portfolio-item IoT ">
+                        <div class="portfolio-wrap">
+                          <img src="certificate/SertifikatPythonDasar.png" class="img-fluid" alt="">
+                          <div class="portfolio-links">
+                            <a href="https://badgr.com/public/assertions/fhm-f9N4RkWAtFsj1h9w7w?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
+                              <h6>Check Credential</h6>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+
+                      <div class="portfolio-item IoT ">
+                        <div class="portfolio-wrap">
+                          <img src="certificate/SertifikatPythonLanjut.png" class="img-fluid" alt="">
+                          <div class="portfolio-links">
+                            <a href="https://badgr.com/public/assertions/M6e1x0CoRFK9JkCoJecclw?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
+                              <h6>Check Credential</h6>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+
+                      <div class="portfolio-item IoT ">
+                        <div class="portfolio-wrap">
+                          <img src="certificate/SertifikatIoT.png" class="img-fluid" alt="">
+                          <div class="portfolio-links">
+                            <a href="https://badgr.com/public/assertions/LK1xozEMTHSsqSI38ch93A?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
+                              <h6>Check Credential</h6>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+
+                      <div class="portfolio-item IoT ">
+                        <div class="portfolio-wrap">
+                          <img src="certificate/SertifikatIoTFundamental.png" class="img-fluid" alt="">
+                          <div class="portfolio-links">
+                            <a href="https://badgr.com/public/assertions/LK1xozEMTHSsqSI38ch93A?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
+                              <h6>Check Credential</h6>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+
+                      <div class="portfolio-item IoT ">
+                        <div class="portfolio-wrap">
+                          <img src="certificate/SertifikatIoTSoftware.png" class="img-fluid" alt="">
+                          <div class="portfolio-links">
+                            <a href="https://badgr.com/public/assertions/z_YkmXG6RPuXybWMOUgUJw?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
+                              <h6>Check Credential</h6>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+
+                      <div class="portfolio-item Web-dev ">
+                        <div class="portfolio-wrap">
+                          <img src="certificate/SertifikatFrontEnd.png" class="img-fluid" alt="">
+                          <div class="portfolio-links">
+                            <a href="https://www.dicoding.com/certificates/2VX34365NZYQ" target="_blank"><i class="bi bi-check2-square"> </i>
+                              <h6>Check Credential</h6>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+
+                      <div class="portfolio-item IoT ">
+                        <div class="portfolio-wrap">
+                          <img src="certificate/SertifikatIoTHealthMonitoringSystem.png" class="img-fluid" alt="">
+                          <div class="portfolio-links">
+                            <a href="https://badgr.com/public/assertions/1ey6ROu9T3C6yRBtcc1tUQ?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
+                              <h6>Check Credential</h6>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+
+                      <div class="portfolio-item Web-dev ">
+                        <div class="portfolio-wrap">
+                          <img src="certificate/SertifikatFrontEndJavascript.png" class="img-fluid" alt="">
+                          <div class="portfolio-links">
+                            <a href="https://www.dicoding.com/certificates/EYX4J09JWZDL" target="_blank"><i class="bi bi-check2-square"> </i>
+                              <h6>Check Credential</h6>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+
+                      <div class="portfolio-item Web-dev ">
+                        <div class="portfolio-wrap">
+                          <img src="certificate/SertifikatReact.png" class="img-fluid" alt="">
+                          <div class="portfolio-links">
+                            <a href="https://www.dicoding.com/certificates/N9ZOY11VYPG5" target="_blank"><i class="bi bi-check2-square"> </i>
+                              <h6>Check Credential</h6>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </section>
+    
+  <section id="project" class="project">
+      <div class="container-fluid blog ">
+              <div class="container ">
+                  <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+                      <h1 class="display-4 mb-4">Project</h1>
+                      <p class="mb-0">In the ever-evolving world of technology development, we are dedicated to creating innovative solutions that blend creativity with advanced technology.
+                      </p>
+                  </div>
+                  <div class="row g-4 justify-content-center">
+                      <div class="col-lg-6 col-xl-4 wow fadeInUp d-flex align-items-stretch" data-aos-delay="100">
+                          <div class="blog-item w-100">
+                              <div class="blog-img">
+                                  <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                      <div class="carousel-item active">
+                                      <img src="img/project/kostifyadv.png" class="img-fluid rounded-top w-100" alt="">
+                                      </div>
+                                      <div class="carousel-item">
+                                      <img src="img/project/kostifyadv1.png" class="img-fluid rounded-top w-100" alt="">
+                                      </div>
+                                      <div class="carousel-item">
+                                      <img src="img/project/kostifyadv2.png" class="img-fluid rounded-top w-100" alt="">
+                                      </div>
+                                    </div>
                                   </div>
+                                  <div class="blog-categiry py-2 px-4">
+                                      <span>Web Apps</span>
+                                  </div>
+                              </div>
+                              <div class="blog-content p-4">
+                                  <div class="blog-comment d-flex justify-content-between mb-3">
+                                      <div class="small"><span class="bi bi-code-slash text-primary"></span> Nadhif Fauzil A</div>
+                                      <div class="small"><span class="bi bi-globe-americas text-primary"></span> Open Source</div>
+                                      <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Juni 2024</div>
+                                  </div>
+                                  
+                                  <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="h4 d-inline-block mb-3">Kostify: Cari Tempat Tinggal Dan Property dengan mudah</a>
+                                  <p class="mb-3"> tememukan kost atau tempat tinggal ideal Anda hanya dengan beberapa klik saja. Nikmati kemudahan dan kecepatan dalam mencari tempat tinggal impian Anda tanpa ribet.</p>
+                                  {{-- <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="btn p-0">Github  <i class="bi bi-arrow-right"></i></a> --}}
+                                  <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="btn btn-sm btn-outline-dark me-2">
+                                    <i class="bi bi-github"></i> Source Code
+                                  </a>
+                                  <a href="https://kostify.my.id" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-eye"></i> Website
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-6 col-xl-4 wow fadeInUp d-flex align-items-stretch" data-aos-delay="100">
+                          <div class="blog-item w-100">
+                              <div class="blog-img">
+                                  <!-- <img src="img/project/hydroeaselogo.png" class="img-fluid rounded-top w-100" alt=""> -->
+                                  <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                      <div class="carousel-item active">
+                                      <img src="img/project/hydroeaselogo.png" class="img-fluid rounded-top w-100" alt="">
+                                      </div>
+                                      <div class="carousel-item">
+                                      <img src="img/project/hydroeasepic1.png" class="img-fluid rounded-top w-100" alt="">
+                                      </div>
+                                      <div class="carousel-item">
+                                      <img src="img/project/hydroeasepic2.png" class="img-fluid rounded-top w-100" alt="">
+                                      </div>
+                                    </div>
+                                  
+                                  </div>
+                                  <div class="blog-categiry py-2 px-4">
+                                      <span>IoT</span>
+                                  </div>
+                              </div>
+                              <div class="blog-content p-4">
+                                  <div class="blog-comment d-flex justify-content-between mb-3">
+                                  <div class="small"><span class="bi bi-code-slash text-primary"></span> Arabis Group</div>
+                                  <div class="small"><span class="bi bi-globe-americas text-primary"></span> Open Colab</div>
+                                  <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Februari 2024</div>
+                                  </div>
+                                  <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="h4 d-inline-block mb-3">HydroEase: Hydroponic Efficiency Automated System</a>
+                                  <p class="mb-3">HydroEase menggabungkan hidroponik dengan kenyamanan IoT, mengajak Anda untuk menanam tanaman yang lebih sehat dan berkelanjutan dengan mudah. </p>
+                                  <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="btn btn-sm btn-outline-dark me-2">
+                                    <i class="bi bi-file-earmark-code"></i> Documentation
+                                  </a>
+                                  
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-6 col-xl-4 wow fadeInUp d-flex align-items-stretch" data-aos-delay="100">
+                          <div class="blog-item w-100">
+                              <div class="blog-img">
+                                  <img src="img/project/Linksyproject.png" class="img-fluid rounded-top w-100" alt="">
+                                  <div class="blog-categiry py-2 px-4">
+                                      <span>Web Apps</span>
+                                  </div>
+                              </div>
+                              <div class="blog-content p-4">
+                                  <div class="blog-comment d-flex justify-content-between mb-3">
+                                  <div class="small"><span class="bi bi-code-slash text-primary"></span> Nadhif Fauzil A</div>
+                                      <div class="small"><span class="bi bi-globe-americas text-primary"></span> Open Source</div>
+                                      <div class="small"><span class="bi bi-calendar2-check text-primary"></span> Desember 2024</div>
+                                  </div>
+                                  <a href="{{ route('ipdocuments') }}" class="h4 d-inline-block mb-3">Linksy Link Management</a>
+                                  <br>
+                                  <p class="mb-5">Linksy transforms your URLs into powerful, shareable links. Whether you're tracking campaigns or simplifying sharing, we’ve got you covered with the smartest link management tool.</p>
+
+                                  <a href="https://linksy.site/apidocumentation" class="btn btn-sm btn-outline-dark me-2">
+                                    <i class="bi bi-file-earmark-code"></i> Documentation
+                                  </a>
+                                  <a href="https://linksy.site" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-eye"></i> Website
+                                  </a>
                               </div>
                           </div>
                       </div>
                   </div>
               </div>
-          </section>
+          </div>
+      </section>
       <section id="testimonials" class="testimonials section-bg">
         <div class="container">
   
@@ -716,4 +782,6 @@
             toast.show();
         });
     </script>
+
+    
 </x-layout>

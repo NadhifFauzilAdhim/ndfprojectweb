@@ -20,7 +20,6 @@
             </ul>
         </li>
         @auth
-        <!-- Dropdown for Dashboard and Logout -->
         <li class="dropdown">
             <a href="#" class="nav-link scrollto dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                 <i class="bi bi-send fs-5"></i> <span>Dashboard</span></i>

@@ -36,7 +36,7 @@ editModal.addEventListener('show.bs.modal', function (event) {
 
     var checkbox = editModal.querySelector('#flexSwitchCheckChecked');
     var label = editModal.querySelector('#switchLabel');
-    checkbox.checked = (isActive == 1);  // Checked jika active bernilai 1
+    checkbox.checked = (isActive == 1);  
     label.textContent = checkbox.checked ? 'Active' : 'Inactive';
     checkbox.addEventListener('change', function () {
         label.textContent = checkbox.checked ? 'Active' : 'Inactive';
@@ -68,7 +68,6 @@ function confirmDelete(slug) {
     });
 }
 
-
 $(function () {
     var visitData = visitDataGlobal;
     var chart = {
@@ -99,8 +98,8 @@ $(function () {
         },
         markers: {
             size: 5,
-            colors: ["#ffffff"], // Warna putih untuk isi marker
-            strokeColors: "#007bff", // Warna biru untuk pinggiran marker
+            colors: ["#ffffff"], 
+            strokeColors: "#007bff", 
             strokeWidth: 2,
             hover: {
                 size: 7,
@@ -180,7 +179,6 @@ $(function () {
     chart.render();
 });
 
-
 document.addEventListener("DOMContentLoaded", function () {
     const toastElList = [].slice.call(document.querySelectorAll('.toast:not(.copy-toast)'));
     const toastList = toastElList.map(function (toastEl) {
@@ -204,8 +202,8 @@ function showQRCode(url) {
     downloadButton.onclick = function () {
         const link = document.createElement('a');
         link.href = qrCodeUrl;
-        link.download = 'qrcode.png'; // Nama file yang akan diunduh
-        link.click(); // Trigger download
+        link.download = 'qrcode.png'; 
+        link.click();
     };
 }
 
@@ -218,10 +216,7 @@ document.getElementById('qrForm').addEventListener('submit', function (event) {
     console.log(url);
 
     if (url) {
-        // Panggil fungsi untuk menampilkan QR Code
         showQRCode(url);
-
-        // Tampilkan modal QR Code
         const qrCodeModal = new bootstrap.Modal(document.getElementById('qrCodeModal'));
         qrCodeModal.show();
     } else {
@@ -255,13 +250,13 @@ function confirmDelete(slug) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const titleInputs = document.querySelectorAll('.form-control[data-link-slug]'); // Pilih semua input judul dengan data-link-slug
+    const titleInputs = document.querySelectorAll('.form-control[data-link-slug]'); 
 
     titleInputs.forEach(input => {
         input.addEventListener('blur', async (event) => {
             const newTitle = event.target.value.trim();
             const linkSlug = event.target.dataset.linkSlug; 
-            const previousTitle = input.dataset.previousTitle?.trim(); // Ambil judul sebelumnya
+            const previousTitle = input.dataset.previousTitle?.trim(); 
 
             if (newTitle === previousTitle) {
                 showToast('Title is unchanged.', 'info');
@@ -338,11 +333,11 @@ function shareLink() {
 function showToast(message, type = 'success') {
     Swal.fire({
         text: message,
-        icon: type, // Tipe icon: 'success', 'error', 'warning', 'info', atau 'question'
+        icon: type, 
         toast: true,
-        position: 'top-end', // Posisi notifikasi
+        position: 'top-end', 
         showConfirmButton: false,
-        timer: 3000, // Durasi dalam milidetik
+        timer: 3000, 
         timerProgressBar: true,
     });
 }

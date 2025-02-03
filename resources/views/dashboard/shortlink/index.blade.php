@@ -1,6 +1,23 @@
 <x-dashlayout>
     <x-slot:title>{{ $title }}</x-slot:title>
     <div class="container-fluid">
+        <div class="modal fade" id="promoModal" tabindex="-1" aria-labelledby="promoModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="promoModalLabel">🎉 Fitur Baru: Share Link!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>✨ Sekarang Anda bisa dengan mudah membagikan tautan ke teman dan keluarga langsung dari aplikasi!</p>
+                        <p>🚀 Coba sekarang !</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="confirmPromo" data-bs-dismiss="modal">Oke, Mengerti!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <div class="card">
             <div class="card-body">
@@ -585,10 +602,16 @@
         const visitDataGlobal = @json($visitData);
     </script>
     <script src="{{ asset('js/link.js') }}"></script>
-    <!-- Tambahkan ini di bagian <head> jika belum ada -->
-<meta name="csrf-token" content="{{ csrf_token() }}">
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (!localStorage.getItem("promoSeen")) {
+                let promoModal = new bootstrap.Modal(document.getElementById("promoModal"));
+                promoModal.show();
+            }
+        
+            document.getElementById("confirmPromo").addEventListener("click", function () {
+                localStorage.setItem("promoSeen", "true");
+            });
+        });
+        </script>
 </x-dashlayout>

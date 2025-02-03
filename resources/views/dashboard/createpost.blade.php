@@ -78,7 +78,7 @@
                                         <option value="en">Inggris</option>
                                     </select>
                                     <button type="button" id="generate-button" class="btn btn-outline-primary">
-                                        Generate by AI
+                                        Generate
                                         <span class="spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
                                     </button>
                                 </div>

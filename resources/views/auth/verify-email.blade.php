@@ -16,7 +16,7 @@
                     </div>
                   </div>
                   @endif
-                  <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                  <a href="" class="text-nowrap logo-img text-center d-block py-3 w-100">
                     <img src="{{ asset('img/verifylogo.jpg') }}" alt="" width="200px">
                   </a>
                   <h5 class="text-center">Email Verifikasi Dikirimkan ke {{ Auth::user()->email }}</h5>

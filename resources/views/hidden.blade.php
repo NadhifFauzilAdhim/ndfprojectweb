@@ -23,22 +23,17 @@
             <h2 id="timecount" class="text-danger fw-bold"></h2>
         </div>
     </div>
-
     <script>
         function updateTimeCount() {
             const startDate = new Date("2023-02-28T00:00:00");
             const now = new Date();
-
             const diff = now - startDate; 
-
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
             document.getElementById("timecount").innerText = `${days} hari, ${hours} jam, ${minutes} menit, ${seconds} detik`;
         }
-
         setInterval(updateTimeCount, 1000); 
         updateTimeCount(); 
     </script>
