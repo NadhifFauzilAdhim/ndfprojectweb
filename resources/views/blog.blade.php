@@ -108,7 +108,7 @@
                             <a href="/blog/{{ $item['slug'] }}" class="h5 text-decoration-none text-dark fw-bold d-block mb-2 text-truncate" style="max-width: 100%;">
                                 {{ Str::limit(strip_tags($item['title']), 80) }}
                             </a>
-                            <p class="text-muted flex-grow-1">{{ Str::limit(strip_tags($item['body']), 100) }}</p>
+                            <p class="text-muted flex-grow-1">{{ $item['excerpt'] }}</p>
                             <div class="d-flex justify-content-between mt-auto">
                                 <a href="/blog/{{ $item['slug'] }}" class="btn p-0 fw-bold">Read more <i class="bi bi-arrow-right"></i></a>
                             </div>

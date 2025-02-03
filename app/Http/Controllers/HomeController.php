@@ -28,9 +28,14 @@ class HomeController extends Controller
         return view('blog', [
             'title' => 'Blog',
             'type' => 'all',
-            'posts' => Post::filter(request(['search', 'category', 'author']))->latest()->paginate(6)->withQueryString()
+            'posts' => Post::select(['id', 'title', 'author_id', 'category_id', 'excerpt', 'slug', 'image', 'created_at', 'updated_at'])
+                ->filter(request(['search', 'category', 'author']))
+                ->latest()
+                ->paginate(6)
+                ->withQueryString()
         ]);
     }
+    
 
     public function showPost(Post $post)
     {

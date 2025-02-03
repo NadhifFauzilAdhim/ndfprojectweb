@@ -57,7 +57,7 @@ class DashboardPostController extends Controller
         }
 
         $validatedData['author_id'] = Auth::id();
-       
+        $validatedData['excerpt'] = str()->limit(trim(preg_replace('/\s+/', ' ', strip_tags($request->body))), 100);
         Post::create($validatedData);
         return redirect('/dashboard/posts')->with('success','Post Berhasil Dibuat');
         
@@ -109,6 +109,7 @@ class DashboardPostController extends Controller
         $validatedData['image']=$request->file('image')->store('post-images');
         }
         $validatedData['author_id'] = Auth::id();
+        $validatedData['excerpt'] = str()->limit(trim(preg_replace('/\s+/', ' ', strip_tags($request->body))), 100);
        
         Post::where('id', $post->id)
             ->update($validatedData);

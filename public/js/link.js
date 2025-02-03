@@ -143,7 +143,7 @@ $(function () {
             tickAmount: 5,
             labels: {
                 formatter: function(val) {
-                    return val + "k"; 
+                    return val; 
                 },
             },
         },
@@ -209,7 +209,7 @@ function showQRCode(url) {
 
 
 document.getElementById('qrForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // Mencegah pengiriman formulir
+    event.preventDefault(); 
 
     const urlInput = document.getElementById('qr_target_url');
     const url = urlInput.value.trim();
