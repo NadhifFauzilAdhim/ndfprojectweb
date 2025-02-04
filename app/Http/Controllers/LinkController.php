@@ -39,7 +39,7 @@ class LinkController extends Controller
                 }])
                 ->orderByDesc('visits')
                 ->take(5)
-                ->get();
+                ->get();    
 
             $visitData = $this->getAllVisitData($userId);
 
@@ -86,7 +86,6 @@ class LinkController extends Controller
             ->latest()
             ->paginate(6, ['*'], 'my_shared_links');
 
-
         return view('dashboard.shortlink.index', [
             'totalLinks' => (int)$totals->total_links,
             'totalVisit' => (int)$totals->total_visits,
@@ -105,7 +104,6 @@ class LinkController extends Controller
     public function show(Link $link, Request $request)
     {
         $this->authorizeLink($link);
-
         $filter = $request->query('filter', 'all');
         $visithistory = $this->getVisitHistory($link->id, $filter);
         $redirectedCount = $this->getVisitCount($link->id, 1);
