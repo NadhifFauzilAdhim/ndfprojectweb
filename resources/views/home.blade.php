@@ -216,12 +216,9 @@
 
         </div>
       </section>
-
-  
       <!-- ======= Resume Section ======= -->
       <section id="resume" class="resume">
         <div class="container">
-  
           <div class="section-title" data-aos="fade-up" data-aos-delay="200">
             <h2>Resume</h2>
           </div>
@@ -237,16 +234,12 @@
                   <li>analyticgames@gmail.com</li>
                 </ul>
               </div>
-  
               <h3 class="resume-title">Education</h3>
               <div class="resume-item">
                 <h4>Bachelor of informatics</h4>
-                
                 <h5>2022 </h5>
                 <p><em>Universitas Amikom Yogyakarta</em></p>
-             
                   <p>GPA: 3.8/4.0</p>
-             
                 <p>
                   Currently pursuing my Bachelor's degree in Informatics at Universitas Amikom Yogyakarta, I am developing a strong foundation in computer science principles and gaining practical insights to thrive in the evolving field of Information Technology.
                 </p>
@@ -266,7 +259,6 @@
                 <p><em>Samsung Innovation Campus Batch 5 AI & IoT Stage 1 - 3</em></p>
                 <ul>
                   <li>Participated in the Samsung Innovation Campus Batch 5 2024. The program focused on providing an in-depth understanding of Artificial Intelligence (AI) and its practical applications. Gained knowledge on integrating AI with Internet of Things (IoT) technologies, creating smart solutions that enhance IoT devices to be more intelligent and autonomous.</li>
-                  
                 </ul>
               </div>
               <div class="resume-item">
@@ -289,7 +281,6 @@
               </div>
             </div>
           </div>
-  
         </div>
       </section>
       <section id="portfolio" class="portfolio section-bg" data-aos="fade-up" data-aos-delay="200">
@@ -298,7 +289,6 @@
                 <h2>Certificate</h2>
                 <p>These certificates reflect a commitment to continuous learning</p>
             </div>
-    
             <!-- Slider main container -->
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
@@ -316,8 +306,6 @@
                             </div>
                         </div>
                     </div>
-    
-                   
                     <!-- Contoh slide kedua -->
                     <div class="swiper-slide">
                         <div class="portfolio-item featured">
@@ -332,7 +320,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="swiper-slide">
                       <div class="portfolio-item featured">
                         <div class="portfolio-wrap">
@@ -589,8 +576,6 @@
                 </div>
               </div>
             </div>
-    
-            <!-- Project 3: Linksy -->
             <div class="swiper-slide project-card">
               <div class="project-img">
                 <img src="img/project/Linksyproject.png" class="img-fluid rounded-top w-100" alt="Linksy">
@@ -608,17 +593,11 @@
                 </div>
               </div>
             </div>
-    
           </div>
-    
-          <!-- Swiper Navigation -->
           <div class="swiper-button-next"></div>
           <div class="swiper-button-prev"></div>
-    
-          <!-- Swiper Pagination -->
           <div class="swiper-pagination"></div>
         </div>
-    
       </div>
     </section>
       <section id="testimonials" class="testimonials section-bg">
@@ -670,8 +649,7 @@
                   <h3>Rif'aa Surososastro</h3>
                   <h4>Informatics Student</h4>
                 </div>
-              </div><!-- End testimonial item -->
-  
+              </div>
             </div>
             <div class="swiper-pagination"></div>
           </div>

@@ -96,7 +96,7 @@
             <div class="table-responsive">
               <table class="table text-nowrap align-middle mb-0">
                 <thead>
-                  <tr class="border-2 border-bottom border-primary border-0"> 
+                  <tr class="border-2 border-bottom border-primary "> 
                     <th scope="col" class="ps-0">Link</th>
                     <th scope="col" class="text-center">Date</th>
                     <th scope="col" class="ps-0">Detail</th>
@@ -126,8 +126,6 @@
         </div>
       </div>
       
-     
-
       <div class="col-lg-4 d-flex align-items-stretch">
         <div class="card w-100">
           <div class="card-body card-fixed-size">
@@ -136,7 +134,7 @@
             <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
               <table class="table text-nowrap align-middle mb-0">
                 <thead>
-                  <tr class="border-2 border-bottom border-primary border-0">
+                  <tr class="border-2 border-bottom border-primary >
                     <th scope="col" class="ps-0">Post</th>
                     <th scope="col">User</th>
                     <th scope="col">Comments</th>
@@ -171,7 +169,6 @@
           {{ $comments->links() }}  
         </div>
       </div>
-      
       
       @forelse($posts as $post)
       <div class="col-lg-4 d-flex align-items-stretch">

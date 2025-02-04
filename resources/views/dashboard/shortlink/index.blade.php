@@ -75,7 +75,6 @@
                                 </h5>
                                  <div id="traffic-overview"></div>
                             </div>
-                            
                         </div>
                     </div>
                     <div class="col-lg-4 d-flex align-items-stretch">
@@ -100,7 +99,6 @@
                                 <h4 class="mb-0 mt-1">{{ $totalUniqueVisit }}</h4>
                               </div>
                             </div>
-              
                              <div class="vstack gap-4 ">
                                 <div class="vstack gap-4 mt-7 pt-2">
                                     @forelse ($topLinks as $link) 
@@ -174,7 +172,6 @@
                                     </form>
                                 </div>
                             </div>
-                        
                             <!-- Collapsible form -->
                             <div class="collapse mt-4" id="collapseForm">
                                 <div class="card card-body shadow-sm border-0">
@@ -190,7 +187,6 @@
                                             </div>
                                             @enderror
                                         </div>
-                        
                                         <!-- Shortened Link Field -->
                                         <div class="mb-4">
                                             <label for="short_link" class="form-label fw-bold">Shortened Link</label>
@@ -204,7 +200,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-                        
                                         <!-- Submit Button -->
                                         <div class="text-end">
                                             <button type="submit" class="btn btn-primary px-4">
@@ -232,7 +227,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="container">
                         <div class="row nav nav-tabs justify-content-center d-flex flex-wrap" id="linkTabs" role="tablist">
@@ -278,9 +272,9 @@
                                                     @endif
                                                      data-link-slug="{{ $link->slug }}" 
                                                      data-previous-title="{{ $link->title }}">
+
                                             </div>
                                         </div>
-                            
                                         <!-- Shortened Link -->
                                         <div class="row d-flex align-items-center mb-2">
                                             <div class="col-10">
@@ -326,18 +320,18 @@
                                                 <span class="text-danger small">Protected</span>
                                             </i>
                                             @else
-                                            <i class="bi bi-unlock text-success me-2"> 
-                                                <span class="text-success small">Unprotected</span>
+                                            <i class="bi bi-unlock  me-2"> 
+                                                <span class=" small">Unprotected</span>
                                             </i>
                                             @endif
-                                            <div class="badge rounded-pill"  
+                                            <span class="badge rounded-pill"  
                                                 style="background-color: {{ $link->active ? '#2f80ed' : '#ff7eb3' }}; color: white;" 
                                                 data-bs-toggle="popover" 
                                                 data-bs-trigger="hover focus"
                                                 data-bs-title="{{ $link->active ? 'Public Link' : 'Private Link' }}" 
                                                 data-bs-content="{{ $link->active ? 'This link is publicly accessible.' : 'This link is private and only accessible to you.' }}">
                                                 <small>{{ $link->active ? 'Public' : 'Private' }}</small>
-                                            </div>
+                                            </span>
                                         </div>
                             
                                         <div class="d-flex justify-content-end mt-3 position-relative dropup">
@@ -414,7 +408,6 @@
                                                     value="{{ $link->title  }}" 
                                                     readonly>
                                             </div>
-                
                                             <p class="text-muted small mb-2">Shared by: <b>{{ $link->user->name }}</b></p>
                                             <a href="{{ $link->target_url }}" target="_blank" class="d-block text-truncate link-dark">
                                                 {{ Str::limit(strip_tags($link->target_url), 80) }}

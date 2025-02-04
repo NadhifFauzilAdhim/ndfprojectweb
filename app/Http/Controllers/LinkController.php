@@ -24,71 +24,79 @@ class LinkController extends Controller
     public function index(Request $request)
     {
         $userId = Auth::id();
-
-        // Cache totals for 5 minutes
-        $totals = Cache::remember("user_{$userId}_totals", 300, function () use ($userId) {
-            return Link::where('user_id', $userId)
+        $cacheKey = "user_{$userId}_dashboard";
+        $search = $request->input('search');
+        // Cache entire dashboard data for 5 minutes
+        $data = Cache::remember($cacheKey, 300, function () use ($userId, $search) {
+            $totals = Link::where('user_id', $userId)
                 ->selectRaw('COUNT(*) as total_links, SUM(visits) as total_visits, SUM(unique_visits) as total_unique_visits')
                 ->first();
-        });
-        $totalLinks = (int)$totals->total_links;
-        $totalVisit = (int)$totals->total_visits;
-        $totalUniqueVisit = (int)$totals->total_unique_visits;
-        $search = $request->input('search');
 
-        $links = Link::where('user_id', $userId)
-            ->when($search, function ($query) use ($search) {
-                $query->where(function ($query) use ($search) {
-                    $query->where('slug', 'like', "%{$search}%")
-                        ->orWhere('title', 'like', "%{$search}%");
-                });
-            })
-            ->latest()
-            ->paginate(6, ['*'], 'own_links');
-
-        $sharedLinks = Link::whereHas('sharedUsers', function ($query) use ($userId) {
-            $query->where('shared_with', $userId);
-        })
-        ->when($search, function ($query) use ($search) {
-            $query->where('slug', 'like', "%{$search}%")
-                ->orWhere('title', 'like', "%{$search}%");
-        })
-        ->latest()
-        ->paginate(6, ['*'], 'shared_links');
-
-        $mySharedLinks = LinkShare::whereHas('link', function ($query) use ($userId, $search) {
-            $query->where('user_id', $userId);
-            if ($search) {
-                $query->where('slug', 'like', "%{$search}%")
-                      ->orWhere('title', 'like', "%{$search}%");
-            }
-         })->with('link','sharedWith') ->latest()->paginate(6, ['*'], 'my_shared_links');
-
-        $sevenDaysAgo = Carbon::now()->subDays(7);
-        $topLinks = Cache::remember("user_{$userId}_topLinks", 300, function () use ($userId, $sevenDaysAgo) {
-            return Link::where('user_id', $userId)
-                ->orderByDesc('visits')
-                ->take(5)
-                ->with(['visithistory' => function ($query) use ($sevenDaysAgo) {
+            $sevenDaysAgo = Carbon::now()->subDays(7);
+            $topLinks = Link::where('user_id', $userId)
+                ->withCount(['visithistory as visits_last_7_days' => function ($query) use ($sevenDaysAgo) {
                     $query->where('created_at', '>=', $sevenDaysAgo);
                 }])
-                ->get()
-                ->each(function ($link) {
-                    $link->visits_last_7_days = $link->visithistory->count();
-                });
-        });
+                ->orderByDesc('visits')
+                ->take(5)
+                ->get();
 
-        $visitData = $this->getAllVisitData($userId);
-        return view('dashboard.shortlink.index', compact(
-            'totalLinks',
-            'totalVisit',
-            'totalUniqueVisit',
-            'links',
-            'topLinks',
-            'visitData',
-            'sharedLinks',
-            'mySharedLinks'
-        ))->with('title', 'Short Link');
+            $visitData = $this->getAllVisitData($userId);
+
+            return compact(
+                'totals',
+                'topLinks',
+                'visitData'
+            );
+        });
+        extract($data);
+
+        $links = Link::where('user_id', $userId)
+        ->when($search, function ($query) use ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('slug', 'like', "%{$search}%")
+                  ->orWhere('title', 'like', "%{$search}%");
+            });
+        })
+        ->latest()
+        ->paginate(6, ['*'], 'own_links');
+
+        $sharedLinks = Link::join('link_shares', 'links.id', '=', 'link_shares.link_id')
+            ->where('link_shares.shared_with', $userId)
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('links.slug', 'like', "%{$search}%")
+                    ->orWhere('links.title', 'like', "%{$search}%");
+                });
+            })
+            ->select('links.*')
+            ->latest()
+            ->paginate(6, ['*'], 'shared_links');
+
+        $mySharedLinks = LinkShare::with('sharedWith')
+            ->join('links', 'link_shares.link_id', '=', 'links.id')
+            ->where('links.user_id', $userId)
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('links.slug', 'like', "%{$search}%")
+                    ->orWhere('links.title', 'like', "%{$search}%");
+                });
+            })
+            ->select('link_shares.*')
+            ->latest()
+            ->paginate(6, ['*'], 'my_shared_links');
+
+
+        return view('dashboard.shortlink.index', [
+            'totalLinks' => (int)$totals->total_links,
+            'totalVisit' => (int)$totals->total_visits,
+            'totalUniqueVisit' => (int)$totals->total_unique_visits,
+            'links' => $links,
+            'topLinks' => $topLinks,
+            'visitData' => $visitData,
+            'sharedLinks' => $sharedLinks,
+            'mySharedLinks' => $mySharedLinks
+        ])->with('title', 'Short Link');
     }
 
     /**

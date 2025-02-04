@@ -15,6 +15,12 @@
                         {{ session('resendsuccess') }}
                     </div>
                   </div>
+                  @elseif (session()->has('resenderror'))
+                  <div class="alert alert-danger d-flex align-items-center justify-content-center" role="alert">  
+                    <div>
+                        {{ session('resenderror') }}
+                    </div>
+                  </div>
                   @endif
                   <a href="" class="text-nowrap logo-img text-center d-block py-3 w-100">
                     <img src="{{ asset('img/verifylogo.jpg') }}" alt="" width="200px">

@@ -51,13 +51,20 @@ class RegisterController extends Controller
     }
 
   
-    public function verificationResend(Request $request){
-        if(Auth::user()->email_verified_at !== null){
-        return redirect('/');
+    public function verificationResend(Request $request)
+    {
+        if (Auth::user()->email_verified_at !== null) {
+            return redirect('/');
         }
-        $request->user()->sendEmailVerificationNotification();
-        return back()->with('resendsuccess', ' Email Verifikasi Dikirim Ulang, silahkan cek Email Anda');
+
+        try {
+            $request->user()->sendEmailVerificationNotification();
+            return back()->with('resendsuccess', 'Email verifikasi telah dikirim ulang. Silakan cek email Anda.');
+        } catch (\Exception $e) {
+            return back()->with('resenderror', 'Gagal mengirim ulang email verifikasi. Silakan coba lagi nanti. SERVER ERROR');
+        }
     }
+
 
     public function verificationSuccess(){
         return view('auth.verify-success', [
