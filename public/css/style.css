@@ -20,6 +20,11 @@
   --accent-color: #149ddd; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
   --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
+  --code-bg: #f8f8f8;
+  --code-text: #d6336c;
+  --code-border: #e8e8e8;
+  --code-radius: 4px;
+  --font-mono: 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
 }
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
@@ -1808,5 +1813,40 @@ section {
     border-radius: none;
     box-shadow: none;
   }
+
+    /* Style untuk inline code */
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    padding: 0.2em 0.4em;
+    background-color: var(--code-bg);
+    color: var(--code-text);
+    border-radius: var(--code-radius);
+    border: 1px solid var(--code-border);
+    white-space: nowrap;
+  }
+
+  /* Style untuk code block (dalam pre tag) */
+  pre code {
+    display: block;
+    padding: 1.2em;
+    margin: 1.5em 0;
+    white-space: pre;
+    overflow-x: auto;
+    line-height: 1.6;
+    background-color: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: var(--code-radius);
+    color: #2f2f2f;
+    tab-size: 4;
+  }
+
+  /* Syntax highlighting dasar */
+  .comment { color: #6a9955; }
+  .keyword { color: #569cd6; }
+  .function { color: #dcdcaa; }
+  .string { color: #ce9178; }
+  .number { color: #b5cea8; }
+  .operator { color: #d4d4d4; }
 
  

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Link;
 use App\Models\Post;
 use App\Models\Comment;
-use Illuminate\Http\Request;
 use App\Models\Linkvisithistory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -66,7 +65,6 @@ class DashboardController extends Controller
     {
         $startOfWeek = now()->startOfWeek();
         $endOfWeek = $startOfWeek->copy()->endOfWeek();
-
         $visits = Linkvisithistory::whereHas('link', fn($query) => $query->where('user_id', $userId))
             ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
             ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))

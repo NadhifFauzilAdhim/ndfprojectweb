@@ -188,7 +188,6 @@ class LinkController extends Controller
         $link->update(['title' => $validated['title']]);
         return response()->json(['success' => true, 'message' => 'Title updated!']);
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -198,7 +197,6 @@ class LinkController extends Controller
             'target_url' => 'required|max:255|url',
             'slug' => 'required|max:255|unique:links|regex:/^[\S]+$/',
         ]);
-
         $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
         $validatedData['user_id'] = Auth::id();
         $websiteTitle = $this->fetchWebsiteTitle($validatedData['target_url']);
@@ -216,7 +214,6 @@ class LinkController extends Controller
                 $doc = new \DOMDocument();
                 @$doc->loadHTML($htmlContent);
                 $titleNodes = $doc->getElementsByTagName('title');
-
                 return $titleNodes->length > 0 ? $titleNodes->item(0)->nodeValue : null;
             }
             return null;
@@ -270,7 +267,6 @@ class LinkController extends Controller
             ->keyBy('day');
         return collect(range(1, 7))->map(fn($day) => $visits[$day]->total_visits ?? 0)->values();
     }
-
     /**
      * Get visit history based on filter.
      */
@@ -313,6 +309,9 @@ class LinkController extends Controller
             abort(403);
         }
     }
+      /**
+     * Create A Share.
+     */
 
     public function share(Request $request)
     {
@@ -347,7 +346,9 @@ class LinkController extends Controller
         }
     }
 
-
+    /**
+     * Delete Share.
+     */
     public function deleteShare($linkShareId)
     {
         $sharedLink = LinkShare::findOrFail($linkShareId);
