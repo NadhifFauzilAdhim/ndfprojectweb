@@ -367,23 +367,41 @@ function showToast(message, type = 'success') {
 function showQRCode(url) {
     const qrCodeContainer = document.getElementById('qrCodeContainer');
     const downloadButton = document.getElementById('downloadQrCode');
-
     qrCodeContainer.innerHTML = '';
-    // Generate URL QR Code menggunakan API eksternal
-    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
-    // Tampilkan QR Code di modal
-    const qrCodeImg = document.createElement('img');
-    qrCodeImg.src = qrCodeUrl;
-    qrCodeImg.alt = 'QR Code';
-    qrCodeImg.classList.add('img-fluid');
-    qrCodeContainer.appendChild(qrCodeImg);
+    fetch('/qrcode/generate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        },
+        body: JSON.stringify({ url: url }), 
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to generate QR Code.');
+            }
+            return response.text();
+        })
+        .then(base64Image => {
+            const qrCodeImg = document.createElement('img');
+            qrCodeImg.src = base64Image;
+            qrCodeImg.alt = 'QR Code';
+            qrCodeImg.classList.add('img-fluid');
+            qrCodeContainer.appendChild(qrCodeImg);
 
-    downloadButton.onclick = function () {
-        const link = document.createElement('a');
-        link.href = qrCodeUrl;
-        link.download = 'qrcode.png'; // Nama file yang akan diunduh
-        link.click(); // Trigger download
-    };
+            // Tambahkan fungsi untuk download QR Code
+            downloadButton.onclick = function () {
+                const link = document.createElement('a');
+                link.href = base64Image;
+                link.download = 'qrcode.png'; 
+                link.click(); 
+            };
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to generate QR Code.');
+        });
 }
+
 
 

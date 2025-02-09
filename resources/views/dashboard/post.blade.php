@@ -31,21 +31,26 @@
                     </script>
                 </div>
                 <div class="col-md-12 d-flex">
-                    <a href="/dashboard/posts/create" class="btn btn-primary mt-4 ms-4">New Post</a>
+                    <a href="/dashboard/posts/create" class="btn btn-primary mt-4 ms-4 d-none d-sm-block">
+                        New Post
+                    </a>
+                    <a href="/dashboard/posts/create" class="btn btn-primary mt-4 ms-4 d-block d-sm-none">
+                        <i class="bi bi-plus"></i>
+                    </a>
                     <form action="/dashboard/posts" method="GET">
                         <div class="input-group mt-4 ms-4">
                             <input type="text" name="search" class="form-control" placeholder="Search Post" aria-label="Search" aria-describedby="button-addon2" value="{{ request('search') }}">
-                            <button class="btn btn-outline-primary" type="submit" id="button-addon2">Search</button>
+                            <button class="btn btn-outline-primary" type="submit" id="button-addon2"><i class="bi bi-search"></i></button>
                         </div>
                     </form>
-                </div>
+                </div>  
             </div>
   
             <div class="card-body">
                 <div class="row">
                     @forelse ($posts as $post)
-                    <div class="col-md-4">
-                        <div class="card">
+                    <div class="col-md-4 mt-3">
+                        <div class="card h-100 d-flex flex-column shadow">
                             @if($post->image)
                             <a href="/dashboard/posts/{{ $post->slug }}">
                                 <img src="{{ asset('storage/' . $post->image ) }}" class="card-img-top img-fluid fixed-size" alt="Post Image">
@@ -55,15 +60,15 @@
                                 <img src="{{ asset('img/programmer_text_2.jpg') }}" class="card-img-top img-fluid fixed-size" alt="Default Image">
                             </a>
                             @endif
-  
-                            <div class="card-body">
+            
+                            <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ $post->title }}</h5>
                                 <h6 class="card-text"><i class="bi bi-bookmark-check"></i> <small>In Category {{ $post->category->name }}</small></h6>
                                 <h6 class="card-text"><i class="bi bi-calendar-check"></i> <small>Posted on {{ $post->created_at }}</small></h6>
                                 <h6 class="card-text"><i class="bi bi-pencil-square"></i> <small>Modified {{ $post->updated_at->diffForHumans() }}</small></h6>
-                                <p class="card-text">{{ Str::limit(strip_tags($post->body), 100) }}</p>
-  
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                <p class="card-text">{{ $post->excerpt }}</p>
+            
+                                <div class="btn-group mt-auto" role="group" aria-label="Button group with nested dropdown">
                                     <div class="btn-group" role="group">
                                         <button type="button" class="btn btn-outline-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                             Action
@@ -94,6 +99,7 @@
                 </div>
                 {{ $posts->links() }}
             </div>
+            
         </div>
     </div>
   

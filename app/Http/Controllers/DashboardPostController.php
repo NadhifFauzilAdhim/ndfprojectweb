@@ -20,7 +20,7 @@ class DashboardPostController extends Controller
         $search = $request->input('search');
         return view('dashboard.post', [
             'title' => 'Create Post',
-            'posts' => Post::where('author_id', Auth::id())
+            'posts' => Post::select(['id', 'title', 'author_id', 'category_id', 'excerpt', 'slug', 'image', 'created_at', 'updated_at'])->where('author_id', Auth::id())
             ->when($search, function ($query, $search) {
                 return $query->where('title', 'like', "%{$search}%")
                             ->orWhere('slug', 'like', "%{$search}%");

@@ -1366,14 +1366,46 @@ section {
 }
 /*** Blog End ***/
 
-
 .blog-section {
   padding-top: 4rem;
   padding-bottom: 4rem;
-  }
-  .blog-section .heading {
-    font-size: 30px;
-    font-weight: 700; }
+  font-family: 'Muli', sans-serif;
+  background: linear-gradient(to right, #ffffff, #f7f7f7);
+}
+
+.blog-section .heading {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #333333;
+  text-transform: uppercase;
+  border-bottom: 3px solid #f39c12;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.blog-section .heading:hover {
+  color: #f39c12;
+  transition: color 0.3s ease-in-out;
+}
+
+.blog-section p {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #555555;
+  text-align: justify;
+  margin-bottom: 1rem;
+}
+
+.blog-section blockquote {
+  font-style: italic;
+  font-size: 20px;
+  color: #555555;
+  border-left: 5px solid #f39c12;
+  padding-left: 1rem;
+  margin: 2rem 0;
+}
+
 
 .bloghero {
   background-size: cover;
@@ -1749,7 +1781,6 @@ section {
 
   .projects {
     padding: 60px 0;
-    background: #f9f9f9;
   }
 
   .swiper {
@@ -1807,6 +1838,22 @@ section {
   .swiper-pagination-bullet {
     background: #007bff;
   }
+
+  .blogSwiper {
+    width: 100%;
+    padding-bottom: 50px;
+  }
+
+  .swiper-slide {
+      display: flex;
+      justify-content: center;
+  }
+
+  .blog-item {
+      width: 100%;
+      max-width: 350px;
+  }
+  
 
   .member-card {
     background-color: transparent;

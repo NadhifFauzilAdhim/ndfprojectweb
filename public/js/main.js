@@ -251,6 +251,12 @@
     grabCursor: true,
     centeredSlides: true,
     slidesPerView: "auto",
+    speed: 600,
+    loop: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false
+    },
     coverflowEffect: {
         rotate: 50,
         stretch: 0,
@@ -299,6 +305,31 @@ var swiper = new Swiper(".project-slider", {
     576: { slidesPerView: 1 },
     320: { slidesPerView: 1 }
   }
+});
+
+var blogSwiper = new Swiper(".blogSwiper", {
+  loop: true,
+  spaceBetween: 20,
+  slidesPerView: 1,
+  pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+  },
+  navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+  },
+  breakpoints: {
+      640: {
+          slidesPerView: 1,
+      },
+      768: {
+          slidesPerView: 2,
+      },
+      1024: {
+          slidesPerView: 3,
+      },
+  },
 });
 
   /**

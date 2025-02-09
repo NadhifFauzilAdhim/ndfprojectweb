@@ -103,7 +103,7 @@ class LinkController extends Controller
      */
     public function show(Link $link, Request $request)
     {
-        $this->authorizeLink($link);
+        $this->authorizeLink($link); 
         $filter = $request->query('filter', 'all');
         $visithistory = $this->getVisitHistory($link->id, $filter);
         $redirectedCount = $this->getVisitCount($link->id, 1);
@@ -133,7 +133,6 @@ class LinkController extends Controller
             'location'
         ))->with('title', 'Detail Link');
     }
-
     /**
      * Update the specified resource in storage.
      */
@@ -205,7 +204,7 @@ class LinkController extends Controller
         return redirect()->back()->with('success', 'Link Berhasil Ditambahkan');
     }
 
-    private function fetchWebsiteTitle($url)
+    private function fetchWebsiteTitle($url) 
     {
         try {
             $response = Http::get($url);
@@ -357,6 +356,36 @@ class LinkController extends Controller
         }
         $sharedLink->delete();
         return redirect()->back()->with('success', 'Link successfully removed from shared users.');
+    }
+
+    public function qrcodegenerate(Request $request)
+    {
+        $request->validate([
+            'url' => 'required|url',
+        ]);
+    
+        // Ambil URL dari request
+        $url = $request->input('url');
+    
+        // Encode URL untuk API
+        $encodedUrl = urlencode($url);
+    
+        // URL API QR Code Generator
+        $apiUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={$encodedUrl}";
+    
+        // Ambil data QR Code dalam bentuk binary
+        $response = Http::get($apiUrl);
+    
+        if ($response->ok()) {
+            // Convert binary data menjadi Base64
+            $base64Image = 'data:image/png;base64,' . base64_encode($response->body());
+    
+            // Kembalikan data Base64 sebagai respons
+            return response($base64Image, 200)->header('Content-Type', 'text/plain');
+        }
+    
+        // Jika gagal, kembalikan respons error
+        return response('Failed to generate QR Code.', 500);
     }
 
 }

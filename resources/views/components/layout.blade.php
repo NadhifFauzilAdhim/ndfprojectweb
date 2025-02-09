@@ -40,6 +40,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Raleway:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Muli:wght@400;700;800&display=swap" rel="stylesheet">
+
   <!-- Styles -->
   <link href="{{ asset('vendor/aos/aos.css') }}" rel="stylesheet">
   <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
@@ -48,6 +50,10 @@
   <link href="{{ asset('vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
   <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+ <!-- Hope You Find It Someday -->
+ <!-- https://ndfproject.my.id/beloved -->
+
   <!-- Canonical URL -->
   <link rel="canonical" href="{{ url()->current() }}">
     <!-- Scripts -->

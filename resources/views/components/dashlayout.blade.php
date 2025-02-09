@@ -10,6 +10,7 @@
   <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+  <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
   <!-- Summernote CSS -->
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
   
@@ -44,45 +45,15 @@
       {{ $slot }}
     </div>
   </div>
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="{{ asset('vendor/apexcharts/dist/apexcharts.min.js') }}"></script>
   <script src="{{ asset('js/dashjs/sidebarmenu.js') }}"></script>
+  <script src="{{ asset('vendor/swiper/swiper-bundle.min.js') }}"></script>
   <script src="{{ asset('js/dashjs/app.min.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
   <script src="{{ asset('js/copy.js') }}"></script>
-  <script>
-    window.addEventListener('load', function() {
-      document.getElementById('spinner').style.display = 'none';
-    });
-  </script>
-  <script>
-    const swiper = new Swiper('.swiper', {
-    slidesPerView: 1, 
-    spaceBetween: 10,
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    breakpoints: {
-        992: { 
-            slidesPerView: 3,
-            spaceBetween: 20,
-        },
-        768: { 
-            slidesPerView: 2,
-            spaceBetween: 15,
-        },
-    },
-});
-</script>
-  
- 
 </body>
 
 </html>

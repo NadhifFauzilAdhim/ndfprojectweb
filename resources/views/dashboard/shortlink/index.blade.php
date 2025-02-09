@@ -254,11 +254,11 @@
                         <!-- Your Links -->
                         <div class="tab-pane fade show active" id="your-links" role="tabpanel" aria-labelledby="your-links-tab">
                             <div class="row">
-                                @forelse ($links as $link)
+                            @forelse ($links as $link)
                             <div class="col-md-4 d-flex align-items-stretch " >
                                 <div class="card shadow border-0 w-100 card-hover">
                                     <div class="card-body">
-                                        <div class="row d-flex align-items-center mb-3">
+                                        <div class="row d-flex align-items-center mb-2">
                                             <div class="col-12 d-flex align-items-center">
                                                 <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=32" 
                                                      alt="Favicon" 
@@ -295,13 +295,13 @@
                                         </div>
                             
                                         <!-- Destination URL -->
-                                        <p class="text-muted small mb-2">Destination:</p>
+                                        <p class="text-muted small mb-1">Destination:</p>
                                         <a href="{{ $link->target_url }}" target="_blank" class="d-block text-truncate link-dark">
                                             {{ Str::limit(strip_tags($link->target_url), 80) }}
                                         </a>
                             
                                         <!-- Statistics -->
-                                        <div class="d-flex justify-content-between mt-3">
+                                        <div class="d-flex justify-content-between mt-2">
                                             <div class="text-muted small">
                                                 <i class="bi bi-calendar me-1"></i> {{ $link->created_at->format('d M Y') }}
                                             </div>
@@ -401,14 +401,14 @@
                                 <div class="col-md-4 d-flex align-items-stretch">
                                     <div class="card shadow border-0 w-100">
                                         <div class="card-body">
-                                            <div class="d-flex align-items-center mb-3">
+                                            <div class="d-flex align-items-center mb-1">
                                                 <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=32" alt="Favicon" class="rounded me-2" style="width: 32px; height: 32px;">
                                                 <input type="text" 
                                                     class="form-control border-0 p-0 text-dark fw-bold fs-5" 
                                                     value="{{ $link->title  }}" 
                                                     readonly>
                                             </div>
-                                            <p class="text-muted small mb-2">Shared by: <b>{{ $link->user->name }}</b></p>
+                                            <p class="text-muted small mb-1">Shared by: <b>{{ $link->user->name }}</b></p>
                                             <a href="{{ $link->target_url }}" target="_blank" class="d-block text-truncate link-dark">
                                                 {{ Str::limit(strip_tags($link->target_url), 80) }}
                                             </a>

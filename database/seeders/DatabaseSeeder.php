@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10)
         ]);
 
-        Post::factory(20)->recycle([
+        Post::factory(2000)->recycle([
             Category::factory(5)->create(),
             $admin,
             $user1,

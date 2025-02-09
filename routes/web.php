@@ -73,6 +73,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
     // Linksy Dashboard
     Route::resource('/dashboard/link', LinkController::class)->only(['index', 'store', 'show', 'destroy','update']);
     Route::post('/dashboard/link/{link}/update-title', [LinkController::class, 'updateTitle']);
+    Route::post('/qrcode/generate',[LinkController::class,'qrcodegenerate'])->name('links.qrcodegenerate');
     //Links Share
     Route::post('/dashboard/link/share', [LinkController::class, 'share']);
     Route::delete('dashboard/link/share/{linkShare}', [LinkController::class, 'deleteShare'])->name('links.share.delete');

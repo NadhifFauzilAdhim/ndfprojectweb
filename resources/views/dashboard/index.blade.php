@@ -96,7 +96,7 @@
             <div class="table-responsive">
               <table class="table text-nowrap align-middle mb-0">
                 <thead>
-                  <tr class="border-2 border-bottom border-primary "> 
+                  <tr class="border-2 border-bottom border-primary border-0"> 
                     <th scope="col" class="ps-0">Link</th>
                     <th scope="col" class="text-center">Date</th>
                     <th scope="col" class="ps-0">Detail</th>
@@ -134,7 +134,7 @@
             <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
               <table class="table text-nowrap align-middle mb-0">
                 <thead>
-                  <tr class="border-2 border-bottom border-primary >
+                  <tr class="border-2 border-bottom border-primary border-0">
                     <th scope="col" class="ps-0">Post</th>
                     <th scope="col">User</th>
                     <th scope="col">Comments</th>
