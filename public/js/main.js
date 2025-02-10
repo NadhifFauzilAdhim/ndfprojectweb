@@ -251,61 +251,53 @@
     grabCursor: true,
     centeredSlides: true,
     slidesPerView: "auto",
-    speed: 600,
     loop: true,
     autoplay: {
       delay: 5000,
       disableOnInteraction: false
     },
     coverflowEffect: {
-        rotate: 50,
-        stretch: 0,
-        depth: 100,
-        modifier: 1,
-        slideShadows: true,
-    },
-    pagination: {
-        el: ".swiper-pagination",
+      rotate: 30,
+      stretch: 0,
+      depth: 250,
+      modifier: 1,
+      slideShadows: true,
     },
     navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
     },
     breakpoints: {
-        640: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-        },
-        768: {
-            slidesPerView: 3,
-            spaceBetween: 30,
-        },
-        1024: {
-            slidesPerView: 3,
-            spaceBetween: 40,
-        },
-    },
-});
+      1024: { slidesPerView: 3 },
+      768: { slidesPerView: 2 },
+      576: { slidesPerView: 1 },
+      320: { slidesPerView: 1 }
+    }
+  });
 
-var swiper = new Swiper(".project-slider", {
-  slidesPerView: 3,
-  spaceBetween: 20,
-  loop: true,
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-  },
-  pagination: {
-    el: ".swiper-pagination",
-    clickable: true,
-  },
-  breakpoints: {
-    1024: { slidesPerView: 3 },
-    768: { slidesPerView: 2 },
-    576: { slidesPerView: 1 },
-    320: { slidesPerView: 1 }
-  }
-});
+  var swiper = new Swiper(".project-slider", {
+    slidesPerView: 3,
+    spaceBetween: 20,
+    loop: true,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    breakpoints: {
+      1024: { slidesPerView: 3 },
+      768: { slidesPerView: 2 },
+      576: { slidesPerView: 1 },
+      320: { slidesPerView: 1 }
+    }
+  });
 
 var blogSwiper = new Swiper(".blogSwiper", {
   loop: true,

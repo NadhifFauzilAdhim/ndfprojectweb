@@ -47,7 +47,7 @@
   
     </section><!-- End Hero -->
      <section id="about" class="about">
-        <div class="container">
+        <div class="container py-auto">
   
           <div class="section-title" data-aos="fade-right" data-aos-delay="200">
             <h2>About</h2>
@@ -218,7 +218,7 @@
       </section>
       <!-- ======= Resume Section ======= -->
       <section id="resume" class="resume">
-        <div class="container">
+        <div class="container py-5">
           <div class="section-title" data-aos="fade-up" data-aos-delay="200">
             <h2>Resume</h2>
             <p>
@@ -286,7 +286,7 @@
         </div>
       </section>
       <section id="portfolio" class="portfolio section-bg" data-aos="fade-up" data-aos-delay="200">
-        <div class="container">
+        <div class="container py-5">
             <div class="section-title">
                 <h2>Certificate</h2>
                 <p>These certificates reflect a commitment to continuous learning</p>
@@ -533,21 +533,57 @@
     </section>
     
     <section id="projects" class="projects " data-aos="fade-up" data-aos-delay="200">
-      <div class="container">
+      <div class="container py-5">
         <div class="section-title">
           <h2>Project</h2>
           <p>Showcasing a collection of projects that highlight my skills, creativity, and problem-solving abilities in software development, AI, and IoT.</p>
         </div>
         <div class="swiper project-slider">
           <div class="swiper-wrapper">
+
+            {{-- <div class="swiper-slide" style="box-shadow: none">
+              <div class="blog-item h-100 d-flex flex-column rounded-5 overflow-hidden mt-1 mb-3 shadow ">
+                  <div class="blog-img position-relative" style="height: a; overflow: hidden;">
+                      <img src="img/project/kostifyadv.png" class="img-fluid w-100 h-100 object-fit-cover" alt="">
+                      <div class="blog-categiry py-2 px-4">
+                          <a href="">
+                              <span class="text-white">IOT</span>
+                          </a>
+                      </div>
+                  </div>
+                  <div class="blog-content p-4 d-flex flex-column flex-grow-1">
+                      <div class="d-flex align-items-center mb-3">
+                          <img src="img/author.png" class="rounded-circle me-2" width="40" height="40" alt="Author Image">
+                          <div class="small">
+                              <a href="" class="text-dark text-decoration-none fw-bold">
+                                 Nadhif Fauzil Adhim
+                              </a>
+                              <div class="text-muted small">
+                                  Now
+                              </div>
+                          </div>
+                      </div>
+                      <a href="" class="h5 text-decoration-none text-dark fw-bold d-block mb-2 text-truncate" style="max-width: 100%;">
+                        Temukan tempat tinggal  Anda dengan cepat dan mudah
+                      </a>
+                      
+                      <div class="d-flex justify-content-between mt-auto">
+                          <a href="" class="btn p-0 fw-bold">Read more <i class="bi bi-arrow-right"></i></a>
+                      </div>
+                  </div>
+              </div>
+          </div> --}}
             <!-- Project 1: Kostify -->
             <div class="swiper-slide project-card rounded-5">
               <div class="project-img">
                 <img src="img/project/kostifyadv.png" class="img-fluid rounded-top w-100" alt="Kostify">
               </div>
               <div class="project-content">
+                <div class="d-flex align-items-center justify-content-center mb-2">
+                  <img src="img/member/nadhif.png" class="rounded-circle" width="20" height="20" alt="Developer" style="z-index: 2;">
+                </div>
                 <h4>Kostify: Cari Kost dengan Mudah</h4>
-                <p>Temukan tempat tinggal  Anda dengan cepat dan mudah.</p>
+                <p>Temukan tempat tinggal Anda dengan cepat dan mudah.</p>
                 <div class="project-links">
                   <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="btn btn-sm btn-dark">
                     <i class="bi bi-github"></i> Source Code
@@ -558,12 +594,19 @@
                 </div>
               </div>
             </div>
+            
             <!-- Project 2: HydroEase -->
             <div class="swiper-slide project-card rounded-5">
               <div class="project-img">
                 <img src="img/project/hydroeaselogo.png" class="img-fluid rounded-top w-100" alt="HydroEase">
               </div>
               <div class="project-content">
+                <div class="d-flex align-items-center justify-content-center mb-2">
+                  <img src="img/member/nadhif.png" class="rounded-circle" width="20" height="20" alt="Developer" style="z-index: 2;">
+                  <img src="img/member/arip.png" class="rounded-circle" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
+                  <img src="img/member/ferdi.png" class="rounded-circle" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
+                  <img src="img/member/julian.png" class="rounded-circle" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
+                </div>
                 <h4>HydroEase: Hydroponic IoT System</h4>
                 <p>Solusi otomatisasi hidroponik dengan teknologi IoT.</p>
                 <div class="project-links">
@@ -578,6 +621,9 @@
                 <img src="img/project/Linksyproject.png" class="img-fluid rounded-top w-100" alt="Linksy">
               </div>
               <div class="project-content">
+                <div class="d-flex align-items-center justify-content-center mb-2">
+                  <img src="img/member/nadhif.png" class="rounded-circle" width="20" height="20" alt="Developer" style="z-index: 2;">
+                </div>
                 <h4>Linksy: Smart Link Management</h4>
                 <p>Transform your URLs into powerful, shareable links.</p>
                 <div class="project-links">
@@ -597,65 +643,10 @@
         </div>
       </div>
     </section>
-    <section id="testimonials" class="testimonials section-bg">
-      <div class="container">
-
-        <div class="section-title" data-aos="fade-up" data-aos-delay="200">
-          <h2>Arabis Group Member</h2>
-          <p>Arabis Group is a team of computer science students who are driven by passion and share a common objective of personal growth and making significant contributions to the field of information technology. As a group, we strive to create a dynamic environment where members can learn, collaborate, and excel in their respective areas of interest within the realm of technology. We firmly believe that by coming together, we can achieve far greater heights than we could individually.</p>
-        </div>
-
-        <div class="testimonials-slider " data-aos="fade-up" data-aos-delay="300">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide member-card">
-              <div class="testimonial-item" data-aos="fade-up">
-                <img src="img/member/nadhif.png" class="testimonial-img" alt="">
-                <h3>Nadhif Fauzil Adhim</h3>
-                <h4>Backend Developer</h4>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide member-card">
-              <div class="testimonial-item" data-aos="fade-up" data-aos-delay="100">
-                <img src="img/member/ferdi.png" class="testimonial-img" alt="">
-                <h3>Dwi Ferdiyanto</h3>
-                <h4>Informatics Student</h4>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide member-card">
-              <div class="testimonial-item" data-aos="fade-up" data-aos-delay="200">
-                <img src="img/member/julian.png" class="testimonial-img" alt="">
-                <h3>Julian Kiyosaki H</h3>
-                <h4>Mobile Developer</h4>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide member-card">
-              <div class="testimonial-item" data-aos="fade-up" data-aos-delay="300">
-                <img src="img/member/aji.png" class="testimonial-img" alt="">
-                <h3>Muhajir Faturrahman</h3>
-                <h4>Multimedia</h4>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide member-card">
-              <div class="testimonial-item" data-aos="fade-up" data-aos-delay="400">
-
-                <img src="img/member/arip.png" class="testimonial-img" alt="">
-                <h3>Rif'aa Surososastro</h3>
-                <h4>Informatics Student</h4>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
-
-      </div>
-    </section><!-- End Testimonials Section -->
-    <section id="blog-section" class="blog">
+   
+    <section id="blog-section" class="blog section-bg">
       <div class="container-fluid py-5">
-          <div class="container py-5" data-aos="fade-up">
+          <div class="container" data-aos="fade-up">
             <div class="section-title" data-aos="fade-up" data-aos-delay="200">
               <h2>Last Blog Post</h2>
             </div>
@@ -664,8 +655,8 @@
                   <div class="swiper blogSwiper">
                       <div class="swiper-wrapper">
                           @foreach ($posts as $item)
-                          <div class="swiper-slide" style="box-shadow: none">
-                              <div class="blog-item h-100 d-flex flex-column rounded-5 overflow-hidden mt-1 mb-3 shadow ">
+                          <div class="swiper-slide bg-transparent" style="box-shadow: none">
+                              <div class="blog-item h-100 d-flex flex-column rounded-5 overflow-hidden mt-1 mb-3 shadow bg-transparent">
                                   <div class="blog-img position-relative" style="height: 200px; overflow: hidden;">
                                       @if($item->image)
                                           <img src="{{ asset('public/' . $item->image) }}" class="img-fluid w-100 h-100 object-fit-cover" alt="">
@@ -678,7 +669,7 @@
                                           </a>
                                       </div>
                                   </div>
-                                  <div class="blog-content p-4 d-flex flex-column flex-grow-1">
+                                  <div class="blog-content p-4 d-flex flex-column flex-grow-1 bg-white">
                                       <div class="d-flex align-items-center mb-3">
                                           <img src="{{ asset('public/' . $item->author->avatar) }}" class="rounded-circle me-2" width="40" height="40" alt="Author Image">
                                           <div class="small">
@@ -712,15 +703,67 @@
                       <p class="home__description">Cek kembali kata kunci yang anda cari</p>
                   </div>
               @endif
-
           </div>
       </div>
   </section>
-    
-  
+  <section id="testimonials" class="testimonials ">
+    <div class="container py-5">
+      <div class="section-title" data-aos="fade-up" data-aos-delay="200">
+        <h2>Arabis Group Member</h2>
+        <p>Arabis Group is a team of computer science students who are driven by passion and share a common objective of personal growth and making significant contributions to the field of information technology. As a group, we strive to create a dynamic environment where members can learn, collaborate, and excel in their respective areas of interest within the realm of technology. We firmly believe that by coming together, we can achieve far greater heights than we could individually.</p>
+      </div>
+
+      <div class="testimonials-slider " data-aos="fade-up" data-aos-delay="300">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide member-card">
+            <div class="testimonial-item" data-aos="fade-up">
+              <img src="img/member/nadhif.png" class="testimonial-img" alt="">
+              <h3>Nadhif Fauzil Adhim</h3>
+              <h4>Backend Developer</h4>
+            </div>
+          </div><!-- End testimonial item -->
+
+          <div class="swiper-slide member-card">
+            <div class="testimonial-item" data-aos="fade-up" data-aos-delay="100">
+              <img src="img/member/ferdi.png" class="testimonial-img" alt="">
+              <h3>Dwi Ferdiyanto</h3>
+              <h4>Informatics Student</h4>
+            </div>
+          </div><!-- End testimonial item -->
+
+          <div class="swiper-slide member-card">
+            <div class="testimonial-item" data-aos="fade-up" data-aos-delay="200">
+              <img src="img/member/julian.png" class="testimonial-img" alt="">
+              <h3>Julian Kiyosaki H</h3>
+              <h4>Mobile Developer</h4>
+            </div>
+          </div><!-- End testimonial item -->
+
+          <div class="swiper-slide member-card">
+            <div class="testimonial-item" data-aos="fade-up" data-aos-delay="300">
+              <img src="img/member/aji.png" class="testimonial-img" alt="">
+              <h3>Muhajir Faturrahman</h3>
+              <h4>Multimedia</h4>
+            </div>
+          </div><!-- End testimonial item -->
+
+          <div class="swiper-slide member-card">
+            <div class="testimonial-item" data-aos="fade-up" data-aos-delay="400">
+
+              <img src="img/member/arip.png" class="testimonial-img" alt="">
+              <h3>Rif'aa Surososastro</h3>
+              <h4>Informatics Student</h4>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+
+    </div>
+  </section><!-- End Testimonials Section -->
       <!-- ======= Contact Section ======= -->
-      <section id="contact" class="contact">
-        <div class="container">
+      <section id="contact" class="contact section-bg">
+        <div class="container py-5">
   
           <div class="section-title">
             <h2>Contact</h2>
