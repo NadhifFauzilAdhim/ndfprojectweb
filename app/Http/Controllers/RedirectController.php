@@ -12,7 +12,7 @@ class RedirectController extends Controller
 {
     public function __invoke(Request $request, Link $link)
     {
-        return redirect('http://linksy.test/' . $link->slug);
+        // return redirect('http://linksy.test/' . $link->slug);
 
         if (!$link->active) {
             return view('redirect.inactive', [
@@ -51,10 +51,11 @@ class RedirectController extends Controller
 
         $this->recordVisit($link, true, $ipAddress, $userAgent, $refererUrl, $location, $request);
 
-        return view('redirect.redirecting', [
-            'targetUrl' => $link->target_url,
-            'title' => $link->title
-        ]);
+        return redirect($link->target_url);
+        // return view('redirect.redirecting', [
+        //     'targetUrl' => $link->target_url,
+        //     'title' => $link->title
+        // ]);
     }
 
     private function getLocationFromIp($ip)

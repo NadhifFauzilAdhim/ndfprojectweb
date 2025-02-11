@@ -16,7 +16,7 @@
       </div>
   </div>
   <div class="bloghero overlay inner-page">
-        <img src="{{ asset('img/puppet.png') }}" alt="" class="img-fluid blob">
+        <img src="{{ asset('img/cat.png') }}" alt="" class="img-fluid blob">
       <div class="container">
           <div class="row align-items-center justify-content-center text-center pt-5">
               <div class="col-lg-10 mt-5">
@@ -65,7 +65,7 @@
                                       @endif
                                       aria-label="Search"
                                   />
-                                  <button type="submit" class="form-control">Search</button>
+                                  <button type="submit" class="form-control" style="max-width:70px"><i class="bi bi-search"></i></button>
                               </div>
                           </form>
                       </div>

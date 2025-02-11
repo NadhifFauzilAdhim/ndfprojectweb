@@ -13,39 +13,43 @@
     </div>
   </div>
      <!-- ======= About Section ======= -->
-     <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
-
+     <section id="hero" class="d-flex flex-column justify-content-center align-items-center position-relative text-center vh-100">
       <div class="hero-container" data-aos="fade-in">
-        <h1 class="">Nadhif Fauzil Adhim</h1>
-        <p class="text-md-start">I'm <span class="typed" data-typed-items="Student, Tech Entusiast, Developer"></span></p>
-        <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-auto">
-          <a class="btn btn-light rounded-pill py-2 px-3 px-md-5 mt-2 name-text" target="_blank" href="https://www.linkedin.com/in/nadhif-fauzil-adhim-99a330294">
-            <i class="bi bi-linkedin ms-2"></i> LinkedIn
+        <h1>Nadhif Fauzil Adhim</h1>
+        <p>I'm <span class="typed" data-typed-items="Student, Tech Enthusiast, Developer"></span></p>
+        <div class="d-flex flex-wrap justify-content-center gap-3 mt-3">
+          <a class="btn btn-light rounded-pill py-2 px-4 d-flex align-items-center justify-content-center" target="_blank" href="https://www.linkedin.com/in/nadhif-fauzil-adhim-99a330294">
+            <i class="bi bi-linkedin"></i> <span class="d-none d-md-inline ms-2 name-text">LinkedIn</span>
           </a>
-        </div>
-        <div class="col-auto">
-          <a class="btn btn-dark rounded-pill py-2 px-3 px-md-5 mt-2" target="_blank" href="https://www.instagram.com/nadhif_f.a/">
-            <i class="bi bi-instagram me-2"></i> Instagram
+          <a class="btn btn-dark rounded-pill py-2 px-4 d-flex align-items-center justify-content-center" target="_blank" href="https://www.instagram.com/nadhif_f.a/">
+            <i class="bi bi-instagram"></i> <span class="d-none d-md-inline ms-2">Instagram</span>
           </a>
-        </div>
-        <div class="col-auto">
-          <a class="btn btn-dark rounded-pill py-2 px-3 px-md-5 mt-2 fw-bold" target="_blank" href="https://github.com/NadhifFauzilAdhim">
-            <i class="bi bi-github ms-3"></i> GitHub
+          <a class="btn btn-dark rounded-pill py-2 px-4 fw-bold d-flex align-items-center justify-content-center" target="_blank" href="https://github.com/NadhifFauzilAdhim">
+            <i class="bi bi-github"></i> <span class="d-none d-md-inline ms-2">GitHub</span>
           </a>
+          
+          <div class="dropdown">
+            <button class="btn btn-dark rounded-pill py-2 px-4 fw-bold d-flex align-items-center justify-content-center " type="button" id="downloadDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-download"></i> <span class="d-none d-md-inline ms-2">Download</span>
+            </button>
+            <ul class="dropdown-menu bg-dark" aria-labelledby="downloadDropdown">
+              <li><a class="dropdown-item text-light bg-transparent" href="#"><i class="bi bi-file-earmark-person me-1"></i>CV</a></li>
+              <li><a class="dropdown-item text-light bg-transparent" href="{{ url('/r/portofolio') }}" target="_blank"><i class="bi bi-card-text me-1"></i>Portofolio</a></li>
+            </ul>
+          </div>
         </div>
       </div>
-  </div>
-      </div>
-      <div class="video-wrap">
-        <video autoplay loop muted class="custom-video" poster="{{ asset('img/poster.png') }}">
+      <div class="video-wrap position-absolute w-100 h-100 top-0 start-0 z-n1">
+        <video autoplay loop muted class="custom-video w-100 h-100 object-fit-cover" poster="{{ asset('img/poster.png') }}">
           <source src="{{ asset('vid/bannervid.mp4') }}" type="video/mp4">
           Your browser does not support the video tag.
         </video>
       </div>
-  
-    </section><!-- End Hero -->
+    </section>
+    
+    
+    
+    
      <section id="about" class="about">
         <div class="container py-auto">
   
@@ -585,11 +589,11 @@
                 <h4>Kostify: Cari Kost dengan Mudah</h4>
                 <p>Temukan tempat tinggal Anda dengan cepat dan mudah.</p>
                 <div class="project-links">
-                  <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="btn btn-sm btn-dark">
+                  <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="btn btn-sm btn-dark rounded-pill">
                     <i class="bi bi-github"></i> Source Code
                   </a>
-                  <a href="https://kostify.my.id" class="btn btn-sm btn-primary">
-                    <i class="bi bi-eye"></i> Live Demo
+                  <a href="https://kostify.my.id" class="btn btn-sm btn-primary rounded-pill">
+                    <i class="bi bi-eye"></i> Website
                   </a>
                 </div>
               </div>
@@ -610,7 +614,7 @@
                 <h4>HydroEase: Hydroponic IoT System</h4>
                 <p>Solusi otomatisasi hidroponik dengan teknologi IoT.</p>
                 <div class="project-links">
-                  <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="btn btn-sm btn-dark">
+                  <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="btn btn-sm btn-dark rounded-pill">
                     <i class="bi bi-file-earmark-code"></i> Documentation
                   </a>
                 </div>
@@ -627,11 +631,11 @@
                 <h4>Linksy: Smart Link Management</h4>
                 <p>Transform your URLs into powerful, shareable links.</p>
                 <div class="project-links">
-                  <a href="https://linksy.site/apidocumentation" class="btn btn-sm btn-dark">
+                  <a href="https://linksy.site/apidocumentation" class="btn btn-sm btn-dark rounded-pill">
                     <i class="bi bi-file-earmark-code"></i> Documentation
                   </a>
-                  <a href="https://linksy.site" class="btn btn-sm btn-primary">
-                    <i class="bi bi-eye"></i> Live Demo
+                  <a href="https://linksy.site" class="btn btn-sm btn-primary rounded-pill">
+                    <i class="bi bi-eye"></i> Website
                   </a>
                 </div>
               </div>
@@ -842,6 +846,8 @@
             toast.show();
         });
     </script>
-
+    <div id="preloader">
+      <div class="line"></div>
+    </div>
     
 </x-layout>

@@ -93,6 +93,10 @@ class HomeController extends Controller
         ]);
     }
 
+    public function download(){
+        return redirect(url('/download/PORTOFOLIO.pdf'));
+    }
+
 
 }
 
