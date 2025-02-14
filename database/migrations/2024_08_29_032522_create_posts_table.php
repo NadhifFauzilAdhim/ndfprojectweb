@@ -22,6 +22,7 @@ return new class extends Migration
                 table : 'categories',
                 indexName : 'posts_category_id'
             );
+            $table->boolean('is_published')->default(true);
             $table->text('excerpt')->nullable();
             $table->text('body');
             $table->string('slug')->unique();

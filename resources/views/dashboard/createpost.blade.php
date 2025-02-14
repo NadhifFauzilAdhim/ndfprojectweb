@@ -35,7 +35,7 @@
                                             <div class="form-text" id="basic-addon4">Link ini akan digunakan sebagai URL</div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
                                         <div class="mb-3">
                                             <label for="category" class="form-label">Pilih Kategori Post</label>
                                             <select class="form-select" aria-label="Default select example" name="category_id" required>
@@ -46,6 +46,15 @@
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                 @endif
                                                 @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="mb-3">
+                                            <label for="category" class="form-label">Visibility</label>
+                                            <select class="form-select" aria-label="Default select example" name="is_published" required>
+                                                <option value="1" selected>Publised</option>
+                                                <option value="0">Draft</option>
                                             </select>
                                         </div>
                                     </div>

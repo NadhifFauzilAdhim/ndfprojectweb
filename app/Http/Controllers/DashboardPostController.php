@@ -20,7 +20,7 @@ class DashboardPostController extends Controller
         $search = $request->input('search');
         return view('dashboard.post', [
             'title' => 'Create Post',
-            'posts' => Post::select(['id', 'title', 'author_id', 'category_id', 'excerpt', 'slug', 'image', 'created_at', 'updated_at'])->where('author_id', Auth::id())
+            'posts' => Post::select(['id', 'title','is_published', 'author_id', 'category_id', 'excerpt', 'slug', 'image', 'created_at', 'updated_at'])->where('author_id', Auth::id())
             ->when($search, function ($query, $search) {
                 return $query->where('title', 'like', "%{$search}%")
                             ->orWhere('slug', 'like', "%{$search}%");
@@ -49,6 +49,7 @@ class DashboardPostController extends Controller
             'title' => 'required|max:255',
             'slug' => 'required|unique:posts',
             'category_id' => 'required',
+            'is_published' => 'required|boolean',
             'image' => 'image|file|max:2048',
             'body' => 'required'
         ]);
@@ -167,6 +168,15 @@ class DashboardPostController extends Controller
             ], 500);
         }
     }
-    
-    
+    public function visibility(Post $post , Request $request)
+    {
+       $validatedData = $request->validate([
+           'is_published' => 'required|boolean'
+       ]);
+       if($post->is_published != $validatedData['is_published']){
+           $post->update($validatedData);
+           return redirect()->back()->with('success','Visibility Diubah');
+       }
+       return redirect()->back()->with('error','Post Tidak Berubah');
+    }
 }

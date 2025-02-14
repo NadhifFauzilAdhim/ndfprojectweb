@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -14,6 +15,7 @@ class HomeController extends Controller
             'title' => 'Home',
             'posts' => Post::select(['id', 'title', 'author_id', 'category_id', 'excerpt', 'slug', 'image', 'created_at', 'updated_at'])
                 ->filter(request(['search', 'category', 'author']))
+                ->where('is_published', true)
                 ->take(6)
                 ->latest()
                 ->get()
@@ -34,6 +36,7 @@ class HomeController extends Controller
             'type' => 'all',
             'posts' => Post::select(['id', 'title', 'author_id', 'category_id', 'excerpt', 'slug', 'image', 'created_at', 'updated_at'])
                 ->filter(request(['search', 'category', 'author']))
+                ->where('is_published', true)
                 ->latest()
                 ->paginate(6)
                 ->withQueryString()
@@ -43,22 +46,25 @@ class HomeController extends Controller
 
     public function showPost(Post $post)
     {
-    // Eager load relationships and order comments
-    $post->load([
-        'author', 
-        'category',
-        'comments.user', 
-        'comments.commentreplies.user',
-        'comments' => function ($query) {
-            $query->orderBy('created_at', 'desc');
-        },
-        
-    ]);
+        if(!$post->is_published && $post->author_id !== Auth::id()) {
+            abort(404);
+        }
+        // Eager load relationships and order comments
+        $post->load([
+            'author', 
+            'category',
+            'comments.user', 
+            'comments.commentreplies.user',
+            'comments' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            },
+            
+        ]);
 
-    return view('post', [
-        'title' => $post->title,
-        'post' => $post
-    ]);
+        return view('post', [
+            'title' => $post->title,
+            'post' => $post
+        ]);
     }    
 
     public function showAuthor(User $user)
@@ -82,14 +88,14 @@ class HomeController extends Controller
     public function arabisindex(){
         return view('arabis.index',[
             'title' => 'Arabis Group',
-            'posts' => Post::filter(request(['search', 'category', 'author']))->latest()->paginate(6)->withQueryString()
+            'posts' => Post::filter(request(['search', 'category', 'author']))->where('is_published', true)->latest()->paginate(6)->withQueryString()
         ]);
     }
 
     public function ipdocuments(){
         return view('ipdocument',[
             'title' => 'IP Documents',
-            'posts' => Post::filter(request(['search', 'category', 'author']))->latest()->paginate(6)->withQueryString()
+            'posts' => Post::filter(request(['search', 'category', 'author']))->where('is_published', true)->latest()->paginate(6)->withQueryString()
         ]);
     }
 

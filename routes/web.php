@@ -119,6 +119,7 @@ Route::middleware(['auth', 'admin', 'verified'])->group(function() {
         Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'checkSlug']);
         Route::resource('/dashboard/posts', DashboardPostController::class);
         Route::post('/dashboard/posts/generate', [DashboardPostController::class, 'generatePost'])->name('posts.generate');
+        Route::post('/dashboard/posts/{post:slug}/visibility', [DashboardPostController::class, 'visibility'])->name('posts.visibility');
         Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show');
         Route::delete('/dashboard/postmanagement/{post:slug}', [AdminPostController::class, 'destroy'])->name('postmanagement.destroy');
         Route::resource('/dashboard/postmanagement', AdminPostController::class)->only(['index','destroy']);

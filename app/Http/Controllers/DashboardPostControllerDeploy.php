@@ -10,6 +10,7 @@ use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use Gemini\Laravel\Facades\Gemini;
 
 class DashboardPostController extends Controller
 {
@@ -157,26 +158,45 @@ class DashboardPostController extends Controller
         return redirect('/dashboard/posts')->with('success', 'Post Berhasil Diubah');
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function generatePost(Request $request)
     {
-        try {
-            if ($post->image && file_exists(base_path('../public/' . $post->image))) {
-                unlink(base_path('../public/' . $post->image));
-            }
-            $post->delete();
+        $request->validate([
+            'title' => 'required|max:255',
+            'language' => 'required|in:id,en',
+        ]);
+        $title = $request->input('title');
+        $language = $request->input('language');
     
-            return redirect('/dashboard/posts')->with('success', 'Post berhasil dihapus.');
+        try {
+            $prompt = "Write a well-structured article about '$title' in '$language'. 
+            The article should include:
+            - A clear and informative title using <h1>.
+            - Well-organized paragraphs using <p>.
+            - Proper structure with an introduction, main content, and conclusion.
+            - Avoid unnecessary tags.";
+            $result = Gemini::geminiPro()->generateContent($prompt);
+
+            $generatedContent = $result->text();
+    
+            return response()->json([
+                'success' => true,
+                'title' => $title,
+                'body' => $generatedContent,
+            ], 200, ['Content-Type' => 'application/json']);
+    
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal menghapus post: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error generating post: ' . $e->getMessage(),
+            ], 500);
         }
     }
-
-    public function checkSlug(Request $request)
+    public function visibility(Post $post , Request $request)
     {
-        $slug = SlugService::createSlug(Post::class,'slug', $request->title);
-        return response()->json(['slug'=>$slug]);
+        dd($request->all());
     }
 }

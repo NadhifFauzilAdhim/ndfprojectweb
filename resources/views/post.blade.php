@@ -20,7 +20,11 @@
       <div class="blog-section">
         <div class="container article">
           <div class="row justify-content-center align-items-stretch">
-    
+            @if(!$post->is_published)
+            <div class="alert alert-warning text-center" role="alert">
+              <i class="bi bi-exclamation-circle-fill"></i> This post is not published, only author can see it
+            </div>
+            @endif
             <article class="col-lg-8 order-lg-2 px-lg-5">
              
               <p>{!! $post['body'] !!}</p>
