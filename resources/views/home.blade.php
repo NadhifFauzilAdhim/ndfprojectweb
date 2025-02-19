@@ -46,10 +46,6 @@
         </video>
       </div>
     </section>
-    
-    
-    
-    
      <section id="about" class="about">
         <div class="container py-auto">
   
@@ -60,7 +56,7 @@
   
           <div class="row">
             <div class="col-lg-4" data-aos="fade-right" data-aos="fade-up" data-aos-delay="200">
-              <img src="img/author.png" class="img-fluid author-image" alt="">
+              <img data-src="img/author.png" class="img-fluid author-image lazyload" alt="">
             </div>
             <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
               <h3>Web Developer &amp; IoT Entusiast</h3>
@@ -147,14 +143,14 @@
             <!-- Bootstrap -->
             <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="200">
               <div class="skill-box">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/reactbootstrap/reactbootstrap-original.svg" alt="Bootstrap">
+                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/reactbootstrap/reactbootstrap-original.svg" class="lazyload" alt="Bootstrap">
                 <h4>Bootstrap</h4>
                 <p>Advanced</p>
               </div>
             </div>
             <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="300">
               <div class="skill-box">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" alt="Bootstrap">
+                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" class="lazyload" alt="Bootstrap">
                 <h4>Tailwind</h4>
                 <p>Intermediate</p>
               </div>
@@ -163,8 +159,8 @@
             <!-- JavaScript -->
             <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="400">
               <div class="skill-box">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="JavaScript">
+                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" class="lazyload" alt="JavaScript">
+                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" class="lazyload" alt="JavaScript">
                 <h4>JavaScript</h4>
                 <p>Intermediate</p>
               </div>
@@ -173,8 +169,8 @@
             <!-- Laravel -->
             <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="500">
               <div class="skill-box">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" alt="Laravel">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/livewire/livewire-original.svg" alt="Laravel">
+                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" class="lazyload" alt="Laravel">
+                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/livewire/livewire-original.svg" class="lazyload" alt="Laravel">
                 <h4>Laravel</h4>
                 <p>Advanced</p>
               </div>
@@ -183,7 +179,7 @@
             <!-- PHP -->
             <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="600">
               <div class="skill-box">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP">
+                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" class="lazyload" alt="PHP">
                 <h4>PHP</h4>
                 <p>Advanced</p>
               </div>
@@ -192,7 +188,7 @@
             <!-- MySQL -->
             <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="700">
               <div class="skill-box">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
+                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" class="lazyload" alt="MySQL">
                 <h4>MySQL</h4>
                 <p>Advanced</p>
               </div>
@@ -201,7 +197,7 @@
             <!-- Python -->
             <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="800">
               <div class="skill-box">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="lazyload" alt="Python">
                 <h4>Python</h4>
                 <p>Beginner</p>
               </div>
@@ -210,7 +206,7 @@
             <!-- C++ & C# -->
             <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="900">
               <div class="skill-box">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++">
+                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" class="lazyload" alt="C++">
                 <h4>C++ & C#</h4>
                 <p>Intermediate</p>
               </div>
@@ -302,7 +298,7 @@
                     <div class="swiper-slide">
                         <div class="portfolio-item Web-dev featured">
                             <div class="portfolio-wrap">
-                                <img src="certificate/SertifikatAMCC.jpeg" class="img-fluid" alt="">
+                                <img data-src="certificate/SertifikatAMCC.jpeg" class="img-fluid lazyload" alt="">
                                 <div class="portfolio-links">
                                     <a href="https://amcc.or.id" target="_blank">
                                         <i class="bi bi-check2-square"></i>
@@ -316,7 +312,7 @@
                     <div class="swiper-slide">
                         <div class="portfolio-item featured">
                             <div class="portfolio-wrap">
-                                <img src="certificate/SertifikatAsisten.jpeg" class="img-fluid" alt="">
+                                <img data-src="certificate/SertifikatAsisten.jpeg" class="img-fluid lazyload" alt="">
                                 <div class="portfolio-links">
                                     <a href="https://forumasisten.or.id/sertifikat/4871198960f1f156a5/show" target="_blank">
                                         <i class="bi bi-check2-square"></i>
@@ -329,7 +325,7 @@
                     <div class="swiper-slide">
                       <div class="portfolio-item featured">
                         <div class="portfolio-wrap">
-                          <img src="certificate/SertifikatAsisten.jpeg" class="img-fluid" alt="">
+                          <img data-src="certificate/SertifikatAsisten.jpeg" class="img-fluid lazyload" alt="">
                           <div class="portfolio-links">
                             <a  href="https://forumasisten.or.id/sertifikat/4871198960f1f156a5/show" target="_blank"><i class="bi bi-check2-square"> </i>
                               <h6>Check Credential</h6>
@@ -341,7 +337,7 @@
                     <div class="swiper-slide">
                       <div class="portfolio-item featured">
                         <div class="portfolio-wrap">
-                          <img src="certificate/SertifikatMikro.png" class="img-fluid" alt="">
+                          <img data-src="certificate/SertifikatMikro.png" class="img-fluid lazyload" alt="">
                           <div class="portfolio-links">
                             <a  href="https://forumasisten.or.id/sertifikat/5601646117cee6daa5d/show" target="_blank"><i class="bi bi-check2-square"> </i>
                               <h6>Check Credential</h6>
@@ -353,7 +349,7 @@
                     <div class="swiper-slide">
                       <div class="portfolio-item featured">
                         <div class="portfolio-wrap">
-                          <img src="certificate/SertifikatSBD.png" class="img-fluid" alt="">
+                          <img data-src="certificate/SertifikatSBD.png" class="img-fluid lazyload" alt="">
                           <div class="portfolio-links">
                             <a  href="https://forumasisten.or.id/sertifikat/707151011e6d5f4f3c8/show" target="_blank"><i class="bi bi-check2-square"> </i>
                               <h6>Check Credential</h6>
@@ -365,7 +361,7 @@
                     <div class="swiper-slide">
                       <div class="portfolio-item featured IoT">
                         <div class="portfolio-wrap">
-                          <img src="certificate/SICStage1.png" class="img-fluid" alt="">
+                          <img data-src="certificate/SICStage1.png" class="img-fluid lazyload" alt="">
                           <div class="portfolio-links">
                             <a href=" " target="_blank"><i class="bi bi-check2-square"> </i>
                               <h6>Check Credential</h6>
@@ -377,7 +373,7 @@
                     <div class="swiper-slide">
                       <div class="portfolio-item featured IoT">
                         <div class="portfolio-wrap">
-                          <img src="certificate/SICStage2.png" class="img-fluid" alt="">
+                          <img data-src="certificate/SICStage2.png" class="img-fluid lazyload" alt="">
                           <div class="portfolio-links">
                             <a href=" " target="_blank"><i class="bi bi-check2-square"> </i>
                               <h6>Check Credential</h6>
@@ -389,7 +385,7 @@
                     <div class="swiper-slide">
                       <div class="portfolio-item featured IoT">
                         <div class="portfolio-wrap">
-                          <img src="certificate/SICStage3.png" class="img-fluid" alt="">
+                          <img data-src="certificate/SICStage3.png" class="img-fluid lazyload" alt="">
                           <div class="portfolio-links">
                             <a href=" " target="_blank"><i class="bi bi-check2-square"> </i>
                               <h6>Check Credential</h6>
@@ -401,7 +397,7 @@
                     <div class="swiper-slide">
                       <div class="portfolio-item">
                         <div class="portfolio-wrap">
-                          <img src="certificate/SertifikatPythonAlgorithm.png" class="img-fluid" alt="">
+                          <img data-src="certificate/SertifikatPythonAlgorithm.png" class="img-fluid lazyload" alt="">
                           <div class="portfolio-links">
                             <a href="https://badgr.com/public/assertions/-5JsF-_9TjC-ITtVvv_8rg?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
                               <h6>Check Credential</h6>
@@ -415,7 +411,7 @@
 
                       <div class="portfolio-item IoT ">
                         <div class="portfolio-wrap">
-                          <img src="certificate/SertifikatPythonDasar.png" class="img-fluid" alt="">
+                          <img data-src="certificate/SertifikatPythonDasar.png" class="img-fluid lazyload" alt="">
                           <div class="portfolio-links">
                             <a href="https://badgr.com/public/assertions/fhm-f9N4RkWAtFsj1h9w7w?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
                               <h6>Check Credential</h6>
@@ -428,7 +424,7 @@
 
                       <div class="portfolio-item IoT ">
                         <div class="portfolio-wrap">
-                          <img src="certificate/SertifikatPythonLanjut.png" class="img-fluid" alt="">
+                          <img data-src="certificate/SertifikatPythonLanjut.png" class="img-fluid lazyload" alt="">
                           <div class="portfolio-links">
                             <a href="https://badgr.com/public/assertions/M6e1x0CoRFK9JkCoJecclw?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
                               <h6>Check Credential</h6>
@@ -441,7 +437,7 @@
 
                       <div class="portfolio-item IoT ">
                         <div class="portfolio-wrap">
-                          <img src="certificate/SertifikatIoT.png" class="img-fluid" alt="">
+                          <img data-src="certificate/SertifikatIoT.png" class="img-fluid lazyload" alt="">
                           <div class="portfolio-links">
                             <a href="https://badgr.com/public/assertions/LK1xozEMTHSsqSI38ch93A?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
                               <h6>Check Credential</h6>
@@ -454,7 +450,7 @@
 
                       <div class="portfolio-item IoT ">
                         <div class="portfolio-wrap">
-                          <img src="certificate/SertifikatIoTFundamental.png" class="img-fluid" alt="">
+                          <img data-src="certificate/SertifikatIoTFundamental.png" class="img-fluid lazyload" alt="">
                           <div class="portfolio-links">
                             <a href="https://badgr.com/public/assertions/LK1xozEMTHSsqSI38ch93A?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
                               <h6>Check Credential</h6>
@@ -467,7 +463,7 @@
 
                       <div class="portfolio-item IoT ">
                         <div class="portfolio-wrap">
-                          <img src="certificate/SertifikatIoTSoftware.png" class="img-fluid" alt="">
+                          <img data-src="certificate/SertifikatIoTSoftware.png" class="img-fluid lazyload" alt="">
                           <div class="portfolio-links">
                             <a href="https://badgr.com/public/assertions/z_YkmXG6RPuXybWMOUgUJw?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
                               <h6>Check Credential</h6>
@@ -480,7 +476,7 @@
 
                       <div class="portfolio-item Web-dev ">
                         <div class="portfolio-wrap">
-                          <img src="certificate/SertifikatFrontEnd.png" class="img-fluid" alt="">
+                          <img data-src="certificate/SertifikatFrontEnd.png" class="img-fluid lazyload" alt="">
                           <div class="portfolio-links">
                             <a href="https://www.dicoding.com/certificates/2VX34365NZYQ" target="_blank"><i class="bi bi-check2-square"> </i>
                               <h6>Check Credential</h6>
@@ -493,7 +489,7 @@
 
                       <div class="portfolio-item IoT ">
                         <div class="portfolio-wrap">
-                          <img src="certificate/SertifikatIoTHealthMonitoringSystem.png" class="img-fluid" alt="">
+                          <img data-src="certificate/SertifikatIoTHealthMonitoringSystem.png" class="img-fluid lazyload" alt="">
                           <div class="portfolio-links">
                             <a href="https://badgr.com/public/assertions/1ey6ROu9T3C6yRBtcc1tUQ?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
                               <h6>Check Credential</h6>
@@ -506,7 +502,7 @@
 
                       <div class="portfolio-item Web-dev ">
                         <div class="portfolio-wrap">
-                          <img src="certificate/SertifikatFrontEndJavascript.png" class="img-fluid" alt="">
+                          <img data-src="certificate/SertifikatFrontEndJavascript.png" class="img-fluid lazyload" alt="">
                           <div class="portfolio-links">
                             <a href="https://www.dicoding.com/certificates/EYX4J09JWZDL" target="_blank"><i class="bi bi-check2-square"> </i>
                               <h6>Check Credential</h6>
@@ -519,7 +515,7 @@
 
                       <div class="portfolio-item Web-dev ">
                         <div class="portfolio-wrap">
-                          <img src="certificate/SertifikatReact.png" class="img-fluid" alt="">
+                          <img data-src="certificate/SertifikatReact.png" class="img-fluid lazyload" alt="">
                           <div class="portfolio-links">
                             <a href="https://www.dicoding.com/certificates/N9ZOY11VYPG5" target="_blank"><i class="bi bi-check2-square"> </i>
                               <h6>Check Credential</h6>
@@ -536,7 +532,7 @@
         </div>
     </section>
     
-    <section id="projects" class="projects " data-aos="fade-up" data-aos-delay="200">
+    <section id="project" class="project" data-aos="fade-up" data-aos-delay="200">
       <div class="container py-5">
         <div class="section-title">
           <h2>Project</h2>
@@ -544,47 +540,14 @@
         </div>
         <div class="swiper project-slider">
           <div class="swiper-wrapper">
-
-            {{-- <div class="swiper-slide" style="box-shadow: none">
-              <div class="blog-item h-100 d-flex flex-column rounded-5 overflow-hidden mt-1 mb-3 shadow ">
-                  <div class="blog-img position-relative" style="height: a; overflow: hidden;">
-                      <img src="img/project/kostifyadv.png" class="img-fluid w-100 h-100 object-fit-cover" alt="">
-                      <div class="blog-categiry py-2 px-4">
-                          <a href="">
-                              <span class="text-white">IOT</span>
-                          </a>
-                      </div>
-                  </div>
-                  <div class="blog-content p-4 d-flex flex-column flex-grow-1">
-                      <div class="d-flex align-items-center mb-3">
-                          <img src="img/author.png" class="rounded-circle me-2" width="40" height="40" alt="Author Image">
-                          <div class="small">
-                              <a href="" class="text-dark text-decoration-none fw-bold">
-                                 Nadhif Fauzil Adhim
-                              </a>
-                              <div class="text-muted small">
-                                  Now
-                              </div>
-                          </div>
-                      </div>
-                      <a href="" class="h5 text-decoration-none text-dark fw-bold d-block mb-2 text-truncate" style="max-width: 100%;">
-                        Temukan tempat tinggal  Anda dengan cepat dan mudah
-                      </a>
-                      
-                      <div class="d-flex justify-content-between mt-auto">
-                          <a href="" class="btn p-0 fw-bold">Read more <i class="bi bi-arrow-right"></i></a>
-                      </div>
-                  </div>
-              </div>
-          </div> --}}
             <!-- Project 1: Kostify -->
             <div class="swiper-slide project-card rounded-5">
               <div class="project-img">
-                <img src="img/project/kostifyadv.png" class="img-fluid rounded-top w-100" alt="Kostify">
+                <img data-src="img/project/kostifyadv.png" class="img-fluid lazyload rounded-top w-100" alt="Kostify">
               </div>
               <div class="project-content">
                 <div class="d-flex align-items-center justify-content-center mb-2">
-                  <img src="img/member/nadhif.png" class="rounded-circle" width="20" height="20" alt="Developer" style="z-index: 2;">
+                  <img data-src="img/member/nadhif.png" class="rounded-circle" width="20" height="20" alt="Developer" style="z-index: 2;">
                 </div>
                 <h4>Kostify: Cari Kost dengan Mudah</h4>
                 <p>Temukan tempat tinggal Anda dengan cepat dan mudah.</p>
@@ -602,14 +565,14 @@
             <!-- Project 2: HydroEase -->
             <div class="swiper-slide project-card rounded-5">
               <div class="project-img">
-                <img src="img/project/hydroeaselogo.png" class="img-fluid rounded-top w-100" alt="HydroEase">
+                <img data-src="img/project/hydroeaselogo.png" class="img-fluid lazyload rounded-top w-100" alt="HydroEase">
               </div>
               <div class="project-content">
                 <div class="d-flex align-items-center justify-content-center mb-2">
-                  <img src="img/member/nadhif.png" class="rounded-circle" width="20" height="20" alt="Developer" style="z-index: 2;">
-                  <img src="img/member/arip.png" class="rounded-circle" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
-                  <img src="img/member/ferdi.png" class="rounded-circle" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
-                  <img src="img/member/julian.png" class="rounded-circle" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
+                  <img data-src="img/member/nadhif.png" class="rounded-circle" width="20" height="20" alt="Developer" style="z-index: 2;">
+                  <img data-src="img/member/arip.png" class="rounded-circle" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
+                  <img data-src="img/member/ferdi.png" class="rounded-circle" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
+                  <img data-src="img/member/julian.png" class="rounded-circle" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
                 </div>
                 <h4>HydroEase: Hydroponic IoT System</h4>
                 <p>Solusi otomatisasi hidroponik dengan teknologi IoT.</p>
@@ -622,11 +585,11 @@
             </div>
             <div class="swiper-slide project-card rounded-5">
               <div class="project-img">
-                <img src="img/project/Linksyproject.png" class="img-fluid rounded-top w-100" alt="Linksy">
+                <img data-src="img/project/Linksyproject.png" class="img-fluid lazyload rounded-top w-100" alt="Linksy">
               </div>
               <div class="project-content">
                 <div class="d-flex align-items-center justify-content-center mb-2">
-                  <img src="img/member/nadhif.png" class="rounded-circle" width="20" height="20" alt="Developer" style="z-index: 2;">
+                  <img data-src="img/member/nadhif.png" class="rounded-circle" width="20" height="20" alt="Developer" style="z-index: 2;">
                 </div>
                 <h4>Linksy: Smart Link Management</h4>
                 <p>Transform your URLs into powerful, shareable links.</p>
@@ -663,9 +626,9 @@
                               <div class="blog-item h-100 d-flex flex-column rounded-5 overflow-hidden mt-1 mb-3 shadow bg-transparent">
                                   <div class="blog-img position-relative" style="height: 200px; overflow: hidden;">
                                       @if($item->image)
-                                          <img src="{{ asset('public/' . $item->image) }}" class="img-fluid w-100 h-100 object-fit-cover" alt="">
+                                          <img data-src="{{ asset('public/' . $item->image) }}" class="img-fluid w-100 h-100 object-fit-cover lazyload" alt="">
                                       @else
-                                          <img src="{{ $item->category->image ? $item->category->image : asset('img/programmer_text_2.jpg') }}" class="img-fluid w-100 h-100 object-fit-cover" alt="Category Image">
+                                          <img data-src="{{ $item->category->image ? $item->category->image : asset('img/programmer_text_2.jpg') }}" class="img-fluid w-100 h-100 object-fit-cover lazyload" alt="Category Image">
                                       @endif
                                       <div class="blog-categiry py-2 px-4">
                                           <a href="/blog?category={{ $item->category->slug }}">
@@ -675,7 +638,7 @@
                                   </div>
                                   <div class="blog-content p-4 d-flex flex-column flex-grow-1 bg-white">
                                       <div class="d-flex align-items-center mb-3">
-                                          <img src="{{ asset('public/' . $item->author->avatar) }}" class="rounded-circle me-2" width="40" height="40" alt="Author Image">
+                                          <img data-src="{{ asset('public/' . $item->author->avatar) }}" class="rounded-circle me-2" width="40" height="40" alt="Author Image">
                                           <div class="small">
                                               <a href="/blog?author={{ $item->author->username }}" class="text-dark text-decoration-none fw-bold">
                                                   {{ $item->author->name }}
@@ -721,7 +684,7 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide member-card">
             <div class="testimonial-item" data-aos="fade-up">
-              <img src="img/member/nadhif.png" class="testimonial-img" alt="">
+              <img data-src="img/member/nadhif.png" class="testimonial-img lazyload" alt="">
               <h3>Nadhif Fauzil Adhim</h3>
               <h4>Backend Developer</h4>
             </div>
@@ -729,7 +692,7 @@
 
           <div class="swiper-slide member-card">
             <div class="testimonial-item" data-aos="fade-up" data-aos-delay="100">
-              <img src="img/member/ferdi.png" class="testimonial-img" alt="">
+              <img data-src="img/member/ferdi.png" class="testimonial-img lazyload" alt="">
               <h3>Dwi Ferdiyanto</h3>
               <h4>Informatics Student</h4>
             </div>
@@ -737,7 +700,7 @@
 
           <div class="swiper-slide member-card">
             <div class="testimonial-item" data-aos="fade-up" data-aos-delay="200">
-              <img src="img/member/julian.png" class="testimonial-img" alt="">
+              <img data-src="img/member/julian.png" class="testimonial-img lazyload" alt="">
               <h3>Julian Kiyosaki H</h3>
               <h4>Mobile Developer</h4>
             </div>
@@ -745,7 +708,7 @@
 
           <div class="swiper-slide member-card">
             <div class="testimonial-item" data-aos="fade-up" data-aos-delay="300">
-              <img src="img/member/aji.png" class="testimonial-img" alt="">
+              <img data-src="img/member/aji.png" class="testimonial-img lazyload" alt="">
               <h3>Muhajir Faturrahman</h3>
               <h4>Multimedia</h4>
             </div>
@@ -754,7 +717,7 @@
           <div class="swiper-slide member-card">
             <div class="testimonial-item" data-aos="fade-up" data-aos-delay="400">
 
-              <img src="img/member/arip.png" class="testimonial-img" alt="">
+              <img data-src="img/member/arip.png" class="testimonial-img lazyload" alt="">
               <h3>Rif'aa Surososastro</h3>
               <h4>Informatics Student</h4>
             </div>

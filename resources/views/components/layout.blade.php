@@ -77,6 +77,7 @@
       gtag('js', new Date());
       gtag('config', '{{ config('services.gtm.id') }}');
   </script>
+  <script src="{{ asset('vendor/lazysizes/lazysizes.min.js') }}" async></script>
 </head>
 <body>
   <div id="spinner" class="spinner-wrapper">
@@ -110,10 +111,8 @@
   <script src="{{ asset('vendor/aos/aos.js') }}"></script>
   <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('vendor/glightbox/js/glightbox.min.js') }}"></script>
-  <script src="{{ asset('vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
   <script src="{{ asset('vendor/swiper/swiper-bundle.min.js') }}"></script>
   <script src="{{ asset('vendor/typed.js/typed.umd.js') }}"></script>
-  <script src="{{ asset('vendor/waypoints/noframework.waypoints.js') }}"></script>
   <script src="{{ asset('js/event/event.js') }}"></script>
   <script src="{{ asset('js/main.js') }}"></script>
    <script>

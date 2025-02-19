@@ -42,8 +42,6 @@ class HomeController extends Controller
                 ->withQueryString()
         ]);
     }
-    
-
     public function showPost(Post $post)
     {
         if(!$post->is_published && $post->author_id !== Auth::id()) {

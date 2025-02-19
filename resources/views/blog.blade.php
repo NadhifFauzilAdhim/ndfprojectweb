@@ -83,9 +83,9 @@
                     <div class="blog-item h-100 d-flex flex-column shadow rounded-5 overflow-hidden">
                         <div class="blog-img position-relative" style="height: 200px; overflow: hidden;">
                             @if($item->image)
-                                <img src="{{ asset('storage/' . $item->image) }}" class="img-fluid w-100 h-100 object-fit-cover" alt="">
+                                <img data-src="{{ asset('storage/' . $item->image) }}" class="img-fluid w-100 h-100 object-fit-cover lazyload" alt="" > 
                             @else
-                                <img src="{{ $item->category->image ? $item->category->image : asset('img/programmer_text_2.jpg') }}" class="img-fluid w-100 h-100 object-fit-cover" alt="Category Image">
+                                <img data-src="{{ $item->category->image ? $item->category->image : asset('img/programmer_text_2.jpg') }}" class="img-fluid w-100 h-100 object-fit-cover lazyload" alt="Category Image">
                             @endif
                             <div class="blog-categiry py-2 px-4" >
                                 <a href="/blog?category={{ $item->category->slug }}">

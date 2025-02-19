@@ -61,7 +61,6 @@ class DashboardPostController extends Controller
         $validatedData['excerpt'] = str()->limit(trim(preg_replace('/\s+/', ' ', strip_tags($request->body))), 100);
         Post::create($validatedData);
         return redirect('/dashboard/posts')->with('success','Post Berhasil Dibuat');
-        
     }
 
 
