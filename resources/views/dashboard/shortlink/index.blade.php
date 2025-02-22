@@ -260,9 +260,9 @@
                                     <div class="card-body">
                                         <div class="row d-flex align-items-center mb-2">
                                             <div class="col-12 d-flex align-items-center">
-                                                <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=32" 
+                                                <img data-src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=32" 
                                                      alt="Favicon" 
-                                                     class="rounded me-2" 
+                                                     class="rounded me-2 lazyload" 
                                                      style="width: 32px; height: 32px; flex-shrink: 0;">
                                                      <input type="text" 
                                                      class="form-control border-0 p-0 text-dark fw-bold fs-5" 

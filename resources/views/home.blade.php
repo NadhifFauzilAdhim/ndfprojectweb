@@ -16,7 +16,7 @@
      <section id="hero" class="d-flex flex-column justify-content-center align-items-center position-relative text-center vh-100">
       <div class="hero-container" data-aos="fade-in">
         <h1>Nadhif Fauzil Adhim</h1>
-        <p>I'm <span class="typed" data-typed-items="Student, Tech Enthusiast, Developer"></span></p>
+        <p>I'm <span class="typed" data-typed-items="Backend Dev, IoT Enthusiast, Assistant Lecturer", "></span></p>
         <div class="d-flex flex-wrap justify-content-center gap-3 mt-3">
           <a class="btn btn-light rounded-pill py-2 px-4 d-flex align-items-center justify-content-center" target="_blank" href="https://www.linkedin.com/in/nadhif-fauzil-adhim-99a330294">
             <i class="bi bi-linkedin"></i> <span class="d-none d-md-inline ms-2 name-text">LinkedIn</span>
@@ -526,8 +526,7 @@
                     </div>
                 </div>
                 <div class="swiper-pagination"></div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+               
             </div>
         </div>
     </section>
@@ -543,11 +542,11 @@
             <!-- Project 1: Kostify -->
             <div class="swiper-slide project-card rounded-5">
               <div class="project-img">
-                <img data-src="img/project/kostifyadv.png" class="img-fluid lazyload rounded-top w-100" alt="Kostify">
+                <img data-src="img/project/kostifyproject.png" class="img-fluid lazyload rounded-top w-100" alt="Kostify">
               </div>
               <div class="project-content">
                 <div class="d-flex align-items-center justify-content-center mb-2">
-                  <img data-src="img/member/nadhif.png" class="rounded-circle" width="20" height="20" alt="Developer" style="z-index: 2;">
+                  <img data-src="img/member/nadhif.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="z-index: 2;">
                 </div>
                 <h4>Kostify: Cari Kost dengan Mudah</h4>
                 <p>Temukan tempat tinggal Anda dengan cepat dan mudah.</p>
@@ -561,35 +560,13 @@
                 </div>
               </div>
             </div>
-            
-            <!-- Project 2: HydroEase -->
             <div class="swiper-slide project-card rounded-5">
               <div class="project-img">
-                <img data-src="img/project/hydroeaselogo.png" class="img-fluid lazyload rounded-top w-100" alt="HydroEase">
+                <img data-src="img/project/linksyproject.png" class="img-fluid lazyload rounded-top w-100" alt="Linksy">
               </div>
               <div class="project-content">
                 <div class="d-flex align-items-center justify-content-center mb-2">
-                  <img data-src="img/member/nadhif.png" class="rounded-circle" width="20" height="20" alt="Developer" style="z-index: 2;">
-                  <img data-src="img/member/arip.png" class="rounded-circle" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
-                  <img data-src="img/member/ferdi.png" class="rounded-circle" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
-                  <img data-src="img/member/julian.png" class="rounded-circle" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
-                </div>
-                <h4>HydroEase: Hydroponic IoT System</h4>
-                <p>Solusi otomatisasi hidroponik dengan teknologi IoT.</p>
-                <div class="project-links">
-                  <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="btn btn-sm btn-dark rounded-pill">
-                    <i class="bi bi-file-earmark-code"></i> Documentation
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide project-card rounded-5">
-              <div class="project-img">
-                <img data-src="img/project/Linksyproject.png" class="img-fluid lazyload rounded-top w-100" alt="Linksy">
-              </div>
-              <div class="project-content">
-                <div class="d-flex align-items-center justify-content-center mb-2">
-                  <img data-src="img/member/nadhif.png" class="rounded-circle" width="20" height="20" alt="Developer" style="z-index: 2;">
+                  <img data-src="img/member/nadhif.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="z-index: 2;">
                 </div>
                 <h4>Linksy: Smart Link Management</h4>
                 <p>Transform your URLs into powerful, shareable links.</p>
@@ -603,6 +580,27 @@
                 </div>
               </div>
             </div>
+            <div class="swiper-slide project-card rounded-5">
+              <div class="project-img">
+                <img data-src="img/project/hydroeaseproject.png" class="img-fluid lazyload rounded-top w-100" alt="HydroEase">
+              </div>
+              <div class="project-content">
+                <div class="d-flex align-items-center justify-content-center mb-2">
+                  <img data-src="img/member/nadhif.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="z-index: 2;">
+                  <img data-src="img/member/arip.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
+                  <img data-src="img/member/ferdi.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
+                  <img data-src="img/member/julian.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
+                </div>
+                <h4>HydroEase: Hydroponic IoT System</h4>
+                <p>Solusi otomatisasi hidroponik dengan teknologi IoT.</p>
+                <div class="project-links">
+                  <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="btn btn-sm btn-dark rounded-pill">
+                    <i class="bi bi-file-earmark-code"></i> Documentation
+                  </a>
+                </div>
+              </div>
+            </div>
+            
           </div>
           <div class="swiper-button-next"></div>
           <div class="swiper-button-prev"></div>
@@ -638,7 +636,7 @@
                                   </div>
                                   <div class="blog-content p-4 d-flex flex-column flex-grow-1 bg-white">
                                       <div class="d-flex align-items-center mb-3">
-                                          <img data-src="{{ asset('public/' . $item->author->avatar) }}" class="rounded-circle me-2" width="40" height="40" alt="Author Image">
+                                          <img data-src="{{ asset('public/' . $item->author->avatar) }}" class="rounded-circle me-2 lazyload" width="40" height="40" alt="Author Image">
                                           <div class="small">
                                               <a href="/blog?author={{ $item->author->username }}" class="text-dark text-decoration-none fw-bold">
                                                   {{ $item->author->name }}

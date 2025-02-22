@@ -54,11 +54,11 @@
                             <div class="position-relative">
                                 <a href="javascript:void(0)">
                                  @if($post->image)
-                                    <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
+                                    <img data-src="{{ asset('storage/' . $post->image) }}" class="img-fluid rounded-top w-100 fixed-size lazyload" alt="">
                                 @else
                                 <img 
-                                src="{{ $post->category->image ? $post->category->image : asset('img/programmer_text_2.jpg') }}" 
-                                class="img-fluid rounded-top w-100 fixed-size" 
+                                data-src="{{ $post->category->image ? $post->category->image : asset('img/programmer_text_2.jpg') }}" 
+                                class="img-fluid rounded-top w-100 fixed-size lazyload" 
                                 alt="Category Image">
                                 @endif
                                 </a>

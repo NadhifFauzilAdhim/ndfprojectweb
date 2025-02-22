@@ -98,9 +98,9 @@
                       <div class="blog-item  @if($event['IsAvailable']) custom-blinking-shadow @endif" data-aos="fade-up" data-aos-delay="100">
                           <div class="blog-img">
                               @if($event['mediaCover'])
-                                  <img src="{{ $event['mediaCover'] }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
+                                  <img data-src="{{ $event['mediaCover'] }}" class="img-fluid rounded-top w-100 fixed-size lazyload" alt="">
                               @else
-                                  <img src="{{ asset('img/programmer_text_2.jpg') }}" class="img-fluid rounded-top w-100 fixed-size" alt="">
+                                  <img data-src="{{ asset('img/programmer_text_2.jpg') }}" class="img-fluid rounded-top w-100 fixed-size lazyload" alt="">
                               @endif
                               <div class="blog-categiry py-2 px-4">
                                   <a href="">
