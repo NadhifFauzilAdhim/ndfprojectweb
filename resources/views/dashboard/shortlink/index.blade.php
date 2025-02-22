@@ -263,7 +263,7 @@
                                                 <img data-src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=32" 
                                                      alt="Favicon" 
                                                      class="rounded me-2 lazyload" 
-                                                     style="width: 32px; height: 32px; flex-shrink: 0;">
+                                                     style="width: 25px; height: 25px; flex-shrink: 0;">
                                                      <input type="text" 
                                                      class="form-control border-0 p-0 text-dark fw-bold fs-5" 
                                                      value="{{ $link->title  }}" 
@@ -286,7 +286,7 @@
                                                            readonly>
                                                 </h6>
                                             </div>
-                                            <div class="col-2">
+                                            <div class="col-2 text-start px-0">
                                                 <button class="btn {{ $link->active ? 'btn-outline-primary' : 'btn-outline-danger' }} btn-sm" 
                                                         onclick="copyFunction('{{ $link->slug }}')">
                                                     <i class="bi bi-clipboard"></i>
@@ -314,27 +314,31 @@
                                         </div>
                             
                                         <!-- Security Status -->
-                                        <div class="d-flex align-items-center mt-3 justify-content-between">
+                                        {{-- <div class="d-flex align-items-center mt-3 justify-content-between">
                                             @if($link->password_protected)
-                                            <i class="bi bi-lock-fill text-danger me-2">  
-                                                <span class="text-danger small">Protected</span>
+                                            <i class="bi bi-lock-fill text-danger me-2 opacity-75">  
+                                                <span class="text-danger small opacity-75">Protected</span>
                                             </i>
                                             @else
-                                            <i class="bi bi-unlock  me-2"> 
-                                                <span class=" small">Unprotected</span>
+                                            <i class="bi bi-unlock  me-2 opacity-75"> 
+                                                <span class=" small opacity-75">Unprotected</span>
                                             </i>
                                             @endif
-                                            <span class="badge rounded-pill"  
-                                                style="background-color: {{ $link->active ? '#2f80ed' : '#ff7eb3' }}; color: white;" 
-                                                data-bs-toggle="popover" 
-                                                data-bs-trigger="hover focus"
-                                                data-bs-title="{{ $link->active ? 'Public Link' : 'Private Link' }}" 
-                                                data-bs-content="{{ $link->active ? 'This link is publicly accessible.' : 'This link is private and only accessible to you.' }}">
-                                                <small>{{ $link->active ? 'Public' : 'Private' }}</small>
+                                            <span class="badge bg-gradient {{ $link->active ? 'bg-primary' : 'bg-warning' }} rounded-pill opacity-75">
+                                                <small><i class="bi bi-{{ $link->active ? 'globe2' : 'lock' }} me-1"></i>
+                                                    {{ $link->active ? 'Public' : 'Private' }}</small>
                                             </span>
-                                        </div>
+                                        </div> --}}
                             
                                         <div class="d-flex justify-content-end mt-3 position-relative dropup">
+                                            @if($link->password_protected)
+                                            <button class="btn btn-outline-primary btn-sm rounded-pill me-2" >
+                                                <i class="bi bi-lock-fill"></i>
+                                            </button>
+                                            @endif
+                                            <button class="btn btn-outline-{{ $link->active ? 'primary' : 'danger' }} btn-sm rounded-pill me-2" >
+                                                <i class="bi bi-globe2"></i>
+                                            </button>
                                             <button class="btn btn-outline-secondary btn-sm rounded-pill" data-bs-toggle="dropdown">
                                                 <i class="bi bi-three-dots"></i>
                                             </button>
@@ -486,57 +490,130 @@
         </div>
         <!-- Modal for Sharing Link -->
         <div class="modal fade" id="shareLinkModal" tabindex="-1" aria-labelledby="shareLinkModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header text-white">
-                        <h5 class="modal-title" id="shareLinkModalLabel">
-                            <i class="bi bi-share me-2"></i> Share Link
-                        </h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content border-0" style="border-radius: 20px;">
+                    <div class="modal-header bg-gradient-primary text-white" style="border-radius: 20px 20px 0 0; padding: 1.5rem 2rem;">
+                        <div class="d-flex align-items-center w-100">
+                            <div class="icon-shape bg-white bg-opacity-10 rounded-circle p-3 me-3">
+                                <i class="bi bi-send fs-4 text-dark"></i>
+                            </div>
+                            <div>
+                                <h5 class="modal-title mb-0" id="shareLinkModalLabel" style="font-weight: 600;">Share Resource</h5>
+                                <p class="mb-0 small opacity-75 text-dark">Collaborate by sharing with team members</p>
+                            </div>
+                            <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
                     </div>
-                    <div class="modal-body">
+                    
+                    <div class="modal-body py-4 px-5">
                         <form id="shareLinkForm">
-                            <div class="mb-3">
-                                <label for="sharedWith" class="form-label">
-                                        Share with User
-                                </label>
-                                <input type="text" class="form-control" id="sharedWith" name="shared_with" placeholder="Enter username" required>
+                            <div class="mb-4">
+                                <label for="sharedWith" class="form-label fw-500 mb-3">Recipient's Username</label>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-person-circle text-muted"></i>
+                                    </span>
+                                    <input type="text" 
+                                           class="form-control border-start-0 ps-2" 
+                                           id="sharedWith" 
+                                           name="shared_with" 
+                                           placeholder="e.g. johndoe123"
+                                           style="height: 50px;"
+                                           required>
+                                </div>
+                                <div class="form-text mt-2">Enter the exact username of the person you want to share with</div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label fw-500 mb-3">Sharing Options</label>
+                                <div class="d-flex gap-3">
+                                    <div class="form-check form-check-card">
+                                        <input class="form-check-input" type="checkbox" id="canEdit">
+                                        <label class="form-check-label small" for="canEdit">
+                                            Allow editing
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-card">
+                                        <input class="form-check-input" type="checkbox" id="sendNotification">
+                                        <label class="form-check-label small" for="sendNotification">
+                                            Send notification
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                             <input type="hidden" id="linkId" name="link_id">
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="shareLink()">
-                            <i class="bi bi-send me-2"></i> Share
+        
+                    <div class="modal-footer bg-light" style="border-radius: 0 0 20px 20px; padding: 1.5rem 2rem;">
+                        <button type="button" class="btn btn- btn-neutral" data-bs-dismiss="modal">
+                            <i class="bi bi-x-circle me-2"></i>Cancel
+                        </button>
+                        <button type="button" class="btn btn- btn-primary px-4" onclick="shareLink()">
+                            <i class="bi bi-send-check me-2"></i>Share Now
                         </button>
                     </div>
                 </div>
             </div>
         </div>
+        
+       
         <!-- Delete Confirmation Modal -->
         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Delete Confirmation</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0" style="border-radius: 20px;">
+                    <div class="modal-header bg-gradient-danger text-white" style="border-radius: 20px 20px 0 0; padding: 1.5rem 2rem;">
+                        <div class="d-flex align-items-center w-100">
+                            <div class="icon-shape bg-white bg-opacity-10 rounded-circle p-3 me-3">
+                                <i class="bi bi-exclamation-triangle fs-4 text-dark"></i>
+                            </div>
+                            <div class="text-dark">
+                                <h5 class="modal-title mb-0" id="deleteModalLabel" style="font-weight: 600;">Delete Short Link</h5>
+                                <p class="mb-0 small opacity-75">This action cannot be undone</p>
+                            </div>
+                            <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <p>Are you sure you want to delete this link?</p>
-                        <p>Type <strong>DELETE</strong> below to confirm:</p>
-                        <input
-                            type="text"
-                            id="deleteConfirmationInput"
-                            class="form-control"
-                            placeholder="Type DELETE to confirm"
-                        />
+        
+                    <div class="modal-body py-2 px-5">
+                        <div class="text-center mb-4">
+                            <h5 class="fw-semibold mb-2">Confirm Deletion</h5>
+                            <p class="text-muted">This will permanently remove the short link and all its analytics data</p>
+                        </div>
+        
+                        <div class="mb-4">
+                            <label class="form-label fw-500 mb-3">Type <span class="text-danger">DELETE</span> to confirm:</label>
+                            <div class="input-group input-group">
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="bi bi-key-fill text-danger"></i>
+                                </span>
+                                <input type="text" 
+                                       class="form-control border-start-0 ps-2" 
+                                       id="deleteConfirmationInput"
+                                       placeholder="Enter 'DELETE'"
+                                       autocomplete="off">
+                            </div>
+                            <div class="form-text text-danger mt-2">
+                                <i class="bi bi-exclamation-circle me-2"></i>This action is irreversible
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        
+                    <div class="modal-footer bg-light" style="border-radius: 0 0 20px 20px; padding: 1.5rem 2rem;">
+                        <button type="button" class="btn btn btn-neutral" data-bs-dismiss="modal">
+                            <i class="bi bi-x-circle me-2"></i>Cancel
+                        </button>
                         <form id="deleteForm" action="" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger" id="deleteButton" disabled>Delete</button>
+                            <button type="submit" 
+                                    class="btn btn btn-danger px-4" 
+                                    id="deleteButton" 
+                                    disabled
+                                    style="position: relative; overflow: hidden;">
+                                <i class="bi bi-trash3 me-2"></i>Delete Permanently
+                                <div class="hover-effect" style="position: absolute; background: rgba(255,255,255,0.2); top: -50%; left: -50%; width: 200%; height: 200%; transform: rotate(45deg) translate(-30px, 100%); transition: all 0.3s;"></div>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -564,28 +641,70 @@
 
         <!-- Edit Modal -->
         <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Edit Link</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content border-0" style="border-radius: 20px;">
+                    <div class="modal-header bg-gradient-primary text-white" style="border-radius: 20px 20px 0 0; padding: 1.5rem 2rem;">
+                        <div class="d-flex align-items-center w-100">
+                            <div class="icon-shape bg-white bg-opacity-10 rounded-circle p-3 me-3">
+                                <i class="bi bi-pencil-square fs-4 text-dark"></i>
+                            </div>
+                            <div class="text-dark">
+                                <h5 class="modal-title mb-0" id="editModalLabel" style="font-weight: 600;">Edit Short Link</h5>
+                                <p class="mb-0 small opacity-75">Update your URL destination and settings</p>
+                            </div>
+                            <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
                     </div>
-                    <div class="modal-body">
+        
+                    <div class="modal-body py-4 px-5">
                         <form id="editForm" action="" method="POST">
                             @csrf
                             @method('PATCH')
-                            <div class="mb-3">
-                                <label for="editTargetUrl" class="form-label">Url Destination</label>
-                                <input type="text" class="form-control" id="editTargetUrl" name="target_url">
+                            
+                            <div class="mb-4">
+                                <label for="editTargetUrl" class="form-label fw-500 mb-3">Destination URL</label>
+                                <div class="input-group input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-link-45deg text-muted"></i>
+                                    </span>
+                                    <input type="text" 
+                                           class="form-control border-start-0 ps-2" 
+                                           id="editTargetUrl" 
+                                           name="target_url"
+                                           placeholder="https://example.com"
+                                           style="height: 50px;"
+                                           required>
+                                </div>
+                                <div class="form-text mt-2">Enter the full URL including http:// or https://</div>
                             </div>
-                            <label for="editTargetUrl" class="form-label">Status</label>
-                            <div class="form-check form-switch mb-5">
-                                
-                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="active" value="1">
+                            <div class="mb-4">
+                                <label class="form-label fw-500 mb-3">Link Status</label>
+                                <div class="d-flex align-items-center gap-3 bg-light rounded p-3">
+                                    <div class="form-check form-switch custom-switch">
+                                        <input class="form-check-input" 
+                                               type="checkbox" 
+                                               role="switch" 
+                                               id="flexSwitchCheckChecked" 
+                                               name="active" 
+                                               value="1"
+                                               >
+                                        <label class="form-check-label ms-3" for="flexSwitchCheckChecked">
+                                            <span class="d-block fw-medium">Active Status</span>
+                                            <span class="text-muted small">Toggle to enable/disable this short link</span>
+                                        </label>
+                                    </div>
+                                </div>
                                 <input type="hidden" name="quickedit" value="1">
-                                <label class="form-check-label" for="flexSwitchCheckChecked" id="switchLabel">Active</label>
                             </div>
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
+        
+                            <div class="modal-footer bg-light px-0 pb-0 mt-4" style="border-radius: 0 0 20px 20px;">
+                                <button type="button" class="btn btn btn-neutral" data-bs-dismiss="modal">
+                                    <i class="bi bi-x-circle me-2"></i>Discard
+                                </button>
+                                <button type="submit" class="btn btn btn-primary px-4">
+                                    <i class="bi bi-save2 me-2"></i>Save Changes
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>

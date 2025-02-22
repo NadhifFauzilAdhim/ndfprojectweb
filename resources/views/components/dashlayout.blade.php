@@ -6,7 +6,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title> {{ $title }} | NDFProject</title>
   <link rel="shortcut icon" type="image/png" href="{{ asset('img/favicon.png') }}" />
-  <link rel="stylesheet" href="{{ asset('css/dash_1.0.1.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/dash.css') }}" />
   <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
@@ -27,14 +27,14 @@
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "q7yy3qm612");
+    })(window, document, "clarity", "script", "{{ config('services.clarity.id') }}");
   </script>
   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
     window.OneSignalDeferred = window.OneSignalDeferred || [];
     OneSignalDeferred.push(async function(OneSignal) {
         await OneSignal.init({
-        appId: "a35c4d8f-8af0-4723-82b8-1bef3a3063c5",
+        appId: "{{ config('services.onesignal.app_id') }}",
         safari_web_id: "web.onesignal.auto.477dedc8-8bcf-40fd-b64c-238033111672",
         notifyButton: {
             enable: true,
