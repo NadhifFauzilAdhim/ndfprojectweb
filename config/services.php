@@ -30,15 +30,19 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+
     'crisp' => [
         'website_id' => env('CRISP_WEBSITE_ID'),
     ],
+
     'gtm' => [
         'id' => env('GTM_ID'),
     ],
+
     'clarity' => [
         'id' => env('CLARITY_ID'),
     ],
+    
     'onesignal' => [
         'app_id' => env('ONESIGNAL_APP_ID'),
     ]

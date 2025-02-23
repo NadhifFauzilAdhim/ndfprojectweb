@@ -11,7 +11,7 @@
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
   <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
-  <script src="https://unpkg.com/html5-qrcode"></script>
+  <script src="{{ asset('vendor/html5-qrcode/html5-qrcode.min.js') }}"></script>
   <script type="text/javascript">
     window.$crisp = [];
     window.CRISP_WEBSITE_ID = "{{ config('services.crisp.website_id') }}";
@@ -23,13 +23,13 @@
       d.getElementsByTagName("head")[0].appendChild(s);
     })();
   </script>
-  <script type="text/javascript">
+  {{-- <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "{{ config('services.clarity.id') }}");
-  </script>
+  </script> --}}
   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
     window.OneSignalDeferred = window.OneSignalDeferred || [];

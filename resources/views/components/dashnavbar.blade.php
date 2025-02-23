@@ -139,7 +139,7 @@
               <button id="scanQRBtn" class="btn btn-primary rounded-circle scan-btn">
                   <iconify-icon icon="solar:qr-code-bold-duotone" width="24" height="24"></iconify-icon>
               </button>
-              <span class="nav-label">Scan QR</span>
+              <span class="nav-label">Scan</span>
           </div>
             @can('admin')
             <a class="nav-item {{ request()->is('dashboard/posts*') ? 'active' : '' }}" href="/dashboard/posts">
@@ -167,19 +167,43 @@
     </div>
 </nav>
 <div class="modal fade" id="scanQRModal" tabindex="-1" aria-labelledby="scanQRModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title">Scan QR Code</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <div id="reader" style="width: 100%; height: 300px;"></div>
-              <div class="text-center mt-3">
-                  <p class="text-muted">Arahkan kamera ke QR Code</p>
-                  <p>Hasil: <span id="result" class="fw-bold"></span></p>
-              </div>
-          </div>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content rounded-4">
+      <div class="modal-header border-0 pb-0">
+        <div class="w-100 d-flex justify-content-between align-items-center">
+          <h5 class="modal-title fs-6 text-muted">Scan QR Code</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
       </div>
+      <div class="modal-body pt-0">
+        <div class="scanner-container position-relative overflow-hidden rounded-3">
+          <div id="reader" style="width: 100%; height: 300px;"></div>
+          <div class="scanning-frame">
+            <div class="corner top-left"></div>
+            <div class="corner top-right"></div>
+            <div class="corner bottom-left"></div>
+            <div class="corner bottom-right"></div>
+          </div>
+          <button type="button" 
+                  id="toggleFlashBtn" 
+                  class="btn btn-primary btn-sm position-absolute shadow-sm"
+                  style="display: none; bottom: 16px; right: 16px; width: 40px; height: 40px; border-radius: 20px">
+            <i class="bi bi-lightbulb"></i>
+          </button>
+        </div>
+        <div class="text-center mt-4">
+          <p class="text-muted mb-2 small">Arahkan kamera ke QR Code</p>
+          <div class="mb-3">
+            <input type="range" class="form-range" id="zoomSlider" min="1" max="10" step="0.1" value="1">
+          </div>
+          <div class="scan-result bg-light rounded-2 p-2">
+            <p class="mb-0 small"><span class="text-muted ">Hasil:</span> 
+              <span id="result" class="fw-bold text-primary"></span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
