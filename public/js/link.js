@@ -190,6 +190,14 @@ document.addEventListener("DOMContentLoaded", function () {
 function showQRCode(url) {
     const qrCodeContainer = document.getElementById('qrCodeContainer');
     const downloadButton = document.getElementById('downloadQrCode');
+    const qrCodeUrlElement = document.getElementById('qrCodeUrl');
+    const socialButtons = {
+        facebook: document.querySelector('.text-facebook'),
+        twitter: document.querySelector('.text-twitter'),
+        whatsapp: document.querySelector('.text-whatsapp'),
+        instagram: document.querySelector('.text-instagram')
+    };
+    qrCodeUrlElement.textContent = url;
     qrCodeContainer.innerHTML = '';
     fetch('/qrcode/generate', {
         method: 'POST',
@@ -199,32 +207,56 @@ function showQRCode(url) {
         },
         body: JSON.stringify({ url: url }),
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to generate QR Code.');
-            }
-            return response.text(); 
-        })
-        .then(base64Image => {
-            const qrCodeImg = document.createElement('img');
-            qrCodeImg.src = base64Image;
-            qrCodeImg.alt = 'QR Code';
-            qrCodeImg.classList.add('img-fluid');
-            qrCodeContainer.appendChild(qrCodeImg);
-
-            downloadButton.onclick = function () {
-                const link = document.createElement('a');
-                link.href = base64Image;
-                link.download = 'qrcode.png';
-                link.click();
-            };
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to generate QR Code.');
+        }
+        return response.text();
+    })
+    .then(base64Image => {
+        const qrCodeImg = document.createElement('img');
+        qrCodeImg.src = base64Image;
+        qrCodeImg.alt = 'QR Code';
+        qrCodeImg.classList.add('img-fluid');
+        qrCodeContainer.appendChild(qrCodeImg);
+        downloadButton.onclick = function() {
+            const link = document.createElement('a');
+            link.href = base64Image;
+            link.download = 'qrcode.png';
+            link.click();
+        };
+        socialButtons.facebook.onclick = () => {
+            window.open(
+                `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+                '_blank',
+                'width=600,height=400'
+            );
+        };
+        socialButtons.twitter.onclick = () => {
+            window.open(
+                `https://twitter.com/intent/tweet?text=${encodeURIComponent(`Check this link: ${url}`)}`,
+                '_blank',
+                'width=600,height=400'
+            );
+        };
+        socialButtons.whatsapp.onclick = () => {
+            window.open(
+                `https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`,
+                '_blank'
+            );
+        };
+        socialButtons.instagram.onclick = () => {
+            // Instagram doesn't have direct web sharing, alternative copy to clipboard
+            navigator.clipboard.writeText(url)
+                .then(() => alert('Link copied to clipboard! Paste it in Instagram'))
+                .catch(() => alert('Failed to copy link'));
+        };
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to generate QR code. Please try again.');
+    });
 }
-
-
 
 document.getElementById('qrForm').addEventListener('submit', function (event) {
     event.preventDefault(); 

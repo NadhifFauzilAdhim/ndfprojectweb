@@ -127,14 +127,20 @@
                 </div>
                 <span class="nav-label">Home</span>
             </a>
-            
+
             <a class="nav-item {{ request()->is('dashboard/link*') ? 'active' : '' }}" href="/dashboard/link">
                 <div class="nav-icon">
                     <iconify-icon icon="solar:link-bold-duotone"></iconify-icon>
                 </div>
                 <span class="nav-label">Links</span>
             </a>
-            
+
+            <div class="nav-item scan-wrapper">
+              <button id="scanQRBtn" class="btn btn-primary rounded-circle scan-btn">
+                  <iconify-icon icon="solar:qr-code-bold-duotone" width="24" height="24"></iconify-icon>
+              </button>
+              <span class="nav-label">Scan QR</span>
+          </div>
             @can('admin')
             <a class="nav-item {{ request()->is('dashboard/posts*') ? 'active' : '' }}" href="/dashboard/posts">
                 <div class="nav-icon">
@@ -142,8 +148,15 @@
                 </div>
                 <span class="nav-label">Post</span>
             </a>
+            @else
+            <a class="nav-item {{ request()->is('dashboard/posts*') ? 'active' : '' }}">
+              <div class="nav-icon">
+                  <iconify-icon icon="solar:text-field-focus-bold-duotone"></iconify-icon>
+              </div>
+              <span class="nav-label">Post</span>
+          </a>
             @endcan
-            
+
             <a class="nav-item {{ request()->is('dashboard/profile') ? 'active' : '' }}" href="/dashboard/profile">
                 <div class="nav-icon">
                     <iconify-icon icon="solar:user-bold-duotone"></iconify-icon>
@@ -153,4 +166,20 @@
         </div>
     </div>
 </nav>
-
+<div class="modal fade" id="scanQRModal" tabindex="-1" aria-labelledby="scanQRModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Scan QR Code</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <div id="reader" style="width: 100%; height: 300px;"></div>
+              <div class="text-center mt-3">
+                  <p class="text-muted">Arahkan kamera ke QR Code</p>
+                  <p>Hasil: <span id="result" class="fw-bold"></span></p>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

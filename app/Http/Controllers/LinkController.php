@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BlockedIp;
-use App\Models\Link;
-use App\Models\Linkvisithistory;
-use App\Models\LinkShare;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\Link;
+use App\Models\User;
+use App\Models\BlockedIp;
+use App\Models\LinkShare;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\Linkvisithistory;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\ValidationException;
@@ -363,29 +364,62 @@ class LinkController extends Controller
         $request->validate([
             'url' => 'required|url',
         ]);
-    
-        // Ambil URL dari request
         $url = $request->input('url');
-    
-        // Encode URL untuk API
         $encodedUrl = urlencode($url);
-    
-        // URL API QR Code Generator
         $apiUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={$encodedUrl}";
-    
-        // Ambil data QR Code dalam bentuk binary
         $response = Http::get($apiUrl);
-    
         if ($response->ok()) {
-            // Convert binary data menjadi Base64
             $base64Image = 'data:image/png;base64,' . base64_encode($response->body());
-    
-            // Kembalikan data Base64 sebagai respons
             return response($base64Image, 200)->header('Content-Type', 'text/plain');
         }
-    
-        // Jika gagal, kembalikan respons error
         return response('Failed to generate QR Code.', 500);
+    }
+
+    public function qrcodescan(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'url' => 'required|url|max:255',
+            ]);
+            $sanitizedUrl = filter_var($validated['url'], FILTER_SANITIZE_URL);
+            if (!$sanitizedUrl) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'URL tidak valid'
+                ], 400);
+            }
+            do {
+                $slug = 'scan' . '-' . Str::random(5);
+                $slug = Str::limit($slug, 255, '');
+            } while (Link::where('slug', $slug)->exists());
+            $websiteTitle = 'scan' . ' ' . $this->fetchWebsiteTitle($sanitizedUrl);
+            $link = Link::create([
+                'target_url' => $sanitizedUrl,
+                'slug' => $slug,
+                'title' => $websiteTitle,
+                'user_id' => Auth::id(),
+                'active' => false,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Link berhasil ditambahkan',
+                'data' => $link
+            ], 201);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validasi gagal',
+                'errors' => $e->errors()
+            ], 422);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan server: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
 }

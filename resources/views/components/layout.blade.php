@@ -82,10 +82,10 @@
 <body>
   <div id="spinner" class="spinner-wrapper">
     <div class="text-center d-flex">
-      <div class="spinner-grow spinner-grow-sm text-info" style="width: 1rem; height: 1rem;" role="status">
+      <div class="spinner-grow spinner-grow-sm text-white" style="width: 1rem; height: 1rem;" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
-      <p class="text-info ms-2" style="font-family: 'Courier New', Courier, monospace">wait, let me finish...</p>
+      <p class="text-white ms-2" style="font-family: 'Courier New', Courier, monospace">Optimizing ... Just a moment!</p>
     </div>
   </div>
   <!-- ======= Mobile nav toggle button ======= -->

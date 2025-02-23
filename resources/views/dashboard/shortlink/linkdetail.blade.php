@@ -279,8 +279,6 @@
         document.addEventListener('DOMContentLoaded', function () {
             showQRCode('{{ url('r/' . $link->slug) }}');
         });
-    </script>
-    <script>
         const visitDataGlobal = @json($chartData);
         const toprefDataGlobal = @json($topReferers);
         const locationData = @json($location);

@@ -109,7 +109,7 @@
                                              class="rounded me-2" 
                                              style="width: 16px; height: 16px; flex-shrink: 0;">
                                                 <span class="fs-3 fw-medium">
-                                                    <a href="{{ url('dashboard/link/').'/'.$link->slug }}">{{ $link->slug }}</a>
+                                                    <a href="{{ url('dashboard/link/').'/'.$link->slug }}" class="text-decoration-none text-dark">{{ $link->slug }}</a>
                                                 </span>
                                                 <h6 class="fs-3 fw-medium text-dark lh-base mb-0  " style="width: 12px">
                                                     <div class="d-flex justify-content-between">
@@ -131,98 +131,96 @@
                           </div>
                         </div>
                       </div>
-                    <div class="col-lg-12">
-                        <div class="card-body">
-                            <div class="row g-3 align-items-center">
-                                <div class="col-12 col-md-4">
-                                    <button 
-                                        class="btn btn-primary  align-items-center w-100 py-2 position-relative" 
-                                        type="button" 
-                                        data-bs-toggle="collapse" 
-                                        data-bs-target="#collapseForm" 
-                                        aria-expanded="false" 
-                                        aria-controls="collapseForm" 
-                                        style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
-                                    >
-                                        <i class="bi bi-plus-circle fs-4 me-2"></i>
-                                        <span>Create New Link</span>
-                                    </button>
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <button 
-                                        class="btn btn-primary  align-items-center w-100 py-2 position-relative" 
-                                        type="button" 
-                                        data-bs-toggle="collapse" 
-                                        data-bs-target="#qrCollapseForm" 
-                                        aria-expanded="false" 
-                                        aria-controls="qrCollapseForm" 
-                                        style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
-                                    >
-                                        <i class="bi bi-plus-circle fs-4 me-2"></i>
-                                        <span>Generate QR</span>
-                                    </button>
-                                </div>
-                                <!-- Form Search -->
-                                <div class="col-12 col-md-4">
-                                    <form action="/dashboard/link" method="GET">
-                                        <div class="input-group">
-                                            <input type="text" name="search" class="form-control" placeholder="Search Link" aria-label="Search" aria-describedby="button-addon2" value="{{ request('search') }}">
-                                            <button class="btn btn-outline-primary" type="submit" id="button-addon2"><i class="bi bi-search"></i></button>
-                                        </div>
-                                    </form>
-                                </div>
+                    <div class="col-lg-12 mb-4">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-12 col-md-4">
+                                <button 
+                                    class="btn btn-primary  align-items-center w-100 py-2 position-relative" 
+                                    type="button" 
+                                    data-bs-toggle="collapse" 
+                                    data-bs-target="#collapseForm" 
+                                    aria-expanded="false" 
+                                    aria-controls="collapseForm" 
+                                    style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
+                                >
+                                    <i class="bi bi-plus-circle fs-4 me-2"></i>
+                                    <span>Create New Link</span>
+                                </button>
                             </div>
-                            <!-- Collapsible form -->
-                            <div class="collapse mt-4" id="collapseForm">
-                                <div class="card card-body shadow-sm border-0">
-                                    <form action="/dashboard/link" method="POST">
-                                        @csrf
-                                        <!-- URL Destination Field -->
-                                        <div class="mb-4">
-                                            <label for="url_target" class="form-label fw-bold">URL Destination</label>
-                                            <input type="text" class="form-control @error('target_url') is-invalid @enderror shadow-sm" id="target_url" name="target_url" placeholder="https://example.com" value="{{ old('target_url') }}">
-                                            @error('target_url')
+                            <div class="col-12 col-md-4">
+                                <button 
+                                    class="btn btn-primary  align-items-center w-100 py-2 position-relative" 
+                                    type="button" 
+                                    data-bs-toggle="collapse" 
+                                    data-bs-target="#qrCollapseForm" 
+                                    aria-expanded="false" 
+                                    aria-controls="qrCollapseForm" 
+                                    style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
+                                >
+                                    <i class="bi bi-plus-circle fs-4 me-2"></i>
+                                    <span>Generate QR</span>
+                                </button>
+                            </div>
+                            <!-- Form Search -->
+                            <div class="col-12 col-md-4">
+                                <form action="/dashboard/link" method="GET">
+                                    <div class="input-group">
+                                        <input type="text" name="search" class="form-control" placeholder="Search Link" aria-label="Search" aria-describedby="button-addon2" value="{{ request('search') }}">
+                                        <button class="btn btn-outline-primary" type="submit" id="button-addon2"><i class="bi bi-search"></i></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Collapsible form -->
+                        <div class="collapse mt-4" id="collapseForm">
+                            <div class="card card-body shadow-sm border-0">
+                                <form action="/dashboard/link" method="POST">
+                                    @csrf
+                                    <!-- URL Destination Field -->
+                                    <div class="mb-4">
+                                        <label for="url_target" class="form-label fw-bold">URL Destination</label>
+                                        <input type="text" class="form-control @error('target_url') is-invalid @enderror shadow-sm" id="target_url" name="target_url" placeholder="https://example.com" value="{{ old('target_url') }}">
+                                        @error('target_url')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <!-- Shortened Link Field -->
+                                    <div class="mb-4">
+                                        <label for="short_link" class="form-label fw-bold">Shortened Link</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light d-none d-md-block " id="basic-addon3">linksy.site/</span>
+                                            <input type="text" class="form-control @error('slug') is-invalid @enderror shadow-sm" id="short_link" name="slug" placeholder="custom-slug" value="{{ old('slug') }}" aria-describedby="basic-addon3">
+                                            @error('slug')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                             @enderror
                                         </div>
-                                        <!-- Shortened Link Field -->
-                                        <div class="mb-4">
-                                            <label for="short_link" class="form-label fw-bold">Shortened Link</label>
-                                            <div class="input-group">
-                                                <span class="input-group-text bg-light d-none d-md-block " id="basic-addon3">linksy.site/</span>
-                                                <input type="text" class="form-control @error('slug') is-invalid @enderror shadow-sm" id="short_link" name="slug" placeholder="custom-slug" value="{{ old('slug') }}" aria-describedby="basic-addon3">
-                                                @error('slug')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <!-- Submit Button -->
-                                        <div class="text-end">
-                                            <button type="submit" class="btn btn-primary px-4">
-                                                <i class="bi bi-check-circle me-2"></i>Create
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                    <!-- Submit Button -->
+                                    <div class="text-end">
+                                        <button type="submit" class="btn btn-primary px-4">
+                                            <i class="bi bi-check-circle me-2"></i>Create
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="collapse mt-4" id="qrCollapseForm">
-                                <div class="card card-body shadow-sm border-0">
-                                    <form id="qrForm">
-                                        <div class="mb-4">
-                                            <label for="qr_target_url" class="form-label fw-bold">URL Destination</label>
-                                            <input type="text" class="form-control shadow-sm" id="qr_target_url" name="qr_target_url" placeholder="https://example.com">
-                                        </div>
-                                        <div class="text-end">
-                                            <button type="submit" class="btn btn-primary px-4">
-                                                <i class="bi bi-check-circle me-2"></i>Create
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
+                        </div>
+                        <div class="collapse mt-4" id="qrCollapseForm">
+                            <div class="card card-body shadow-sm border-0">
+                                <form id="qrForm">
+                                    <div class="mb-4">
+                                        <label for="qr_target_url" class="form-label fw-bold">URL Destination</label>
+                                        <input type="text" class="form-control shadow-sm" id="qr_target_url" name="qr_target_url" placeholder="https://example.com">
+                                    </div>
+                                    <div class="text-end">
+                                        <button type="submit" class="btn btn-primary px-4">
+                                            <i class="bi bi-check-circle me-2"></i>Create
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -287,7 +285,7 @@
                                                 </h6>
                                             </div>
                                             <div class="col-2 text-start px-0">
-                                                <button class="btn {{ $link->active ? 'btn-outline-primary' : 'btn-outline-danger' }} btn-sm" 
+                                                <button class="btn {{ $link->active ? 'btn-outline-dark' : 'btn-outline-danger' }} btn-sm" 
                                                         onclick="copyFunction('{{ $link->slug }}')">
                                                     <i class="bi bi-clipboard"></i>
                                                 </button>
@@ -314,32 +312,19 @@
                                         </div>
                             
                                         <!-- Security Status -->
-                                        {{-- <div class="d-flex align-items-center mt-3 justify-content-between">
-                                            @if($link->password_protected)
-                                            <i class="bi bi-lock-fill text-danger me-2 opacity-75">  
-                                                <span class="text-danger small opacity-75">Protected</span>
-                                            </i>
-                                            @else
-                                            <i class="bi bi-unlock  me-2 opacity-75"> 
-                                                <span class=" small opacity-75">Unprotected</span>
-                                            </i>
-                                            @endif
-                                            <span class="badge bg-gradient {{ $link->active ? 'bg-primary' : 'bg-warning' }} rounded-pill opacity-75">
-                                                <small><i class="bi bi-{{ $link->active ? 'globe2' : 'lock' }} me-1"></i>
-                                                    {{ $link->active ? 'Public' : 'Private' }}</small>
-                                            </span>
-                                        </div> --}}
-                            
                                         <div class="d-flex justify-content-end mt-3 position-relative dropup">
                                             @if($link->password_protected)
-                                            <button class="btn btn-outline-primary btn-sm rounded-pill me-2" >
+                                            <button class="btn btn-outline-dark btn-sm rounded-pill me-2" >
                                                 <i class="bi bi-lock-fill"></i>
                                             </button>
                                             @endif
                                             <button class="btn btn-outline-{{ $link->active ? 'primary' : 'danger' }} btn-sm rounded-pill me-2" >
                                                 <i class="bi bi-globe2"></i>
                                             </button>
-                                            <button class="btn btn-outline-secondary btn-sm rounded-pill" data-bs-toggle="dropdown">
+                                            <a class="btn btn-outline-primary btn-sm rounded-pill me-2" href="/dashboard/link/{{ $link->slug }}">
+                                                <i class="bi bi-sliders"></i>
+                                            </a>
+                                            <button class="btn btn-outline-primary btn-sm rounded-pill" data-bs-toggle="dropdown">
                                                 <i class="bi bi-three-dots"></i>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-end" style="z-index: 1050;">
@@ -621,19 +606,53 @@
         </div>
         <!-- QR Code Modal -->
         <div class="modal fade" id="qrCodeModal" tabindex="-1" aria-labelledby="qrCodeModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="qrCodeModalLabel">QR Code</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <div id="qrCodeContainer">
-                            <div class="spinner-border text-primary" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                              </div>
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content border-0" style="border-radius: 20px;">
+                    <div class="modal-header bg-gradient-primary text-white" style="border-radius: 20px 20px 0 0; padding: 1.5rem;">
+                        <div class="w-100 text-center">
+                            <h5 class="modal-title mb-1" id="qrCodeModalLabel" style="font-weight: 600;">
+                                <i class="bi bi-qr-code-scan me-2"></i>QR Code
+                            </h5>
+                            <p class="mb-0 small opacity-75" id="qrCodeUrl"></p>
                         </div>
-                        <button id="downloadQrCode" class="btn btn-primary mt-3">Download QR Code</button>
+                        <button type="button" class="btn-close btn-close-white position-absolute end-3 top-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+        
+                    <div class="modal-body text-center py-4 px-5">
+                        <div id="qrCodeContainer" class="position-relative">
+                            <div class="qr-code-loader">
+                                <div class="circle-spinner">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <i class="bi bi-qr-code position-absolute text-primary"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <button id="downloadQrCode" class="btn btn-lg btn-primary px-4 rounded-pill hover-scale">
+                                <i class="bi bi-download me-2"></i>Download
+                            </button>
+                        </div>
+        
+                        <div class="social-share mt-4">
+                            <p class="text-muted small mb-2">Share to:</p>
+                            <div class="d-flex justify-content-center gap-2">
+                                <button class="btn btn-icon hover-scale text-facebook">
+                                    <i class="bi bi-facebook"></i>
+                                </button>
+                                <button class="btn btn-icon hover-scale text-twitter">
+                                    <i class="bi bi-twitter-x"></i>
+                                </button>
+                                <button class="btn btn-icon hover-scale text-instagram">
+                                    <i class="bi bi-instagram"></i>
+                                </button>
+                                <button class="btn btn-icon hover-scale text-whatsapp">
+                                    <i class="bi bi-whatsapp"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

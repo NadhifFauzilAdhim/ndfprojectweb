@@ -17106,3 +17106,37 @@ ul {
     background: #0d6efd;
     border-radius: 2px;
 }
+
+.scan-btn {
+  width: 56px !important;
+  height: 56px !important;
+  position: absolute !important;
+  top: -45px !important; /* Half of the button height */
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  padding: 0;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
+  border: none;
+}
+
+.scan-btn:hover {
+  transform: translateX(-50%) scale(1.05);
+  box-shadow: 0 6px 16px rgba(13, 110, 253, 0.3);
+}
+
+/* Ensure the button stays pressed on click */
+.scan-btn:active {
+  transform: translateX(-50%) scale(0.95);
+}
+
+
+.scan-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin: 0 12px; /* Beri sedikit jarak */
+}

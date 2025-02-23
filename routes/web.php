@@ -37,7 +37,7 @@ Route::middleware('throttle:20,1')->group(function () {
 
 // Authentication routes 
 Route::middleware('guest')->group(function() {
-    Route::middleware('throttle:5,1')->group(function () {
+    Route::middleware('throttle:20,1')->group(function () {
         Route::get('/login', [LoginController::class, 'index'])->name('login');
         Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate');
         Route::get('/register', [RegisterController::class, 'index'])->name('register');
@@ -95,6 +95,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
         Route::resource('/dashboard/link', LinkController::class)->only(['index', 'store', 'show', 'destroy','update']);
         Route::post('/dashboard/link/{link}/update-title', [LinkController::class, 'updateTitle']);
         Route::post('/qrcode/generate',[LinkController::class,'qrcodegenerate'])->name('links.qrcodegenerate');
+        Route::post('/qrcode/scan',[LinkController::class,'qrcodescan'])->name('links.qrcodescan');
         Route::post('/dashboard/link/share', [LinkController::class, 'share']);
         Route::delete('dashboard/link/share/{linkShare}', [LinkController::class, 'deleteShare'])->name('links.share.delete');
     });

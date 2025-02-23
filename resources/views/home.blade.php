@@ -74,9 +74,9 @@
                 </div>
                 <div class="col-lg-6">
                   <ul>
-                    <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span id="umurSpan">20</span></li>
+                    <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span id="umurSpan">21</span></li>
                     <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>Bachelor</span></li>
-                    <li><i class="bi bi-chevron-right"></i> <strong>PhEmailone:</strong> <span>analyticgames@gmail.com</span></li>
+                    <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span>analyticgames@gmail.com</span></li>
                   </ul>
                 </div>
               </div>
@@ -229,7 +229,7 @@
               <h3 class="resume-title">Sumary</h3>
               <div class="resume-item pb-0">
                 <h4>Nadhif Fauzil Adhim</h4>
-                <p><em>undergraduate student majoring in Computer Science, I am deeply passionate about the field of Information Technology (IT). My academic journey revolves around gaining a solid foundation in computer science principles, algorithms, and data structures</em></p>
+                <p><em>An undergraduate student majoring in Computer Science at Universitas Amikom Yogyakarta, passionate about Information Technology (IT), web development, IoT, and software engineering. Experienced as a Lab Assistant, facilitating practical learning, assisting students with troubleshooting, and enhancing their understanding of technical concepts. Committed to continuous learning and innovation in the tech industy</em></p>
                 <ul>
                   <li>Kulon Progo, Yogyakarta, 55672</li>
                   <li>(62) 85 727 785 062</li>
@@ -241,16 +241,20 @@
                 <h4>Bachelor of informatics</h4>
                 <h5>2022 </h5>
                 <p><em>Universitas Amikom Yogyakarta</em></p>
-                  <p>GPA: 3.8/4.0</p>
-                <p>
-                  Currently pursuing my Bachelor's degree in Informatics at Universitas Amikom Yogyakarta, I am developing a strong foundation in computer science principles and gaining practical insights to thrive in the evolving field of Information Technology.
-                </p>
+                <ul>
+                  <li>GPA: 3.8/4.0</li>
+                  <li>Gaining expertise in computer science principles, algorithms, and data structures.</li>
+                  <li>Serving as a Lab Assistant, guiding students in Algorithms and Programming, Advanced Programming, Microcontrollers, and Database Systems.</li>
+                </ul>
               </div>
               <div class="resume-item">
                 <h4>STUDENT HIGH SCHOOL</h4>
                 <h5>2019 - 2022</h5>
                 <p><em>SMA Negeri 1 Kalibawang</em></p>
-                <p> I engaged in diverse academic subjects and extracurricular activities, honing my skills and cultivating a strong foundation for future endeavors. The experiences gained during this time have contributed significantly to my personal and academic growth.</p>
+                <ul>
+                  <li>Engaged in various academic subjects and extracurricular activities.</li>
+                  <li>Actively participated in student organizations, developing leadership and teamwork skills.</li>
+                </ul>
               </div>
             </div>
             <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
@@ -274,13 +278,26 @@
                 </ul>
               </div>
               <div class="resume-item">
-                <h4>STUDENT COUNCIL (OSIS) TECHNOLOGY INFORMATION SECTION</h4>
+                <h4>FLS2N (National Art & Culture Competition)</h4>
+                <h5>2020-2022</h5>
+                <p><em>SMA Negeri 1 Kalibawang</em></p>
+                <ul>
+                  <li>Achieved <strong>1st place</strong> at the provincial level and <strong>8th place</strong> at the national level in the film category.
+
+                    Worked collaboratively in a team to create a short film, handling scriptwriting, directing, and editing.
+                    
+                    Developed strong storytelling and multimedia production skills through the competition.</li>
+                </ul>
+              </div>
+              <div class="resume-item">
+                <h4>STUDENT COUNCIL (OSIS) TECHNOLOGY INFORMATION</h4>
                 <h5>2020-2022</h5>
                 <p><em>SMA Negeri 1 Kalibawang</em></p>
                 <ul>
                   <li>Developing and implementing various marketing programs, including logos, brochures, infographics, and presentations, to enhance communication between OSIS and the student .</li>
                 </ul>
               </div>
+              
             </div>
           </div>
         </div>
@@ -551,10 +568,10 @@
                 <h4>Kostify: Cari Kost dengan Mudah</h4>
                 <p>Temukan tempat tinggal Anda dengan cepat dan mudah.</p>
                 <div class="project-links">
-                  <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="btn btn-sm btn-dark rounded-pill">
+                  <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="btn btn-sm btn-outline-dark rounded-pill">
                     <i class="bi bi-github"></i> Source Code
                   </a>
-                  <a href="https://kostify.my.id" class="btn btn-sm btn-primary rounded-pill">
+                  <a href="https://kostify.my.id" class="btn btn-sm  btn-outline-primary rounded-pill">
                     <i class="bi bi-eye"></i> Website
                   </a>
                 </div>
@@ -571,10 +588,10 @@
                 <h4>Linksy: Smart Link Management</h4>
                 <p>Transform your URLs into powerful, shareable links.</p>
                 <div class="project-links">
-                  <a href="https://linksy.site/apidocumentation" class="btn btn-sm btn-dark rounded-pill">
+                  <a href="https://linksy.site/apidocumentation" class="btn btn-sm btn-outline-dark rounded-pill">
                     <i class="bi bi-file-earmark-code"></i> Documentation
                   </a>
-                  <a href="https://linksy.site" class="btn btn-sm btn-primary rounded-pill">
+                  <a href="https://linksy.site" class="btn btn-sm btn-outline-primary rounded-pill">
                     <i class="bi bi-eye"></i> Website
                   </a>
                 </div>
@@ -594,7 +611,7 @@
                 <h4>HydroEase: Hydroponic IoT System</h4>
                 <p>Solusi otomatisasi hidroponik dengan teknologi IoT.</p>
                 <div class="project-links">
-                  <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="btn btn-sm btn-dark rounded-pill">
+                  <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="btn btn-sm btn-outline-dark rounded-pill">
                     <i class="bi bi-file-earmark-code"></i> Documentation
                   </a>
                 </div>
@@ -807,8 +824,8 @@
             toast.show();
         });
     </script>
-    <div id="preloader">
+    {{-- <div id="preloader">
       <div class="line"></div>
-    </div>
+    </div> --}}
     
 </x-layout>
