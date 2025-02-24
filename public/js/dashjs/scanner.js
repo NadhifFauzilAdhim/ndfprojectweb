@@ -21,7 +21,8 @@
                 fps: 10,
                 qrbox: { width: 250, height: 250 },
                 aspectRatio: 1.0,
-                focusMode: "continuous"
+                focusMode: "continuous",
+                showTorchButtonIfSupported: true 
             };
     
             await html5QrCode.start(
@@ -29,9 +30,10 @@
                 config,
                 onScanSuccess
             );
+            
             isScanning = true;
             initFlashControl();
-            initZoomControl(); 
+            initZoomControl();
         } catch (err) {
             console.error("Gagal memulai kamera:", err);
             showToast('Tidak dapat mengakses kamera. Pastikan izin kamera telah diberikan!', 'error');
@@ -63,7 +65,6 @@
     zoomSlider.addEventListener('input', applyZoom);
 }
 
-// Fungsi untuk mengaplikasikan zoom
 async function applyZoom() {
     const videoElement = document.querySelector('#reader video');
     if (!videoElement || !videoElement.srcObject) return;
@@ -112,10 +113,11 @@ function resetScannerState() {
     function initFlashControl() {
         const flashBtn = document.getElementById('toggleFlashBtn');
         try {
-            const torchCapability = html5QrCode.torchFeature();
-            if (torchCapability.supported) {
+            const settings = html5QrCode.getRunningTrackSettings();
+            if ('torch' in settings) {
                 flashBtn.style.display = 'inline-block';
                 flashBtn.disabled = false;
+                updateFlashUI(); 
             } else {
                 flashBtn.style.display = 'none';
             }
@@ -125,21 +127,27 @@ function resetScannerState() {
         }
     }
 
-    function toggleFlash() {
+    async function toggleFlash() {
         if (!html5QrCode || !isScanning) return;
-
-        const track = html5QrCode.getRunningTrack();
-        if (!track || !track.applyConstraints) return;
-
-        isFlashOn = !isFlashOn;
-        
-        track.applyConstraints({ advanced: [{ torch: isFlashOn }] })
-            .then(() => updateFlashUI())
-            .catch(err => {
-                console.error("Gagal mengubah flash:", err);
-                showToast('Gagal mengubah flash', 'error');
-                isFlashOn = !isFlashOn;
-            });
+    
+        try {
+            isFlashOn = !isFlashOn;
+            const constraints = {
+                torch: isFlashOn,
+                advanced: [{ torch: isFlashOn }] 
+            };
+            await html5QrCode.applyVideoConstraints(constraints);
+            const settings = html5QrCode.getRunningTrackSettings();
+            if (settings.torch !== isFlashOn) {
+                throw new Error('Gagal mengubah status flash');
+            }
+            
+            updateFlashUI();
+        } catch (err) {
+            console.error("Gagal mengubah flash:", err);
+            showToast('Perangkat tidak mendukung flash', 'error');
+            isFlashOn = !isFlashOn;
+        }
     }
 
     function updateFlashUI() {
@@ -150,15 +158,17 @@ function resetScannerState() {
 
     // Utilities
     function resetScannerState() {
+        if (html5QrCode && isScanning) {
+            html5QrCode.applyVideoConstraints({ torch: false }).catch(console.error);
+        }
+        
         isScanning = false;
         isFlashOn = false;
-        
         const flashBtn = document.getElementById('toggleFlashBtn');
         flashBtn.style.display = 'none';
-        
         const flashIcon = document.querySelector('#toggleFlashBtn i');
-        flashIcon.classList.remove('bi-flashlight-fill');
-        flashIcon.classList.add('bi-flashlight');
+        flashIcon.classList.remove('bi-lightbulb-fill');
+        flashIcon.classList.add('bi-lightbulb');
     }
 
     function isValidURL(url) {

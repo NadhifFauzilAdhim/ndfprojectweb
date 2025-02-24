@@ -17,76 +17,72 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="card shadow-sm border-0">
-                            <div class="card-body p-4">
-                                @if($link->password_protected)
-                                    <div class="alert alert-warning d-flex align-items-center justify-content-center text-center shadow-sm" role="alert">
-                                        <i class="bi bi-shield-lock-fill me-2 fs-5"></i>
-                                        <span>Password Protection is Enabled</span>
-                                    </div>
-                                @endif
-                                <div class="text-center mt-4 mb-4">
-                                    <h5>{{ $link->title }}</h5>
+                        { @if($link->password_protected)
+                            <div class="alert alert-warning d-flex align-items-center justify-content-center text-center shadow-sm" role="alert">
+                                <i class="bi bi-shield-lock-fill me-2 fs-5"></i>
+                                <span>Password Protection is Enabled</span>
+                            </div>
+                        @endif
+                        <div class="text-center mt-4 mb-4">
+                            <h5>{{ $link->title }}</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8 mb-5">
+                                <div class="card-body">
+                                    <h5 class="card-title d-flex align-items-center gap-2 mb-4">
+                                        Traffic Overview
+                                        <span>
+                                            <iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Traffic Overview"></iconify-icon>
+                                        </span>
+                                    </h5>
+                                    <div id="traffic-overview"></div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-8 mb-5">
-                                        <div class="card-body">
-                                            <h5 class="card-title d-flex align-items-center gap-2 mb-4">
-                                                Traffic Overview
-                                                <span>
-                                                    <iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Traffic Overview"></iconify-icon>
-                                                </span>
-                                            </h5>
-                                            <div id="traffic-overview"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 mb-5">
-                                        <div class="card-body">
-                                            <h5 class="card-title d-flex align-items-center gap-2 mb-4">
-                                                Top Referrers
-                                                <span>
-                                                    <iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Top Referrers"></iconify-icon>
-                                                </span>
-                                            </h5>
-                                            <div style="overflow-x: auto;">
-                                            <div id="chart"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 mb-5">
-                                        <div class="card-body">
-                                            <h5 class="card-title d-flex align-items-center gap-2 mb-4">
-                                                Location
-                                                <span>
-                                                    <iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Traffic Overview"></iconify-icon>
-                                                </span>
-                                            </h5>
-                                            <div id="location-chart"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-3 text-center">
-                                        <i class="bi bi-cloud-check-fill text-primary fs-6"></i>
-                                        <span class="fs-6 mt-2 d-block text-secondary d-none d-sm-block">Records</span>
-                                        <h4 class="mb-0 mt-1 text-dark">{{ $link->visits }}</h4>
-                                    </div>
-                                    <div class="col-3 text-center">
-                                        <i class="bi bi-arrow-up-right-circle-fill text-success fs-6"></i>
-                                        <span class="fs-6 mt-2 d-block text-secondary d-none d-sm-block">Redirected</span>
-                                        <h4 class="mb-0 mt-1 text-dark">{{ $redirectedCount }}</h4>
-                                    </div>
-                                    <div class="col-3 text-center">
-                                        <i class="bi bi-exclamation-circle-fill text-danger fs-6"></i>
-                                        <span class="fs-6 mt-2 d-block text-secondary d-none d-sm-block">Rejected</span>
-                                        <h4 class="mb-0 mt-1 text-dark">{{ $rejectedCount }}</h4>
-                                    </div>
-                                    <div class="col-3 text-center">
-                                        <i class="bi bi-people-fill text-info fs-6"></i>
-                                        <span class="fs-6 mt-2 d-block text-secondary d-none d-sm-block">Unique</span>
-                                        <h4 class="mb-0 mt-1 text-dark">{{ $link->unique_visits }}</h4>
+                            </div>
+                            <div class="col-lg-4 mb-5">
+                                <div class="card-body">
+                                    <h5 class="card-title d-flex align-items-center gap-2 mb-4">
+                                        Top Referrers
+                                        <span>
+                                            <iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Top Referrers"></iconify-icon>
+                                        </span>
+                                    </h5>
+                                    <div style="overflow-x: auto;">
+                                    <div id="chart"></div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="col-lg-12 mb-5">
+                                <div class="card-body">
+                                    <h5 class="card-title d-flex align-items-center gap-2 mb-4">
+                                        Location
+                                        <span>
+                                            <iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Traffic Overview"></iconify-icon>
+                                        </span>
+                                    </h5>
+                                    <div id="location-chart"></div>
+                                </div>
+                            </div>
+                            <div class="col-3 text-center">
+                                <i class="bi bi-cloud-check-fill text-primary fs-6"></i>
+                                <span class="fs-6 mt-2 d-block text-secondary d-none d-sm-block">Records</span>
+                                <h4 class="mb-0 mt-1 text-dark">{{ $link->visits }}</h4>
+                            </div>
+                            <div class="col-3 text-center">
+                                <i class="bi bi-arrow-up-right-circle-fill text-success fs-6"></i>
+                                <span class="fs-6 mt-2 d-block text-secondary d-none d-sm-block">Redirected</span>
+                                <h4 class="mb-0 mt-1 text-dark">{{ $redirectedCount }}</h4>
+                            </div>
+                            <div class="col-3 text-center">
+                                <i class="bi bi-exclamation-circle-fill text-danger fs-6"></i>
+                                <span class="fs-6 mt-2 d-block text-secondary d-none d-sm-block">Rejected</span>
+                                <h4 class="mb-0 mt-1 text-dark">{{ $rejectedCount }}</h4>
+                            </div>
+                            <div class="col-3 text-center">
+                                <i class="bi bi-people-fill text-info fs-6"></i>
+                                <span class="fs-6 mt-2 d-block text-secondary d-none d-sm-block">Unique</span>
+                                <h4 class="mb-0 mt-1 text-dark">{{ $link->unique_visits }}</h4>
+                            </div>
+                        </div>}
                     </div>
                 </div>
             </div>

@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
   <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
   <script src="{{ asset('vendor/html5-qrcode/html5-qrcode.min.js') }}"></script>
-  <script type="text/javascript">
+  {{-- <script type="text/javascript">
     window.$crisp = [];
     window.CRISP_WEBSITE_ID = "{{ config('services.crisp.website_id') }}";
     (function() {
@@ -22,7 +22,7 @@
       s.async = 1;
       d.getElementsByTagName("head")[0].appendChild(s);
     })();
-  </script>
+  </script> --}}
   {{-- <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
