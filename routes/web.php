@@ -40,11 +40,11 @@ Route::middleware('guest')->group(function() {
     Route::middleware('throttle:20,1')->group(function () {
         Route::get('/login', [LoginController::class, 'index'])->name('login');
         Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate');
-        Route::get('/register', [RegisterController::class, 'index'])->name('register');
+        Route::get('/register', [RegisterController::class, 'index'])->name('register');    
         Route::post('/register', [RegisterController::class, 'store'])->name('storeregister');
     });
 
-    Route::middleware('throttle:3,1')->group(function () {
+    Route::middleware('throttle:20,1')->group(function () {
         Route::get('/forgot-password',[ForgotPasswordController::class,'passwordReset'])->name('password.request');
         Route::post('/forgot-password',[ForgotPasswordController::class,'resetRequest'])->name('password.email');
         Route::get('/reset-password/{token}',[ForgotPasswordController::class,'resetToken'])->name('password.reset');

@@ -1,82 +1,108 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> {{ $title }} | NDFProject</title>
-    <meta name="author" content="Kostify" />
-    <link rel="shortcut icon" href="{{ asset('images/Kostifyop.png') }}" />
-    <!-- Menggunakan stylesheet dari template kedua -->
-    <link rel="stylesheet" href="{{ asset('/css/dash.css') }}" />
-</head>
-<body class="authbody">
-    <!-- Body Wrapper -->
-    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-        data-sidebar-position="fixed" data-header-position="fixed">
-        <div class="position-relative overflow-hidden auth-background min-vh-100 d-flex align-items-center justify-content-center">
-            <div class="d-flex align-items-center justify-content-center w-100">
-                <div class="row justify-content-center w-100">
-                    <div class="col-md-8 col-lg-6 col-xxl-3">
-                        <div class="card mb-0">
-                            <div class="card-body">
-                                <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                                    <img src="{{ asset('img/project/nprojectlogoblue.png') }}" alt="logo" width="250">
-                                </a>
-                                <p class="text-center">Masukan Informasi untuk mendaftar</p>
-                                <form action="/register" method="POST">
-                                    @csrf
-                                    <div class="mb-3">
-                                        <label for="name" class="form-label">Name</label>
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Nama" value="{{ old('name') }}" required>
-                                        @error('name')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="username" class="form-label">Username</label>
-                                        <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" placeholder="Username" value="{{ old('username') }}" required>
-                                        @error('username')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">Email Address</label>
-                                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Email address" value="{{ old('email') }}" required>
-                                        @error('email')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-4">
-                                        <label for="password" class="form-label">Password</label>
-                                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Masukan Password" required>
-                                        @error('password')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4">Sign Up</button>
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <p class="fs-4 mb-0 fw-bold">Sudah punya akun?</p>
-                                        <a class="text-primary fw-bold ms-2" href="/login">Log In</a>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+<x-authlayout>
+    <x-slot:title>{{ $title }}</x-slot:title>
+    <div class="page-wrapper min-vh-100 d-flex align-items-center justify-content-center bg-light auth-background">
+    <div class="container">
+        <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 col-xl-5">
+            <div class="card border-0 shadow-lg overflow-hidden loginblury-background">
+            <div class="text-dark text-center pt-4">
+                <a href="/" class="text-decoration-none">
+                <img src="{{ asset('img/linksy-ndfproject.png') }}" alt="logo" class="img-fluid" style="max-height: 70px;">
+                </a>
+                <h3 class="mt-3 mb-0">Create an Account</h3>
+                <p class="mb-0">Sign up to get started</p>
+            </div>
+
+            <div class="card-body ">
+                <form method="POST" class="needs-validation" novalidate>
+                @csrf
+                <div class="mb-4">
+                    <label class="form-label small mb-2">Full Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0">
+                            <i class="bi bi-person-vcard text-primary"></i>
+                        </span>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Full Name" required value="{{ old('name') }}">
+                        @error('name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
+                
+                <div class="mb-4">
+                    <label class="form-label small mb-2">Username</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0">
+                            <i class="bi bi-person-fill-check text-primary"></i>
+                        </span>
+                        <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" placeholder="Username" required value="{{ old('username') }}">
+                        @error('username')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="form-label small mb-2">Email Address</label>
+                    <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0">
+                        <i class="bi bi-envelope-fill text-primary"></i>
+                    </span>
+                    <input type="email" class="form-control rounded-end @error('email') is-invalid @enderror" name="email" placeholder="name@example.com" required value="{{ old('email') }}">
+                    <div class="invalid-feedback">
+                        @error('email') {{ $message }} @else Please enter valid email @enderror
+                    </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label small mb-2">Password</label>
+                    <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0">
+                        <i class="bi bi-lock-fill text-primary"></i>
+                    </span>
+                    <input type="password" class="form-control rounded-end @error('password') is-invalid @enderror" name="password" placeholder="••••••••" required>
+                    </div>
+                    @error('password')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-4">
+                    <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-person-plus me-2"></i>Sign Up
+                    </button>
+                </div>
+
+                <div class="position-relative my-4">
+                    <hr>
+                    <div class="position-absolute top-50 start-50 translate-middle bg-white px-3 small">OR</div>
+                </div>
+
+                <div class="text-center">
+                    <p class="small mb-0">Already have an account? 
+                    <a href="/login" class="text-decoration-none text-primary fw-semibold">Sign in</a>
+                    </p>
+                </div>
+                </form>
+            </div>
+
+            <div class="card-footer bg-transparent text-center pt-1">
+                <div class="d-flex gap-3 justify-content-center">
+                <a href="#" class="btn btn-outline-secondary btn-icon rounded-circle">
+                    <i class="bi bi-google"></i>
+                </a>
+                <a href="#" class="btn btn-outline-secondary btn-icon rounded-circle">
+                    <i class="bi bi-facebook"></i>
+                </a>
+                <a href="#" class="btn btn-outline-secondary btn-icon rounded-circle">
+                    <i class="bi bi-github"></i>
+                </a>
+                </div>
+            </div>
             </div>
         </div>
+        </div>
     </div>
-    <!-- Menggunakan script dari template kedua -->
-    <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
-</body>
-</html>
+    </div>
+</x-authlayout>

@@ -1,65 +1,116 @@
 <x-authlayout>
   <x-slot:title>{{ $title }}</x-slot:title>
-  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-  data-sidebar-position="fixed" data-header-position="fixed">
-  <div
-    class="position-relative overflow-hidden auth-background min-vh-100 d-flex align-items-center justify-content-center">
-    <div class="d-flex align-items-center justify-content-center w-100">
-      <div class="row justify-content-center w-100">
-        <div class="col-md-8 col-lg-6 col-xxl-3">
-          <div class="card mb-0">
-            <div class="card-body">
-              <a href="/" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                <img src="{{ asset('img/linksy-ndfproject.png') }}" style="width: 250px;" alt="logo">
+  <div class="page-wrapper min-vh-100 d-flex align-items-center justify-content-center bg-light auth-background">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 col-xl-5">
+          <div class="card border-0 shadow-lg overflow-hidden loginblury-background ">
+            <div class=" text-dark text-center pt-2">
+              <a href="/" class="text-decoration-none">
+                <img src="{{ asset('img/linksy-ndfproject.png') }}" alt="logo" class="img-fluid" style="max-height: 70px;">
               </a>
+              <h3 class="mt-3 mb-0">Welcome Back</h3>
+              <p class="mb-0">Sign in to continue</p>
+            </div>
+            
+            <div class="card-body ">
               @if (session('success'))
-              <div class="alert alert-success text-center">
-                {{ session('success') }}
-              </div>
+                <div class="alert alert-success alert-dismissible fade show rounded-3" role="alert">
+                  {{ session('success') }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
               @endif
-              @error('loginfeedback')
-              <div class="alert alert-danger text-center">
-                {{ $message }}
-              </div>
-              @enderror
-              <p class="text-center">Masukkan Email dan Password yang terdaftar</p>
               
-              <form action="/login" method="POST">
+              @error('loginfeedback')
+                <div class="alert alert-danger alert-dismissible fade show rounded-3" role="alert">
+                  {{ $message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              @enderror
+
+              <form method="POST" class="needs-validation" novalidate>
                 @csrf
-                <div class="mb-3">
-                  <label class="form-label" for="email">Email</label>
-                  <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                    placeholder="Email address" value="{{ old('email') }}" autofocus required />
-                  @error('email')
-                  <div class="invalid-feedback">
-                    {{ $message }}
-                  </div>
-                  @enderror
-                </div>
+                <!-- Email Input -->
                 <div class="mb-4">
-                  <label class="form-label" for="password">Password</label>
-                  <input type="password" id="password" name="password" placeholder="Masukan Password"
-                    class="form-control" required />
-                  <div id="forgotpassword" class="form-text"><a href="/forgot-password" class="text-danger">Lupa
-                      Password?</a></div>
+                  <label class="form-label  small mb-2">Email Address</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0">
+                      <i class="bi bi-envelope-fill text-primary"></i>
+                    </span>
+                    <input type="email" 
+                           class="form-control rounded-end @error('email') is-invalid @enderror" 
+                           name="email"
+                           placeholder="name@example.com"
+                           required
+                           autofocus>
+                    <div class="invalid-feedback">
+                      @error('email') {{ $message }} @else Please enter valid email @enderror
+                    </div>
+                  </div>
                 </div>
-                <div class="form-check mb-4">
-                  <input class="form-check-input primary" type="checkbox" id="flexCheckChecked" name="remember">
-                  <label class="form-check-label text-dark" for="flexCheckChecked">
-                    Remember this Device
-                  </label>
+
+                <!-- Password Input -->
+                <div class="mb-4">
+                  <label class="form-label small mb-2">Password</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0">
+                      <i class="bi bi-lock-fill text-primary"></i>
+                    </span>
+                    <input type="password" 
+                           class="form-control rounded-end" 
+                           name="password"
+                           placeholder="••••••••"
+                           required>
+                  </div>
+                  <div class="mt-2 text-end">
+                    <a href="/forgot-password" class="text-decoration-none small">Forgot Password?</a>
+                  </div>
                 </div>
-                <button type="submit" class="btn btn-primary w-100 py-2 fs-4 mb-4">Log In</button>
-                <div class="d-flex align-items-center justify-content-center">
-                  <p class="fs-4 mb-0 fw-bold">Belum Punya Akun?</p>
-                  <a class="text-primary fw-bold ms-2" href="/register">Create new</a>
+
+                <!-- Remember Me Checkbox -->
+                <div class="mb-4 d-flex justify-content-between align-items-center">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="remember" id="remember">
+                    <label class="form-check-label small fw-semibold" for="remember">
+                      Remember me
+                    </label>
+                  </div>
+                  <button type="submit" class="btn btn-primary px-4">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                  </button>
+                </div>
+                <!-- Divider -->
+                <div class="position-relative my-4">
+                  <hr class="">
+                  <div class="position-absolute top-50 start-50 translate-middle bg-white px-3 small ">
+                    OR
+                  </div>
+                </div>
+                <!-- Registration Link -->
+                <div class="text-center">
+                  <p class=" small mb-0">Don't have an account? 
+                    <a href="/register" class="text-decoration-none text-primary fw-semibold">Create account</a>
+                  </p>
                 </div>
               </form>
+            </div>
+            <!-- Social Login (Optional) -->
+            <div class="card-footer bg-transparent text-center pt-0">
+              <div class="d-flex gap-3 justify-content-center">
+                <a href="#" class="btn btn-outline-secondary btn-icon rounded-circle">
+                  <i class="bi bi-google"></i>
+                </a>
+                <a href="#" class="btn btn-outline-secondary btn-icon rounded-circle">
+                  <i class="bi bi-facebook"></i>
+                </a>
+                <a href="#" class="btn btn-outline-secondary btn-icon rounded-circle">
+                  <i class="bi bi-github"></i>
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </x-authlayout>

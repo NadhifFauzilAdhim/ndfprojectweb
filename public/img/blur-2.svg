@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="466px" height="623px" viewBox="0 0 466 623" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>4DC6A0F4-0E30-47C3-A6F1-663858BC7755</title>
+    <defs>
+        <filter x="-62.8%" y="-62.8%" width="225.6%" height="225.6%" filterUnits="objectBoundingBox" id="filter-1">
+            <feGaussianBlur stdDeviation="45" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <filter x="-204.5%" y="-57.2%" width="509.1%" height="214.4%" filterUnits="objectBoundingBox" id="filter-2">
+            <feGaussianBlur stdDeviation="45" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+    </defs>
+    <g id="desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.300000012">
+        <g id="homepage" transform="translate(0, -281)">
+            <g id="blur2" transform="translate(116, 416)">
+                <rect id="Rectangle" fill="#29B77D" filter="url(#filter-1)" x="0" y="189" width="215" height="215" rx="50"></rect>
+                <rect id="Rectangle-Copy" fill="#13EFDC" filter="url(#filter-2)" x="5" y="0" width="66" height="236"></rect>
+            </g>
+        </g>
+    </g>
+</svg>
