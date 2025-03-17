@@ -61,7 +61,7 @@
             <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
               <h3>Web Developer &amp; IoT Entusiast</h3>
               <p class="fst-italic">
-                As a UI/UX & Web Developer, I am passionate about creating engaging and user-friendly digital experiences
+                As a Web $ IoT Developer, I am passionate about creating engaging and user-friendly digital experiences
               </p>
               <div class="row">
                 <div class="col-lg-6">
@@ -269,7 +269,7 @@
               </div>
               <div class="resume-item">
                 <h4>Lab Assistant</h4>
-                <h5>2023 - 2024</h5>
+                <h5>2023 - 2025</h5>
                 <p><em>Universitas Amikom Yogyakarta</em></p>
                 <ul>
                   <li>Lead the instruction and guidance on programming languages, focusing on Algorithms and Programming, Advanced Programming, Microcontrollers, and Database Systems.</li>
@@ -279,7 +279,7 @@
               </div>
               <div class="resume-item">
                 <h4>FLS2N (National Art & Culture Competition)</h4>
-                <h5>2020-2022</h5>
+                <h5>2020-2021</h5>
                 <p><em>SMA Negeri 1 Kalibawang</em></p>
                 <ul>
                   <li>Achieved <strong>1st place</strong> at the provincial level and <strong>8th place</strong> at the national level in the film category.
@@ -658,9 +658,14 @@
                                               <a href="/blog?author={{ $item->author->username }}" class="text-dark text-decoration-none fw-bold">
                                                   {{ $item->author->name }}
                                               </a>
-                                              <div class="text-muted small">
-                                                  <i class="bi bi-clock-history"></i> {{ $item['created_at']->diffForHumans() }}
-                                              </div>
+                                              <div class="d-flex text-muted small gap-3">
+                                                <div>
+                                                    <i class="bi bi-clock-history"></i> {{ $item['created_at']->diffForHumans() }}
+                                                </div>
+                                                <div>
+                                                    <i class="bi bi-eye"></i> {{ $item['views'] }} views
+                                                </div>
+                                            </div>
                                           </div>
                                       </div>
                                       <a href="/blog/{{ $item['slug'] }}" class="h5 text-decoration-none text-dark fw-bold d-block mb-2 text-truncate" style="max-width: 100%;">

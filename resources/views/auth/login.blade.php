@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6 col-xl-5">
-          <div class="card border-0 shadow-lg overflow-hidden loginblury-background ">
+          <div class="card border-0 shadow-lg overflow-hidden loginblury-background rounded-5">
             <div class=" text-dark text-center pt-2">
               <a href="/" class="text-decoration-none">
                 <img src="{{ asset('img/linksy-ndfproject.png') }}" alt="logo" class="img-fluid" style="max-height: 70px;">
@@ -13,7 +13,7 @@
               <p class="mb-0">Sign in to continue</p>
             </div>
             
-            <div class="card-body ">
+            <div class="card-body rounded-5">
               @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show rounded-3" role="alert">
                   {{ session('success') }}

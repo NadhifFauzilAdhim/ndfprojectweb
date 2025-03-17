@@ -625,7 +625,6 @@
                                     <div class="spinner-border text-primary" role="status">
                                         <span class="visually-hidden">Loading...</span>
                                     </div>
-                                    <i class="bi bi-qr-code position-absolute text-primary"></i>
                                 </div>
                             </div>
                         </div>

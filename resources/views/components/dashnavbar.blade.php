@@ -136,7 +136,7 @@
             </a>
 
             <div class="nav-item scan-wrapper">
-              <button id="scanQRBtn" class="btn btn-primary rounded-circle scan-btn">
+              <button id="scanQRBtn" class="btn btn-primary .bg-gradient-primary rounded-circle scan-btn">
                   <iconify-icon icon="solar:qr-code-bold-duotone" width="24" height="24"></iconify-icon>
               </button>
               <span class="nav-label">Scan</span>
@@ -197,13 +197,20 @@
             <input type="range" class="form-range" id="zoomSlider" min="1" max="10" step="0.1" value="1">
           </div>
           <div class="scan-result bg-light rounded-2 p-2">
-            <p class="mb-0 small"><span class="text-muted ">Hasil:</span> 
-              <span id="result" class="fw-bold text-primary"></span>
+            <p class="mb-0 small">
+              <span class="text-muted">Hasil:</span> 
+              <span id="result" class="fw-bold text-primary text-wrap d-inline-block w-100">
+              </span>
             </p>
+            <div id="actionButtons" class="mt-2 d-none">
+              <button id="copyBtn" class="btn btn-sm btn-outline-secondary me-2"><i class="bi bi-clipboard-check me-1"></i>Copy</button>
+              <button id="saveBtn" class="btn btn-sm btn-primary"><i class="bi bi-cloud-arrow-up me-1"></i>Simpan</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 

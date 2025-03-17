@@ -187,8 +187,18 @@ document.addEventListener("DOMContentLoaded", function () {
     toastList.forEach(toast => toast.show());
 });
 
+function isValidUrl(url) {
+    const pattern = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(\/\S*)?$/i;
+    return pattern.test(url);
+}
 function showQRCode(url) {
+    if (!isValidUrl(url)) {
+        showToast('URL tidak valid!', 'warning');
+        return;
+    }
+
     const qrCodeContainer = document.getElementById('qrCodeContainer');
+    const qrCodeLoader = document.querySelector('.qr-code-loader');
     const downloadButton = document.getElementById('downloadQrCode');
     const qrCodeUrlElement = document.getElementById('qrCodeUrl');
     const socialButtons = {
@@ -199,6 +209,8 @@ function showQRCode(url) {
     };
     qrCodeUrlElement.textContent = url;
     qrCodeContainer.innerHTML = '';
+    qrCodeContainer.appendChild(qrCodeLoader);
+    qrCodeLoader.style.display = 'block';
     fetch('/qrcode/generate', {
         method: 'POST',
         headers: {
@@ -214,6 +226,7 @@ function showQRCode(url) {
         return response.text();
     })
     .then(base64Image => {
+        qrCodeLoader.style.display = 'none';
         const qrCodeImg = document.createElement('img');
         qrCodeImg.src = base64Image;
         qrCodeImg.alt = 'QR Code';

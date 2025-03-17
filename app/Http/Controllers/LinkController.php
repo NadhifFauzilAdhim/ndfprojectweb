@@ -197,11 +197,16 @@ class LinkController extends Controller
             'target_url' => 'required|max:255|url',
             'slug' => 'required|max:255|unique:links|regex:/^[\S]+$/',
         ]);
+
         $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
         $validatedData['user_id'] = Auth::id();
+
         $websiteTitle = $this->fetchWebsiteTitle($validatedData['target_url']);
-        $validatedData['title'] = $websiteTitle ?? null;
+
+        $validatedData['title'] = $websiteTitle ? Str::limit($websiteTitle, 50, '') : null;
+
         Link::create($validatedData);
+
         return redirect()->back()->with('success', 'Link Berhasil Ditambahkan');
     }
 

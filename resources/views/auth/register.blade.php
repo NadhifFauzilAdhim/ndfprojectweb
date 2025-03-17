@@ -4,13 +4,24 @@
     <div class="container">
         <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6 col-xl-5">
-            <div class="card border-0 shadow-lg overflow-hidden loginblury-background">
+            <div class="card border-0 shadow-lg overflow-hidden loginblury-background rounded-5">
             <div class="text-dark text-center pt-4">
                 <a href="/" class="text-decoration-none">
                 <img src="{{ asset('img/linksy-ndfproject.png') }}" alt="logo" class="img-fluid" style="max-height: 70px;">
                 </a>
                 <h3 class="mt-3 mb-0">Create an Account</h3>
                 <p class="mb-0">Sign up to get started</p>
+                @if(@session('success'))
+                    <div class="alert alert-success alert-dismissible fade show rounded-3" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @elseif (@session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show rounded-3" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endsession
             </div>
 
             <div class="card-body ">

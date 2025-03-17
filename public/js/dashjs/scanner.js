@@ -5,6 +5,7 @@
     let currentZoom = 1;
     let zoomSlider = document.getElementById('zoomSlider');
     let zoomValue = document.getElementById('zoomValue');
+    let lastScannedUrl = null;
 
     document.getElementById("scanQRBtn").addEventListener("click", () => {
         new bootstrap.Modal(document.getElementById('scanQRModal')).show();
@@ -13,6 +14,8 @@
     document.getElementById('scanQRModal').addEventListener('shown.bs.modal', startScanner);
     document.getElementById('scanQRModal').addEventListener('hidden.bs.modal', stopScanner);
     document.getElementById('toggleFlashBtn').addEventListener('click', toggleFlash);
+    document.getElementById('copyBtn').addEventListener('click', handleCopy);
+    document.getElementById('saveBtn').addEventListener('click', handleSave);
 
     async function startScanner() {
         try {
@@ -36,7 +39,7 @@
             initZoomControl();
         } catch (err) {
             console.error("Gagal memulai kamera:", err);
-            showToast('Tidak dapat mengakses kamera. Pastikan izin kamera telah diberikan!', 'error');
+            showToast('Tidak dapat mengakses kamera. Pastikan izin kamera telah diberikan!', 'warning');
         }
     }
 
@@ -177,21 +180,41 @@ function resetScannerState() {
     }
     
     function onScanSuccess(decodedText) {
-        stopScanner();
+
         if (!isValidURL(decodedText)) {
+            stopScanner();
             showToast('URL tidak valid!', 'error');
             document.getElementById('result').textContent = 'URL tidak valid!';
-            setTimeout(startScanner, 1000);
+            setTimeout(startScanner, 2000);
             return;
         }
+        console.log('Hasil scan:', decodedText);
+        // Tampilkan hasil dan tombol
         document.getElementById('result').textContent = decodedText;
+        document.getElementById('actionButtons').classList.remove('d-none');
+        lastScannedUrl = decodedText;
+    }
+    
+    // Tambahkan fungsi handleCopy dan handleSave
+    function handleCopy() {
+        if (!lastScannedUrl) return;
+        navigator.clipboard.writeText(lastScannedUrl)
+            .then(() => showToast('Tersalin ke clipboard', 'success'))
+            .catch(err => {
+                console.error('Gagal menyalin:', err);
+                showToast('Gagal menyalin', 'error');
+            });
+    }
+    
+    function handleSave() {
+        if (!lastScannedUrl) return;
         fetch('/qrcode/scan', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
             },
-            body: JSON.stringify({ url: decodedText })
+            body: JSON.stringify({ url: lastScannedUrl })
         })
         .then(handleResponse)
         .then(data => {
@@ -199,15 +222,32 @@ function resetScannerState() {
                 showToast('Berhasil menyimpan link', 'success');
                 setTimeout(() => {
                     bootstrap.Modal.getInstance(document.getElementById('scanQRModal')).hide();
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1000);
+                    setTimeout(() => location.reload(), 1000);
                 }, 1500);
             }
         })
         .catch(handleError);
     }
     
+    // Update fungsi resetScannerState
+    function resetScannerState() {
+        if (html5QrCode && isScanning) {
+            html5QrCode.applyVideoConstraints({ torch: false }).catch(console.error);
+        }
+        
+        isScanning = false;
+        isFlashOn = false;
+        const flashBtn = document.getElementById('toggleFlashBtn');
+        flashBtn.style.display = 'none';
+        const flashIcon = document.querySelector('#toggleFlashBtn i');
+        flashIcon.classList.remove('bi-lightbulb-fill');
+        flashIcon.classList.add('bi-lightbulb');
+        
+        // Reset UI hasil scan
+        document.getElementById('actionButtons').classList.add('d-none');
+        document.getElementById('result').textContent = '';
+        lastScannedUrl = null;
+    }
 
     function handleResponse(response) {
         if (!response.ok) {

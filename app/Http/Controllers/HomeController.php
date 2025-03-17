@@ -13,7 +13,7 @@ class HomeController extends Controller
     {
         return view('home',[
             'title' => 'Home',
-            'posts' => Post::select(['id', 'title', 'author_id', 'category_id', 'excerpt', 'slug', 'image', 'created_at', 'updated_at'])
+            'posts' => Post::select(['id', 'title', 'author_id', 'category_id', 'excerpt', 'slug', 'image', 'created_at', 'updated_at','views'])
                 ->filter(request(['search', 'category', 'author']))
                 ->where('is_published', true)
                 ->take(6)
@@ -31,22 +31,32 @@ class HomeController extends Controller
 
     public function blog()
     {
+        $baseQuery = Post::select(['id', 'title', 'author_id', 'category_id', 'excerpt', 'slug', 'image', 'created_at', 'updated_at','views'])
+            ->filter(request(['search', 'category', 'author']))
+            ->where('is_published', true);
+        $posts = (clone $baseQuery)
+            ->latest()
+            ->paginate(6)
+            ->withQueryString();
+        $topPosts = (clone $baseQuery)
+            ->orderBy('views', 'desc')
+            ->limit(5)
+            ->get();
+    
         return view('blog', [
             'title' => 'Blog',
             'type' => 'all',
-            'posts' => Post::select(['id', 'title', 'author_id', 'category_id', 'excerpt', 'slug', 'image', 'created_at', 'updated_at'])
-                ->filter(request(['search', 'category', 'author']))
-                ->where('is_published', true)
-                ->latest()
-                ->paginate(6)
-                ->withQueryString()
+            'posts' => $posts,
+            'topPosts' => $topPosts
         ]);
     }
+
     public function showPost(Post $post)
     {
         if(!$post->is_published && $post->author_id !== Auth::id()) {
             abort(404);
         }
+        $post->increment('views');
         // Eager load relationships and order comments
         $post->load([
             'author', 

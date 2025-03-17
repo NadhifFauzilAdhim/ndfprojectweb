@@ -26,13 +26,18 @@ class RegisterController extends Controller
             'email' => 'required|email:dns|unique:users',
             'password' => 'required|min:5|max:255'
         ]);
-
-        $user = User::create($validatedData);
-        event(new Registered($user));
-        Auth::login($user);
-        // return redirect('/login')->with('success', 'Registration success, please login!');
-        return redirect('/email/verify')->with('success', 'Verify email first');
+    
+        try {
+            $user = User::create($validatedData);
+            event(new Registered($user));
+            Auth::login($user);
+    
+            return redirect('/email/verify')->with('success', 'Verify email first');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to send verification email. SERVER ERROR.');
+        }
     }
+    
 
     public function verifyemail()
     { 
