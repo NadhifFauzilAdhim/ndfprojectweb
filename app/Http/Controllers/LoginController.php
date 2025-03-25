@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class LoginController extends Controller
 {
@@ -16,10 +17,13 @@ class LoginController extends Controller
 
     public function authenticate(Request $request): RedirectResponse
     {
-        $credentials = $request->validate([
+        $request->validate([
             'email' => 'required|email:dns',
             'password' => 'required',
+            'cf-turnstile-response' => ['required', Rule::turnstile()]
         ]);
+
+        $credentials = $request->only('email', 'password');
         $remember = $request->has('remember');
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();

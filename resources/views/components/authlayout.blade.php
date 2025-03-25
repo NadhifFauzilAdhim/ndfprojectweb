@@ -10,6 +10,7 @@
   <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
   <link href="{{ asset('css/dash.css') }}" rel="stylesheet">
+  @turnstileScripts()
 </head> 
 
 <body class="authbody">

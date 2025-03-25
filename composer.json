@@ -14,7 +14,8 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "piwik/device-detector": "^6.4",
-        "realrashid/sweet-alert": "^7.2"
+        "realrashid/sweet-alert": "^7.2",
+        "ryangjchandler/laravel-cloudflare-turnstile": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",

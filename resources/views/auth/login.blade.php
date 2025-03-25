@@ -30,6 +30,7 @@
 
               <form method="POST" class="needs-validation" novalidate>
                 @csrf
+               
                 <!-- Email Input -->
                 <div class="mb-4">
                   <label class="form-label  small mb-2">Email Address</label>
@@ -66,6 +67,7 @@
                     <a href="/forgot-password" class="text-decoration-none small">Forgot Password?</a>
                   </div>
                 </div>
+                <x-turnstile data-theme="light"/>
 
                 <!-- Remember Me Checkbox -->
                 <div class="mb-4 d-flex justify-content-between align-items-center">

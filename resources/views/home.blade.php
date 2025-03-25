@@ -61,7 +61,7 @@
             <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
               <h3>Web Developer &amp; IoT Entusiast</h3>
               <p class="fst-italic">
-                As a Web $ IoT Developer, I am passionate about creating engaging and user-friendly digital experiences
+                As a Web & IoT Developer, I am passionate about creating engaging and user-friendly digital experiences
               </p>
               <div class="row">
                 <div class="col-lg-6">
@@ -143,7 +143,7 @@
             <!-- Bootstrap -->
             <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="200">
               <div class="skill-box">
-                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/reactbootstrap/reactbootstrap-original.svg" class="lazyload" alt="Bootstrap">
+                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" class="lazyload" alt="Bootstrap">
                 <h4>Bootstrap</h4>
                 <p>Advanced</p>
               </div>
@@ -159,7 +159,7 @@
             <!-- JavaScript -->
             <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="400">
               <div class="skill-box">
-                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" class="lazyload" alt="JavaScript">
+                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg" class="lazyload" alt="JavaScript">
                 <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" class="lazyload" alt="JavaScript">
                 <h4>JavaScript</h4>
                 <p>Intermediate</p>
@@ -189,7 +189,8 @@
             <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="700">
               <div class="skill-box">
                 <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" class="lazyload" alt="MySQL">
-                <h4>MySQL</h4>
+                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" class="lazyload" alt="PostgreSQL">
+                <h4>MySQL & PostgreSQL</h4>
                 <p>Advanced</p>
               </div>
             </div>
@@ -199,7 +200,7 @@
               <div class="skill-box">
                 <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="lazyload" alt="Python">
                 <h4>Python</h4>
-                <p>Beginner</p>
+                <p>Intermediate</p>
               </div>
             </div>
 
@@ -211,9 +212,7 @@
                 <p>Intermediate</p>
               </div>
             </div>
-
           </div>
-
         </div>
       </section>
       <!-- ======= Resume Section ======= -->

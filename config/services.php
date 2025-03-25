@@ -45,6 +45,10 @@ return [
     
     'onesignal' => [
         'app_id' => env('ONESIGNAL_APP_ID'),
+    ],
+    'turnstile' => [
+        'key' => env('TURNSTILE_SITE_KEY'),
+        'secret' => env('TURNSTILE_SECRET_KEY'),
     ]
 
 ];

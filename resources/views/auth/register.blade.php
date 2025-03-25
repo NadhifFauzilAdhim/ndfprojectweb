@@ -78,7 +78,7 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-
+                <x-turnstile data-theme="light"/>
                 <div class="mb-4">
                     <button type="submit" class="btn btn-primary w-100">
                     <i class="bi bi-person-plus me-2"></i>Sign Up

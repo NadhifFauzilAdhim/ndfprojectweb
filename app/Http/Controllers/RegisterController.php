@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Registered;
 use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Contracts\Service\Attribute\Required;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -20,12 +21,16 @@ class RegisterController extends Controller
     }
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'name' => 'required|max:255|min:3',
             'username' => 'required|min:3|max:255|unique:users|regex:/^\S*$/u',
             'email' => 'required|email:dns|unique:users',
-            'password' => 'required|min:5|max:255'
+            'password' => 'required|min:5|max:255',
+            'cf-turnstile-response' => ['required', Rule::turnstile()]
+
         ]);
+
+        $validatedData = $request->only('name', 'username', 'email', 'password');
     
         try {
             $user = User::create($validatedData);
