@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main  # Ganti dengan branch yang ingin dideploy
+  workflow_dispatch:  # Menjalankan secara manual jika perlu
 
 jobs:
   deploy:
@@ -15,18 +16,37 @@ jobs:
 
     - name: 🏗️ Install Dependencies with Composer
       run: |
-        composer install --no-dev --optimize-autoloader
+        composer install --no-dev --optimize-autoloader --ignore-platform-reqs
 
     - name: 🗑️ Remove Unnecessary Files
       run: |
-        rm -rf node_modules .git .github .gitignore storage/logs/*
+        rm -rf node_modules .git .github .gitignore storage/logs/* tests
+
+    - name: 📂 Set Directory Permissions
+      run: chmod -R 775 storage bootstrap/cache
+
+    - name: 🚀 Clear Laravel Cache
+      run: php artisan optimize:clear
+
+    - name: 🔗 Create Storage Link
+      run: php artisan storage:link --force
+
+    - name: 🗄️ Run Database Migrations (Opsional)
+      run: php artisan migrate --force
 
     - name: 📤 Upload Files via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4
       with:
-        server: ftpupload.net  # Ganti dengan FTP Host kamu
-        username: if0_34781119  # Ganti dengan username FTP kamu
-        password: ${{ secrets.FTP_WEBHOST_TEST }}  # Simpan password di GitHub Secrets
+        server: ftpupload.net  # Simpan di GitHub Secrets
+        username: if0_34781119
+        password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./  # Folder Laravel yang akan diupload
-        server-dir: /ndfprojectaction.rf.gd/  # Direktori di server (pastikan sesuai)
-
+        server-dir: /ndfprojectaction.rf.gd/  # Sesuaikan dengan direktori di server
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          **/storage/logs/**
+          **/storage/framework/**
+          **/tests/**
+          **/vendor/bin/**
