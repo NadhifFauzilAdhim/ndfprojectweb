@@ -34,7 +34,7 @@ jobs:
       with:
         server: ftpupload.net  # Simpan di GitHub Secrets
         username: if0_34781119
-        password: ${{ secrets.FTP_PASSWORD }}
+        password: ${{ secrets.FTP_WEBHOST_TEST }}
         local-dir: ./  # Folder Laravel yang akan diupload
         server-dir: /ndfprojectaction.rf.gd/  # Sesuaikan dengan direktori di server
         exclude: |
