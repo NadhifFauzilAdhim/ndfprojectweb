@@ -1,0 +1,32 @@
+name: 🚀 Deploy Laravel ke Shared Hosting via FTP
+
+on:
+  push:
+    branches:
+      - main  # Ganti dengan branch yang ingin dideploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: 🏗️ Install Dependencies with Composer
+      run: |
+        composer install --no-dev --optimize-autoloader
+
+    - name: 🗑️ Remove Unnecessary Files
+      run: |
+        rm -rf node_modules .git .github .gitignore storage/logs/*
+
+    - name: 📤 Upload Files via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4
+      with:
+        server: ftpupload.net  # Ganti dengan FTP Host kamu
+        username: if0_34781119  # Ganti dengan username FTP kamu
+        password: ${{ secrets.FTP_WEBHOST_TEST }}  # Simpan password di GitHub Secrets
+        local-dir: ./  # Folder Laravel yang akan diupload
+        server-dir: /ndfprojectaction.rf.gd/  # Direktori di server (pastikan sesuai)
+
