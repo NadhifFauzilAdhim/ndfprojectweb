@@ -1,0 +1,36 @@
+name: 🚀 Install Composer & Upload Dependencies
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: 🏗️ Install Dependencies with Composer
+      run: composer install --no-dev --optimize-autoloader --ignore-platform-reqs
+
+    - name: 🗑️ Remove Unnecessary Files
+      run: |
+        rm -rf node_modules .git .github .gitignore storage/logs/* tests
+
+    - name: 📤 Upload Only Vendor Folder via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ftpupload.net
+        username: if0_34835341
+        password: ${{ secrets.FTP_WEBHOST }}
+        local-dir: vendor/
+        server-dir: /htdocs/Laravel/vendor/
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          **/storage/logs/**
+          **/storage/framework/**
+          **/tests/**
+          **/vendor/bin/**
