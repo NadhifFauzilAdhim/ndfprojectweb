@@ -35,7 +35,7 @@ jobs:
       run: php artisan migrate --force
 
     - name: 📤 Upload Files via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ftpupload.net  # Simpan di GitHub Secrets
         username: if0_34781119
