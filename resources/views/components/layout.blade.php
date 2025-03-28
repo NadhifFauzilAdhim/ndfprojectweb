@@ -53,7 +53,7 @@
 
  <!-- Hope You Find It Someday -->
  <!-- https://ndfproject.my.id/beloved -->
-
+ 
   <!-- Canonical URL -->
   <link rel="canonical" href="{{ url()->current() }}">
     <!-- Scripts -->

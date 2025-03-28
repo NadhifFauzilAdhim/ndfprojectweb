@@ -28,7 +28,7 @@
             <img data-src="https://img.icons8.com/color/512/user-male-circle--v1.png" alt="" width="150" class="rounded-circle lazyload">
             @endif
         </div>
-        <h1 class="heading text-white mb-3" data-aos="fade-up">{{ $posts->count() }} Article By {{ $posts->first()->author->name }}</h1>
+        <h1  class="heading text-white mb-3" data-aos="fade-up">{{ $posts->count() }} Article By {{ $posts->first()->author->name }}</h1>
         <style>.author-avatar-frame{position:relative;display:inline-block;border-radius:50%;padding:8px;background:linear-gradient(45deg,#ff6b6b,#4ecdc4,#45b7d1,#96f2d7);background-size:400% 400%;animation:6s infinite gradientFrame;box-shadow:0 0 20px rgba(78,205,196,.3)}.author-avatar-frame::before{content:'';position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;background:inherit;border-radius:inherit;z-index:-1;animation:inherit;filter:blur(10px)}.author-avatar-frame img{position:relative;z-index:1;border:3px solid #fff;transition:transform .3s}@keyframes gradientFrame{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}@media (hover:hover){.author-avatar-frame:hover img{transform:scale(1.05) rotate(5deg)}}</style>
                     @elseif(request('category'))
                         <h1 class="heading text-white mb-3" data-aos="fade-up">Post in Category @if($posts) {{ $posts->first()->category->name }} @endif</h1> 
@@ -58,6 +58,7 @@
                                 <div class="input-group input-group-lg">
                                     <span class="input-group-text bi-search" id="basic-addon1"></span>
                                     <input
+                                     
                                         name="search"
                                         type="search"
                                         style="z-index: 10;"

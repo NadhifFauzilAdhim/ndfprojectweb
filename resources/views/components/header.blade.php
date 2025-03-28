@@ -3,7 +3,10 @@
 
     <div class="profile">
       @auth
-        @if(Auth::user()->avatar)
+        
+        @if(Auth::user()->avatar && Auth::user()->gauth_id)
+        <img data-src="{{ Auth::user()->avatar }}" alt="" class="img-fluid rounded-circle author-img lazyload">
+        @elseif (Auth::user()->avatar)
         <img data-src="{{ asset('public/'. auth()->user()->avatar) }}" alt="" class="img-fluid rounded-circle author-img lazyload">
         @else
         <img data-src="https://img.icons8.com/color/500/user-male-circle--v1.png" alt="" class="img-fluid rounded-circle author-img lazyload">
@@ -11,7 +14,6 @@
       @else
       <img src="{{ asset('img/author.png') }}" alt="" class="img-fluid rounded-circle author-img">
       @endauth
-
       @auth
       <h1 class="sitename text-white">{{ auth()->user()->name}} @can ('verified') <i class="bi bi-patch-check-fill text-primary"></i> @endcan</h1>
       @else
@@ -19,11 +21,12 @@
       @endauth
      
       <div class="social-links mt-3 text-center">
-        <a href="mailto:nadya15a3@gmail.com" class="mail" target="_blank"><i class="bi bi-envelope-arrow-up"></i></a>
-        <a href="https://www.instagram.com/nadhif_f.a/" class="instagram" target="_blank"><i class="bx bxl-instagram"></i></a>
-        <a href="https://wa.link/89jklc" class="whatsapp" target="_blank"><i class="bx bxl-whatsapp"></i></a>
-        <a href="https://www.linkedin.com/in/nadhif-fauzil-adhim-99a330294" target="_blank" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-      </div>
+        <a href="mailto:nadya15a3@gmail.com" class="mail" target="_blank"><i class="bi bi-envelope-arrow-up" title="Email"></i></a>
+        <a href="https://www.instagram.com/nadhif_f.a/" class="instagram" target="_blank"><i class="bx bxl-instagram" title="Instagram"></i></a>
+        <a href="https://wa.link/89jklc" class="whatsapp" target="_blank"><i class="bx bxl-whatsapp" title="WhatsApp"></i></a>
+        <a href="https://www.linkedin.com/in/nadhif-fauzil-adhim-99a330294" target="_blank" class="linkedin"><i class="bx bxl-linkedin" title="LinkedIn"></i></a>
+    </div>
+    
     </div>
     @auth
       @can('verified')

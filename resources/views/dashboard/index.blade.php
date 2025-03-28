@@ -3,6 +3,7 @@
   <script src="https://static.elfsight.com/platform/platform.js" async></script>
 <div class="elfsight-app-16c599f4-70fd-4b71-aa1d-bfb0ee7810ef" data-elfsight-app-lazy></div>
   <div class="container-fluid">
+    <div class="alert alert-warning text-center" role="alert"> <i class="bi bi-info-circle-fill me-2"></i>Maaf, karena tingginya tingkat spam, fitur post hanya tersedia untuk pengguna terverifikasi. </div>
       <div class="row">
         <div class="col-lg-4">
           <div class="card">

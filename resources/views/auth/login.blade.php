@@ -14,6 +14,15 @@
             </div>
             
             <div class="card-body rounded-5">
+
+              <div class="card-footer bg-transparent text-center pt-0">
+                <div class="d-flex gap-3 justify-content-center">
+                  <a href="{{ route('oauth.google') }}" class="btn btn-light border d-flex align-items-center justify-content-center gap-2 py-2 px-4 rounded-3 shadow-sm" style="text-decoration: none;">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/google/google-original.svg" alt="Google Logo" width="20" height="20">
+                    <span class="fw-semibold text-dark">Sign in with Google</span>
+                  </a>
+                </div>
+              </div>
               @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show rounded-3" role="alert">
                   {{ session('success') }}
@@ -67,8 +76,9 @@
                     <a href="/forgot-password" class="text-decoration-none small">Forgot Password?</a>
                   </div>
                 </div>
-                <x-turnstile data-theme="light"/>
-
+                <div class="text-center">
+                  <x-turnstile data-theme="light"/>
+                </div>
                 <!-- Remember Me Checkbox -->
                 <div class="mb-4 d-flex justify-content-between align-items-center">
                   <div class="form-check">
@@ -97,19 +107,7 @@
               </form>
             </div>
             <!-- Social Login (Optional) -->
-            <div class="card-footer bg-transparent text-center pt-0">
-              <div class="d-flex gap-3 justify-content-center">
-                <a href="#" class="btn btn-outline-secondary btn-icon rounded-circle">
-                  <i class="bi bi-google"></i>
-                </a>
-                <a href="#" class="btn btn-outline-secondary btn-icon rounded-circle">
-                  <i class="bi bi-facebook"></i>
-                </a>
-                <a href="#" class="btn btn-outline-secondary btn-icon rounded-circle">
-                  <i class="bi bi-github"></i>
-                </a>
-              </div>
-            </div>
+           
           </div>
         </div>
       </div>

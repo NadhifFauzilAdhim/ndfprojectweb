@@ -12,6 +12,7 @@
         "jantinnerezo/livewire-alert": "^3.0",
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
+        "laravel/socialite": "^5.18",
         "laravel/tinker": "^2.9",
         "piwik/device-detector": "^6.4",
         "realrashid/sweet-alert": "^7.2",

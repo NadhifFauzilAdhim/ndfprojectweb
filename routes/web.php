@@ -12,6 +12,7 @@ use App\Http\Controllers\BlockedIpController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\GauthController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\RedirectController;
@@ -42,6 +43,11 @@ Route::middleware('guest')->group(function() {
         Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate');
         Route::get('/register', [RegisterController::class, 'index'])->name('register');    
         Route::post('/register', [RegisterController::class, 'store'])->name('storeregister');
+        //GAuth
+        Route::get('/oauth/google', [GauthController::class, 'redirectToProvider'])->name('oauth.google');
+        Route::get('/oauth/google/callback', [GauthController::class, 'handleProviderCallback'])->name('oauth.google.callback');
+
+
     });
 
     Route::middleware('throttle:20,1')->group(function () {
