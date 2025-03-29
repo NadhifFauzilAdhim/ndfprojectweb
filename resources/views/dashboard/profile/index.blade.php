@@ -47,14 +47,29 @@
                 <div class="card">
                     <div class="card-body text-center">
                         @if($user->avatar)
-                        <img src="{{ asset('storage/' . $user->avatar) }}" alt="image" class="img-fluid rounded-circle" width="205"> 
-                        {{-- Delpoy <img src="{{ asset('public/'. $user->avatar) }}" alt="image" class="img-fluid rounded-circle" width="205"> --}}
+                        <img src="{{ asset('storage/' . $user->avatar) }}" alt="image" class="img-fluid rounded-circle" width="205">
+                        @elseif($user->google_avatar)
+                            <img src="{{ $user->google_avatar }}" alt="image" class="img-fluid rounded-circle" width="205">
                         @else
-                        <img src="https://img.icons8.com/color/500/user-male-circle--v1.png" alt="image" class="img-fluid rounded-circle" width="205">
+                            <img src="https://img.icons8.com/color/500/user-male-circle--v1.png" alt="image" class="img-fluid rounded-circle" width="205">
                         @endif
-                        <h4 class="mt-7">{{ $user->name }} <i class="bi bi-patch-check-fill me-1 text-primary"></i><span class="badge text-bg-success rounded-pill ms-1">@if($user->is_admin)<small>Admin</small>@endif</span></h4>
+                    
+                        
+                        <h4 class="mt-3">{{ $user->name }} <i class="bi bi-patch-check-fill me-1 text-primary"></i>
+                            <span class="badge text-bg-success rounded-pill ms-1">
+                                @if($user->is_admin)<small>Admin</small>@endif
+                            </span>
+                        </h4>
+                        @if($user->gauth_id)
+                        <p class="text-muted">
+                            <i class="bi bi-google text-primary me-1"></i> Linked to Google Account
+                        </p>
+                        @endif
                         <p class="card-subtitle mt-2 mb-3">Joined on {{ $user->created_at }}</p>
+                        
                         <button class="btn btn-outline-primary mb-3" data-bs-toggle="modal" data-bs-target="#changeImageModal">Change Image</button>
+                        
+                       
                     </div>
                 </div>
             </div>

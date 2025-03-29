@@ -31,7 +31,7 @@ class GauthController extends Controller
         if ($user) {
             if (!$user->gauth_id) {
                 $user->gauth_id = $googleUser->getId();
-                $user->avatar = $googleUser->getAvatar();
+                $user->google_avatar = $googleUser->getAvatar();
                 $user->gauth_type = 'google';
                 $user->save();
             }
@@ -44,7 +44,7 @@ class GauthController extends Controller
                 'gauth_id'          => $googleUser->getId(),
                 'gauth_type'        => 'google',
                 'password'          => bcrypt(Str::random(16)),
-                'avatar'            => $googleUser->getAvatar(),
+                'google_avatar'     => $googleUser->getAvatar(),
             ]);
         }
 

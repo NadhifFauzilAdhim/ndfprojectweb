@@ -17,11 +17,11 @@ return new class extends Migration
             $table->foreignId('author_id')->constrained(
                 table : 'users',
                 indexName : 'posts_author_id'
-            );
+            )->onDelete('cascade');
             $table->foreignId('category_id')->constrained(
                 table : 'categories',
                 indexName : 'posts_category_id'
-            );
+            )->onDelete('cascade');
             $table->integer('views')->default(0);
             $table->boolean('is_published')->default(true);
             $table->text('excerpt')->nullable();

@@ -64,9 +64,11 @@
                         <!-- Komentar Utama -->
                         <div class="vcard bio">
                             @if($comment->user->avatar)
-                                <img src="{{ asset('storage/' . $comment->user->avatar) }}" alt="Image placeholder">
+                                <img data-src="{{ asset('storage/' . $comment->user->avatar) }}" alt="Image placeholder" class="lazyload">
+                            @elseif($comment->user->google_avatar)
+                                <img data-src="{{ $comment->user->google_avatar }}" alt="Image placeholder" class="lazyload">
                             @else
-                                <img src="https://img.icons8.com/color/48/user-male-circle--v1.png" alt="Image placeholder">
+                                <img data-src="https://img.icons8.com/color/48/user-male-circle--v1.png" alt="Image placeholder" class="lazyload">
                             @endif
                         </div>
                         <div class="comment-body">
@@ -104,9 +106,11 @@
                                 <li class="comment">
                                     <div class="vcard bio">
                                         @if($reply->user->avatar)
-                                            <img src="{{ asset('storage/' . $reply->user->avatar) }}" alt="Image placeholder">
+                                            <img data-src="{{ asset('storage/' . $reply->user->avatar) }}" alt="Image placeholder" class="lazyload">
+                                        @elseif($reply->user->google_avatar)
+                                            <img data-src="{{ $reply->user->google_avatar }}" alt="Image placeholder" class="lazyload">
                                         @else
-                                            <img src="https://img.icons8.com/color/48/user-male-circle--v1.png" alt="Image placeholder">
+                                            <img data-src="https://img.icons8.com/color/48/user-male-circle--v1.png" alt="Image placeholder" class="lazyload">
                                         @endif
                                     </div>
                                     <div class="comment-body">

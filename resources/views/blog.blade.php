@@ -24,6 +24,8 @@
         <div class="author-avatar-frame mb-3"> <!-- Tambahkan div wrapper ini -->
             @if($posts->first()->author->avatar)
             <img data-src="{{ asset('public/' . $posts->first()->author->avatar) }}" alt="" width="150" class="rounded-circle lazyload">
+            @elseif($posts->first()->author->google_avatar)
+            <img data-src="{{ $posts->first()->author->google_avatar }}" alt="" width="150" class="rounded-circle lazyload">
             @else
             <img data-src="https://img.icons8.com/color/512/user-male-circle--v1.png" alt="" width="150" class="rounded-circle lazyload">
             @endif
@@ -103,7 +105,13 @@
                                   </div>
                                   <div class="blog-content p-4 d-flex flex-column flex-grow-1">
                                       <div class="d-flex align-items-center mb-3">
-                                          <img data-src="{{ asset('public/' . $item->author->avatar) }}" class="rounded-circle me-2 lazyload" width="40" height="40" alt="Author Image">
+                                            @if ($item->author->avatar)
+                                            <img data-src="{{ asset('public/' . $item->author->avatar) }}" class="rounded-circle me-2 lazyload" width="40" height="40" alt="Author Image">
+                                            @elseif ($item->author->google_avatar)
+                                            <img data-src="{{ $item->author->google_avatar }}" class="rounded-circle me-2 lazyload" width="40" height="40" alt="Author Image">
+                                            @else
+                                            <img data-src="https://img.icons8.com/color/48/user-male-circle--v1.png" class="rounded-circle me-2 lazyload" width="40" height="40" alt="Author Image">
+                                            @endif
                                           <div class="small">
                                               <a href="/blog?author={{ $item->author->username }}" class="text-dark text-decoration-none fw-bold">
                                                   {{ $item->author->name }}
@@ -154,7 +162,13 @@
                                           {{ Str::limit(strip_tags($item['title']), 80) }}
                                       </a>
                                       <div class="d-flex align-items-center mb-3">
+                                          @if ($item->author->avatar)
                                           <img data-src="{{ asset('public/' . $item->author->avatar) }}" class="rounded-circle me-2 lazyload" width="40" height="40" alt="Author Image">
+                                          @elseif ($item->author->google_avatar)
+                                          <img data-src="{{ $item->author->google_avatar }}" class="rounded-circle me-2 lazyload" width="40" height="40" alt="Author Image">
+                                          @else
+                                          <img data-src="https://img.icons8.com/color/512/user-male-circle--v1.png" class="rounded-circle me-2 lazyload" width="40" height="40" alt="Author Image">
+                                          @endif
                                           <div class="small">
                                               <a href="/blog?author={{ $item->author->username }}" class="text-dark text-decoration-none fw-bold">
                                                   {{ $item->author->name }}

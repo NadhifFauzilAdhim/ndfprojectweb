@@ -42,12 +42,39 @@
                 </script>
 
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="alert alert-primary d-flex align-items-center justify-content-center gap-2" role="alert">
-                            <iconify-icon icon="solar:check-circle-bold" class="fs-4"></iconify-icon>
-                            <span>Open API is ready! <a href="{{ route('ipdocuments') }}" class="fw-bold text-decoration-none">Click here to check it out.</a></span>
+                    {{-- Temporary Component --}}
+                    <div class="carousel slide d-none d-lg-block" data-bs-ride="carousel" data-bs-interval="3000" id="autoPlayCarousel" >
+                        <div class="carousel-inner rounded-3 ">
+                            <div class="carousel-item active">
+                                <div class="col-lg-12 d-none d-lg-block">
+                                    <div class="alert alert-info d-flex align-items-center gap-2 p-3 m-2 shadow-sm justify-content-center" role="alert">
+                                        <iconify-icon icon="material-symbols:phone-iphone" class="fs-4 text-info"></iconify-icon>
+                                        <div>
+                                            <span class="fw-medium">Desktop User?</span> 
+                                            Beralih ke <u>mode mobile</u> untuk mengakses fitur QR Code
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="col-lg-12">
+                                    <div class="alert alert-success d-flex align-items-center gap-2 p-3 m-2 shadow-sm justify-content-center" role="alert">
+                                        <iconify-icon icon="tabler:api" class="fs-4 text-success"></iconify-icon>
+                                        <div>
+                                            Open API tersedia! 
+                                            <a href="{{ route('ipdocuments') }}" class="text-decoration-none fw-medium link-success">
+                                                Akses Sekarang ➔
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <style>.alert{transition:.2s;border-left:3px solid}.alert-info{border-left-color:#0dcaf0;background-color:rgba(13,202,240,.05)}.alert-success{border-left-color:#198754;background-color:rgba(25,135,84,.05)}.alert:hover{box-shadow:0 2px 8px rgba(0,0,0,.1)!important}.link-success:hover{text-decoration:underline!important}</style>
+                      
+                      
+                    
                     <div class="col-lg-8 d-flex align-items-stretch">
                         <div class="card w-100">
                             <div class="card-body shadow-sm">

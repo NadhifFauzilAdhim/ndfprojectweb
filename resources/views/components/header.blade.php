@@ -3,11 +3,10 @@
 
     <div class="profile">
       @auth
-        
-        @if(Auth::user()->avatar && Auth::user()->gauth_id)
-        <img data-src="{{ Auth::user()->avatar }}" alt="" class="img-fluid rounded-circle author-img lazyload">
-        @elseif (Auth::user()->avatar)
+        @if(Auth::user()->avatar)
         <img data-src="{{ asset('public/'. auth()->user()->avatar) }}" alt="" class="img-fluid rounded-circle author-img lazyload">
+        @elseif (Auth::user()->google_avatar)
+        <img data-src="{{ Auth::user()->google_avatar }}" alt="" class="img-fluid rounded-circle author-img lazyload">
         @else
         <img data-src="https://img.icons8.com/color/500/user-male-circle--v1.png" alt="" class="img-fluid rounded-circle author-img lazyload">
          @endif
