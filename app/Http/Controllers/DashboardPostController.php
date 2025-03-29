@@ -142,6 +142,7 @@ class DashboardPostController extends Controller
         ]);
         $title = $request->input('title');
         $language = $request->input('language');
+        $model = 'gemini-2.0-flash';
     
         try {
             $prompt = "Write a well-structured article about '$title' in '$language'. 
@@ -150,8 +151,8 @@ class DashboardPostController extends Controller
             - Well-organized paragraphs using <p>.
             - Proper structure with an introduction, main content, and conclusion.
             - Avoid unnecessary tags.";
-            $result = Gemini::geminiPro()->generateContent($prompt);
-
+            $result = Gemini::generativeModel($model)->generateContent($prompt);
+            
             $generatedContent = $result->text();
     
             return response()->json([
