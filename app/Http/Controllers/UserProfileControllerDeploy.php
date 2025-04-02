@@ -80,7 +80,7 @@ class UserProfileController extends Controller
                 $fullPath = $destinationPath . '/' . $imageName; 
                 $imgManager = new ImageManager(new Driver);
                 $filteredImage = $imgManager->read($fullPath);
-                $filteredImage->resize(500, 500)->save($fullPath);
+                $filteredImage->resize(500, 500)->place(base_path('../img/watermark.png'), 'bottom-right', 10, 10)->save($fullPath);
 
                 $imagePath = 'avatars/' . $imageName;
                 $user->avatar = $imagePath;

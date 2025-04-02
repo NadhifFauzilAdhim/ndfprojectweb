@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Notifications\UserLogin;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
-use Laravel\Socialite\Facades\Socialite;
-use Illuminate\Support\Str;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Notification;
 
 class LoginController extends Controller
 {
@@ -32,6 +30,11 @@ class LoginController extends Controller
         $remember = $request->has('remember');
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
+            $user = Auth::user();
+            $ip_address = $request->ip();
+            $login_time = now()->format('Y-m-d H:i:s');
+            $browser = $request->header('User-Agent');
+            Notification::send($user,new UserLogin($ip_address, $login_time, $browser));
             return redirect()->back();
         }
 

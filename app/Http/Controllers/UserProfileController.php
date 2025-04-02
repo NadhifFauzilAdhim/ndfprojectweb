@@ -75,7 +75,9 @@ class UserProfileController extends Controller
             $imagePath = $request->file('image')->store('avatar');
             $imgManager = new ImageManager(new Driver);
             $filteredImage = $imgManager->read('storage/'.$imagePath);
-            $filteredImage->resize(500,500)->save('storage/'.$imagePath);
+            $watermarkPath = public_path('img/watermark.png');
+            
+            $filteredImage->resize(500,500)->place($watermarkPath, 'bottom-right', 10, 10)->save('storage/'.$imagePath);
             $user->avatar = $imagePath;
             $user->save();
         }
