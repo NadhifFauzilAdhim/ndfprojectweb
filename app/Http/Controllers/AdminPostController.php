@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Notifications\PostDeleted;
+use Illuminate\Support\Facades\Notification;
 
 class AdminPostController extends Controller
 {
@@ -29,12 +31,21 @@ class AdminPostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
-    {
+    public function destroy(Post $post, Request $request)
+    { 
+
+        $request->validate([
+            'delete_reason' => 'required|max:100',
+        ]);
+
         if($post->image){
             Storage::delete($post->image);
         }
-       Post::destroy($post->id);
+        if($post->author->is_owner){
+            return redirect()->back()->with('error', 'You cannot delete this post. FORBIDDEN');
+        }
+        // Notification::send($post->author, new PostDeleted($request->delete_reason, $post->title));
+        Post::destroy($post->id);
         return redirect()->back()->with('success', 'Post Dihapus');
     }
 }

@@ -45,31 +45,41 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="card">
-                    <div class="card-body text-center">
-                        @if($user->avatar)
-                        <img src="{{ asset('storage/' . $user->avatar) }}" alt="image" class="img-fluid rounded-circle" width="205">
-                        @elseif($user->google_avatar)
-                            <img src="{{ $user->google_avatar }}" alt="image" class="img-fluid rounded-circle" width="205">
-                        @else
-                            <img src="https://img.icons8.com/color/500/user-male-circle--v1.png" alt="image" class="img-fluid rounded-circle" width="205">
-                        @endif
-                    
+                    <div class="card-body p-4 text-center">
+                        <div class="position-relative mx-auto" style="width: 180px">
+                            @if($user->avatar)
+                            <img src="{{ asset('storage/' . $user->avatar) }}" 
+                                 class="profile-img shadow-lg" alt="profile">
+                            @elseif($user->google_avatar)
+                                <img src="{{ $user->google_avatar }}" 
+                                     class="profile-img shadow-lg" alt="profile">
+                            @else
+                                <img src="https://img.icons8.com/color/500/user-male-circle--v1.png" 
+                                     class="profile-img shadow-lg" alt="profile">
+                            @endif
+                            <button class="btn btn-light rounded-circle p-2 shadow-sm btn-edit-image" 
+                                    data-bs-toggle="modal" data-bs-target="#changeImageModal">
+                                <i class="bi bi-pencil-fill text-primary"></i>
+                            </button>
+                        </div>
                         
-                        <h4 class="mt-3">{{ $user->name }} <i class="bi bi-patch-check-fill me-1 text-primary"></i>
-                            <span class="badge text-bg-success rounded-pill ms-1">
-                                @if($user->is_admin)<small>Admin</small>@endif
+                        <h2 class="mt-4 mb-1 fw-bold">{{ $user->name }}</h2>
+                        
+                        <div class="d-flex align-items-center justify-content-center gap-2 mb-3">
+                            <span class="badge bg-primary-soft text-primary rounded-pill">
+                                @if($user->is_admin) Admin @endif
                             </span>
-                        </h4>
-                        @if($user->gauth_id)
-                        <p class="text-muted">
-                            <i class="bi bi-google text-primary me-1"></i> Linked to Google Account
-                        </p>
-                        @endif
-                        <p class="card-subtitle mt-2 mb-3">Joined on {{ $user->created_at }}</p>
+                            @if($user->gauth_id)
+                            <span class="badge bg-success-soft text-success rounded-pill">
+                                <i class="bi bi-google me-1"></i>Connected
+                            </span>
+                            @endif
+                        </div>
                         
-                        <button class="btn btn-outline-primary mb-3" data-bs-toggle="modal" data-bs-target="#changeImageModal">Change Image</button>
-                        
-                       
+                        <div class="text-muted small">
+                            <i class="bi bi-clock-history me-1"></i>
+                            Member since {{ $user->created_at->format('M Y') }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -188,5 +198,58 @@
             toastList.forEach(toast => toast.show());
         });
     </script>
+     <style>
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #fff;
+        }
+        
+        .btn-edit-image {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-edit-image:hover {
+            transform: scale(1.1);
+        }
+        
+        .drop-zone {
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            cursor: pointer;
+        }
+        
+        .drop-zone.dragging {
+            border-color: #0d6efd;
+            background-color: rgba(13, 110, 253, 0.05);
+        }
+        
+        .preview-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+        }
+        
+        .bg-primary-soft {
+            background-color: rgba(13, 110, 253, 0.1);
+        }
+        
+        .bg-success-soft {
+            background-color: rgba(25, 135, 84, 0.1);
+        }
+        
+        .card {
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+    </style>
   </x-dashlayout>
   

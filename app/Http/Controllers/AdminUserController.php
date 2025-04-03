@@ -17,7 +17,7 @@ class AdminUserController extends Controller
     {
         return view('dashboard.adminuser', [
             'title' => 'User Setting',
-            'users' => User::all()
+            'users' => User::orderBy('id', 'desc')->paginate(20)->withQueryString(),
         ]);
     }
 
@@ -31,12 +31,47 @@ class AdminUserController extends Controller
             if ($user->email_verified_at && $user->id != Auth::id()) {
                 $user->update(['email_verified_at' => null]);
                 return redirect()->back()->with('success', 'User unverified successfully.');
-            } else {
+            } elseif(!$user->email_verified_at && $user->id != Auth::id()) {
                 $user->update(['email_verified_at' => now()]);
                 Notification::send($user, new UserVerified());
                 return redirect()->back()->with('success', 'User verified successfully.');
             }
+            elseif($user->id == Auth::id()) {
+                return redirect()->back()->with('error', 'You cannot unverify yourself.');
+            }
+            else{
+                return redirect()->back()->with('error', 'Failed to verify user.');
+            }
         }
         return abort(403);
     }
+
+    public function exportCSV()
+    {
+        $dateTime = now()->format('Y-m-d H:i:s');
+        $fileName = 'user_emails '.$dateTime.'.csv';
+        $users = User::all(['id', 'name','username','email']);
+
+        $headers = [
+            "Content-Type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        ];
+
+        $columns = ['ID', 'Name','Username', 'Email'];
+
+        $callback = function() use ($users, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+            foreach ($users as $user) {
+                fputcsv($file, [$user->id, $user->name, $user->username ,$user->email]);
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
 }

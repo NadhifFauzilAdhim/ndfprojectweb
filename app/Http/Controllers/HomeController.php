@@ -80,7 +80,7 @@ class HomeController extends Controller
         return view('blog', [
             'title' => 'Article By ' . $user->name,
             'type' => 'author',
-            'posts' => $user->posts
+            'posts' => $user->posts->only(['id', 'title', 'slug', 'excerpt', 'image', 'created_at', 'updated_at'])
         ]);
     }
 
@@ -89,7 +89,7 @@ class HomeController extends Controller
         return view('blog', [
             'title' => 'Category ' . $category->name,
             'type' => 'category',
-            'posts' => $category->posts
+            'posts' => $category->posts->only(['id', 'title', 'slug', 'excerpt', 'image', 'created_at', 'updated_at'])
         ]);
     }
 

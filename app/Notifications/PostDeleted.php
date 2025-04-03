@@ -7,21 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class UserLogin extends Notification
+class PostDeleted extends Notification
 {
     use Queueable;
-
-    protected $ipAddress;
-    protected $loginTime;
-    protected $browser;
+    protected $deleteReason;
+    protected $postTitle;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(string $ipAddress, string $loginTime, string $browser)
+    public function __construct(string $deleteReason, string $postTitle)
     {
-        $this->ipAddress = $ipAddress;
-        $this->loginTime = $loginTime;
+        $this->deleteReason = $deleteReason;
+        $this->postTitle = $postTitle;
     }
 
     /**
@@ -34,20 +32,20 @@ class UserLogin extends Notification
         return ['mail'];
     }
 
-    /**                    
+    /**
      * Get the mail representation of the notification.
      */
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->subject('New Login Detected ⚠️')
+                    ->subject('Post Deleted Notification ❌')
                     ->greeting('Hello, ' . $notifiable->name . '!')
-                    ->line('We detected a new login to your account.')
-                    ->line('**IP Address:** ' . $this->ipAddress)
-                    ->line('**Login Time:** ' . $this->loginTime)
-                    ->line('**Browser:** ' . $this->browser)
-                    ->line('If this was not you, please change your password immediately.');
-    }   
+                    ->line('Your post has been deleted.')
+                    ->line('im sorry to inform you that your post has been permanently deleted due to violation of our policies.')
+                    ->line('title: ' . $this->postTitle)
+                    ->line('reason: ' . $this->deleteReason)
+                    ->line('If you believe this is a mistake, please contact support.');
+    }
 
     /**
      * Get the array representation of the notification.
@@ -57,8 +55,7 @@ class UserLogin extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'ip_address' => $this->ipAddress,
-            'login_time' => $this->loginTime,
+            //
         ];
     }
 }

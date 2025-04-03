@@ -12,8 +12,6 @@ class RedirectController extends Controller
 {
     public function __invoke(Request $request, Link $link)
     {
-        // return redirect('http://linksy.test/' . $link->slug);
-
         if (!$link->active) {
             return view('redirect.inactive', [
                 'title' => "Link Inactive",
