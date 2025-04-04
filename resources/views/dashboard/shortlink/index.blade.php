@@ -524,12 +524,6 @@
                                 <label class="form-label fw-500 mb-3">Sharing Options</label>
                                 <div class="d-flex gap-3">
                                     <div class="form-check form-check-card">
-                                        <input class="form-check-input" type="checkbox" id="canEdit">
-                                        <label class="form-check-label small" for="canEdit">
-                                            Allow editing
-                                        </label>
-                                    </div>
-                                    <div class="form-check form-check-card">
                                         <input class="form-check-input" type="checkbox" id="sendNotification">
                                         <label class="form-check-label small" for="sendNotification">
                                             Send notification

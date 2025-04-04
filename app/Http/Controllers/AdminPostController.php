@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\PostDeleted;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 
 class AdminPostController extends Controller
@@ -44,7 +45,8 @@ class AdminPostController extends Controller
         if($post->author->is_owner){
             return redirect()->back()->with('error', 'You cannot delete this post. FORBIDDEN');
         }
-        // Notification::send($post->author, new PostDeleted($request->delete_reason, $post->title));
+        Log::info('Post deleted by: ' . auth()->user()->name . ' Reason: ' . $request->delete_reason);
+        Notification::send($post->author, new PostDeleted($request->delete_reason, $post->title));
         Post::destroy($post->id);
         return redirect()->back()->with('success', 'Post Dihapus');
     }

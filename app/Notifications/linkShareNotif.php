@@ -7,22 +7,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class UserLogin extends Notification
+class linkShareNotif extends Notification
 {
     use Queueable;
-
-    protected $ipAddress;
-    protected $loginTime;
-    protected $browser;
+    protected $LinkTitle;
+    protected $linkUrl;
+    protected $sharedBy;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(string $ipAddress, string $loginTime, string $browser)
+    public function __construct(string $LinkTitle, string $linkUrl, string $sharedBy)   
     {
-        $this->ipAddress = $ipAddress;
-        $this->loginTime = $loginTime;
-        $this->browser = $browser;
+        $this->LinkTitle = $LinkTitle;
+        $this->linkUrl = $linkUrl;
+        $this->sharedBy = $sharedBy;
     }
 
     /**
@@ -35,18 +34,22 @@ class UserLogin extends Notification
         return ['mail'];
     }
 
-    /**                    
+    /**
      * Get the mail representation of the notification.
      */
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('New Login Detected ⚠️')
-            ->view('emails.user_login', [
-                'user' => $notifiable,
-                'ipAddress' => $this->ipAddress,
-                'loginTime' => $this->loginTime,
-                'browser' => $this->browser
+            ->subject('🌟 New Link Shared with You!')
+            ->view('emails.link-shared', [
+                'notifiable' => $notifiable,
+                'linkTitle' => $this->LinkTitle,
+                'linkUrl' => $this->linkUrl,
+                'dashboardUrl' => config('app.url') . '/dashboard',
+                'sharedBy' => $this->sharedBy,
+                'sharedAt' => now()->format('F j, Y \a\t g:i a'),
+                'appUrl' => config('app.url'),
+                'appName' => config('app.name')
             ]);
     }
 
@@ -58,8 +61,7 @@ class UserLogin extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'ip_address' => $this->ipAddress,
-            'login_time' => $this->loginTime,
+            //
         ];
     }
 }

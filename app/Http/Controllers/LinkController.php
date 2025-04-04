@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\ValidationException;
+use App\Notifications\linkShareNotif;
+use Illuminate\Support\Facades\Notification;
 
 
 class LinkController extends Controller
@@ -320,13 +322,19 @@ class LinkController extends Controller
 
     public function share(Request $request)
     {
+      
         try {
             $validated = $request->validate([
                 'link_id' => 'required|exists:links,slug',
                 'shared_with' => 'required|exists:users,username',
+                'send_notification' => 'boolean'
             ]);
+
+            $sendingNotification = $request->send_notification ? true : false;
             $link = Link::where('slug', $request->link_id)->firstOrFail();
             $user = User::where('username', $request->shared_with)->firstOrFail();
+            $sharedBy = Auth::user()->name;
+            $fullUrl = 'https://linksy.site/' . $link->slug;
             if ($user->id == Auth::id()) {
                 return response()->json(['error' => 'Anda tidak dapat berbagi link Anda sendiri'], 400);
             }
@@ -336,11 +344,14 @@ class LinkController extends Controller
             if (LinkShare::where('link_id', $link->id)->where('shared_with', $user->id)->exists()) {
                 return response()->json(['error' => 'Link sudah dibagikan kepada pengguna ini'], 400);
             }
+
             LinkShare::create([
                 'link_id' => $link->id,
                 'shared_with' => $user->id,
             ]);
-
+            if ($sendingNotification) {
+                Notification::send($user, new linkShareNotif($link->title,$fullUrl, $sharedBy));
+            }
             return response()->json(['message' => 'Link berhasil dibagikan'], 200);
         } catch (ValidationException $e) {
             return response()->json([

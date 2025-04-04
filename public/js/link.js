@@ -361,13 +361,16 @@ function prepareShareModal(linkSlug) {
 function shareLink() {
     const linkId = $('#linkId').val();
     const sharedWith = $('#sharedWith').val();
+    const sendNotification = $('#sendNotification').is(':checked');
 
     $.ajax({
         url: '/dashboard/link/share',
         type: 'POST',
         data: JSON.stringify({
             link_id: linkId,
-            shared_with: sharedWith
+            shared_with: sharedWith,
+            send_notification: sendNotification
+
         }),
         contentType: 'application/json',
         headers: {
