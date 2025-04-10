@@ -20,7 +20,6 @@ class EventController extends Controller
                         $event['IsAvailable'] = $this->checkIfAvailable($event);
                         $event['timeLeft'] = $this->getTimeLeft($event);
                     }
-    
                     return $eventsData;
                 }
                 return ['error' => 'Unable to fetch events'];

@@ -40,12 +40,21 @@ class BlockedIpController extends Controller
     
     public function unblock($id)
     {
-        $blockedIp = BlockedIp::findOrFail($id);
-        $blockedIp->delete();
+
     
-        return response()->json([
-            'success' => 'IP Address unblocked successfully.',
-        ]);
+
+        $blockedIp = BlockedIp::findOrFail($id);
+        if($blockedIp){
+            $blockedIp->delete();
+            return response()->json([
+                'success' => 'IP Address unblocked successfully.',
+            ]);
+        }
+        else{
+            return response()->json([
+                 'error' => 'Error Unblocking IPs'
+            ]);
+        }
     }
     
 }

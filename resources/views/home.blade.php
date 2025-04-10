@@ -616,6 +616,40 @@
                 </div>
               </div>
             </div>
+            <div class="swiper-slide project-card rounded-5">
+              <div class="project-img">
+                <img data-src="img/project/aksara_project.png" class="img-fluid lazyload rounded-top w-100" alt="HydroEase">
+              </div>
+              <div class="project-content">
+                <div class="d-flex align-items-center justify-content-center mb-2">
+                  <img data-src="img/member/nadhif.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="z-index: 2;">
+                </div>
+                <h4>Klasifikasi Aksara Jawa dengan ResNet 18</h4>
+                <p>Solusi digital mendeteksi dan mengklasifikasikan tulisan tangan aksara Jawa.</p>
+                <div class="project-links">
+                  <a href="https://blog.ndfproject.my.id/2025/04/07/klasifikasi-aksara-jawa-dengan-resnet18-solusi-modern-untuk-digitalisasi-budaya-lokal/" class="btn btn-sm btn-outline-dark rounded-pill">
+                    <i class="bi bi-file-earmark-code"></i> Documentation
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide project-card rounded-5">
+              <div class="project-img">
+                <img data-src="img/project/cad_project.png" class="img-fluid lazyload rounded-top w-100" alt="HydroEase">
+              </div>
+              <div class="project-content">
+                <div class="d-flex align-items-center justify-content-center mb-2">
+                  <img data-src="img/member/nadhif.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="z-index: 2;">
+                </div>
+                <h4>Classroom Attention Analytics System</h4>
+                <p>Analisis real-time data objektif yang dapat mendukung proses pembelajaran.</p>
+                <div class="project-links">
+                  <a href="https://blog.ndfproject.my.id/2025/04/07/classroom-attention-analytics-system-meningkatkan-kualitas-pembelajaran/" class="btn btn-sm btn-outline-dark rounded-pill">
+                    <i class="bi bi-file-earmark-code"></i> Documentation
+                  </a>
+                </div>
+              </div>
+            </div>
             
           </div>
           <div class="swiper-button-next"></div>

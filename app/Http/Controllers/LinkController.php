@@ -97,7 +97,7 @@ class LinkController extends Controller
             'topLinks' => $topLinks,
             'visitData' => $visitData,
             'sharedLinks' => $sharedLinks,
-            'mySharedLinks' => $mySharedLinks
+            'mySharedLinks' => $mySharedLinks,
         ])->with('title', 'Short Link');
     }
 

@@ -16,8 +16,10 @@
         </div>
     </div>
     <div class="bloghero overlay inner-page">
+       
           <img data-src="{{ asset('img/cat.png') }}" alt="" class="img-fluid blob lazyload">
         <div class="container">
+            
             <div class="row align-items-center justify-content-center text-center pt-5">
                 <div class="col-lg-10 mt-5">
                     @if(request('author') && $posts->count() > 0)
@@ -86,6 +88,11 @@
           <div class="container py-5" data-aos="fade-up">
               <div class="row g-4">
                   <!-- Main Content Column -->
+                  <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <strong>Perhatian!</strong> Blog ini telah dipindahkan ke <a href="https://blog.ndfproject.my.id" class="alert-link">blog.ndfproject.my.id</a> untuk memberikan pengalaman membaca yang lebih nyaman.  
+                    Jangan lupa bookmark ya!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
                   <div class="col-lg-8"> 
                       <div class="row g-4 mb-5">
                           @forelse ($posts as $item)
