@@ -144,7 +144,7 @@
                       </div>
                     <div class="col-lg-12 mb-4">
                         <div class="row g-3 align-items-center">
-                            <div class="col-12 col-md-4">
+                            <div class="col-12 col-md-3">
                                 <button 
                                     class="btn btn-primary  align-items-center w-100 py-2 position-relative" 
                                     type="button" 
@@ -155,10 +155,20 @@
                                     style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
                                 >
                                     <i class="bi bi-plus-circle fs-4 me-2"></i>
-                                    <span>Create New Link</span>
+                                    <span>Create New</span>
                                 </button>
                             </div>
-                            <div class="col-12 col-md-4">
+                            <div class="col-12 col-md-3">
+                                <a 
+                                    class="btn btn-primary  align-items-center w-100 py-2 position-relative" 
+                                    href="/dashboard/tracking" 
+                                    style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
+                                >
+                                    <i class="bi bi-geo-alt fs-4 me-2"></i>
+                                    <span>Location Tracker</span>
+                                </a>
+                            </div>
+                            <div class="col-12 col-md-2">
                                 <button 
                                     class="btn btn-primary  align-items-center w-100 py-2 position-relative" 
                                     type="button" 
@@ -172,6 +182,7 @@
                                     <span>Generate QR</span>
                                 </button>
                             </div>
+                           
                             <!-- Form Search -->
                             <div class="col-12 col-md-4">
                                 <form action="/dashboard/link" method="GET">
@@ -345,12 +356,16 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <button class="dropdown-item text-primary" 
-                                                            data-bs-toggle="modal" 
-                                                            data-bs-target="#qrCodeModal" 
-                                                            onclick="showQRCode('https://linksy.site/{{ $link->slug }}')">
-                                                        <i class="bi bi-qr-code me-2"></i> Generate QR
-                                                    </button>
+                                                    <button 
+                                                    class="dropdown-item text-primary generate-qr" 
+                                                    data-url="https://linksy.site/datasets_bdpal"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#qrCodeModal"
+                                                  >
+                                                    <i class="bi bi-qr-code me-2"></i>
+                                                    Generate QR
+                                                  </button>
+                                                  
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item text-primary" 
@@ -367,7 +382,8 @@
                                                     <button class="dropdown-item text-primary" 
                                                             data-bs-toggle="modal" 
                                                             data-bs-target="#shareLinkModal" 
-                                                            onclick="prepareShareModal('{{ $link->slug }}')">
+                                                            data-id="{{ $link->slug }}"
+                                                            >
                                                         <i class="bi bi-share me-2"></i> Share Link
                                                     </button>
                                                 </li>
@@ -539,7 +555,7 @@
                         <button type="button" class="btn btn- btn-neutral" data-bs-dismiss="modal">
                             <i class="bi bi-x-circle me-2"></i>Cancel
                         </button>
-                        <button type="button" class="btn btn- btn-primary px-4" onclick="shareLink()">
+                        <button  id="shareButton" type="button" class="btn  btn-primary px-4" >
                             <i class="bi bi-send-check me-2"></i>Share Now
                         </button>
                     </div>
@@ -734,7 +750,7 @@
             </div>
         </div>
     <script>
-        const visitDataGlobal = @json($visitData);
+        window.visitDataGlobal = @json($visitData);  
     </script>
     <script src="{{ asset('js/link.js') }}"></script>
     <script src="{{ asset('js/dashjs/popup.js') }}"></script>

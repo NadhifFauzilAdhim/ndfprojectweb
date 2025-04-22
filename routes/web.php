@@ -17,6 +17,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\TodoController;
+use App\Http\Controllers\TrackingController;
 
 // Public routes 
 Route::middleware('throttle:60,1')->group(function () {
@@ -43,13 +44,10 @@ Route::middleware('guest')->group(function() {
         Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate');
         Route::get('/register', [RegisterController::class, 'index'])->name('register');    
         Route::post('/register', [RegisterController::class, 'store'])->name('storeregister');
-        //GAuth
+        //Google Authentication
         Route::get('/oauth/google', [GauthController::class, 'redirectToProvider'])->name('oauth.google');
         Route::get('/oauth/google/callback', [GauthController::class, 'handleProviderCallback'])->name('oauth.google.callback');
-
-
     });
-
     Route::middleware('throttle:20,1')->group(function () {
         Route::get('/forgot-password',[ForgotPasswordController::class,'passwordReset'])->name('password.request');
         Route::post('/forgot-password',[ForgotPasswordController::class,'resetRequest'])->name('password.email');
@@ -104,6 +102,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
         Route::post('/qrcode/scan',[LinkController::class,'qrcodescan'])->name('links.qrcodescan');
         Route::post('/dashboard/link/share', [LinkController::class, 'share']);
         Route::delete('dashboard/link/share/{linkShare}', [LinkController::class, 'deleteShare'])->name('links.share.delete');
+        Route::resource('/dashboard/tracking', TrackingController::class)->only(['index', 'store', 'show', 'destroy','update']);
     });
 
     // Blocked IPs 

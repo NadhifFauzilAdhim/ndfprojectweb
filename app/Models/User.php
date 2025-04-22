@@ -78,4 +78,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(LinkShare::class, 'shared_with');
     }
+
+    public function tracking()
+    {
+        return $this->hasMany(Tracking::class, 'user_id');
+    }
 }

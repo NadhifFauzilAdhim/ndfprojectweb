@@ -271,6 +271,7 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('js/dashjs/linkdetail.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             showQRCode('{{ url('r/' . $link->slug) }}');
@@ -279,5 +280,5 @@
         const toprefDataGlobal = @json($topReferers);
         const locationData = @json($location);
     </script>
-    <script src="{{ asset('js/dashjs/linkdetail.js') }}"></script>
+    
 </x-dashlayout>

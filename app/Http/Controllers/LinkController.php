@@ -262,18 +262,36 @@ class LinkController extends Controller
 
     private function getAllVisitData($userId)
     {
-        $startOfWeek = now()->startOfWeek();
-        $endOfWeek = $startOfWeek->copy()->endOfWeek();
-
-        $visits = Linkvisithistory::whereHas('link', fn($query) => $query->where('user_id', $userId))
-            ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
+        $startOfThisWeek = now()->startOfWeek();
+        $endOfThisWeek = now()->endOfWeek();
+        $thisWeekVisits = Linkvisithistory::whereHas('link', fn($q) => $q->where('user_id', $userId))
+            ->whereBetween('created_at', [$startOfThisWeek, $endOfThisWeek])
             ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
             ->groupBy('day')
             ->orderBy('day')
             ->get()
             ->keyBy('day');
-        return collect(range(1, 7))->map(fn($day) => $visits[$day]->total_visits ?? 0)->values();
+    
+        $thisWeek = collect(range(1, 7))->map(fn($day) => $thisWeekVisits[$day]->total_visits ?? 0)->values();
+        $lastWeekCacheKey = 'visit_data_last_week_' . $userId;
+        $lastWeek = Cache::remember($lastWeekCacheKey, now()->addDays(7), function () use ($userId) {
+            $startOfLastWeek = now()->subWeek()->startOfWeek();
+            $endOfLastWeek = now()->subWeek()->endOfWeek();
+            $lastWeekVisits = Linkvisithistory::whereHas('link', fn($q) => $q->where('user_id', $userId))
+                ->whereBetween('created_at', [$startOfLastWeek, $endOfLastWeek])
+                ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
+                ->groupBy('day')
+                ->orderBy('day')
+                ->get()
+                ->keyBy('day');
+            return collect(range(1, 7))->map(fn($day) => $lastWeekVisits[$day]->total_visits ?? 0)->values();
+        });
+        return [
+            'thisWeek' => $thisWeek,
+            'lastWeek' => $lastWeek,
+        ];
     }
+
     /**
      * Get visit history based on filter.
      */

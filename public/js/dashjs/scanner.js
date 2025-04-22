@@ -1,4 +1,11 @@
-    // JavaScript
+/*
+ * File: link.js
+ * Deskripsi: Script untuk Scanner QR Code
+ * Author ; Nadhif Fauzil.
+ */
+
+
+
     let html5QrCode = null;
     let isScanning = false;
     let isFlashOn = false;

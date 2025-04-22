@@ -213,10 +213,6 @@ $(function () {
     chart.render();
 });
 
-
-
-
-
 function applyFilter() {
     const filter = document.getElementById('filterUnique').value;
     const urlParams = new URLSearchParams(window.location.search);

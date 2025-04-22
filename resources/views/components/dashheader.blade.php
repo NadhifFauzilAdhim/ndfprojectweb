@@ -15,23 +15,6 @@
       </ul>
       <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
         <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-          <!-- Elemen ini hanya akan terlihat pada layar md (768px) ke atas -->
-          <li class="nav-item d-none d-md-block">
-              <a  target="_blank" class="btn btn-primary me-2">
-                  <span><small>{{ auth()->user()->name }}</small></span>
-              </a>
-          </li>
-          <!-- Elemen ini juga hanya akan terlihat pada layar md (768px) ke atas -->
-          <li class="nav-item d-none d-md-block">
-              <button
-                  class="btn btn-success me-2"
-                  data-bs-toggle="popover"
-                  data-bs-placement="bottom"
-                  data-bs-content="{{ auth()->user()->is_admin ? 'Akun Anda adalah Admin. Anda memiliki akses penuh.' : 'Akun Anda Adalah Basic, Beberapa fitur dibatasi' }}"
-              >
-                  <span><small>@if(auth()->user()->is_admin) Admin @else Basic @endif</small></span>
-              </button>
-          
           <li class="nav-item dropdown">
             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
               aria-expanded="false">

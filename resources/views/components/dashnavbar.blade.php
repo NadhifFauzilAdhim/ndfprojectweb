@@ -1,11 +1,37 @@
 <aside class="left-sidebar">
     <!-- Sidebar scroll-->
     <div>
-      <div class="brand-logo d-flex align-items-center justify-content-between">
-        <a href="/" class="text-nowrap logo-img">
-          <img src="{{ asset('img/ndflogo.png') }}" alt="" width="200px"/>
+      <div class="brand-logo d-flex align-items-center justify-content-between p-3 py-3">
+        <a href="/dashboard/profile" class="d-flex align-items-center text-decoration-none text-dark">
+          <div class="position-relative">
+            @if(Auth::user()->profile_picture)
+              <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" 
+                   alt="Profile" 
+                   class="rounded-circle shadow-sm"
+                   width="48" 
+                   height="48"
+                   style="object-fit: cover; border: 2px solid #fff;">
+            @elseif(Auth::user()->google_avatar)
+              <img src="{{ Auth::user()->google_avatar }}" 
+                   alt="Profile" 
+                   class="rounded-circle shadow-sm"
+                   width="48" 
+                   height="48"
+                   style="object-fit: cover; border: 2px solid #fff;">
+            @else
+              <div class="avatar-placeholder bg-primary rounded-circle d-flex align-items-center justify-content-center" 
+                   style="width: 48px; height: 48px; background-color: {{ '#'.substr(md5(Auth::user()->id), 0, 6) }};">
+                <span class="text-white fs-5 fw-bold">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</span>
+              </div>
+            @endif
+            <span class="position-absolute bottom-0 end-0 p-1 bg-success border border-2 border-white rounded-circle"></span>
+          </div>
+          <div class="ms-3">
+            <span class="d-block fw-semibold mb-0">{{ Auth::user()->name }}</span>
+            <small class="text-muted">@if(auth()->user()->is_admin) Admin @else Basic @endif</small>
+          </div>
         </a>
-        <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+        <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer">
           <i class="bi bi-x-lg fs-6"></i>
         </div>
       </div>
@@ -113,7 +139,18 @@
           </li>
           @endcan
         </ul>
-        
+        <div class="unlimited-access hide-menu bg-primary-subtle position-relative mb-7 mt-7 rounded-3"> 
+          <div class="d-flex">
+            <div class="unlimited-access-title me-3">
+              <h6 class="fw-semibold fs-4 mb-6 text-dark w-75">Check Out Our New Feature!</h6>
+              <a href="https://linksy.site/updatelog" target="_blank"
+                class="btn btn-primary fs-2 fw-semibold lh-sm">Change Log</a>
+            </div>
+            <div class="unlimited-access-img">
+              <img src="{{ asset('img/rocket.png') }}" alt="" class="img-fluid">
+            </div>
+          </div>
+        </div>
       </nav>
     </div>
   </aside>
