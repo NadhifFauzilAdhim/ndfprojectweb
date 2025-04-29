@@ -17,12 +17,6 @@
     </style>
 </head>
 <body style="margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: #f8fafc;">
-    <!-- Header -->
-    <div style="background-color: #ffffff; padding: 20px 0; border-bottom: 1px solid #e5e7eb;">
-        <div style="max-width: 600px; margin: 0 auto; text-align: center;">
-            <img src="https://i.ibb.co.com/D1stnvk/Arabisoft-removebg-preview.png" alt="Logo" style="height: 40px;">
-        </div>
-    </div>
 
     <!-- Main Content -->
     <div style="max-width: 600px; margin: 30px auto; padding: 0 20px;">
@@ -39,18 +33,12 @@
                 <h2 style="margin: 0 0 15px; font-size: 20px; color: #1e293b;">
                     {{ $linkTitle }}
                 </h2>
-                <a href="{{ url($linkUrl) }}" class="btn">
-                    Open Link 🔗
+                <a href="https://ndfproject.my.id/dashboard/link" class="btn">
+                    Open Dashboard 
                 </a>
                 <div style="margin-top: 25px; color: #64748b; font-size: 14px;">
                     <p style="margin: 8px 0;">
                         <strong>Shared at:</strong> {{ $sharedAt }}
-                    </p>
-                    <p style="margin: 8px 0; word-break: break-all;">
-                        <strong>URL:</strong> 
-                        <a href="{{ url($linkUrl) }}" style="color: #6366f1; text-decoration: none;">
-                            {{ $linkUrl }}
-                        </a>
                     </p>
                 </div>
             </div>
@@ -68,10 +56,6 @@
             <p style="margin: 8px 0;">
                 © {{ date('Y') }} {{ $appName }}. All rights reserved.
             </p>
-            <p style="margin: 8px 0;">
-                <a href="" style="color: #6366f1; text-decoration: none;">Unsubscribe</a> 
-            </p>
-            
         </div>
     </div>
 </body>

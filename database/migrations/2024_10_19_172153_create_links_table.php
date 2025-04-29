@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('visits')->default(0);
             $table->integer('unique_visits')->default(0);
             $table->boolean('active')->default(true);
+            $table->boolean('multi_link')->default(false);
             $table->boolean('password_protected')->default(false);
             $table->string('password')->nullable();
             $table->timestamps();

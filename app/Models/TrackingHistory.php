@@ -10,6 +10,9 @@ class TrackingHistory extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+    protected $casts = [
+        'location' => 'array'
+    ];
 
     public function tracking()
     {

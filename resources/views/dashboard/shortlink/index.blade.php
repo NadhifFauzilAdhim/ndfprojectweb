@@ -1,8 +1,6 @@
 <x-dashlayout>
     <x-slot:title>{{ $title }}</x-slot:title>
     <div class="container-fluid">
-        
-        
         <div class="card">
             <div class="card-body">
             <div class="toast-container position-fixed top-0 end-0 p-3">
@@ -110,35 +108,68 @@
                                 <h4 class="mb-0 mt-1">{{ $totalUniqueVisit }}</h4>
                               </div>
                             </div>
-                             <div class="vstack gap-4 ">
-                                <div class="vstack gap-4 mt-7 pt-2">
-                                    @forelse ($topLinks as $link) 
-                                        <div class="mt-1">
-                                            <div class="hstack justify-content-between">
-                                                <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=16" 
-                                             alt="Favicon" 
-                                             class="rounded me-2" 
-                                             style="width: 16px; height: 16px; flex-shrink: 0;">
-                                                <span class="fs-3 fw-medium">
-                                                    <a href="{{ url('dashboard/link/').'/'.$link->slug }}" class="text-decoration-none text-dark">{{ $link->slug }}</a>
-                                                </span>
-                                                <h6 class="fs-3 fw-medium text-dark lh-base mb-0  " style="width: 12px">
-                                                    <div class="d-flex justify-content-between">
-                                                        <small>{{ $link->visits }}</small>
-                                                        <small class="text-success">
-                                                            +{{ $link->visits_last_7_days ? $link->visits_last_7_days : '-' }}
-                                                        </small>
-                                                    </div>
-                                                </h6>
+                            <div class="vstack gap-3 mt-2" x-data="{ showAll: false }">
+                                @forelse ($topLinks as $index => $link)
+                                    <div class="link-card p-2 p-sm-3 rounded-3 bg-white shadow-sm" 
+                                        @if($loop->index >= 3) x-show="showAll" @endif
+                                        x-transition:enter="transition ease-out duration-200"
+                                        x-transition:enter-start="opacity-0 transform translate-y-2"
+                                        x-transition:enter-end="opacity-100 transform translate-y-0">
+                                        
+                                        <div class="row g-2 align-items-center">
+                                            <!-- Favicon Column -->
+                                            <div class="col-auto">
+                                                <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=32" 
+                                                    alt="Favicon" 
+                                                    class="favicon rounded-2"
+                                                    width="32"
+                                                    height="32">
                                             </div>
-                                        </div>  
-                                    @empty
-                                        <h6 class="fs-3 fw-medium text-dark lh-base mb-0 text-center">
-                                            No Data
-                                        </h6>
-                                    @endforelse
-                                </div>
+                                            
+                                            <!-- Link Info Column -->
+                                            <div class="col text-truncate pe-2">
+                                                <div class="d-flex flex-column truncate-container">
+                                                    <a href="{{ url('dashboard/link/').'/'.$link->slug }}" 
+                                                    class="link-slug text-dark text-decoration-none fw-medium text-truncate">
+                                                        {{ $link->slug }}
+                                                    </a>
+                                                    <small class="text-muted domain-name text-truncate">
+                                                        {{ parse_url($link->target_url, PHP_URL_HOST) }}
+                                                    </small>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Stats Column -->
+                                            <div class="col-auto">
+                                                <div class="d-flex flex-column text-nowrap">
+                                                    <span class="total-visits fw-bold text-dark">{{ $link->visits }}</span>
+                                                    <small class="text-success trend-badge">
+                                                        +{{ $link->visits_last_7_days ?: '-' }}
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @empty
+                                    <div class="empty-state text-center p-3 rounded-3 bg-light">
+                                        <iconify-icon icon="solar:link-broken" class="fs-1 text-muted mb-2"></iconify-icon>
+                                        <p class="text-muted mb-0 fs-14">No links available</p>
+                                    </div>
+                                @endforelse
+                            
+                                @if(count($topLinks) > 3)
+                                    <div class="text-center mt-2">
+                                        <button class="btn btn-outline-primary btn-sm px-4 rounded-pill" 
+                                                @click="showAll = !showAll"
+                                                x-text="showAll ? 'Show Less' : `Show More (+${ { count($topLinks) - 3 } })`">
+                                        </button>
+                                    </div>
+                                @endif
                             </div>
+                            @push('scripts')
+                            <script src="//unpkg.com/alpinejs" defer></script>
+                            @endpush
+                            
                           </div>
                         </div>
                       </div>
@@ -358,7 +389,7 @@
                                                 <li>
                                                     <button 
                                                     class="dropdown-item text-primary generate-qr" 
-                                                    data-url="https://linksy.site/datasets_bdpal"
+                                                    data-url="{{ 'https://linksy.site/' . $link->slug }}"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#qrCodeModal"
                                                   >

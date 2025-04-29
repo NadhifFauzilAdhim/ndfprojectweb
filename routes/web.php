@@ -102,7 +102,11 @@ Route::middleware(['auth', 'verified'])->group(function() {
         Route::post('/qrcode/scan',[LinkController::class,'qrcodescan'])->name('links.qrcodescan');
         Route::post('/dashboard/link/share', [LinkController::class, 'share']);
         Route::delete('dashboard/link/share/{linkShare}', [LinkController::class, 'deleteShare'])->name('links.share.delete');
-        Route::resource('/dashboard/tracking', TrackingController::class)->only(['index', 'store', 'show', 'destroy','update']);
+        // routes/web.php
+        // Route::get('dashboard/tracking', \App\Livewire\TrackingIndex::class)->name('dashboard.tracking.index');
+        Route::name('dashboard.')->group(function () {
+            Route::resource('dashboard/tracking', TrackingController::class)->only(['index', 'store', 'show', 'destroy', 'update']);
+        });
     });
 
     // Blocked IPs 

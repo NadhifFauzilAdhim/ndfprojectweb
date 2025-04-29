@@ -19,6 +19,49 @@
               <p class="card-subtitle mt-2 mb-1 fs-2">We're glad to have you here. Explore the features and tools available on your dashboard to make the most out of your experience.</p>
             </div>
           </div>
+          <div class="d-block d-lg-none mt-4 mobiprof-menu">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row g-3 text-center">
+                        <div class="col-3">
+                            <a href="/dashboard/link" class="text-decoration-none">
+                                <div class="mobiprof-icon-wrapper mobiprof-bg-primary">
+                                    <iconify-icon icon="solar:link-bold-duotone" class="mobiprof-icon"></iconify-icon>
+                                </div>
+                                <div class="mobiprof-label">Linksy</div>
+                            </a>
+                        </div>
+    
+                        <div class="col-3">
+                            <a href="/dashboard/tracking" class="text-decoration-none">
+                                <div class="mobiprof-icon-wrapper mobiprof-bg-success">
+                                    <iconify-icon icon="solar:map-point-hospital-bold-duotone" class="mobiprof-icon"></iconify-icon>
+                                </div>
+                                <div class="mobiprof-label">Tracker</div>
+                            </a>
+                        </div>
+    
+                        <div class="col-3">
+                            <a href="#" class="text-decoration-none">
+                                <div class="mobiprof-icon-wrapper mobiprof-bg-danger">
+                                    <iconify-icon icon="solar:settings-bold-duotone" class="mobiprof-icon"></iconify-icon>
+                                </div>
+                                <div class="mobiprof-label">LinkNest</div>
+                            </a>
+                        </div>
+    
+                        <div class="col-3">
+                            <a href="#" class="text-decoration-none">
+                                <div class="mobiprof-icon-wrapper mobiprof-bg-warning">
+                                    <iconify-icon icon="solar:user-bold-duotone" class="mobiprof-icon"></iconify-icon>
+                                </div>
+                                <div class="mobiprof-label">Profile</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
         </div>
           <div class="col-lg-8">
               <div class="card">
@@ -37,95 +80,144 @@
       
           <div class="col-lg-4 d-flex align-items-stretch">
             <div class="card w-100">
-              <div class="card-body">
+            <div class="card-body shadow-sm">
                 <h5 class="card-title d-flex align-items-center gap-2 pb-3">Link Static<span><iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Locations"></iconify-icon></span>
                 </h5>
                 <div class="row">
-                  <div class="col-4">
+                <div class="col-4">
                     <iconify-icon icon="solar:link-bold-duotone" class="fs-7 d-flex text-primary"></iconify-icon>
                     <span class="fs-11 mt-2 d-block text-nowrap">Link Created</span>
                     <h4 class="mb-0 mt-1">{{ $totalLinks }}</h4>
-                  </div>
-                  <div class="col-4">
+                </div>
+                <div class="col-4">
                     <iconify-icon icon="solar:cursor-line-duotone" class="fs-7 d-flex text-secondary"></iconify-icon>
                     <span class="fs-11 mt-2 d-block text-nowrap">Total Visit</span>
                     <h4 class="mb-0 mt-1">{{ $totalVisit }}</h4>
-                  </div>
-                  <div class="col-4">
+                </div>
+                <div class="col-4">
                     <iconify-icon icon="solar:shield-user-broken" class="fs-7 d-flex text-success"></iconify-icon>
                     <span class="fs-11 mt-2 d-block text-nowrap">Unique Visit</span>
                     <h4 class="mb-0 mt-1">{{ $totalUniqueVisit }}</h4>
-                  </div>
                 </div>
-    
-                <div class="vstack gap-4 mt-7 pt-2">
-                    <div class="vstack gap-4 ">
-                        @forelse ($topLinks as $link) 
-                            <div class="mt-1">
-                                <div class="hstack justify-content-between">
-                                    <iconify-icon 
-                                        icon="solar:link-round-angle-bold-duotone" 
-                                        class="fs-3 d-flex text-primary">
-                                    </iconify-icon>
-                                    <span class="fs-3 fw-medium">
-                                        <a href="{{ url('dashboard/link/').'/'.$link->slug }}">{{ $link->slug }}</a>
-                                    </span>
-                                    <h6 class="fs-3 fw-medium text-dark lh-base mb-0 w-4">
-                                        <div class="d-flex justify-content-between">
-                                            <small>{{ $link->visits }}</small>
-                                            <small class="text-success">
-                                                +{{ $link->visits_last_7_days ? $link->visits_last_7_days : '-' }}
-                                            </small>
-                                        </div>
-                                    </h6>
+                </div>
+                <div class="border-0 rounded-3" style="max-height: 250px; overflow-y: auto;">
+                    <div class="vstack gap-3 p-3">
+                        @forelse ($topLinks as $link)
+                        <div class="link-card p-2 p-sm-3 rounded-3 bg-white shadow-sm">
+                            <div class="row g-2 align-items-center">
+                                <!-- Favicon Column -->
+                                <div class="col-auto">
+                                    <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=32" 
+                                        alt="Favicon" 
+                                        class="favicon rounded-2"
+                                        width="32"
+                                        height="32">
                                 </div>
-                            </div>  
+                                
+                                <!-- Link Info Column -->
+                                <div class="col text-truncate pe-2">
+                                    <div class="d-flex flex-column truncate-container">
+                                        <a href="{{ url('dashboard/link/').'/'.$link->slug }}" 
+                                        class="link-slug text-dark text-decoration-none fw-medium text-truncate">
+                                            {{ $link->title }}
+                                        </a>
+                                        <small class="text-muted domain-name text-truncate">
+                                            {{ parse_url($link->target_url, PHP_URL_HOST) }}
+                                        </small>
+                                    </div>
+                                </div>
+                                
+                                <!-- Stats Column -->
+                                <div class="col-auto">
+                                    <div class="d-flex flex-column text-nowrap">
+                                        <span class="total-visits fw-bold text-dark">{{ $link->visits }}</span>
+                                        <small class="text-success trend-badge">
+                                            +{{ $link->visits_last_7_days ?: '-' }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         @empty
-                            <h6 class="fs-3 fw-medium text-dark lh-base mb-0 text-center">
-                                No Data
-                            </h6>
+                        <div class="empty-state text-center p-3 rounded-3 bg-light">
+                            <iconify-icon icon="solar:link-broken" class="fs-1 text-muted mb-2"></iconify-icon>
+                            <p class="text-muted mb-0 fs-14">No links available</p>
+                        </div>
                         @endforelse
                     </div>
                 </div>
-              </div>
             </div>
-          </div>
-   
-      <div class="col-lg-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Last Visits History</h5>
-            <div class="table-responsive">
-              <table class="table text-nowrap align-middle mb-0">
-                <thead>
-                  <tr class="border-2 border-bottom border-primary border-0"> 
-                    <th scope="col" class="ps-0">Link</th>
-                    <th scope="col" class="text-center">Date</th>
-                    <th scope="col" class="ps-0">Detail</th>
-                   
-                  </tr>
-                </thead>
-                <tbody class="table-group-divider">
-                  @forelse ($lastLinkVisit as $visit )
-                  <tr>
-                    <th scope="row" class="ps-0 fw-medium">
-                      <span class="table-link1 text-truncate d-block"><small>{{ $visit->link->title }}</small></span>
-                    </th> 
-                    <td class="text-center fw-medium"><small>{{  $visit->created_at->diffForHumans() }}</small></td>
-                    <td>
-                      <a href="/dashboard/link/{{ $visit->link->slug }}" class="link-primary text-dark fw-medium d-block"><small>Detail</small></a>
-                    </td>
-                  </tr>
-              
-                  @empty
-                  <td colspan="3" class="text-center">Tidak ada data &#129300;</td>
-                  @endforelse
-                  
-                </tbody>
-              </table>
             </div>
-          </div>
         </div>
+   
+        <div class="col-lg-4">
+          <div class="card border-0 shadow-hover">
+              <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center mb-4">
+                      <h5 class="card-title mb-0 fw-bold ">
+                          <iconify-icon icon="solar:clock-circle-linear" class="me-2"></iconify-icon>
+                          Last Visits
+                      </h5>
+                      <span class="badge bg-primary-soft text-primary">{{ count($lastLinkVisit) }}</span>
+                  </div>
+      
+                  <div class="table-responsive rounded-3 custom-scroll" style="max-height: 400px;">
+                      <table class="table table-hover align-middle mb-0">
+                          <thead class="bg-primary-soft">
+                              <tr>
+                                  <th scope="col" class="ps-3 rounded-start">Link</th>
+                                  <th scope="col" class="text-center">Time</th>
+                                  <th scope="col" class="pe-3 rounded-end">Action</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              @forelse ($lastLinkVisit as $visit)
+                              <tr class="position-relative">
+                                  <td class="ps-3">
+                                      <div class="d-flex align-items-center">
+                                          <div class="symbol symbol-35px symbol-circle bg-light-primary me-3">
+                                              <span class="symbol-label fs-6 fw-bold">
+                                                  {{ $visit->link->title, 0, 1 }} 
+                                              </span>
+                                          </div>
+                                          <div>
+                                              <div class="fw-medium text-dark text-truncate" style="max-width: 120px;">
+                                                  {{ $visit->link->title }}
+                                              </div>
+                                              <div class="text-muted fs-9 text-truncate">
+                                                  {{ parse_url($visit->link->target_url, PHP_URL_HOST) }}
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  <td class="text-center">
+                                      <span class="badge bg-light text-dark">
+                                          <iconify-icon icon="solar:clock-circle-linear" class="me-1"></iconify-icon>
+                                          {{ $visit->created_at->diffForHumans() }}
+                                      </span>
+                                  </td>
+                                  <td class="pe-3">
+                                      <a href="/dashboard/link/{{ $visit->link->slug }}" 
+                                         class="btn btn-icon btn-sm btn-light-primary">
+                                         <iconify-icon icon="solar:eye-linear"></iconify-icon>
+                                      </a>
+                                  </td>
+                              </tr>
+                              @empty
+                              <tr>
+                                  <td colspan="3" class="text-center py-5">
+                                      <div class="empty-state">
+                                          <iconify-icon icon="solar:clock-circle-linear" class="fs-1 text-muted mb-3"></iconify-icon>
+                                          <p class="text-muted mb-0">No visit history found</p>
+                                      </div>
+                                  </td>
+                              </tr>
+                              @endforelse
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
       </div>
       
       <div class="col-lg-4 d-flex align-items-stretch">

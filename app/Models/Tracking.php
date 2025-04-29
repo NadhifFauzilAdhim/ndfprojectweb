@@ -20,4 +20,9 @@ class Tracking extends Model
     {
         return $this->hasMany(TrackingHistory::class);
     }
+    public function latestHistory()
+    {
+        return $this->hasOne(TrackingHistory::class)->latestOfMany();
+    }
+    
 }
