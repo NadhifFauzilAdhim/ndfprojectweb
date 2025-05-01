@@ -101,6 +101,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
         Route::post('/qrcode/generate',[LinkController::class,'qrcodegenerate'])->name('links.qrcodegenerate');
         Route::post('/qrcode/scan',[LinkController::class,'qrcodescan'])->name('links.qrcodescan');
         Route::post('/dashboard/link/share', [LinkController::class, 'share']);
+        Route::get('dashboard/link/{link}/summary', [LinkController::class, 'generateSummary'])->name('link.summary');
         Route::delete('dashboard/link/share/{linkShare}', [LinkController::class, 'deleteShare'])->name('links.share.delete');
         // routes/web.php
         // Route::get('dashboard/tracking', \App\Livewire\TrackingIndex::class)->name('dashboard.tracking.index');

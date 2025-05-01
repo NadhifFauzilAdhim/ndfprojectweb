@@ -51,6 +51,22 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-12 mt-4">
+                                <div class="card border shadow-sm p-4">
+                                    <h5 class="card-title mb-3">Analisis Kunjungan Link</h5>
+                                    <button id="generate-summary-btn" class="btn btn-primary mb-3" data-link-id="{{ $link->slug }}">
+                                        <i class="bi bi-magic me-2"></i>Generate Insight
+                                    </button>
+                                    <div id="summary-loading" class="d-none">
+                                        <div class="d-flex align-items-center text-primary">
+                                            <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                                            <span>Menganalisis pola lalu lintas...</span>
+                                        </div>
+                                    </div>
+                                    <div id="summary-result" class="mt-3"></div>
+                                </div>
+                            </div>
+                            <style>.summary-card{background:linear-gradient(135deg,#f8f9fa 0,#fff 100%);border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:1.5rem;position:relative;transition:.3s}.summary-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.06)}.stats-badge{background:rgba(41,128,185,.1);color:#2980b9;padding:6px 12px;border-radius:8px;font-size:.85rem}.section-heading{color:#2c3e50;font-weight:600;border-left:3px solid #3498db;padding-left:1rem;margin:1.5rem 0 1rem}.copy-btn{position:absolute;top:1rem;right:1rem;opacity:.6;transition:.2s}.copy-btn:hover{opacity:1;transform:scale(1.05)}</style>
                             <div class="col-lg-12 mb-5">
                                 <div class="card-body">
                                     <h5 class="card-title d-flex align-items-center gap-2 mb-4">
@@ -272,6 +288,7 @@
         </div>
     </div>
     <script src="{{ asset('js/dashjs/linkdetail.js') }}"></script>
+    <script src="{{ asset('js/dashjs/linksummary.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             showQRCode('{{ url('r/' . $link->slug) }}');

@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\ValidationException;
 use App\Notifications\linkShareNotif;
 use Illuminate\Support\Facades\Notification;
+use Gemini\Laravel\Facades\Gemini;
+
 
 
 class LinkController extends Controller
@@ -454,6 +456,127 @@ class LinkController extends Controller
                 'message' => 'Terjadi kesalahan server: ' . $e->getMessage()
             ], 500);
         }
+    }
+
+    public function generateSummary(Link $link)
+    {
+        $this->authorizeLink($link);
+
+        try {
+            $cacheKey = 'summary_' . $link->id;
+            $cached = Cache::get($cacheKey);
+
+            if ($cached) {
+                return response()->json([
+                    'success' => true,
+                    'summary' => $cached['summary'],
+                    'stats' => $cached['stats']
+                ]);
+            }
+
+            $totalVisits = $link->visits;
+            $uniqueVisits = $link->unique_visits;
+            $recentVisits = Linkvisithistory::where('link_id', $link->id)
+                ->latest()
+                ->take(5)
+                ->get();
+
+            // Cek jika tidak ada data kunjungan
+            if ($totalVisits == 0 && $uniqueVisits == 0 && $recentVisits->isEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Belum ada data kunjungan untuk dianalisis.'
+                ], 200);
+            }
+
+            $stats = [
+                'Total Kunjungan' => $totalVisits,
+                'Kunjungan Unik' => $uniqueVisits,
+                'Lokasi Terbanyak' => $this->getMostCommonLocation($link->id),
+                'Referer Utama' => $this->getTopReferer($link->id),
+                'Device Populer' => $this->getDeviceStats($link->id),
+                '5 Kunjungan Terakhir' => $recentVisits->map(fn($v) => [
+                    'Waktu' => $v->created_at->format('d M Y H:i'),
+                    'Status' => $v->status ? 'Redirected' : 'Blocked',
+                    'Lokasi' => $v->location,
+                    'Device' => $this->parseDevice($v->user_agent)
+                ])->toArray()
+            ];
+
+            $prompt = "Berdasarkan data statistik berikut:\n";
+            foreach ($stats as $label => $value) {
+                $prompt .= "- $label: " . json_encode($value, JSON_UNESCAPED_SLASHES) . "\n";
+            }
+            $prompt .= "\nTampilkan ringkasan analisis dalam 3 poin utama dalam Bahasa Indonesia, dan outputkan langsung dalam format HTML tanpa kalimat pembuka. Gunakan tag <ul> dan <li> dengan format:\n" .
+                    "<ul>\n" .
+                    "<li><b>1. Tren Utama:</b> ...</li>\n" .
+                    "<li><b>2. Pola Menarik:</b> ...</li>\n" .
+                    "<li><b>3. Rekomendasi:</b> ...</li>\n" .
+                    "</ul>";
+
+            $model = 'gemini-2.0-flash';
+            $response = Gemini::generativeModel($model)->generateContent($prompt);
+
+            $data = [
+                'summary' => $response->text(),
+                'stats' => $stats
+            ];
+
+            Cache::put($cacheKey, $data, now()->addMinutes(30));
+
+            return response()->json([
+                'success' => true,
+                'summary' => $data['summary'],
+                'stats' => $data['stats']
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error generating summary: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    // Helper methods
+    private function getMostCommonLocation($linkId)
+    {
+        return Linkvisithistory::where('link_id', $linkId)
+            ->select('location', DB::raw('count(*) as total'))
+            ->groupBy('location')
+            ->orderByDesc('total')
+            ->first()->location ?? 'N/A';
+    }
+
+    private function getTopReferer($linkId)
+    {
+        return Linkvisithistory::where('link_id', $linkId)
+            ->whereNotNull('referer_url')
+            ->select('referer_url', DB::raw('count(*) as total'))
+            ->groupBy('referer_url')
+            ->orderByDesc('total')
+            ->first()->referer_url ?? 'Direct';
+    }
+
+    private function getDeviceStats($linkId)
+    {
+        $devices = Linkvisithistory::where('link_id', $linkId)
+            ->select('user_agent', DB::raw('count(*) as total'))
+            ->groupBy('user_agent')
+            ->orderByDesc('total')
+            ->take(3)
+            ->get()
+            ->mapWithKeys(fn($item) => [$this->parseDevice($item->user_agent) => $item->total]);
+        
+        return $devices->all();
+    }
+
+    private function parseDevice($userAgent)
+    {
+        if (stripos($userAgent, 'Mobile') !== false) return 'Mobile';
+        if (stripos($userAgent, 'Tablet') !== false) return 'Tablet';
+        if (stripos($userAgent, 'Desktop') !== false) return 'Desktop';
+        return 'Unknown';
     }
 
 }

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->ipAddress('ip_address')->nullable();
             $table->string('user_agent')->nullable();
             $table->string('referer_url')->nullable();
-            $table->string('location')->nullable();
+            $table->json('location')->nullable();
             $table->boolean('is_unique')->nullable();
             $table->timestamps();
         });
