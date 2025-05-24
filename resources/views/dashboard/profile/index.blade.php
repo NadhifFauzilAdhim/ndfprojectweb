@@ -87,31 +87,6 @@
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
-                        <script>
-                            document.addEventListener("DOMContentLoaded", function() {
-                                @if(session()->has('success'))
-                                    Swal.fire({
-                                        text: "{{ session('success') }}",
-                                        icon: 'success',
-                                        toast: true,
-                                        position: 'top-end',
-                                        showConfirmButton: false,
-                                        timer: 3000,
-                                        timerProgressBar: true,
-                                    });
-                                @elseif(session()->has('error'))
-                                    Swal.fire({
-                                        text: "{{ session('error') }}",
-                                        icon: 'error',
-                                        toast: true,
-                                        position: 'top-end',
-                                        showConfirmButton: false,
-                                        timer: 3000,
-                                        timerProgressBar: true,
-                                    });
-                                @endif
-                            });
-                        </script>
                         <h5 class="card-title fw-semibold">Your Profile</h5>
                         <div class="card">
                             <div class="card-body">

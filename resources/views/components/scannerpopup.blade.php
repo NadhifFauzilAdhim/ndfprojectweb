@@ -40,7 +40,7 @@
                 <div class="scan-result bg-light rounded-2 p-2">
                   <p class="mb-0 small">
                     <span class="text-muted">Hasil:</span> 
-                    <span id="result" class="fw-bold text-primary text-wrap d-inline-block w-100">
+                    <span id="result" class="fw-bold  text-wrap d-inline-block w-100">
                     </span>
                   </p>
                   <div id="actionButtons" class="mt-2 d-none">

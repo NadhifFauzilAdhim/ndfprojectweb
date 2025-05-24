@@ -108,9 +108,10 @@ Route::middleware(['auth', 'verified'])->group(function() {
         Route::name('dashboard.')->group(function () {
             Route::resource('dashboard/tracking', TrackingController::class)->only(['index', 'store', 'show', 'destroy', 'update']);
         });
+        route::view('/dashboard/linknest', 'dashboard.linknest.index',['title' => 'Linknest'])->name('linknest');
     });
 
-    // Blocked IPs 
+    // Blocked IPs '
     Route::middleware('throttle:10,1')->group(function () {
         Route::post('/block-ip', [BlockedIpController::class, 'block'])->name('block.ip');
         Route::delete('/unblock-ip/{id}', [BlockedIpController::class, 'unblock'])->name('unblock.ip');

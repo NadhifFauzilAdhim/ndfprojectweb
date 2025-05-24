@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\Notification;
 use Gemini\Laravel\Facades\Gemini;
 
 
-
 class LinkController extends Controller
 {
     /** 
@@ -43,7 +42,7 @@ class LinkController extends Controller
                     $query->where('created_at', '>=', $sevenDaysAgo);
                 }])
                 ->orderByDesc('visits')
-                ->take(5)
+                ->take(10)
                 ->get();    
 
             $visitData = $this->getAllVisitData($userId);
@@ -64,7 +63,7 @@ class LinkController extends Controller
             });
         })
         ->latest()
-        ->paginate(6, ['*'], 'own_links');
+        ->paginate(12, ['*'], 'own_links');
 
         $sharedLinks = Link::join('link_shares', 'links.id', '=', 'link_shares.link_id')
             ->where('link_shares.shared_with', $userId)
@@ -100,7 +99,7 @@ class LinkController extends Controller
             'visitData' => $visitData,
             'sharedLinks' => $sharedLinks,
             'mySharedLinks' => $mySharedLinks,
-        ])->with('title', 'Short Link');
+        ])->with('title', 'Linksy');
     }
 
     /**
@@ -108,7 +107,8 @@ class LinkController extends Controller
      */
     public function show(Link $link, Request $request)
     {
-        $this->authorizeLink($link); 
+        $this->authorizeLink($link);
+
         $filter = $request->query('filter', 'all');
         $visithistory = $this->getVisitHistory($link->id, $filter);
         $redirectedCount = $this->getVisitCount($link->id, 1);
@@ -138,6 +138,7 @@ class LinkController extends Controller
             'location'
         ))->with('title', 'Detail Link');
     }
+
     /**
      * Update the specified resource in storage.
      */
@@ -192,29 +193,36 @@ class LinkController extends Controller
         $link->update(['title' => $validated['title']]);
         return response()->json(['success' => true, 'message' => 'Title updated!']);
     }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'target_url' => 'required|max:255|url',
-            'slug' => 'required|max:255|unique:links|regex:/^[\S]+$/',
-        ]);
+        try {
+            $validatedData = $request->validate([
+                'target_url' => 'required|max:255|url',
+                'slug' => 'required|max:255|unique:links|regex:/^[\S]+$/|not_in:dashboard,admin,settings',
+                'active' => 'required|boolean',
+            ]);
+            
+            $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
+            $validatedData['user_id'] = Auth::id();
+            $websiteTitle = $this->fetchWebsiteTitle($validatedData['target_url']);
+            $validatedData['title'] = $websiteTitle ? Str::limit($websiteTitle, 50, '') : null;
 
-        $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
-        $validatedData['user_id'] = Auth::id();
+            Link::create($validatedData);
 
-        $websiteTitle = $this->fetchWebsiteTitle($validatedData['target_url']);
-
-        $validatedData['title'] = $websiteTitle ? Str::limit($websiteTitle, 50, '') : null;
-
-        Link::create($validatedData);
-
-        return redirect()->back()->with('success', 'Link Berhasil Ditambahkan');
+            return redirect()->back()->with('success', 'Link Berhasil Ditambahkan');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors())->withInput();
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
-    private function fetchWebsiteTitle($url) 
+
+    private function fetchWebsiteTitle($url)
     {
         try {
             $response = Http::get($url);
@@ -223,6 +231,7 @@ class LinkController extends Controller
                 $doc = new \DOMDocument();
                 @$doc->loadHTML($htmlContent);
                 $titleNodes = $doc->getElementsByTagName('title');
+
                 return $titleNodes->length > 0 ? $titleNodes->item(0)->nodeValue : null;
             }
             return null;
@@ -264,8 +273,10 @@ class LinkController extends Controller
 
     private function getAllVisitData($userId)
     {
+        // Minggu ini
         $startOfThisWeek = now()->startOfWeek();
         $endOfThisWeek = now()->endOfWeek();
+
         $thisWeekVisits = Linkvisithistory::whereHas('link', fn($q) => $q->where('user_id', $userId))
             ->whereBetween('created_at', [$startOfThisWeek, $endOfThisWeek])
             ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
@@ -273,12 +284,13 @@ class LinkController extends Controller
             ->orderBy('day')
             ->get()
             ->keyBy('day');
-    
+
         $thisWeek = collect(range(1, 7))->map(fn($day) => $thisWeekVisits[$day]->total_visits ?? 0)->values();
         $lastWeekCacheKey = 'visit_data_last_week_' . $userId;
         $lastWeek = Cache::remember($lastWeekCacheKey, now()->addDays(7), function () use ($userId) {
             $startOfLastWeek = now()->subWeek()->startOfWeek();
             $endOfLastWeek = now()->subWeek()->endOfWeek();
+
             $lastWeekVisits = Linkvisithistory::whereHas('link', fn($q) => $q->where('user_id', $userId))
                 ->whereBetween('created_at', [$startOfLastWeek, $endOfLastWeek])
                 ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
@@ -286,6 +298,7 @@ class LinkController extends Controller
                 ->orderBy('day')
                 ->get()
                 ->keyBy('day');
+
             return collect(range(1, 7))->map(fn($day) => $lastWeekVisits[$day]->total_visits ?? 0)->values();
         });
         return [
@@ -336,9 +349,6 @@ class LinkController extends Controller
             abort(403);
         }
     }
-      /**
-     * Create A Share.
-     */
 
     public function share(Request $request)
     {
@@ -349,8 +359,6 @@ class LinkController extends Controller
                 'shared_with' => 'required|exists:users,username',
                 'send_notification' => 'boolean'
             ]);
-
-            $sendingNotification = $request->send_notification ? true : false;
             $link = Link::where('slug', $request->link_id)->firstOrFail();
             $user = User::where('username', $request->shared_with)->firstOrFail();
             $sharedBy = Auth::user()->name;
@@ -369,7 +377,7 @@ class LinkController extends Controller
                 'link_id' => $link->id,
                 'shared_with' => $user->id,
             ]);
-            if ($sendingNotification) {
+            if ($request->send_notification) {
                 Notification::send($user, new linkShareNotif($link->title,$fullUrl, $sharedBy));
             }
             return response()->json(['message' => 'Link berhasil dibagikan'], 200);
@@ -381,10 +389,7 @@ class LinkController extends Controller
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
     }
-
-    /**
-     * Delete Share.
-     */
+    
     public function deleteShare($linkShareId)
     {
         $sharedLink = LinkShare::findOrFail($linkShareId);
@@ -411,7 +416,7 @@ class LinkController extends Controller
         return response('Failed to generate QR Code.', 500);
     }
 
-    public function qrcodescan(Request $request)
+     public function qrcodescan(Request $request)
     {
         try {
             $validated = $request->validate([
@@ -434,7 +439,7 @@ class LinkController extends Controller
                 'slug' => $slug,
                 'title' => $websiteTitle,
                 'user_id' => Auth::id(),
-                'active' => false,
+                'active' => true,
             ]);
 
             return response()->json([
@@ -457,15 +462,13 @@ class LinkController extends Controller
             ], 500);
         }
     }
-
-    public function generateSummary(Link $link)
+      public function generateSummary(Link $link)
     {
         $this->authorizeLink($link);
 
         try {
             $cacheKey = 'summary_' . $link->id;
             $cached = Cache::get($cacheKey);
-
             if ($cached) {
                 return response()->json([
                     'success' => true,
@@ -473,7 +476,6 @@ class LinkController extends Controller
                     'stats' => $cached['stats']
                 ]);
             }
-
             $totalVisits = $link->visits;
             $uniqueVisits = $link->unique_visits;
             $recentVisits = Linkvisithistory::where('link_id', $link->id)
@@ -481,7 +483,6 @@ class LinkController extends Controller
                 ->take(5)
                 ->get();
 
-            // Cek jika tidak ada data kunjungan
             if ($totalVisits == 0 && $uniqueVisits == 0 && $recentVisits->isEmpty()) {
                 return response()->json([
                     'success' => false,
@@ -498,7 +499,7 @@ class LinkController extends Controller
                 '5 Kunjungan Terakhir' => $recentVisits->map(fn($v) => [
                     'Waktu' => $v->created_at->format('d M Y H:i'),
                     'Status' => $v->status ? 'Redirected' : 'Blocked',
-                    'Lokasi' => $v->location,
+                    'Lokasi' => $v->location,   
                     'Device' => $this->parseDevice($v->user_agent)
                 ])->toArray()
             ];
@@ -507,7 +508,7 @@ class LinkController extends Controller
             foreach ($stats as $label => $value) {
                 $prompt .= "- $label: " . json_encode($value, JSON_UNESCAPED_SLASHES) . "\n";
             }
-            $prompt .= "\nTampilkan ringkasan analisis dalam 3 poin utama dalam Bahasa Indonesia, dan outputkan langsung dalam format HTML tanpa kalimat pembuka. Gunakan tag <ul> dan <li> dengan format:\n" .
+            $prompt .= "\nBuat ringkasan dalam 3 poin utama menggunakan Bahasa Indonesia yang mudah dimengerti oleh pengguna aplikasi (bukan teknikal). Tampilkan hasilnya langsung dalam format HTML dengan struktur berikut:\n" .
                     "<ul>\n" .
                     "<li><b>1. Tren Utama:</b> ...</li>\n" .
                     "<li><b>2. Pola Menarik:</b> ...</li>\n" .
@@ -516,14 +517,11 @@ class LinkController extends Controller
 
             $model = 'gemini-2.0-flash';
             $response = Gemini::generativeModel($model)->generateContent($prompt);
-
             $data = [
                 'summary' => $response->text(),
                 'stats' => $stats
             ];
-
             Cache::put($cacheKey, $data, now()->addMinutes(30));
-
             return response()->json([
                 'success' => true,
                 'summary' => $data['summary'],
@@ -538,7 +536,6 @@ class LinkController extends Controller
         }
     }
 
-    // Helper methods
     private function getMostCommonLocation($linkId)
     {
         return Linkvisithistory::where('link_id', $linkId)
@@ -578,5 +575,4 @@ class LinkController extends Controller
         if (stripos($userAgent, 'Desktop') !== false) return 'Desktop';
         return 'Unknown';
     }
-
 }

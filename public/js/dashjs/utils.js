@@ -8,6 +8,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+document.getElementById('linkform').addEventListener('submit', function () {
+    const btn = document.getElementById('linkSubmitBtn');
+    const spinner = document.getElementById('linkBtnSpinner');
+    const btnText = document.getElementById('linkBtnText');
+
+    btn.disabled = true;
+    spinner.classList.remove('d-none');
+    btnText.textContent = 'Loading...';
+});
+
 function showIntroModal() {
     let modalHTML = `
         <div class="modal fade" id="introModal" tabindex="-1" aria-labelledby="introModalLabel" aria-hidden="true">
@@ -66,3 +76,4 @@ function showPromoModal() {
     var promoModal = new bootstrap.Modal(document.getElementById('promoModal'));
     promoModal.show();
 }
+

@@ -3,33 +3,6 @@
     <div class="container-fluid">
         <div class="card">
             <div class="row">
-                <div class="col-md-12">
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function() {
-                            @if(session()->has('success'))
-                                Swal.fire({
-                                    text: "{{ session('success') }}",
-                                    icon: 'success',
-                                    toast: true,
-                                    position: 'top-end',
-                                    showConfirmButton: false,
-                                    timer: 3000,
-                                    timerProgressBar: true,
-                                });
-                            @elseif(session()->has('error'))
-                                Swal.fire({
-                                    text: "{{ session('error') }}",
-                                    icon: 'error',
-                                    toast: true,
-                                    position: 'top-end',
-                                    showConfirmButton: false,
-                                    timer: 3000,
-                                    timerProgressBar: true,
-                                });
-                            @endif
-                        });
-                    </script>
-                </div>
                 <div class="col-md-12 d-flex">
                     <a href="/dashboard/posts/create" class="btn btn-primary mt-4 ms-4 d-none d-sm-block">
                         New Post

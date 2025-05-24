@@ -67,6 +67,7 @@
     </div>
   </div>
   <script src="{{ asset('js/dashjs/scanner.js') }}"></script>
+  @include('sweetalert::alertnotif')
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="{{ asset('vendor/apexcharts/dist/apexcharts.min.js') }}"></script>

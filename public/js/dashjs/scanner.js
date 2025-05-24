@@ -14,9 +14,24 @@
     let zoomValue = document.getElementById('zoomValue');
     let lastScannedUrl = null;
 
-    document.getElementById("scanQRBtn").addEventListener("click", () => {
-        new bootstrap.Modal(document.getElementById('scanQRModal')).show();
-    });
+    const scanQRBtn = document.getElementById("scanQRBtn");
+    if (scanQRBtn) {
+        scanQRBtn.addEventListener("click", () => {
+            const modalEl = document.getElementById('scanQRModal');
+            if (modalEl) {
+                new bootstrap.Modal(modalEl).show();
+            }
+        });
+    }
+    const scanQRBtn2 = document.getElementById("scanQRBtn2");
+    if (scanQRBtn2) {
+        scanQRBtn2.addEventListener("click", () => {
+            const modalEl = document.getElementById('scanQRModal');
+            if (modalEl) {
+                new bootstrap.Modal(modalEl).show();
+            }
+        });
+    }
 
     document.getElementById('scanQRModal').addEventListener('shown.bs.modal', startScanner);
     document.getElementById('scanQRModal').addEventListener('hidden.bs.modal', stopScanner);

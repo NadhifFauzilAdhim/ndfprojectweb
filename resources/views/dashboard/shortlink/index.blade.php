@@ -13,32 +13,6 @@
                     </div>
                 </div>
             </div>
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        @if(session()->has('success'))
-                            Swal.fire({
-                                text: "{{ session('success') }}",
-                                icon: 'success',
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                timerProgressBar: true,
-                                });
-                        @elseif(session()->has('error'))
-                            Swal.fire({
-                                text: "{{ session('error') }}",
-                                icon: 'error',
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                timerProgressBar: true,
-                            });
-                        @endif
-                    });
-                </script>
-
                 <div class="row">
                     {{-- Temporary Component --}}
                     <div class="carousel slide d-none d-lg-block" data-bs-ride="carousel" data-bs-interval="3000" id="autoPlayCarousel" >
@@ -70,9 +44,6 @@
                         </div>
                     </div>
                     <style>.alert{transition:.2s;border-left:3px solid}.alert-info{border-left-color:#0dcaf0;background-color:rgba(13,202,240,.05)}.alert-success{border-left-color:#198754;background-color:rgba(25,135,84,.05)}.alert:hover{box-shadow:0 2px 8px rgba(0,0,0,.1)!important}.link-success:hover{text-decoration:underline!important}</style>
-                      
-                      
-                    
                     <div class="col-lg-8 d-flex align-items-stretch">
                         <div class="card w-100">
                             <div class="card-body shadow-sm">
@@ -108,20 +79,16 @@
                                 <h4 class="mb-0 mt-1">{{ $totalUniqueVisit }}</h4>
                               </div>
                             </div>
-                            <div class="vstack gap-3 mt-2" x-data="{ showAll: false }">
-                                @forelse ($topLinks as $index => $link)
-                                    <div class="link-card p-2 p-sm-3 rounded-3 bg-white shadow-sm" 
-                                        @if($loop->index >= 3) x-show="showAll" @endif
-                                        x-transition:enter="transition ease-out duration-200"
-                                        x-transition:enter-start="opacity-0 transform translate-y-2"
-                                        x-transition:enter-end="opacity-100 transform translate-y-0">
-                                        
+                            <div class="border-0 rounded-3" style="max-height: 250px; overflow-y: auto;">
+                                <div class="vstack gap-3 p-3">
+                                    @forelse ($topLinks as $link)
+                                    <div class="link-card p-2 p-sm-3 rounded-3 bg-white shadow-sm card-hover">
                                         <div class="row g-2 align-items-center">
                                             <!-- Favicon Column -->
                                             <div class="col-auto">
                                                 <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=32" 
                                                     alt="Favicon" 
-                                                    class="favicon rounded-2"
+                                                    class="favicon rounded-2 lazyload"
                                                     width="32"
                                                     height="32">
                                             </div>
@@ -131,7 +98,7 @@
                                                 <div class="d-flex flex-column truncate-container">
                                                     <a href="{{ url('dashboard/link/').'/'.$link->slug }}" 
                                                     class="link-slug text-dark text-decoration-none fw-medium text-truncate">
-                                                        {{ $link->slug }}
+                                                        {{ $link->title }}
                                                     </a>
                                                     <small class="text-muted domain-name text-truncate">
                                                         {{ parse_url($link->target_url, PHP_URL_HOST) }}
@@ -150,34 +117,22 @@
                                             </div>
                                         </div>
                                     </div>
-                                @empty
+                                    @empty
                                     <div class="empty-state text-center p-3 rounded-3 bg-light">
                                         <iconify-icon icon="solar:link-broken" class="fs-1 text-muted mb-2"></iconify-icon>
                                         <p class="text-muted mb-0 fs-14">No links available</p>
                                     </div>
-                                @endforelse
-                            
-                                @if(count($topLinks) > 3)
-                                    <div class="text-center mt-2">
-                                        <button class="btn btn-outline-primary btn-sm px-4 rounded-pill" 
-                                                @click="showAll = !showAll"
-                                                x-text="showAll ? 'Show Less' : `Show More (+${ { count($topLinks) - 3 } })`">
-                                        </button>
-                                    </div>
-                                @endif
+                                    @endforelse
+                                </div>
                             </div>
-                            @push('scripts')
-                            <script src="//unpkg.com/alpinejs" defer></script>
-                            @endpush
-                            
                           </div>
                         </div>
                       </div>
                     <div class="col-lg-12 mb-4">
                         <div class="row g-3 align-items-center">
-                            <div class="col-12 col-md-3">
+                            <div class="col-12 col-md-2 ">
                                 <button 
-                                    class="btn btn-primary  align-items-center w-100 py-2 position-relative" 
+                                    class="btn btn-primary  align-items-center w-100 py-2 position-relative " 
                                     type="button" 
                                     data-bs-toggle="collapse" 
                                     data-bs-target="#collapseForm" 
@@ -185,23 +140,24 @@
                                     aria-controls="collapseForm" 
                                     style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
                                 >
-                                    <i class="bi bi-plus-circle fs-4 me-2"></i>
+                                <iconify-icon icon="solar:clipboard-add-bold-duotone" class="fs-5" style="position: relative; top: 3px;"></iconify-icon>
+
                                     <span>Create New</span>
                                 </button>
                             </div>
-                            <div class="col-12 col-md-3">
+                            <div class="col-12 col-md-2">
                                 <a 
                                     class="btn btn-primary  align-items-center w-100 py-2 position-relative" 
                                     href="/dashboard/tracking" 
                                     style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
                                 >
-                                    <i class="bi bi-geo-alt fs-4 me-2"></i>
+                                <iconify-icon icon="solar:map-point-hospital-bold-duotone" class="fs-5" style="position: relative; top: 3px;"></iconify-icon> 
                                     <span>Location Tracker</span>
                                 </a>
                             </div>
                             <div class="col-12 col-md-2">
                                 <button 
-                                    class="btn btn-primary  align-items-center w-100 py-2 position-relative" 
+                                    class="btn btn-primary  align-items-center w-100 py-2 position-relative"    
                                     type="button" 
                                     data-bs-toggle="collapse" 
                                     data-bs-target="#qrCollapseForm" 
@@ -209,11 +165,22 @@
                                     aria-controls="qrCollapseForm" 
                                     style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
                                 >
-                                    <i class="bi bi-plus-circle fs-4 me-2"></i>
+                                    <iconify-icon icon="solar:qr-code-bold-duotone" class="fs-5" style="position: relative; top: 3px;"></iconify-icon> 
                                     <span>Generate QR</span>
                                 </button>
                             </div>
-                           
+                            <div class="col-12 col-md-2 d-none d-md-block">
+                                <button 
+                                    class="btn btn-primary  align-items-center w-100 py-2 position-relative"    
+                                    type="button" 
+                                    id="scanQRBtn2"
+                                    style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
+                                >
+                                    <iconify-icon icon="solar:scanner-bold-duotone" class="fs-5" style="position: relative; top: 3px;"></iconify-icon> 
+                                    <span>Scan QR</span>
+                                </button>
+                            </div>
+                            
                             <!-- Form Search -->
                             <div class="col-12 col-md-4">
                                 <form action="/dashboard/link" method="GET">
@@ -227,7 +194,7 @@
                         <!-- Collapsible form -->
                         <div class="collapse mt-4" id="collapseForm">
                             <div class="card card-body shadow-sm border-0">
-                                <form action="/dashboard/link" method="POST">
+                                <form id="linkform" action="/dashboard/link" method="POST">
                                     @csrf
                                     <!-- URL Destination Field -->
                                     <div class="mb-4">
@@ -242,20 +209,37 @@
                                     <!-- Shortened Link Field -->
                                     <div class="mb-4">
                                         <label for="short_link" class="form-label fw-bold">Shortened Link</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-light d-none d-md-block " id="basic-addon3">linksy.site/</span>
-                                            <input type="text" class="form-control @error('slug') is-invalid @enderror shadow-sm" id="short_link" name="slug" placeholder="custom-slug" value="{{ old('slug') }}" aria-describedby="basic-addon3">
-                                            @error('slug')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
+                                    
+                                        <div class="d-flex flex-column flex-md-row gap-2 align-items-stretch">
+                                            <div class="input-group shadow-sm flex-grow-1">
+                                                <span class="input-group-text bg-light" id="basic-addon3">linksy.site/</span>
+                                    
+                                                <input type="text" class="form-control @error('slug') is-invalid @enderror" id="short_link" name="slug" placeholder="custom-slug" value="{{ old('slug') }}" aria-describedby="basic-addon3">
                                             </div>
-                                            @enderror
+                                    
+                                            <select class="form-select shadow-sm mt-2 mt-md-0 w-auto flex-grow-0" name="active" aria-label="Visibility select">
+                                                <option value="1" {{ old('active', '1') == '1' ? 'selected' : '' }}>Visible to Everyone</option>
+                                                <option value="0" {{ old('active') == '0' ? 'selected' : '' }}>Private (Only You)</option>
+                                            </select>
                                         </div>
+                                    
+                                        @error('slug')
+                                        <div class="invalid-feedback d-block">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    
+                                        @error('active')
+                                        <div class="invalid-feedback d-block">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                     <!-- Submit Button -->
                                     <div class="text-end">
-                                        <button type="submit" class="btn btn-primary px-4">
-                                            <i class="bi bi-check-circle me-2"></i>Create
+                                        <button type="submit" class="btn btn-primary px-4" id="linkSubmitBtn">
+                                            <span id="linkBtnSpinner" class="spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
+                                            <span id="linkBtnText"><i class="bi bi-check-circle me-2"></i>Create</span>
                                         </button>
                                     </div>
                                 </form>
@@ -283,20 +267,20 @@
                         <div class="row nav nav-tabs justify-content-center d-flex flex-wrap" id="linkTabs" role="tablist">
                             <div class="col-4 p-1">
                                 <button class="nav-link active btn btn-sm w-100" id="your-links-tab" data-bs-toggle="tab" data-bs-target="#your-links" type="button" role="tab">
-                                    <i class="bi bi-link"></i>
+                                    <iconify-icon icon="solar:link-bold-duotone" class="fs-5" style="position: relative; top: 3px;"></iconify-icon> 
                                     <span class="d-none d-sm-inline"> Your Links</span>
                                 </button>
                             </div>
                             <div class="col-4 p-1">
                                 <button class="nav-link btn btn-sm w-100" id="shared-links-tab" data-bs-toggle="tab" data-bs-target="#shared-links" type="button" role="tab">
-                                    <i class="bi bi-share"></i>
-                                    <span class="d-none d-sm-inline"> Shared Links</span>
+                                    <iconify-icon icon="solar:round-arrow-down-line-duotone" class="fs-5" style="position: relative; top: 3px;"></iconify-icon> 
+                                    <span class="d-none d-sm-inline"> Shared to You</span>
                                 </button>
                             </div>
                             <div class="col-4 p-1">
                                 <button class="nav-link btn btn-sm w-100" id="links-you-shared-tab" data-bs-toggle="tab" data-bs-target="#links-you-shared" type="button" role="tab">
-                                    <i class="bi bi-send"></i>
-                                    <span class="d-none d-sm-inline"> Links You Shared</span>
+                                    <iconify-icon icon="solar:square-share-line-line-duotone" class="fs-5" style="position: relative; top: 3px;"></iconify-icon> 
+                                    <span class="d-none d-sm-inline"> Shared by You</span>
                                 </button>
                             </div>
                         </div>
@@ -340,11 +324,10 @@
                                             <div class="col-2 text-start px-0">
                                                 <button class="btn {{ $link->active ? 'btn-outline-dark' : 'btn-outline-danger' }} btn-sm" 
                                                         onclick="copyFunction('{{ $link->slug }}')">
-                                                    <i class="bi bi-clipboard"></i>
+                                                        <iconify-icon icon="solar:copy-line-duotone"></iconify-icon>
                                                 </button>
                                             </div>
                                         </div>
-                            
                                         <!-- Destination URL -->
                                         <p class="text-muted small mb-1">Destination:</p>
                                         <a href="{{ $link->target_url }}" target="_blank" class="d-block text-truncate link-dark">
@@ -354,68 +337,71 @@
                                         <!-- Statistics -->
                                         <div class="d-flex justify-content-between mt-2">
                                             <div class="text-muted small">
-                                                <i class="bi bi-calendar me-1"></i> {{ $link->created_at->format('d M Y') }}
+                                                <iconify-icon icon="solar:calendar-bold" class="me-1" style="position: relative; top: 3px;"></iconify-icon> {{ $link->created_at->format('d M Y') }}
                                             </div>
                                             <div class="text-muted small">
-                                                <i class="bi bi-graph-up-arrow me-1"></i> <b>{{ $link->visits }}</b> visits
+                                                <iconify-icon icon="solar:graph-up-bold" class="me-1" style="position: relative; top: 3px;"></iconify-icon> <b>{{ $link->visits }}</b> visits
                                             </div>
                                             <div class="text-muted small">
-                                                <i class="bi bi-person-check"></i> <b>{{ $link->unique_visits }}</b> unique
+                                                <iconify-icon icon="solar:user-check-bold" class="me-1" style="position: relative; top: 3px;"></iconify-icon> <b>{{ $link->unique_visits }}</b> unique
                                             </div>
                                         </div>
-                            
                                         <!-- Security Status -->
                                         <div class="d-flex justify-content-end mt-3 position-relative dropup">
                                             @if($link->password_protected)
-                                            <button class="btn btn-outline-dark btn-sm rounded-pill me-2" >
-                                                <i class="bi bi-lock-fill"></i>
-                                            </button>
+                                                <button class="btn btn-outline-dark btn-sm rounded-pill me-2">
+                                                    <iconify-icon icon="solar:key-outline"></iconify-icon>
+                                                </button>
                                             @endif
-                                            <button class="btn btn-outline-{{ $link->active ? 'primary' : 'danger' }} btn-sm rounded-pill me-2" >
-                                                <i class="bi bi-globe2"></i>
+
+                                            <button class="btn btn-outline-{{ $link->active ? 'primary' : 'danger' }} btn-sm rounded-pill me-2">
+                                                <iconify-icon icon="solar:earth-bold-duotone"></iconify-icon>
                                             </button>
-                                            <a class="btn btn-outline-primary btn-sm rounded-pill me-2" href="/dashboard/link/{{ $link->slug }}">
-                                                <i class="bi bi-sliders"></i>
+
+                                            <a class="btn btn-outline-primary btn-sm rounded-pill d-flex align-items-center gap-1 px-3 py-1 me-2 shadow-sm transition" 
+                                            href="/dashboard/link/{{ $link->slug }}"
+                                           >
+                                                <iconify-icon icon="solar:chart-bold"></iconify-icon>
+                                                <span>Analytic</span>
                                             </a>
+
                                             <button class="btn btn-outline-primary btn-sm rounded-pill" data-bs-toggle="dropdown">
-                                                <i class="bi bi-three-dots"></i>
+                                                <iconify-icon icon="solar:menu-dots-bold"></iconify-icon>
                                             </button>
+
                                             <ul class="dropdown-menu dropdown-menu-end" style="z-index: 1050;">
                                                 <li>
-                                                    <a class="dropdown-item text-primary" href="/dashboard/link/{{ $link->slug }}">
-                                                        <i class="bi bi-info-circle me-2"></i> Detail
+                                                    <a class="dropdown-item" href="/dashboard/link/{{ $link->slug }}">
+                                                        <iconify-icon icon="solar:info-circle-bold" class="me-2"></iconify-icon> Detail
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <button 
-                                                    class="dropdown-item text-primary generate-qr" 
-                                                    data-url="{{ 'https://linksy.site/' . $link->slug }}"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#qrCodeModal"
-                                                  >
-                                                    <i class="bi bi-qr-code me-2"></i>
-                                                    Generate QR
-                                                  </button>
-                                                  
+                                                        class="dropdown-item generate-qr" 
+                                                        data-url="{{ 'https://linksy.site/' . $link->slug }}"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#qrCodeModal"
+                                                    >
+                                                        <iconify-icon icon="solar:qr-code-bold" class="me-2"></iconify-icon> Generate QR
+                                                    </button>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item text-primary" 
+                                                    <a class="dropdown-item" 
                                                        href="#" 
                                                        data-bs-toggle="modal" 
                                                        data-bs-target="#editModal" 
                                                        data-id="{{ $link->slug }}" 
                                                        data-target-url="{{ $link->target_url }}" 
                                                        data-active="{{ $link->active }}">
-                                                        <i class="bi bi-pencil me-2"></i> Quick Edit
+                                                        <iconify-icon icon="solar:pen-bold" class="me-2"></iconify-icon> Quick Edit
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <button class="dropdown-item text-primary" 
+                                                    <button class="dropdown-item" 
                                                             data-bs-toggle="modal" 
                                                             data-bs-target="#shareLinkModal" 
-                                                            data-id="{{ $link->slug }}"
-                                                            >
-                                                        <i class="bi bi-share me-2"></i> Share Link
+                                                            data-id="{{ $link->slug }}">
+                                                        <iconify-icon icon="solar:share-bold" class="me-2"></iconify-icon> Share Link
                                                     </button>
                                                 </li>
                                                 <li>
@@ -424,7 +410,7 @@
                                                        data-bs-toggle="modal" 
                                                        data-bs-target="#deleteModal" 
                                                        data-id="{{ $link->slug }}">
-                                                        <i class="bi bi-trash me-2"></i> Delete
+                                                        <iconify-icon icon="solar:trash-bin-minimalistic-bold" class="me-2"></iconify-icon> Delete
                                                     </a>
                                                 </li>
                                             </ul>
@@ -784,5 +770,5 @@
         window.visitDataGlobal = @json($visitData);  
     </script>
     <script src="{{ asset('js/link.js') }}"></script>
-    <script src="{{ asset('js/dashjs/popup.js') }}"></script>
+    <script src="{{ asset('js/dashjs/utils.js') }}"></script>
 </x-dashlayout>
