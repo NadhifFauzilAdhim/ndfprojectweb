@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use App\Models\Link;
 use App\Models\User;
 use App\Models\BlockedIp;
@@ -12,16 +11,22 @@ use Illuminate\Http\Request;
 use App\Models\Linkvisithistory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\ValidationException;
 use App\Notifications\linkShareNotif;
 use Illuminate\Support\Facades\Notification;
-use Gemini\Laravel\Facades\Gemini;
-
+use App\Services\{LinkService,
+                  AnalyticService,
+                  ApiServices
+                };
 
 class LinkController extends Controller
 {
+    public function __construct(
+        private LinkService $linkService,
+        private AnalyticService $analyticService,
+        private ApiServices $apiServices
+        ){}
     /** 
      * Display a listing of the resource.
      */
@@ -30,28 +35,9 @@ class LinkController extends Controller
         $userId = Auth::id();
         $cacheKey = "user_{$userId}_dashboard";
         $search = $request->input('search');
-        // Cache entire dashboard data for 5 minutes
+        // Analytic Service
         $data = Cache::remember($cacheKey, 300, function () use ($userId, $search) {
-            $totals = Link::where('user_id', $userId)
-                ->selectRaw('COUNT(*) as total_links, SUM(visits) as total_visits, SUM(unique_visits) as total_unique_visits')
-                ->first();
-
-            $sevenDaysAgo = Carbon::now()->subDays(7);
-            $topLinks = Link::where('user_id', $userId)
-                ->withCount(['visithistory as visits_last_7_days' => function ($query) use ($sevenDaysAgo) {
-                    $query->where('created_at', '>=', $sevenDaysAgo);
-                }])
-                ->orderByDesc('visits')
-                ->take(10)
-                ->get();    
-
-            $visitData = $this->getAllVisitData($userId);
-
-            return compact(
-                'totals',
-                'topLinks',
-                'visitData'
-            );
+            return $this->analyticService->getDashboardData($userId);
         });
         extract($data);
 
@@ -110,7 +96,7 @@ class LinkController extends Controller
         $this->authorizeLink($link);
 
         $filter = $request->query('filter', 'all');
-        $visithistory = $this->getVisitHistory($link->id, $filter);
+        $visithistory = $this->analyticService->getVisitHistory($link->id, $filter);
         $redirectedCount = $this->getVisitCount($link->id, 1);
         $rejectedCount = $this->getVisitCount($link->id, 0);
         $blockedIps = BlockedIp::where('link_id', $link->id)->get();
@@ -124,8 +110,8 @@ class LinkController extends Controller
             'labels' => $topReferersRaw->pluck('referer_url')->toArray(),
             'data' => $topReferersRaw->pluck('visit_count')->toArray(),
         ];
-        $chartData = $this->getSingleLinkStatistic($link->id, false);
-        $location = $this->getLocationStatistic($link->id);
+        $chartData = $this->analyticService->singleLinkStatistic($link->id, false);
+        $location = $this->analyticService->getLocationStatistic($link->id);
         return view('dashboard.shortlink.linkdetail', compact(
             'link',
             'visithistory',
@@ -153,29 +139,12 @@ class LinkController extends Controller
         ]);
 
         if ($request->has('quickedit')) {
-            $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
-            $validatedData['active'] = $request->has('active') ? 1 : 0;
-            if ($link->target_url !== $validatedData['target_url']) {
-                $websiteTitle = $this->fetchWebsiteTitle($validatedData['target_url']);
-                $validatedData['title'] = $websiteTitle ?? null;
-            }
-            $link->update($validatedData);
+            $this->linkService->quickUpdate($validatedData, $link, $request);
             return redirect()->back()->with('success', 'Link updated successfully!');
         }
 
         $oldSlug = $link->slug;
-        $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
-        $validatedData['password_protected'] = $request->has('password_protected') ? 1 : 0;
-        $validatedData['password'] = $validatedData['password_protected']
-            ? bcrypt($request->input('password', $link->password))
-            : null;
-        $validatedData['active'] = $request->has('active') ? 1 : 0;
-
-        if ($link->target_url !== $validatedData['target_url'] && !$validatedData['title']) {
-            $websiteTitle = $this->fetchWebsiteTitle($validatedData['target_url']);
-            $validatedData['title'] = $websiteTitle ?? null;
-        }
-        $link->update($validatedData);
+        $link = $this->linkService->updateLink($validatedData, $link, $request);
         return $oldSlug !== $link->slug
             ? response()->json([
                 'success' => true,
@@ -205,38 +174,12 @@ class LinkController extends Controller
                 'slug' => 'required|max:255|unique:links|regex:/^[\S]+$/|not_in:dashboard,admin,settings',
                 'active' => 'required|boolean',
             ]);
-            
-            $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
-            $validatedData['user_id'] = Auth::id();
-            $websiteTitle = $this->fetchWebsiteTitle($validatedData['target_url']);
-            $validatedData['title'] = $websiteTitle ? Str::limit($websiteTitle, 50, '') : null;
-
-            Link::create($validatedData);
-
+            $link = $this->linkService->createLink($validatedData, Auth::id());
             return redirect()->back()->with('success', 'Link Berhasil Ditambahkan');
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
-        }
-    }
-
-
-    private function fetchWebsiteTitle($url)
-    {
-        try {
-            $response = Http::get($url);
-            if ($response->successful()) {
-                $htmlContent = $response->body();
-                $doc = new \DOMDocument();
-                @$doc->loadHTML($htmlContent);
-                $titleNodes = $doc->getElementsByTagName('title');
-
-                return $titleNodes->length > 0 ? $titleNodes->item(0)->nodeValue : null;
-            }
-            return null;
-        } catch (\Exception $e) {
-            return null;
         }
     }
 
@@ -253,84 +196,6 @@ class LinkController extends Controller
         return redirect()->back()->with('error', 'Link sudah dihapus atau tidak ditemukan.');
     }
     
-    /**
-     * Get visit data by day.
-     */
-    private function getSingleLinkStatistic($identifier, $isUser = true)
-    {
-        $startOfWeek = now()->startOfWeek();
-        $endOfWeek = $startOfWeek->copy()->endOfWeek();
-        $query = Linkvisithistory::when($isUser, fn($q) => $q->whereHas('link', fn($q) => $q->where('user_id', $identifier)))
-            ->when(!$isUser, fn($q) => $q->where('link_id', $identifier))
-            ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
-            ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
-            ->groupBy('day')
-            ->orderBy('day')
-            ->get()
-            ->keyBy('day');
-        return collect(range(1, 7))->map(fn($day) => $query[$day]->total_visits ?? 0)->values()->toArray();
-    }
-
-    private function getAllVisitData($userId)
-    {
-        // Minggu ini
-        $startOfThisWeek = now()->startOfWeek();
-        $endOfThisWeek = now()->endOfWeek();
-
-        $thisWeekVisits = Linkvisithistory::whereHas('link', fn($q) => $q->where('user_id', $userId))
-            ->whereBetween('created_at', [$startOfThisWeek, $endOfThisWeek])
-            ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
-            ->groupBy('day')
-            ->orderBy('day')
-            ->get()
-            ->keyBy('day');
-
-        $thisWeek = collect(range(1, 7))->map(fn($day) => $thisWeekVisits[$day]->total_visits ?? 0)->values();
-        $lastWeekCacheKey = 'visit_data_last_week_' . $userId;
-        $lastWeek = Cache::remember($lastWeekCacheKey, now()->addDays(7), function () use ($userId) {
-            $startOfLastWeek = now()->subWeek()->startOfWeek();
-            $endOfLastWeek = now()->subWeek()->endOfWeek();
-
-            $lastWeekVisits = Linkvisithistory::whereHas('link', fn($q) => $q->where('user_id', $userId))
-                ->whereBetween('created_at', [$startOfLastWeek, $endOfLastWeek])
-                ->select(DB::raw('DAYOFWEEK(created_at) as day'), DB::raw('COUNT(*) as total_visits'))
-                ->groupBy('day')
-                ->orderBy('day')
-                ->get()
-                ->keyBy('day');
-
-            return collect(range(1, 7))->map(fn($day) => $lastWeekVisits[$day]->total_visits ?? 0)->values();
-        });
-        return [
-            'thisWeek' => $thisWeek,
-            'lastWeek' => $lastWeek,
-        ];
-    }
-
-    /**
-     * Get visit history based on filter.
-     */
-    private function getVisitHistory($linkId, $filter)
-    {
-        $query = Linkvisithistory::where('link_id', $linkId);
-        if ($filter === 'unique') {
-            $query->where('is_unique', true);
-        } elseif ($filter === 'redirected') {
-            $query->where('status', 1);
-        } elseif ($filter === 'rejected') {
-            $query->where('status', 0);
-        }
-        return $query->latest()->paginate(10);
-    }
-
-    private function getLocationStatistic($linkId)
-    {
-        $locations = Linkvisithistory::where('link_id', $linkId)
-            ->select('location', DB::raw('COUNT(*) as visit_count'))
-            ->groupBy('location')
-            ->get();
-        return $locations->pluck('visit_count', 'location')->toArray();
-    }
     /**
      * Get visit count by status.
      */
@@ -405,15 +270,8 @@ class LinkController extends Controller
         $request->validate([
             'url' => 'required|url',
         ]);
-        $url = $request->input('url');
-        $encodedUrl = urlencode($url);
-        $apiUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={$encodedUrl}";
-        $response = Http::get($apiUrl);
-        if ($response->ok()) {
-            $base64Image = 'data:image/png;base64,' . base64_encode($response->body());
-            return response($base64Image, 200)->header('Content-Type', 'text/plain');
-        }
-        return response('Failed to generate QR Code.', 500);
+        $qrCode = $this->apiServices->qrCodeGenerate($request->url);
+        return response($qrCode, 200)->header('Content-Type', 'image/png');
     }
 
      public function qrcodescan(Request $request)
@@ -433,7 +291,7 @@ class LinkController extends Controller
                 $slug = 'scan' . '-' . Str::random(5);
                 $slug = Str::limit($slug, 255, '');
             } while (Link::where('slug', $slug)->exists());
-            $websiteTitle = 'scan' . ' ' . $this->fetchWebsiteTitle($sanitizedUrl);
+            $websiteTitle = 'scan' . ' ' . $this->apiServices->fetchWebsiteTitle($sanitizedUrl);
             $link = Link::create([
                 'target_url' => $sanitizedUrl,
                 'slug' => $slug,
@@ -468,6 +326,7 @@ class LinkController extends Controller
 
         try {
             $cacheKey = 'summary_' . $link->id;
+            $geminiCacheKey = 'summary_gemini_' . $link->id;
             $cached = Cache::get($cacheKey);
             if ($cached) {
                 return response()->json([
@@ -516,9 +375,9 @@ class LinkController extends Controller
                     "</ul>";
 
             $model = 'gemini-2.0-flash';
-            $response = Gemini::generativeModel($model)->generateContent($prompt);
+            $response = $this->apiServices->generateGeminiResponse($prompt, $model, $geminiCacheKey);
             $data = [
-                'summary' => $response->text(),
+                'summary' => $response,
                 'stats' => $stats
             ];
             Cache::put($cacheKey, $data, now()->addMinutes(30));

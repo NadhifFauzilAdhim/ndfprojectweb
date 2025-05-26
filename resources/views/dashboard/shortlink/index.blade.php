@@ -45,8 +45,8 @@
                     </div>
                     <style>.alert{transition:.2s;border-left:3px solid}.alert-info{border-left-color:#0dcaf0;background-color:rgba(13,202,240,.05)}.alert-success{border-left-color:#198754;background-color:rgba(25,135,84,.05)}.alert:hover{box-shadow:0 2px 8px rgba(0,0,0,.1)!important}.link-success:hover{text-decoration:underline!important}</style>
                     <div class="col-lg-8 d-flex align-items-stretch">
-                        <div class="card w-100">
-                            <div class="card-body shadow-sm">
+                        <div class="card w-100 rounded-5 shadow-sm">
+                            <div class="card-body">
                                 <h5 class="card-title d-flex align-items-center gap-2 mb-4">
                                     Traffic Overview
                                     <span>
@@ -57,9 +57,10 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="col-lg-4 d-flex align-items-stretch">
-                        <div class="card w-100">
-                          <div class="card-body shadow-sm">
+                        <div class="card w-100 rounded-5 shadow-sm">
+                          <div class="card-body">
                             <h5 class="card-title d-flex align-items-center gap-2 pb-3">Link Static<span><iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Locations"></iconify-icon></span>
                             </h5>
                             <div class="row">
@@ -129,68 +130,77 @@
                         </div>
                       </div>
                     <div class="col-lg-12 mb-4">
-                        <div class="row g-3 align-items-center">
-                            <div class="col-12 col-md-2 ">
+                        <div class="row g-2 align-items-center">
+                            <!-- Create New -->
+                            <div class="col-3 col-md-2">
                                 <button 
-                                    class="btn btn-primary  align-items-center w-100 py-2 position-relative " 
-                                    type="button" 
-                                    data-bs-toggle="collapse" 
-                                    data-bs-target="#collapseForm" 
-                                    aria-expanded="false" 
-                                    aria-controls="collapseForm" 
-                                    style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
-                                >
-                                <iconify-icon icon="solar:clipboard-add-bold-duotone" class="fs-5" style="position: relative; top: 3px;"></iconify-icon>
-
-                                    <span>Create New</span>
+                                    class="btn btn-primary w-100 py-2 d-flex flex-column flex-md-row align-items-center justify-content-center gap-1"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapseForm"
+                                    aria-expanded="false"
+                                    aria-controls="collapseForm"
+                                    style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px;">
+                                    <iconify-icon icon="solar:clipboard-add-bold-duotone" class="fs-5"></iconify-icon>
+                                    <span class="d-inline d-md-none small">Create</span>
+                                    <span class="d-none d-md-inline">Create New</span>
                                 </button>
                             </div>
-                            <div class="col-12 col-md-2">
+                        
+                            <!-- Location Tracker -->
+                            <div class="col-3 col-md-2">
                                 <a 
-                                    class="btn btn-primary  align-items-center w-100 py-2 position-relative" 
-                                    href="/dashboard/tracking" 
-                                    style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
-                                >
-                                <iconify-icon icon="solar:map-point-hospital-bold-duotone" class="fs-5" style="position: relative; top: 3px;"></iconify-icon> 
-                                    <span>Location Tracker</span>
+                                    class="btn btn-primary w-100 py-2 d-flex flex-column flex-md-row align-items-center justify-content-center gap-1"
+                                    href="/dashboard/tracking"
+                                    style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px;">
+                                    <iconify-icon icon="solar:map-point-hospital-bold-duotone" class="fs-5"></iconify-icon>
+                                    <span class="d-inline d-md-none small">Track</span>
+                                    <span class="d-none d-md-inline">Location Tracker</span>
                                 </a>
                             </div>
-                            <div class="col-12 col-md-2">
+                        
+                            <!-- Generate QR -->
+                            <div class="col-3 col-md-2">
                                 <button 
-                                    class="btn btn-primary  align-items-center w-100 py-2 position-relative"    
-                                    type="button" 
-                                    data-bs-toggle="collapse" 
-                                    data-bs-target="#qrCollapseForm" 
-                                    aria-expanded="false" 
-                                    aria-controls="qrCollapseForm" 
-                                    style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
-                                >
-                                    <iconify-icon icon="solar:qr-code-bold-duotone" class="fs-5" style="position: relative; top: 3px;"></iconify-icon> 
-                                    <span>Generate QR</span>
+                                    class="btn btn-primary w-100 py-2 d-flex flex-column flex-md-row align-items-center justify-content-center gap-1"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#qrCollapseForm"
+                                    aria-expanded="false"
+                                    aria-controls="qrCollapseForm"
+                                    style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px;">
+                                    <iconify-icon icon="solar:qr-code-bold-duotone" class="fs-5"></iconify-icon>
+                                    <span class="d-inline d-md-none small">QR</span>
+                                    <span class="d-none d-md-inline">Generate QR</span>
                                 </button>
                             </div>
-                            <div class="col-12 col-md-2 d-none d-md-block">
+                        
+                            <!-- Scan QR -->
+                            <div class="col-3 col-md-2">
                                 <button 
-                                    class="btn btn-primary  align-items-center w-100 py-2 position-relative"    
-                                    type="button" 
+                                    class="btn btn-primary w-100 py-2 d-flex flex-column flex-md-row align-items-center justify-content-center gap-1"
+                                    type="button"
                                     id="scanQRBtn2"
-                                    style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
-                                >
-                                    <iconify-icon icon="solar:scanner-bold-duotone" class="fs-5" style="position: relative; top: 3px;"></iconify-icon> 
-                                    <span>Scan QR</span>
+                                    style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px;">
+                                    <iconify-icon icon="solar:scanner-bold-duotone" class="fs-5"></iconify-icon>
+                                    <span class="d-inline d-md-none small">Scan</span>
+                                    <span class="d-none d-md-inline">Scan QR</span>
                                 </button>
                             </div>
-                            
-                            <!-- Form Search -->
+                        
+                            <!-- Search Form -->
                             <div class="col-12 col-md-4">
                                 <form action="/dashboard/link" method="GET">
                                     <div class="input-group">
                                         <input type="text" name="search" class="form-control" placeholder="Search Link" aria-label="Search" aria-describedby="button-addon2" value="{{ request('search') }}">
-                                        <button class="btn btn-outline-primary" type="submit" id="button-addon2"><i class="bi bi-search"></i></button>
+                                        <button class="btn btn-outline-primary" type="submit" id="button-addon2">
+                                            <i class="bi bi-search"></i>
+                                        </button>
                                     </div>
                                 </form>
                             </div>
                         </div>
+            
                         <!-- Collapsible form -->
                         <div class="collapse mt-4" id="collapseForm">
                             <div class="card card-body shadow-sm border-0">
@@ -291,7 +301,7 @@
                             <div class="row">
                             @forelse ($links as $link)
                             <div class="col-md-4 d-flex align-items-stretch " >
-                                <div class="card shadow border-0 w-100 card-hover">
+                                <div class="card shadow border-0 w-100 card-hover rounded-5">
                                     <div class="card-body">
                                         <div class="row d-flex align-items-center mb-2">
                                             <div class="col-12 d-flex align-items-center">
@@ -330,9 +340,12 @@
                                         </div>
                                         <!-- Destination URL -->
                                         <p class="text-muted small mb-1">Destination:</p>
-                                        <a href="{{ $link->target_url }}" target="_blank" class="d-block text-truncate link-dark">
+                                        <a href="{{ $link->target_url }}" target="_blank" class="d-block text-truncate link-dark text-decoration-none"
+                                            style="transition: color 0.2s;"
+                                            onmouseover="this.classList.replace('link-dark', 'text-primary')"
+                                            onmouseout="this.classList.replace('text-primary', 'link-dark')">
                                             {{ Str::limit(strip_tags($link->target_url), 80) }}
-                                        </a>
+                                         </a>
                             
                                         <!-- Statistics -->
                                         <div class="d-flex justify-content-between mt-2">
@@ -768,6 +781,7 @@
         </div>
     <script>
         window.visitDataGlobal = @json($visitData);  
+        console.log(window.visitDataGlobal);
     </script>
     <script src="{{ asset('js/link.js') }}"></script>
     <script src="{{ asset('js/dashjs/utils.js') }}"></script>

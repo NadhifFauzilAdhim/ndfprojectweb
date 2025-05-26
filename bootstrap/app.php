@@ -1,12 +1,13 @@
 <?php
 
+use Illuminate\Http\Request;
+use App\Services\LinkService;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsOwner;
 use Illuminate\Foundation\Application;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -35,3 +36,10 @@ return Application::configure(basePath: dirname(__DIR__))
         // Jadwalkan command untuk menghapus visit history setiap hari
         $schedule->command('visit-history:cleanup')->daily();
     })->create();
+
+    $app->bind(LinkService::class, function($app) {
+        return new LinkService();
+    });
+
+    
+

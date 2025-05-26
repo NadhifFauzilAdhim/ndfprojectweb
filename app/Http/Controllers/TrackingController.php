@@ -31,8 +31,7 @@ class TrackingController extends Controller
                 ->paginate(20)
         ]);
     }
-
-    
+   
     /**
      * Store a newly created resource in storage.
      */
@@ -42,11 +41,9 @@ class TrackingController extends Controller
             'title' => 'required|max:255',
             'target_url' => 'required|url',
         ]);
-
         do {
             $slug = Str::random(5);
         } while (Tracking::where('slug', $slug)->exists()); 
-    
         $validatedData['slug'] = $slug; 
         $validatedData['target_url'] = filter_var($validatedData['target_url'], FILTER_SANITIZE_URL);
         $validatedData['user_id'] = Auth::id();
@@ -60,6 +57,9 @@ class TrackingController extends Controller
      */
     public function destroy(Tracking $tracking)
     {
+        if($tracking->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
         $tracking->delete();
         return redirect()->route('dashboard.tracking.index')->with('success', 'Tracking deleted successfully.');
     }
