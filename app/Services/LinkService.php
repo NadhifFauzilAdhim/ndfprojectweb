@@ -26,7 +26,7 @@ class LinkService
         $data['password'] = $data['password_protected']
             ? bcrypt($request->input('password', $link->password))
             : null;
-        $data['active'] = $request->has('active') ? 1 : 0;
+        $data['active'] = $request['visibility'] ? 1 : 0;
         if($link->target_url !== $data['target_url'] && !$data['title']){
             $websiteTitle = $this->apiServices->fetchWebsiteTitle($data['target_url']);
             $data['title'] = $websiteTitle ?? null;
@@ -35,11 +35,10 @@ class LinkService
          return $link;
     }
 
-
     public function quickUpdate(array $data, Link $link, Request $request): Link
     {
         $data['target_url'] = filter_var($data['target_url'], FILTER_SANITIZE_URL);
-        $data['active'] = $request->has('active') ? 1 : 0;
+        $data['active'] = $request['visibility'] ? 1 : 0;
         if($link->target_url !== $data['target_url']){
             $websiteTitle = $this->apiServices->fetchWebsiteTitle($data['target_url']);
             $data['title'] = $websiteTitle ?? null;

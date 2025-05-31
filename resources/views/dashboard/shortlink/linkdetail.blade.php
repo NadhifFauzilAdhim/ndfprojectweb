@@ -189,7 +189,7 @@
         <div class="card shadow-sm mb-4">
             <div class="card-body">
                 <h5 class="card-title fw-semibold text-primary mb-4">
-                    <i class="bi bi-link-45deg"></i> Link Details
+                    <i class="bi bi-link-45deg"></i> Link Settings
                 </h5>
                 <div class="row g-4">
                     <div class="col-lg-8">
@@ -219,11 +219,16 @@
                                             <div class="invalid-feedback" id="slug-error"></div>
                                         </div>
                                     </div>
-                                    <div class="form-check form-switch mt-3">
-                                        <input class="form-check-input" type="checkbox" id="activeSwitch" name="active" {{ $link->active ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="activeSwitch">
-                                            {{ $link->active ? 'Active' : 'Inactive' }}
-                                        </label>
+                                    <div class="mb-3">
+                                        <label for="activeSelect" class="form-label">Visibility</label>
+                                        <select class="form-select" id="activeSelect" name="visibility" required>
+                                            <option value="1" {{ $link->active ? 'selected' : '' }}>
+                                                Public — Accessible to everyone
+                                            </option>
+                                            <option value="0" {{ !$link->active ? 'selected' : '' }}>
+                                                Private — Restricted access only
+                                            </option>
+                                        </select>
                                     </div>
                                     <div class="card mt-4 border-0 shadow-sm">
                                         <div class="card-body">

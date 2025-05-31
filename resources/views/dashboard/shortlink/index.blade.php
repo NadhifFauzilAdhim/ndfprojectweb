@@ -15,33 +15,82 @@
             </div>
                 <div class="row">
                     {{-- Temporary Component --}}
-                    <div class="carousel slide d-none d-lg-block" data-bs-ride="carousel" data-bs-interval="3000" id="autoPlayCarousel" >
-                        <div class="carousel-inner rounded-3 ">
+                    <div id="linksyCarousel" class="carousel slide d-none d-lg-block" data-bs-ride="carousel" data-bs-interval="4000">
+
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#linksyCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#linksyCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#linksyCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            <button type="button" data-bs-target="#linksyCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                        </div>
+                    
+                        <div class="carousel-inner rounded-3">
                             <div class="carousel-item active">
-                                <div class="col-lg-12 d-none d-lg-block">
+                                <div class="col-lg-12">
                                     <div class="alert alert-info d-flex align-items-center gap-2 p-3 m-2 shadow-sm justify-content-center" role="alert">
                                         <iconify-icon icon="material-symbols:phone-iphone" class="fs-4 text-info"></iconify-icon>
                                         <div>
-                                            <span class="fw-medium">Desktop User?</span> 
-                                            Beralih ke <u>mode mobile</u> untuk mengakses fitur QR Code
+                                            <span class="fw-medium">Pengguna Desktop?</span>
+                                            Beralih ke <u>mode mobile</u> untuk mengakses fitur QR Code Linksy!
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                    
                             <div class="carousel-item">
                                 <div class="col-lg-12">
                                     <div class="alert alert-success d-flex align-items-center gap-2 p-3 m-2 shadow-sm justify-content-center" role="alert">
                                         <iconify-icon icon="tabler:api" class="fs-4 text-success"></iconify-icon>
                                         <div>
-                                            Open API tersedia! 
-                                            <a href="{{ route('ipdocuments') }}" class="text-decoration-none fw-medium link-success">
-                                                Akses Sekarang ➔
+                                            <span class="fw-bold">Open API Linksy Tersedia!</span>
+                                            Integrasikan Linksy dengan aplikasi Anda.
+                                            <a href="{{ route('ipdocuments') }}" class="text-decoration-none fw-medium link-success ms-2">
+                                                Akses Dokumentasi ➔
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <div class="carousel-item">
+                                <div class="col-lg-12">
+                                    <div class="alert alert-primary d-flex align-items-center gap-2 p-3 m-2 shadow-sm justify-content-center" role="alert">
+                                        <iconify-icon icon="mdi:rocket-launch-outline" class="fs-4 text-primary"></iconify-icon>
+                                        <div>
+                                            <span class="fw-bold">Baru di Linksy: Analitik Lebih Detail!</span>
+                                            Pahami performa link Anda lebih dalam.
+                                            <a href="/fitur/analitik" class="text-decoration-none fw-medium link-primary ms-2">
+                                                Lihat Sekarang ➔
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <div class="carousel-item">
+                                <div class="col-lg-12">
+                                    <div class="alert alert-warning d-flex align-items-center gap-2 p-3 m-2 shadow-sm justify-content-center" role="alert">
+                                        <iconify-icon icon="mdi:lightbulb-on-outline" class="fs-4 text-warning"></iconify-icon>
+                                        <div>
+                                            <span class="fw-medium">Tips Linksy:</span>
+                                            Gunakan judul yang menarik untuk meningkatkan klik pada tautan Anda!
+                                            <a href="/blog/tips-judul" class="text-decoration-none fw-medium link-warning ms-2">
+                                                Pelajari Lebih Lanjut ➔
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    
+                        <button class="carousel-control-prev" type="button" data-bs-target="#linksyCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#linksyCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
                     <style>.alert{transition:.2s;border-left:3px solid}.alert-info{border-left-color:#0dcaf0;background-color:rgba(13,202,240,.05)}.alert-success{border-left-color:#198754;background-color:rgba(25,135,84,.05)}.alert:hover{box-shadow:0 2px 8px rgba(0,0,0,.1)!important}.link-success:hover{text-decoration:underline!important}</style>
                     <div class="col-lg-8 d-flex align-items-stretch">
@@ -747,21 +796,13 @@
                                 <div class="form-text mt-2">Enter the full URL including http:// or https://</div>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label fw-500 mb-3">Link Status</label>
-                                <div class="d-flex align-items-center gap-3 bg-light rounded p-3">
-                                    <div class="form-check form-switch custom-switch">
-                                        <input class="form-check-input" 
-                                               type="checkbox" 
-                                               role="switch" 
-                                               id="flexSwitchCheckChecked" 
-                                               name="active" 
-                                               value="1"
-                                               >
-                                        <label class="form-check-label ms-3" for="flexSwitchCheckChecked">
-                                            <span class="d-block fw-medium">Active Status</span>
-                                            <span class="text-muted small">Toggle to enable/disable this short link</span>
-                                        </label>
-                                    </div>
+                                <label class="form-label fw-500 mb-3">Link Visibility</label>
+                                <div class="bg-light rounded p-3">
+                                    <select class="form-select" id="visibilitySelect" name="visibility">
+                                        <option value="0">Private</option>
+                                        <option value="1">Public</option>
+                                    </select>
+                                    <div class="form-text mt-2">Choose whether this link should be private or publicly accessible</div>
                                 </div>
                                 <input type="hidden" name="quickedit" value="1">
                             </div>

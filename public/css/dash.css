@@ -223,7 +223,7 @@ body {
 }
 
 body .auth-background {
-  background-image: url('../img/poster.png');
+  background-image: url('../img/login_banner.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
