@@ -17123,28 +17123,84 @@ ul {
 }
 
 .scan-btn {
-  width: 56px !important;
-  height: 56px !important;
+  width: 65px !important;
+  height: 65px !important;
   position: absolute !important;
-  top: -45px !important; /* Half of the button height */
-  left: 50% !important;
-  transform: translateX(-50%) !important;
+  top: -55px !important;
+  left: -8% !important;
+  /* transform: translateX(-50%) !important; Untuk centering horizontal */
   padding: 0;
   display: flex !important;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25); /* Warna biru primary Bootstrap */
   border: none;
+  cursor: pointer;
+  overflow: hidden; 
+  z-index: 1; 
+
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.25s ease-out,
+              background-color 0.2s ease-out; 
 }
 
+.scan-btn iconify-icon {
+  position: relative; /* Agar z-index bekerja jika ada ::before */
+  z-index: 2; /* Icon di atas pseudo-element ::before */
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Pseudo-element untuk animasi gradasi/kilauan pada hover */
+.scan-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    60deg,
+    rgba(255, 255, 255, 0) 20%, 
+    rgba(255, 255, 255, 0.3) 50%, 
+    rgba(255, 255, 255, 0) 80%  
+  );
+  background-size: 300% 300%; /* Buat gradien lebih besar dari elemen */
+  background-position: 150% 50%; /* Mulai dari luar pandangan */
+  border-radius: inherit; /* Mengikuti border-radius tombol (lingkaran) */
+  opacity: 0;
+  z-index: 1; /* Di bawah ikon, di atas background tombol utama */
+  transition: opacity 0.4s ease-out, background-position 0.6s ease-out;
+}
+
+/* --- State Hover --- */
 .scan-btn:hover {
-  transform: translateX(-50%) scale(1.05);
-  box-shadow: 0 6px 16px rgba(13, 110, 253, 0.3);
+  /* Penting untuk menyertakan transform awal jika ada */
+  transform: translateX(-50%) scale(1.12); /* Tombol sedikit membesar */
+  box-shadow: 0 8px 25px rgba(13, 110, 253, 0.45); /* Bayangan lebih besar dan lembut (efek glow) */
 }
 
-/* Ensure the button stays pressed on click */
+.scan-btn:hover::before {
+  opacity: 1; /* Tampilkan gradasi kilauan */
+  background-position: -50% 50%; /* Gerakkan gradasi melintasi tombol */
+}
+
+.scan-btn:hover iconify-icon {
+  transform: scale(1.15) rotate(8deg); /* Ikon membesar dan sedikit berputar */
+}
+
+/* --- State Active (Saat Diklik) --- */
 .scan-btn:active {
-  transform: translateX(-50%) scale(0.95);
+  /* Penting untuk menyertakan transform awal jika ada */
+  transform: translateX(-50%) scale(0.92) translateY(1px); /* Tombol mengecil dan sedikit ke bawah */
+  /* Bayangan inset untuk efek "ditekan" */
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.3),
+              0 1px 2px rgba(13, 110, 253, 0.15); /* Bayangan luar minimal saat ditekan */
+  transition-duration: 0.1s; /* Efek :active harus cepat dan responsif */
+}
+
+.scan-btn:active iconify-icon {
+  transform: scale(0.95) rotate(-2deg); /* Ikon juga sedikit mengecil dan berputar balik */
+  transition-duration: 0.1s;
 }
 
 
@@ -17273,4 +17329,50 @@ ul {
 
 .animate-jump-forward {
   animation: jump-forward 1.6s ease-in-out infinite;
+}
+
+
+.scan-btn-animated {
+  display: inline-block; /* Memastikan transform bekerja dengan baik */
+  animation-name: periodicButtonBounce;
+  animation-duration: 8s; /* Total durasi siklus (misal: 1.5 detik animasi, 6.5 detik jeda) */
+  animation-iteration-count: infinite;
+}
+
+@keyframes periodicButtonBounce {
+  /* Animasi bouncing aktif (misalnya, dalam 0% - 18% dari total durasi) */
+  0%, 18%, 100% { /* Awal, akhir bouncing, dan akhir seluruh siklus (untuk jeda) */
+    transform: translateY(0);
+    animation-timing-function: ease-out; /* Halus saat berhenti */
+  }
+  /* Naik pertama */
+  4% {
+    transform: translateY(-8px);
+    animation-timing-function: ease-in-out;
+  }
+  /* Turun */
+  7% {
+    transform: translateY(0px);
+    animation-timing-function: ease-in-out;
+  }
+  /* Naik kedua (lebih tinggi) */
+  11% {
+    transform: translateY(-14px); /* Puncak pantulan */
+    animation-timing-function: ease-in-out;
+  }
+  /* Turun kembali ke posisi awal dan sedikit memantul */
+  15% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000); /* Efek landing */
+  }
+  17% {
+    transform: translateY(-4px); /* Pantulan kecil terakhir */
+    animation-timing-function: ease-in-out;
+  }
+  /* 18% hingga 100% adalah periode jeda, elemen tetap di translateY(0) */
+}
+
+/* Opsional: Anda mungkin ingin memastikan iconify-icon di dalamnya juga berperilaku baik */
+.scan-btn-animated iconify-icon {
+  display: block; /* Atau inline-block, agar transform jika ada, bekerja baik */
 }

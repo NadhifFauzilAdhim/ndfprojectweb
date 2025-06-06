@@ -1,5 +1,5 @@
 /*
- * File: link.js
+ * File: Scanner.js
  * Deskripsi: Script untuk Scanner QR Code (Optimized with History)
  * Author ; Nadhif Fauzil.
  */
@@ -11,11 +11,11 @@ let currentZoom = 1;
 let lastScannedUrl = null;
 
 const HISTORY_STORAGE_KEY = 'qrScanHistoryLinks';
-const MAX_HISTORY_ITEMS = 10; // Batasi jumlah item riwayat
+const MAX_HISTORY_ITEMS = 10; 
 
 // Cache DOM elements
 const zoomSlider = document.getElementById('zoomSlider');
-const zoomValue = document.getElementById('zoomValue'); // Pastikan elemen ini ada di HTML
+const zoomValue = document.getElementById('zoomValue'); 
 const readerElement = document.getElementById('reader');
 const resultElement = document.getElementById('result');
 const actionButtonsElement = document.getElementById('actionButtons');
@@ -100,7 +100,6 @@ async function startScanner() {
             config,
             onScanSuccess,
             (errorMessage) => {
-                // console.debug("QR error:", errorMessage);
             }
         );
 

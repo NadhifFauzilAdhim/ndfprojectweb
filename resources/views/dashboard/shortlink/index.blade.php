@@ -488,31 +488,51 @@
                                 {{ $links->links() }}
                             </div>
                         </div>
-                
                         <!-- Shared Links -->
                         <div class="tab-pane fade" id="shared-links" role="tabpanel" aria-labelledby="shared-links-tab">
                             <div class="row">
-                                @forelse ($sharedLinks as $link)
-                                <div class="col-md-4 d-flex align-items-stretch">
-                                    <div class="card shadow border-0 w-100">
+                                @forelse ($sharedLinks as $sharedlink)
+                                <div class="col-md-4 d-flex align-items-stretch ">
+                                    <div class="card shadow border-0 w-100 card-hover rounded-5">
                                         <div class="card-body">
-                                            <div class="d-flex align-items-center mb-1">
-                                                <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=32" alt="Favicon" class="rounded me-2" style="width: 32px; height: 32px;">
-                                                <input type="text" 
-                                                    class="form-control border-0 p-0 text-dark fw-bold fs-5" 
-                                                    value="{{ $link->title  }}" 
-                                                    readonly>
+                                            <div class="row d-flex align-items-center mb-2">
+                                                <div class="col-12 d-flex align-items-center">
+                                                    <img data-src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($sharedlink->target_url) }}&size=32" 
+                                                         alt="Favicon" 
+                                                         class="rounded me-2 lazyload" 
+                                                         style="width: 25px; height: 25px; flex-shrink: 0;">
+                                                    <input type="text" 
+                                                           class="form-control border-0 p-0 text-dark fw-bold fs-5" 
+                                                           value="{{ $sharedlink->title }}" 
+                                                           readonly>
+                                                </div>
                                             </div>
-                                            <p class="text-muted small mb-1">Shared by: <b>{{ $link->user->name }}</b></p>
-                                            <a href="{{ $link->target_url }}" target="_blank" class="d-block text-truncate link-dark">
-                                                {{ Str::limit(strip_tags($link->target_url), 80) }}
+                                            <p class="text-muted small mb-1">Destination:</p>
+                                            <a href="{{ $sharedlink->target_url }}" target="_blank" class="d-block text-truncate link-dark text-decoration-none"
+                                               style="transition: color 0.2s;"
+                                               onmouseover="this.classList.replace('link-dark', 'text-primary')"
+                                               onmouseout="this.classList.replace('text-primary', 'link-dark')">
+                                                {{ Str::limit(strip_tags($sharedlink->target_url), 80) }}
                                             </a>
+                            
+                                            <div class="mt-2">
+                                                <p class="text-muted small mb-1">
+                                                    <iconify-icon icon="solar:user-speak-rounded-bold-duotone" class="me-1" style="position: relative; top: 3px;"></iconify-icon>
+                                                    Shared by: @<b>{{ $sharedlink->user->username }}</b>
+                                                </p>
+                                                 <p class="text-muted small mb-1">
+                                                    <iconify-icon icon="solar:calendar-minimalistic-bold-duotone" class="me-1" style="position: relative; top: 3px;"></iconify-icon>
+                                                    Shared on: {{ \Carbon\Carbon::parse($sharedlink->share_created_at)->format('d M Y') }}
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
+                                </div> 
+                            @empty
+                                <div class="empty-container text-center w-100">
+                                    <p>No links have been shared with you yet.</p>
                                 </div>
-                                @empty
-                                <div class="text-center w-100"><p>No shared links found.</p></div>
-                                @endforelse
+                            @endforelse
                                 {{ $sharedLinks->links() }}
                             </div>
                         </div>
@@ -520,61 +540,102 @@
                         <div class="tab-pane fade" id="links-you-shared" role="tabpanel" aria-labelledby="links-you-shared-tab">
                             <div class="row g-3">
                                 @forelse ($mySharedLinks as $sharedLink)
-                                <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
-                                    <div class="card shadow border-0 w-100">
-                                        <div class="card-body d-flex flex-column">
-                                            <!-- Favicon and Link Title -->
-                                            <div class="d-flex align-items-center mb-3">
-                                                <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($sharedLink->link->target_url) }}&size=32" 
-                                                    alt="Favicon" class="rounded me-2" style="width: 32px; height: 32px;">
+                                <div class="col-md-4 d-flex align-items-stretch ">
+                                    <div class="card shadow border-0 w-100 card-hover rounded-5">
+                                        <div class="card-body">
+                                            <div class="row d-flex align-items-center mb-2">
+                                                <div class="col-12 d-flex align-items-center">
+                                                    <img data-src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($sharedLink->link->target_url) }}&size=32" 
+                                                         alt="Favicon" 
+                                                         class="rounded me-2 lazyload" 
+                                                         style="width: 25px; height: 25px; flex-shrink: 0;">
                                                     <input type="text" 
-                                                    class="form-control border-0 p-0 text-dark fw-bold fs-5" 
-                                                    value="{{ $sharedLink->link->title  }}" 
-                                                    readonly>
-                                            </div>
-                                            <!-- Shared with User -->
-                                            <p class="text-muted small mb-2">
-                                                To: <b>{{ $sharedLink->sharedWith->name }}</b>
-                                            </p>
-                                            <!-- Link URL -->
-                                            <div class="d-flex align-items-center">
-                                                <a href="{{ $sharedLink->link->target_url }}" target="_blank" class="text-truncate text-decoration-none flex-grow-1">
-                                                    {{ Str::limit(strip_tags($sharedLink->link->target_url), 80) }}
-                                                </a>
-                                            </div>
-                                            <!-- Actions -->
-                                            <div class="d-flex justify-content-end mt-3">
-                                                <div class="dropdown">
-                                                    <button class="btn btn-outline-secondary btn-sm rounded-pill" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="bi bi-three-dots"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <li>
-                                                            <form action="{{ route('links.share.delete', $sharedLink->id) }}" method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="dropdown-item text-danger">
-                                                                    <i class="bi bi-trash"></i> Hapus
-                                                                </button>
-                                                            </form>
-                                                        </li>
-                                                    </ul>
+                                                           class="form-control border-0 p-0 text-dark fw-bold fs-5" 
+                                                           value="{{ $sharedLink->link->title }}" 
+                                                           readonly>
                                                 </div>
+                                            </div>
+                                            <p class="text-muted small mb-1">Destination:</p>
+                                            <a href="{{ $sharedLink->link->target_url }}" target="_blank" class="d-block text-truncate link-dark text-decoration-none"
+                                               style="transition: color 0.2s;"
+                                               onmouseover="this.classList.replace('link-dark', 'text-primary')"
+                                               onmouseout="this.classList.replace('text-primary', 'link-dark')">
+                                                {{ Str::limit(strip_tags($sharedLink->link->target_url), 80) }}
+                                            </a>
+                            
+                                            <div class="mt-2">
+                                                <p class="text-muted small mb-1">
+                                                    <iconify-icon icon="solar:user-bold-duotone" class="me-1" style="position: relative; top: 3px;"></iconify-icon>
+                                                    Shared to: <b>@{{ $sharedLink->sharedWith->username }}</b>
+                                                </p>
+                                                <p class="text-muted small mb-1">
+                                                    <iconify-icon icon="solar:calendar-add-bold-duotone" class="me-1" style="position: relative; top: 3px;"></iconify-icon>
+                                                    Shared on: {{ $sharedLink->created_at->format('d M Y') }}
+                                                </p>
+                                            </div>
+                                            
+                                            <div class="d-flex justify-content-end mt-3 position-relative dropup">
+                                                @if($sharedLink->link->password_protected)
+                                                    <button class="btn btn-outline-dark btn-sm rounded-pill me-2" title="Password Protected">
+                                                        <iconify-icon icon="solar:key-outline"></iconify-icon>
+                                                    </button>
+                                                @endif
+                            
+                                                <button class="btn btn-outline-{{ $sharedLink->link->active ? 'primary' : 'danger' }} btn-sm rounded-pill me-2" title="{{ $sharedLink->link->active ? 'Link Active' : 'Link Inactive' }}">
+                                                    <iconify-icon icon="solar:earth-bold-duotone"></iconify-icon>
+                                                </button>
+                            
+                                                <a class="btn btn-outline-primary btn-sm rounded-pill d-flex align-items-center gap-1 px-3 py-1 me-2 shadow-sm transition" 
+                                                   href="/dashboard/link/{{ $sharedLink->link->slug }}"
+                                                   title="View Analytics for Original Link">
+                                                    <iconify-icon icon="solar:chart-bold"></iconify-icon>
+                                                    <span>Analytic</span>
+                                                </a>
+                            
+                                                <button class="btn btn-outline-primary btn-sm rounded-pill" data-bs-toggle="dropdown" title="More Options">
+                                                    <iconify-icon icon="solar:menu-dots-bold"></iconify-icon>
+                                                </button>
+                            
+                                                <ul class="dropdown-menu dropdown-menu-end" style="z-index: 1050;">
+                                                    <li>
+                                                        <a class="dropdown-item" href="/dashboard/link/{{ $sharedLink->link->slug }}" title="View Details of Original Link">
+                                                            <iconify-icon icon="solar:info-circle-bold" class="me-2"></iconify-icon> Detail Link Asli
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <button 
+                                                            class="dropdown-item generate-qr" 
+                                                            data-url="{{ 'https://linksy.site/' . $sharedLink->link->slug }}"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#qrCodeModal"
+                                                            title="Generate QR Code for Original Link"
+                                                        >
+                                                            <iconify-icon icon="solar:qr-code-bold" class="me-2"></iconify-icon> QR Link Asli
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <form action="{{ route('links.share.delete', $sharedLink->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to unshare this link?');">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="dropdown-item text-danger">
+                                                                <iconify-icon icon="solar:trash-bin-minimalistic-bold" class="me-2"></iconify-icon> Hapus Bagikan
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                @empty
-                                <div class="text-center w-100">
-                                    <p>Tidak ada tautan yang Anda bagikan.</p>
+                            @empty
+                                <div class="empty-container text-center w-100"> <p>No shared links found.</p>
                                 </div>
-                                @endforelse
+                            @endforelse
                             </div>
                             <div class="mt-3">
                                 {{ $mySharedLinks->links() }}
                             </div>
                         </div>
-                        
                     </div>
                 </div>
             </div>

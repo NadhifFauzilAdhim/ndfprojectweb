@@ -173,11 +173,11 @@
             </a>
 
             <div class="nav-item scan-wrapper">
-              <button id="scanQRBtn" class="btn btn-primary .bg-gradient-primary rounded-circle scan-btn">
-                  <iconify-icon icon="solar:qr-code-bold-duotone" width="24" height="24"></iconify-icon>
+              <button id="scanQRBtn" class="btn btn-primary bg-gradient-primary rounded-circle scan-btn scan-btn-animated">
+                <iconify-icon icon="solar:qr-code-bold-duotone" width="24" height="24"></iconify-icon>
               </button>
               <span class="nav-label">Scan</span>
-          </div>
+            </div>
             @can('admin')
             <a class="nav-item {{ request()->is('dashboard/posts*') ? 'active' : '' }}" href="/dashboard/posts">
                 <div class="nav-icon">

@@ -51,7 +51,8 @@ class LinkController extends Controller
         ->latest()
         ->paginate(12, ['*'], 'own_links');
 
-        $sharedLinks = Link::join('link_shares', 'links.id', '=', 'link_shares.link_id')
+        $sharedLinks = Link::with('user') 
+            ->join('link_shares', 'links.id', '=', 'link_shares.link_id')
             ->where('link_shares.shared_with', $userId)
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
@@ -59,8 +60,8 @@ class LinkController extends Controller
                     ->orWhere('links.title', 'like', "%{$search}%");
                 });
             })
-            ->select('links.*')
-            ->latest()
+            ->select('links.*', 'link_shares.created_at as share_created_at') 
+            ->orderBy('link_shares.created_at', 'desc') 
             ->paginate(6, ['*'], 'shared_links');
 
         $mySharedLinks = LinkShare::with('sharedWith')
@@ -320,7 +321,7 @@ class LinkController extends Controller
             ], 500);
         }
     }
-      public function generateSummary(Link $link)
+    public function generateSummary(Link $link)
     {
         $this->authorizeLink($link);
 
