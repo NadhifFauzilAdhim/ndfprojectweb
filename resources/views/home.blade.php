@@ -130,91 +130,133 @@
   
       <!-- ======= Skills Section ======= -->
      <!-- Skills Section -->
-      <section id="skills" class="skills section-bg">
-        <div class="container">
-
-          <div class="section-title" data-aos="fade-up" data-aos-delay="200">
-            <h2>Learning Progress</h2>
-            <p>Currently expanding my skills through learning initiatives in web development and the Internet of Things (IoT).</p>
-          </div>
-
-          <div class="row">
-
-            <!-- Bootstrap -->
-            <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="200">
-              <div class="skill-box">
-                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" class="lazyload" alt="Bootstrap">
-                <h4>Bootstrap</h4>
-                <p>Advanced</p>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="300">
-              <div class="skill-box">
-                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" class="lazyload" alt="Bootstrap">
-                <h4>Tailwind</h4>
-                <p>Intermediate</p>
-              </div>
-            </div>
-
-            <!-- JavaScript -->
-            <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="400">
-              <div class="skill-box">
-                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg" class="lazyload" alt="JavaScript">
-                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" class="lazyload" alt="JavaScript">
-                <h4>JavaScript</h4>
-                <p>Intermediate</p>
-              </div>
-            </div>
-
-            <!-- Laravel -->
-            <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="500">
-              <div class="skill-box">
-                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" class="lazyload" alt="Laravel">
-                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/livewire/livewire-original.svg" class="lazyload" alt="Laravel">
-                <h4>Laravel</h4>
-                <p>Advanced</p>
-              </div>
-            </div>
-
-            <!-- PHP -->
-            <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="600">
-              <div class="skill-box">
-                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" class="lazyload" alt="PHP">
-                <h4>PHP</h4>
-                <p>Advanced</p>
-              </div>
-            </div>
-
-            <!-- MySQL -->
-            <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="700">
-              <div class="skill-box">
-                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" class="lazyload" alt="MySQL">
-                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" class="lazyload" alt="PostgreSQL">
-                <h4>MySQL & PostgreSQL</h4>
-                <p>Advanced</p>
-              </div>
-            </div>
-
-            <!-- Python -->
-            <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="800">
-              <div class="skill-box">
-                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="lazyload" alt="Python">
-                <h4>Python</h4>
-                <p>Intermediate</p>
-              </div>
-            </div>
-
-            <!-- C++ & C# -->
-            <div class="col-lg-3 col-md-4 col-6 skill-card mt-4" data-aos="fade-up" data-aos-delay="900">
-              <div class="skill-box">
-                <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" class="lazyload" alt="C++">
-                <h4>C++ & C#</h4>
-                <p>Intermediate</p>
-              </div>
-            </div>
-          </div>
+     <section id="skills" class="skills section-bg">
+      <div class="container">
+    
+        <div class="section-title" data-aos="fade-up" data-aos-delay="100">
+          <h2>Skills & Expertise</h2>
+          <p>My skills are organized by development fields, showcasing my focus on creating integrated solutions across different technology platforms.</p>
         </div>
-      </section>
+    
+        <div class="row">
+    
+          <div class="col-12" data-aos="fade-up" data-aos-delay="200">
+            <h3 class="skills-category-title">Web Development</h3>
+            <hr class="skills-hr">
+            <div class="row">
+              <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
+                <div class="skill-box">
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" class="lazyload" alt="Laravel">
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/livewire/livewire-original.svg" class="lazyload" alt="Livewire">
+                  <h4>Laravel & Livewire</h4>
+                  <p>Advanced</p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
+                <div class="skill-box">
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg" class="lazyload" alt="VueJS">
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" class="lazyload" alt="React">
+                  <h4>Vue & React</h4>
+                  <p>Intermediate</p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
+                <div class="skill-box">
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" class="lazyload" alt="Bootstrap">
+                   <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" class="lazyload" alt="Tailwind CSS">
+                  <h4>Bootstrap & Tailwind</h4>
+                  <p>Advanced</p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
+                <div class="skill-box">
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" class="lazyload" alt="MySQL">
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" class="lazyload" alt="PostgreSQL">
+                  <h4>MySQL & PostgreSQL</h4>
+                  <p>Advanced</p>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <div class="col-12 mt-5" data-aos="fade-up" data-aos-delay="300">
+            <h3 class="skills-category-title">AI & Machine Learning</h3>
+            <hr class="skills-hr">
+            <div class="row">
+              <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
+                <div class="skill-box">
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="lazyload" alt="Python">
+                  <h4>Python</h4>
+                  <p>Intermediate</p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
+                <div class="skill-box">
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg" class="lazyload" alt="TensorFlow">
+                  <h4>TensorFlow</h4>
+                  <p>Intermediate</p>
+                </div>
+              </div>
+               <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
+                <div class="skill-box">
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/opencv/opencv-original.svg" class="lazyload" alt="OpenCV">
+                  <h4>OpenCV</h4>
+                  <p>Intermediate</p>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <div class="col-12 mt-5" data-aos="fade-up" data-aos-delay="400">
+            <h3 class="skills-category-title">IoT & Mobile Development</h3>
+            <hr class="skills-hr">
+            <div class="row">
+              <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
+                <div class="skill-box">
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg" class="lazyload" alt="Kotlin">
+                  <h4>Kotlin</h4>
+                  <p>Intermediate</p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
+                <div class="skill-box">
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" class="lazyload" alt="C++">
+                  <h4>C++</h4>
+                  <p>Intermediate</p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
+                <div class="skill-box">
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg" class="lazyload" alt="Arduino">
+                  <h4>Arduino</h4>
+                  <p>Advanced</p>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+        </div>
+      </div>
+    </section>
+    
+    <style>
+      .skills-category-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #37517e;
+        margin-bottom: 0;
+      }
+      .skills-hr {
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border: 0;
+        border-top: 2px solid #eef0f2;
+      }
+      .skill-box img {
+        height: 40px; /* Menyeragamkan tinggi ikon */
+        margin: 0 5px 15px 5px; /* Memberi jarak antar ikon */
+      }
+    </style>
       <!-- ======= Resume Section ======= -->
       <section id="resume" class="resume">
         <div class="container py-5">
@@ -555,37 +597,52 @@
         </div>
         <div class="swiper project-slider">
           <div class="swiper-wrapper">
-            <!-- Project 1: Kostify -->
+    
             <div class="swiper-slide project-card rounded-5">
               <div class="project-img">
-                <img data-src="img/project/kostifyproject.png" class="img-fluid lazyload rounded-top w-100" alt="Kostify">
+                <img data-src="img/project/banner/kostifyproject.png" class="img-fluid lazyload rounded-top w-100" alt="Kostify">
               </div>
               <div class="project-content">
                 <div class="d-flex align-items-center justify-content-center mb-2">
                   <img data-src="img/member/nadhif.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="z-index: 2;">
                 </div>
                 <h4>Kostify: Cari Kost dengan Mudah</h4>
-                <p>Temukan tempat tinggal Anda dengan cepat dan mudah.</p>
+                <p>Platform digital yang dirancang untuk menyederhanakan proses pencarian dan pengelolaan indekos, membantu pengguna menemukan hunian ideal dengan cepat.</p>
+                <div class="project-tech-stack my-3">
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" class="lazyload" title="Laravel" alt="Laravel Logo" />
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" class="lazyload" title="JavaScript" alt="JavaScript Logo" />
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original-wordmark.svg" class="lazyload" title="MySQL" alt="MySQL Logo" />
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" class="lazyload" title="Bootstrap" alt="Bootstrap Logo" />
+                </div>
                 <div class="project-links">
                   <a href="https://github.com/NadhifFauzilAdhim/Kostify-Aplikasi-Cari-Kost-Native" class="btn btn-sm btn-outline-dark rounded-pill">
                     <i class="bi bi-github"></i> Source Code
                   </a>
-                  <a href="https://kostify.my.id" class="btn btn-sm  btn-outline-primary rounded-pill">
+                  <a href="https://kostify.my.id" class="btn btn-sm btn-outline-primary rounded-pill">
                     <i class="bi bi-eye"></i> Website
                   </a>
                 </div>
               </div>
             </div>
+    
             <div class="swiper-slide project-card rounded-5">
               <div class="project-img">
-                <img data-src="img/project/linksyproject.png" class="img-fluid lazyload rounded-top w-100" alt="Linksy">
+                <img data-src="img/project/banner/linksyproject.png" class="img-fluid lazyload rounded-top w-100" alt="Linksy">
               </div>
               <div class="project-content">
                 <div class="d-flex align-items-center justify-content-center mb-2">
                   <img data-src="img/member/nadhif.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="z-index: 2;">
                 </div>
                 <h4>Linksy: Smart Link Management</h4>
-                <p>Transform your URLs into powerful, shareable links.</p>
+                <p>Solusi manajemen tautan cerdas untuk memperpendek, mengkustomisasi, dan menganalisis performa URL, ideal untuk kampanye pemasaran dan optimasi media sosial.</p>
+                <div class="project-tech-stack my-3">
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" class="lazyload" title="Laravel" alt="Laravel Logo" />
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original-wordmark.svg" class="lazyload" title="MySQL" alt="MySQL Logo" />
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg" class="lazyload" title="Redis" alt="Redis Logo" />
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" class="lazyload" title="Bootstrap" alt="Bootstrap Logo" />
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/googlecloud/googlecloud-original.svg" class="lazyload" title="Google Cloud" alt="Google Cloud Logo" />
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cloudflare/cloudflare-original.svg" class="lazyload" title="Cloudflare" alt="Cloudflare Logo" />
+                </div>
                 <div class="project-links">
                   <a href="https://linksy.site/apidocumentation" class="btn btn-sm btn-outline-dark rounded-pill">
                     <i class="bi bi-file-earmark-code"></i> Documentation
@@ -596,9 +653,10 @@
                 </div>
               </div>
             </div>
+    
             <div class="swiper-slide project-card rounded-5">
               <div class="project-img">
-                <img data-src="img/project/hydroeaseproject.png" class="img-fluid lazyload rounded-top w-100" alt="HydroEase">
+                <img data-src="img/project/banner/hydroeaseproject.png" class="img-fluid lazyload rounded-top w-100" alt="HydroEase">
               </div>
               <div class="project-content">
                 <div class="d-flex align-items-center justify-content-center mb-2">
@@ -608,7 +666,12 @@
                   <img data-src="img/member/julian.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
                 </div>
                 <h4>HydroEase: Hydroponic IoT System</h4>
-                <p>Solusi otomatisasi hidroponik dengan teknologi IoT.</p>
+                <p>Sistem otomatisasi berbasis IoT untuk memonitor dan mengontrol parameter penting pada tanaman hidroponik, seperti nutrisi dan pH, demi hasil panen yang optimal.</p>
+                <div class="project-tech-stack my-3">
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg" class="lazyload" title="Arduino" alt="Arduino Logo" />
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" class="lazyload" title="MongoDB" alt="MongoDB Logo" />
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rabbitmq/rabbitmq-original.svg" class="lazyload" title="MQTT" alt="MQTT Logo" />
+                </div>
                 <div class="project-links">
                   <a href="https://launchinpad.com/project/hydroease-hydroponic-efficiency-automation-8dafb66" class="btn btn-sm btn-outline-dark rounded-pill">
                     <i class="bi bi-file-earmark-code"></i> Documentation
@@ -616,33 +679,23 @@
                 </div>
               </div>
             </div>
+    
             <div class="swiper-slide project-card rounded-5">
               <div class="project-img">
-                <img data-src="img/project/aksara_project.png" class="img-fluid lazyload rounded-top w-100" alt="HydroEase">
+                <img data-src="img/project/banner/focuseyeproject.png" class="img-fluid lazyload rounded-top w-100" alt="FocusEye Project">
               </div>
               <div class="project-content">
                 <div class="d-flex align-items-center justify-content-center mb-2">
                   <img data-src="img/member/nadhif.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="z-index: 2;">
                 </div>
-                <h4>Klasifikasi Aksara Jawa dengan ResNet 18</h4>
-                <p>Solusi digital mendeteksi dan mengklasifikasikan tulisan tangan aksara Jawa.</p>
-                <div class="project-links">
-                  <a href="https://blog.ndfproject.my.id/2025/04/07/klasifikasi-aksara-jawa-dengan-resnet18-solusi-modern-untuk-digitalisasi-budaya-lokal/" class="btn btn-sm btn-outline-dark rounded-pill">
-                    <i class="bi bi-file-earmark-code"></i> Documentation
-                  </a>
+                <h4>FocusEye</h4>
+                <p>Aplikasi cerdas yang memanfaatkan AI untuk menganalisis tingkat fokus siswa di kelas, memberikan data objektif untuk mendukung metode pengajaran yang lebih efektif.</p>
+                <div class="project-tech-stack my-3">
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg" class="lazyload" title="TensorFlow" alt="TensorFlow Logo" />
+                  <img data-src="{{ asset('img/tech/mediapipelogo.png') }}" class="lazyload" title="MediaPipe" alt="MediaPipe Logo" width="40" />
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg" class="lazyload" title="Kotlin" alt="Kotlin Logo" />
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg" class="lazyload" title="SQLite" alt="SQLite Logo" />
                 </div>
-              </div>
-            </div>
-            <div class="swiper-slide project-card rounded-5">
-              <div class="project-img">
-                <img data-src="img/project/cad_project.png" class="img-fluid lazyload rounded-top w-100" alt="HydroEase">
-              </div>
-              <div class="project-content">
-                <div class="d-flex align-items-center justify-content-center mb-2">
-                  <img data-src="img/member/nadhif.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="z-index: 2;">
-                </div>
-                <h4>Classroom Attention Analytics System</h4>
-                <p>Analisis real-time data objektif yang dapat mendukung proses pembelajaran.</p>
                 <div class="project-links">
                   <a href="https://blog.ndfproject.my.id/2025/04/07/classroom-attention-analytics-system-meningkatkan-kualitas-pembelajaran/" class="btn btn-sm btn-outline-dark rounded-pill">
                     <i class="bi bi-file-earmark-code"></i> Documentation
@@ -650,14 +703,35 @@
                 </div>
               </div>
             </div>
-            
+    
           </div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
           <div class="swiper-pagination"></div>
         </div>
       </div>
     </section>
+
+    <style>
+      .project-tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+        align-items: center;
+        min-height: 40px;
+      }
+    
+      .project-tech-stack img {
+        height: 32px;
+        width: auto;
+        filter: grayscale(30%);
+        transition: filter 0.3s ease, transform 0.3s ease;
+      }
+    
+      .project-tech-stack img:hover {
+        filter: grayscale(0%);
+        transform: scale(1.1);
+      }
+    </style>
    
     <section id="blog-section" class="blog section-bg">
       <div class="container-fluid py-5">
@@ -862,8 +936,4 @@
             toast.show();
         });
     </script>
-    {{-- <div id="preloader">
-      <div class="line"></div>
-    </div> --}}
-    
 </x-layout>

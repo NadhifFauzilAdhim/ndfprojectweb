@@ -14,14 +14,12 @@ class LinkService
         $data['target_url'] = filter_var($data['target_url'], FILTER_SANITIZE_URL);
         $data['user_id'] = $userId;
         $data['title'] = $this->apiServices->fetchWebsiteTitle($data['target_url']);
-
         return Link::create($data);
     }
-    
-
     public function updateLink(array $data, Link $link, Request $request): Link
     {
         $data['target_url'] = filter_var($data['target_url'], FILTER_SANITIZE_URL);
+        $data['scheduled'] = $request->has('scheduled') ? 1 : 0;
         $data['password_protected'] = $request->has('password_protected') ? 1 : 0;
         $data['password'] = $data['password_protected']
             ? bcrypt($request->input('password', $link->password))
@@ -31,6 +29,11 @@ class LinkService
             $websiteTitle = $this->apiServices->fetchWebsiteTitle($data['target_url']);
             $data['title'] = $websiteTitle ?? null;
         }
+        if($data['scheduled']){
+            $data['start_time'] = $request->input('start_time', $link->start_time);
+            $data['end_time'] = $request->input('end_time', $link->end_time);
+        }
+        
          $link->update($data);
          return $link;
     }

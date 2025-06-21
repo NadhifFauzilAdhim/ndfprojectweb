@@ -3,250 +3,239 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-            <div class="toast-container position-fixed top-0 end-0 p-3">
-                <div id="copyToast" class="toast align-items-center text-bg-primary border-0 copy-toast" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            <i class="bi bi-clipboard-check me-2"></i> Link copied to clipboard!
+                <div class="toast-container position-fixed top-0 end-0 p-3">
+                    <div id="copyToast" class="toast align-items-center text-bg-primary border-0 copy-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                <i class="bi bi-clipboard-check me-2"></i> Link copied to clipboard!
+                            </div>
+                            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                         </div>
-                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>
                 </div>
-            </div>
                 <div class="row">
                     {{-- Temporary Component --}}
-                    <div id="linksyCarousel" class="carousel slide d-none d-lg-block" data-bs-ride="carousel" data-bs-interval="4000">
-
-                        <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#linksyCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#linksyCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#linksyCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                            <button type="button" data-bs-target="#linksyCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                        </div>
                     
-                        <div class="carousel-inner rounded-3">
-                            <div class="carousel-item active">
-                                <div class="col-lg-12">
-                                    <div class="alert alert-info d-flex align-items-center gap-2 p-3 m-2 shadow-sm justify-content-center" role="alert">
-                                        <iconify-icon icon="material-symbols:phone-iphone" class="fs-4 text-info"></iconify-icon>
-                                        <div>
-                                            <span class="fw-medium">Pengguna Desktop?</span>
-                                            Beralih ke <u>mode mobile</u> untuk mengakses fitur QR Code Linksy!
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    
-                            <div class="carousel-item">
-                                <div class="col-lg-12">
-                                    <div class="alert alert-success d-flex align-items-center gap-2 p-3 m-2 shadow-sm justify-content-center" role="alert">
-                                        <iconify-icon icon="tabler:api" class="fs-4 text-success"></iconify-icon>
-                                        <div>
-                                            <span class="fw-bold">Open API Linksy Tersedia!</span>
-                                            Integrasikan Linksy dengan aplikasi Anda.
-                                            <a href="{{ route('ipdocuments') }}" class="text-decoration-none fw-medium link-success ms-2">
-                                                Akses Dokumentasi ➔
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    
-                            <div class="carousel-item">
-                                <div class="col-lg-12">
-                                    <div class="alert alert-primary d-flex align-items-center gap-2 p-3 m-2 shadow-sm justify-content-center" role="alert">
-                                        <iconify-icon icon="mdi:rocket-launch-outline" class="fs-4 text-primary"></iconify-icon>
-                                        <div>
-                                            <span class="fw-bold">Baru di Linksy: Analitik Lebih Detail!</span>
-                                            Pahami performa link Anda lebih dalam.
-                                            <a href="/fitur/analitik" class="text-decoration-none fw-medium link-primary ms-2">
-                                                Lihat Sekarang ➔
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    
-                            <div class="carousel-item">
-                                <div class="col-lg-12">
-                                    <div class="alert alert-warning d-flex align-items-center gap-2 p-3 m-2 shadow-sm justify-content-center" role="alert">
-                                        <iconify-icon icon="mdi:lightbulb-on-outline" class="fs-4 text-warning"></iconify-icon>
-                                        <div>
-                                            <span class="fw-medium">Tips Linksy:</span>
-                                            Gunakan judul yang menarik untuk meningkatkan klik pada tautan Anda!
-                                            <a href="/blog/tips-judul" class="text-decoration-none fw-medium link-warning ms-2">
-                                                Pelajari Lebih Lanjut ➔
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <button class="carousel-control-prev" type="button" data-bs-target="#linksyCarousel" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#linksyCarousel" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                    <style>.alert{transition:.2s;border-left:3px solid}.alert-info{border-left-color:#0dcaf0;background-color:rgba(13,202,240,.05)}.alert-success{border-left-color:#198754;background-color:rgba(25,135,84,.05)}.alert:hover{box-shadow:0 2px 8px rgba(0,0,0,.1)!important}.link-success:hover{text-decoration:underline!important}</style>
-                    <div class="col-lg-8 d-flex align-items-stretch">
-                        <div class="card w-100 rounded-5 shadow-sm">
+                    <style>.hide-scrollbar{scrollbar-width:none;-ms-overflow-style:none}.hide-scrollbar::-webkit-scrollbar{display:none}</style>
+                    <div class="col-lg-7 d-flex align-items-stretch mb-4">
+                        <div class="card w-100 rounded-4 shadow-sm">
                             <div class="card-body">
-                                <h5 class="card-title d-flex align-items-center gap-2 mb-4">
-                                    Traffic Overview
-                                    <span>
-                                        <iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Traffic Overview"></iconify-icon>
-                                    </span>
-                                </h5>
-                                 <div id="traffic-overview"></div>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="card-title fw-semibold mb-0">Traffic Overview</h5>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <select id="chartTypeSelector" class="form-select form-select-sm" style="width: auto;">
+                                            <option value="area" selected>Area</option>
+                                            <option value="bar">Bar</option>
+                                            <option value="line">Line</option>
+                                            <option value="radar">Radar</option>
+                                        </select>
+                                        <iconify-icon icon="solar:question-circle-bold-duotone" class="fs-5 text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="Monthly traffic data"></iconify-icon>
+                                    </div>
+                                </div>
+                                {{-- Container untuk library chart (misal: ApexCharts) --}}
+                                <div id="traffic-overview" style="min-height: 320px;"></div>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="col-lg-4 d-flex align-items-stretch">
-                        <div class="card w-100 rounded-5 shadow-sm">
-                          <div class="card-body">
-                            <h5 class="card-title d-flex align-items-center gap-2 pb-3">Link Static<span><iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Locations"></iconify-icon></span>
-                            </h5>
-                            <div class="row">
-                              <div class="col-4">
-                                <iconify-icon icon="solar:link-bold-duotone" class="fs-7 d-flex text-primary"></iconify-icon>
-                                <span class="fs-11 mt-2 d-block text-nowrap">Link Created</span>
-                                <h4 class="mb-0 mt-1">{{ $totalLinks }}</h4>
-                              </div>
-                              <div class="col-4">
-                                <iconify-icon icon="solar:cursor-line-duotone" class="fs-7 d-flex text-secondary"></iconify-icon>
-                                <span class="fs-11 mt-2 d-block text-nowrap">Total Visit</span>
-                                <h4 class="mb-0 mt-1">{{ $totalVisit }}</h4>
-                              </div>
-                              <div class="col-4">
-                                <iconify-icon icon="solar:shield-user-broken" class="fs-7 d-flex text-success"></iconify-icon>
-                                <span class="fs-11 mt-2 d-block text-nowrap">Unique Visit</span>
-                                <h4 class="mb-0 mt-1">{{ $totalUniqueVisit }}</h4>
-                              </div>
-                            </div>
-                            <div class="border-0 rounded-3" style="max-height: 250px; overflow-y: auto;">
-                                <div class="vstack gap-3 p-3">
-                                    @forelse ($topLinks as $link)
-                                    <div class="link-card p-2 p-sm-3 rounded-3 bg-white shadow-sm card-hover">
-                                        <div class="row g-2 align-items-center">
-                                            <!-- Favicon Column -->
-                                            <div class="col-auto">
-                                                <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=32" 
-                                                    alt="Favicon" 
-                                                    class="favicon rounded-2 lazyload"
-                                                    width="32"
-                                                    height="32">
+                
+                    <div class="col-lg-5 d-flex align-items-stretch mb-4"> 
+                        <div class="card w-100 rounded-4 shadow-sm">
+                            <div class="card-body">
+                                <div class="row g-3 mb-4">
+                                    <div class="col-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0 me-2">
+                                                <span class="bg-primary-subtle text-primary p-2 rounded-3 d-flex">
+                                                    <iconify-icon icon="solar:link-bold-duotone" width="24" height="24"></iconify-icon>
+                                                </span>
                                             </div>
-                                            
-                                            <!-- Link Info Column -->
-                                            <div class="col text-truncate pe-2">
-                                                <div class="d-flex flex-column truncate-container">
-                                                    <a href="{{ url('dashboard/link/').'/'.$link->slug }}" 
-                                                    class="link-slug text-dark text-decoration-none fw-medium text-truncate">
-                                                        {{ $link->title }}
-                                                    </a>
-                                                    <small class="text-muted domain-name text-truncate">
-                                                        {{ parse_url($link->target_url, PHP_URL_HOST) }}
-                                                    </small>
-                                                </div>
+                                            <div class="flex-grow-1">
+                                                <h4 class="mb-0 fw-bolder">{{ $totalLinks }}</h4>
+                                                <small class="text-muted text-nowrap">Links</small>
                                             </div>
-                                            
-                                            <!-- Stats Column -->
-                                            <div class="col-auto">
-                                                <div class="d-flex flex-column text-nowrap">
-                                                    <span class="total-visits fw-bold text-dark">{{ $link->visits }}</span>
-                                                    <small class="text-success trend-badge">
-                                                        +{{ $link->visits_last_7_days ?: '-' }}
-                                                    </small>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0 me-2">
+                                                <span class="bg-info-subtle text-info p-2 rounded-3 d-flex">
+                                                    <iconify-icon icon="solar:cursor-line-duotone" width="24" height="24"></iconify-icon>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h4 class="mb-0 fw-bolder">{{ $totalVisit }}</h4>
+                                                <small class="text-muted text-nowrap">Visit</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0 me-2">
+                                                <span class="bg-success-subtle text-success p-2 rounded-3 d-flex">
+                                                    <iconify-icon icon="solar:shield-user-bold-duotone" width="24" height="24"></iconify-icon>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h4 class="mb-0 fw-bolder">{{ $totalUniqueVisit }}</h4>
+                                                <small class="text-muted text-nowrap">Unique</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion accordion-flush" id="performanceAccordion">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headerPerformance">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePerformance" aria-expanded="true" aria-controls="collapsePerformance">
+                                                <h5 class="mb-0 fw-semibold">Link Performance</h5>
+                                            </button>
+                                        </h2>
+                                        
+                                        <div id="collapsePerformance" class="accordion-collapse collapse show" aria-labelledby="headerPerformance" data-bs-parent="#performanceAccordion">
+                                            <div class="accordion-body">
+                                                <h6 class="fw-semibold text-muted mb-3">Top Performing Links</h6>
+                                                <div class="flex-grow-1 hide-scrollbar" style="max-height: 150px; overflow-y: auto;">
+                                                    <div class="vstack gap-3">
+                                                        @forelse ($topLinks as $link)
+                                                            <a href="{{ url('dashboard/link/').'/'.$link->slug }}" class="text-decoration-none">
+                                                                <div class="d-flex align-items-center">
+                                                                    {{-- Konten Top Link seperti sebelumnya --}}
+                                                                    <div class="flex-shrink-0 me-3">
+                                                                        <img src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=32" alt="Favicon" class="rounded-2" width="32" height="32">
+                                                                    </div>
+                                                                    <div class="flex-grow-1 text-truncate">
+                                                                        <p class="mb-0 fw-medium text-dark text-truncate">{{ $link->title }}</p>
+                                                                        <small class="text-muted text-truncate d-block">{{ parse_url($link->target_url, PHP_URL_HOST) }}</small>
+                                                                    </div>
+                                                                    <div class="flex-shrink-0 ms-3 text-end">
+                                                                        <p class="mb-0 fw-bold text-dark">{{ $link->visits }} <span class="fw-normal text-muted">visits</span></p>
+                                                                        <small class="text-success fw-medium">+{{ $link->visits_last_7_days ?: '0' }} last 7d</small>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        @empty
+                                                            <div class="text-center p-4 rounded-3 bg-light">
+                                                                <iconify-icon icon="solar:chart-line-duotone" class="fs-1 text-muted mb-2"></iconify-icon>
+                                                                <p class="text-muted mb-0">No link data to show.</p>
+                                                            </div>
+                                                        @endforelse
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    @empty
-                                    <div class="empty-state text-center p-3 rounded-3 bg-light">
-                                        <iconify-icon icon="solar:link-broken" class="fs-1 text-muted mb-2"></iconify-icon>
-                                        <p class="text-muted mb-0 fs-14">No links available</p>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headerHistory">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHistory" aria-expanded="false" aria-controls="collapseHistory">
+                                                <h5 class="mb-0 fw-semibold">Last Visits History</h5>
+                                            </button>
+                                        </h2>
+                                        <div id="collapseHistory" class="accordion-collapse collapse" aria-labelledby="headerHistory" data-bs-parent="#performanceAccordion">
+                                            <div class="accordion-body">
+                                                <div class="pe-3 hide-scrollbar" style="max-height: 250px; overflow-y: auto;">
+                                                    @forelse ($lastvisitData as $visit)
+                                                        <a href="/dashboard/link/{{ $visit->link->slug }}" title="Lihat Detail: {{ $visit->link->title }}" class="text-decoration-none">
+                                                            <div class="d-flex align-items-center py-2 border-bottom border-200">
+                                                               {{-- Konten Last Visit seperti sebelumnya --}}
+                                                               <div class="flex-shrink-0 me-3">
+                                                                   <img data-src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($visit->link->target_url) }}&size=32" alt="Favicon" class="rounded me-2 lazyload" style="width: 25px; height: 25px; flex-shrink: 0;">
+                                                               </div>
+                                                               <div class="flex-grow-1">
+                                                                   <h6 class="mb-0 text-dark text-truncate" style="max-width: 180px;">{{ $visit->link->title }}</h6>
+                                                                   <small class="text-muted">{{ $visit->created_at->diffForHumans() }}</small>
+                                                               </div>
+                                                               <div class="flex-shrink-0 ms-2">
+                                                                   <iconify-icon icon="solar:alt-arrow-right-line-duotone" width="20" height="20" class="text-muted"></iconify-icon>
+                                                               </div>
+                                                            </div>
+                                                        </a>
+                                                    @empty
+                                                        <div class="d-flex flex-column align-items-center justify-content-center text-center text-muted" style="min-height: 200px;">
+                                                            <iconify-icon icon="solar:file-text-line-duotone" width="50" height="50"></iconify-icon>
+                                                            <p class="mt-3 mb-0">Tidak ada riwayat kunjungan.</p>
+                                                        </div>
+                                                    @endforelse
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    @endforelse
+                    
                                 </div>
                             </div>
-                          </div>
                         </div>
-                      </div>
+                    </div>
+                
+                     
                     <div class="col-lg-12 mb-4">
                         <div class="row g-2 align-items-center">
                             <!-- Create New -->
-                            <div class="col-3 col-md-2">
-                                <button 
-                                    class="btn btn-primary w-100 py-2 d-flex flex-column flex-md-row align-items-center justify-content-center gap-1"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseForm"
-                                    aria-expanded="false"
-                                    aria-controls="collapseForm"
-                                    style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px;">
-                                    <iconify-icon icon="solar:clipboard-add-bold-duotone" class="fs-5"></iconify-icon>
-                                    <span class="d-inline d-md-none small">Create</span>
-                                    <span class="d-none d-md-inline">Create New</span>
-                                </button>
-                            </div>
-                        
-                            <!-- Location Tracker -->
-                            <div class="col-3 col-md-2">
-                                <a 
-                                    class="btn btn-primary w-100 py-2 d-flex flex-column flex-md-row align-items-center justify-content-center gap-1"
-                                    href="/dashboard/tracking"
-                                    style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px;">
-                                    <iconify-icon icon="solar:map-point-hospital-bold-duotone" class="fs-5"></iconify-icon>
-                                    <span class="d-inline d-md-none small">Track</span>
-                                    <span class="d-none d-md-inline">Location Tracker</span>
-                                </a>
-                            </div>
-                        
-                            <!-- Generate QR -->
-                            <div class="col-3 col-md-2">
-                                <button 
-                                    class="btn btn-primary w-100 py-2 d-flex flex-column flex-md-row align-items-center justify-content-center gap-1"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#qrCollapseForm"
-                                    aria-expanded="false"
-                                    aria-controls="qrCollapseForm"
-                                    style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px;">
-                                    <iconify-icon icon="solar:qr-code-bold-duotone" class="fs-5"></iconify-icon>
-                                    <span class="d-inline d-md-none small">QR</span>
-                                    <span class="d-none d-md-inline">Generate QR</span>
-                                </button>
-                            </div>
-                        
-                            <!-- Scan QR -->
-                            <div class="col-3 col-md-2">
-                                <button 
-                                    class="btn btn-primary w-100 py-2 d-flex flex-column flex-md-row align-items-center justify-content-center gap-1"
-                                    type="button"
-                                    id="scanQRBtn2"
-                                    style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px;">
-                                    <iconify-icon icon="solar:scanner-bold-duotone" class="fs-5"></iconify-icon>
-                                    <span class="d-inline d-md-none small">Scan</span>
-                                    <span class="d-none d-md-inline">Scan QR</span>
-                                </button>
-                            </div>
-                        
-                            <!-- Search Form -->
-                            <div class="col-12 col-md-4">
-                                <form action="/dashboard/link" method="GET">
-                                    <div class="input-group">
-                                        <input type="text" name="search" class="form-control" placeholder="Search Link" aria-label="Search" aria-describedby="button-addon2" value="{{ request('search') }}">
-                                        <button class="btn btn-outline-primary" type="submit" id="button-addon2">
-                                            <i class="bi bi-search"></i>
-                                        </button>
+                                <div class="shadow-sm rounded-5">
+                                    <div class="card-body">
+                                        <div class="row g-2 align-items-center">
+                                            
+                                        <div class="col-6 col-sm-4 col-md-2">
+                                            <button 
+                                                class="btn btn-primary w-100 py-2 d-flex flex-column flex-md-row align-items-center justify-content-center gap-1 shadow-sm"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#collapseForm"
+                                                aria-expanded="false"
+                                                aria-controls="collapseForm"
+                                                style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px;">
+                                                <iconify-icon icon="solar:clipboard-add-bold-duotone" class="fs-5"></iconify-icon>
+                                                <span class="d-inline d-md-none small">Create</span>
+                                                <span class="d-none d-md-inline">Create New</span>
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="col-6 col-sm-4 col-md-2">
+                                            <a 
+                                                class="btn btn-primary w-100 py-2 d-flex flex-column flex-md-row align-items-center justify-content-center gap-1 shadow-sm"
+                                                href="/dashboard/tracking"
+                                                style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px;">
+                                                <iconify-icon icon="solar:map-point-hospital-bold-duotone" class="fs-5"></iconify-icon>
+                                                <span class="d-inline d-md-none small">Track</span>
+                                                <span class="d-none d-md-inline">Tracker</span>
+                                            </a>
+                                        </div>
+                                        
+                                        <div class="col-6 col-sm-4 col-md-2">
+                                            <button 
+                                                class="btn btn-primary w-100 py-2 d-flex flex-column flex-md-row align-items-center justify-content-center gap-1 shadow-sm"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#qrCollapseForm"
+                                                aria-expanded="false"
+                                                aria-controls="qrCollapseForm"
+                                                style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px;">
+                                                <iconify-icon icon="solar:qr-code-bold-duotone" class="fs-5"></iconify-icon>
+                                                <span class="d-inline d-md-none small">QR</span>
+                                                <span class="d-none d-md-inline">Generate QR</span>
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="col-6 col-sm-4 col-md-2">
+                                            <button 
+                                                class="btn btn-primary w-100 py-2 d-flex flex-column flex-md-row align-items-center justify-content-center gap-1 shadow-sm"
+                                                type="button"
+                                                id="scanQRBtn2"
+                                                style="background: linear-gradient(135deg, #007bff, #0056b3); border: none; border-radius: 10px;">
+                                                <iconify-icon icon="solar:scanner-bold-duotone" class="fs-5"></iconify-icon>
+                                                <span class="d-inline d-md-none small">Scan</span>
+                                                <span class="d-none d-md-inline">Scan QR</span>
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="col-12 col-sm-8 col-md-4 mt-2">
+                                            <form action="/dashboard/link" method="GET">
+                                                <div class="input-group">
+                                                    <input type="text" name="search" class="form-control" placeholder="Cari link..." aria-label="Search" value="{{ request('search') }}">
+                                                    <button class="btn btn-outline-secondary" type="submit">
+                                                        <i class="bi bi-search"></i> </button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
             
@@ -408,10 +397,35 @@
                                                 <iconify-icon icon="solar:user-check-bold" class="me-1" style="position: relative; top: 3px;"></iconify-icon> <b>{{ $link->unique_visits }}</b> unique
                                             </div>
                                         </div>
+
+                                        @if($link->scheduled)
+                                        <div class="d-flex justify-content-between mt-2">
+                                            @if($link->start_time)
+                                                <div class="text-success small">
+                                                    <iconify-icon icon="mdi:clipboard-text-date" class="me-1" style="position: relative; top: 3px;"></iconify-icon>
+                                                    Start: {{ $link->start_time->format('d M Y, H:i') }}
+                                                </div>
+                                            @endif  
+                                    
+                                            @if($link->end_time)
+                                                <div class="text-danger small">
+                                                    <iconify-icon icon="mdi:clipboard-text-date" class="me-1" style="position: relative; top: 3px;"></iconify-icon>
+                                                    End: {{ $link->end_time->format('d M Y, H:i') }}
+                                                </div>
+                                            @endif
+                                        </div>
+                                        @endif
+
                                         <!-- Security Status -->
                                         <div class="d-flex justify-content-end mt-3 position-relative dropup">
+
+                                            @if($link->scheduled)
+                                            <button class="btn btn-outline-info btn-sm rounded-pill me-2">
+                                                <iconify-icon icon="gala:clock"></iconify-icon>
+                                            </button>
+                                             @endif
                                             @if($link->password_protected)
-                                                <button class="btn btn-outline-dark btn-sm rounded-pill me-2">
+                                                <button class="btn btn-outline-info btn-sm rounded-pill me-2">
                                                     <iconify-icon icon="solar:key-outline"></iconify-icon>
                                                 </button>
                                             @endif
@@ -433,8 +447,8 @@
 
                                             <ul class="dropdown-menu dropdown-menu-end" style="z-index: 1050;">
                                                 <li>
-                                                    <a class="dropdown-item" href="/dashboard/link/{{ $link->slug }}">
-                                                        <iconify-icon icon="solar:info-circle-bold" class="me-2"></iconify-icon> Detail
+                                                    <a class="dropdown-item" href="/dashboard/link/{{ $link->slug }}#link-settings">
+                                                        <iconify-icon icon="solar:settings-bold" class="me-2"></iconify-icon>Link Settings
                                                     </a>
                                                 </li>
                                                 <li>
@@ -881,10 +895,10 @@
                 </div>
             </div>
         </div>
-    <script>
-        window.visitDataGlobal = @json($visitData);  
-        console.log(window.visitDataGlobal);
-    </script>
-    <script src="{{ asset('js/link.js') }}"></script>
-    <script src="{{ asset('js/dashjs/utils.js') }}"></script>
+        <script>
+            window.visitDataGlobal = @json($visitData);  
+            console.log(window.visitDataGlobal);
+        </script>
+        <script src="{{ asset('js/link.js') }}"></script>
+        <script src="{{ asset('js/dashjs/utils.js') }}"></script>
 </x-dashlayout>

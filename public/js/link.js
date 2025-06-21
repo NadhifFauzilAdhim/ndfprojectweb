@@ -78,74 +78,98 @@
     };
   
     // ==================== CHART INITIALIZATION ====================
+    let trafficChart = null; // Deklarasikan variabel chart di scope luar
+
     const initChart = visitData => {
-      const config = {
-        series: [
-          { 
-            name: 'This week', 
-            data: visitData.thisWeek 
-          },
-          { 
-            name: 'Last week', 
-            data: visitData.lastWeek 
-          }
-        ],
-        chart: { 
-          type: 'area', 
-          height: 320, 
-          toolbar: { show: false }, 
-          animations: { enabled: true } 
-        },
-        stroke: { 
-          width: 3, 
-          curve: 'smooth' 
-        },
-        markers: { 
-          size: 5,
-          colors: ['#fff'],
-          strokeColors: ['#007bff', '#ff6b6b'],
-          strokeWidth: 2,
-          hover: { size: 7 } 
-        },  
-        grid: { 
-          borderColor: 'rgba(0,0,0,0.1)',
-          strokeDashArray: 3,
-          xaxis: { lines: { show: true } },
-          yaxis: { lines: { show: true } } 
-        },
-        xaxis: { 
-          categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-          axisTicks: { show: false },
-          axisBorder: { show: false } 
-        },
-        yaxis: { 
-          tickAmount: 5,
-          labels: { 
-            formatter: val => `${val} Visit` 
-          } 
-        },
-        tooltip: { 
-          theme: 'dark',
-          x: { show: true },
-          y: { 
-            formatter: val => `${val} Visit` 
-          } 
-        },
-        colors: ['#007bff', '#ff6b6b'],
-        fill: {
-          type: 'gradient',
-          gradient: {
-            shade: 'light',
-            type: 'vertical',
-            shadeIntensity: 0.25,
-            gradientToColors: ['#80d0ff', '#ff9f9f'],
-            opacityFrom: 1,
-            opacityTo: 0.3,
-          }
-        },
-      };
-      new ApexCharts(document.querySelector('#traffic-overview'), config).render();
+        const config = {
+            series: [{
+                name: 'This week',
+                data: visitData.thisWeek || []
+            }, {
+                name: 'Last week',
+                data: visitData.lastWeek || []
+            }],
+            chart: {
+                type: 'area', // Tipe default
+                height: 320,
+                toolbar: { show: true },
+                animations: { enabled: true },
+                zoom: { enabled: false }
+            },
+            stroke: {
+                width: 3,
+                curve: 'smooth'
+            },
+            markers: {
+                size: 5,
+                colors: ['#fff'],
+                strokeColors: ['#007bff', '#ff6b6b'],
+                strokeWidth: 2,
+                hover: { size: 7 }
+            },
+            grid: {
+                borderColor: 'rgba(0,0,0,0.1)',
+                strokeDashArray: 3,
+                xaxis: { lines: { show: false } },
+                yaxis: { lines: { show: true } }
+            },
+            xaxis: {
+                categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                axisTicks: { show: false },
+                axisBorder: { show: false }
+            },
+            yaxis: {
+                tickAmount: 5,
+                labels: {
+                    formatter: val => `${val} Visit`
+                }
+            },
+            tooltip: {
+                theme: 'dark',
+                x: { show: true },
+                y: {
+                    formatter: val => `${val} Visit`
+                }
+            },
+            colors: ['#007bff', '#ff6b6b'],
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'light',
+                    type: 'vertical',
+                    shadeIntensity: 0.25,
+                    gradientToColors: ['#80d0ff', '#ff9f9f'],
+                    opacityFrom: 1,
+                    opacityTo: 0.3,
+                }
+            },
+            dataLabels: {
+                enabled: false
+            }
+        };
+
+        if (trafficChart) {
+            trafficChart.destroy();
+        }
+
+        trafficChart = new ApexCharts(document.querySelector('#traffic-overview'), config);
+        trafficChart.render();
     };
+
+    const setupChartSelector = () => {
+      const selector = document.getElementById('chartTypeSelector');
+      if (selector) {
+          selector.addEventListener('change', (e) => {
+              const newType = e.target.value;
+              if (trafficChart) {
+                  trafficChart.updateOptions({
+                      chart: { type: newType },
+                      stroke: { curve: newType === 'bar' ? 'straight' : 'smooth' }
+                  });
+              }
+          });
+      }
+  };
   
     // ==================== QR CODE GENERATOR ====================
     const generateQRCode = async url => {
@@ -260,6 +284,7 @@
       setupDeleteModal();
       setupEditModal();
       initChart(window.visitDataGlobal || []);
+      setupChartSelector();
       console.log(window.visitDataGlobal);
       setupQRCode();
       setupTitleUpdater();

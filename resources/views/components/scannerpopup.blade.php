@@ -12,7 +12,7 @@
         </div>
         <div class="modal-body pt-2"> 
           <div class="scanner-container position-relative overflow-hidden rounded-5 mb-3">
-            <div id="reader" style="width: 100%; height: 280px;"> <!- Slightly adjusted height if needed -->
+            <div id="reader" style="width: 100%; height: 100%"> 
               <div id="cameraLoadingSpinner" class="position-absolute top-50 start-50 translate-middle" style="display: none;">
                 <div class="spinner-border text-primary" role="status">
                   <span class="visually-hidden">Loading camera...</span>

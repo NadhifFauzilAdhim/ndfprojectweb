@@ -280,7 +280,7 @@
   });
 
   var swiper = new Swiper(".project-slider", {
-    slidesPerView: 2,
+    slidesPerView: 3,
     spaceBetween: 20,
     loop: true,
     navigation: {
@@ -292,7 +292,7 @@
       clickable: true,
     },
     breakpoints: {
-      1024: { slidesPerView: 2 },
+      1024: { slidesPerView: 3 },
       768: { slidesPerView: 2 },
       576: { slidesPerView: 1 },
       320: { slidesPerView: 1 }

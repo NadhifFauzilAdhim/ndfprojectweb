@@ -28,6 +28,8 @@ Route::middleware('throttle:60,1')->group(function () {
     Route::get('category/{category:slug}', [HomeController::class, 'showCategory']);
     Route::get('/event', [EventController::class, 'index'])->name('event');
     Route::get('/event/{id}', [EventController::class, 'show'])->name('eventdetail');
+    Route::view('/focuseye/privacy-policy', 'privacy-policy')->name('privacy');
+
 });
 
 Route::middleware('throttle:20,1')->group(function () {

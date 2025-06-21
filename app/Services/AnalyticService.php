@@ -26,9 +26,15 @@ class AnalyticService
             ->take(10)
             ->get();
 
+        $lastvisitData = Linkvisithistory::with('link')
+        ->whereHas('link', fn($query) => $query->where('user_id', $userId))
+        ->latest()
+        ->take(12)
+        ->get();
+
         $visitData = $this->getAllVisitData($userId);
 
-        return compact('totals', 'topLinks', 'visitData');
+        return compact('totals', 'topLinks', 'visitData', 'lastvisitData');
     }
 
 

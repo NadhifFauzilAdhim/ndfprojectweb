@@ -144,7 +144,12 @@ $(function () {
     const locationLabels = Object.keys(locationData); 
     const locationSeries = Object.values(locationData); 
 
-    // Konfigurasi chart
+    const barColors = [
+        '#3b82f6', '#10b981', '#f59e0b', '#ef4444',
+        '#8b5cf6', '#ec4899', '#14b8a6', '#f43f5e',
+        '#6366f1', '#84cc16'
+    ];
+
     var options = {
         series: [{
             name: 'Visits',
@@ -161,7 +166,8 @@ $(function () {
             bar: {
                 horizontal: false, 
                 columnWidth: '55%', 
-                endingShape: 'rounded' 
+                endingShape: 'rounded',
+                distributed: true 
             },
         },
         dataLabels: {
@@ -206,7 +212,7 @@ $(function () {
                 }
             }
         },
-        colors: ['#3b82f6'] 
+        colors: barColors 
     };
 
     var chart = new ApexCharts(document.querySelector("#location-chart"), options);
@@ -219,6 +225,37 @@ function applyFilter() {
     urlParams.set('filter', filter);
     window.location.search = urlParams.toString();
 }
+
+$(document).ready(function () {
+    const schedulerSwitch = document.getElementById('timeSchedulerSwitch');
+    const schedulerFields = document.getElementById('scheduler-fields');
+    const passwordSwitch = document.getElementById('passwordProtectionSwitch');
+    const passwordFieldContainer = document.getElementById('password-field-container');
+    const passwordInput = document.getElementById('password');
+    
+    function toggleVisibility(element, isChecked) {
+        if (element) {
+            element.style.display = isChecked ? 'block' : 'none';
+        }
+    }
+
+    schedulerSwitch.addEventListener('change', function () {
+        toggleVisibility(schedulerFields, this.checked);
+    });
+
+    passwordSwitch.addEventListener('change', function() {
+        toggleVisibility(passwordFieldContainer, this.checked);
+        if (passwordInput) {
+            passwordInput.required = this.checked;
+            if (!this.checked) {
+                passwordInput.value = ''; // Clear password on disable for security
+            }
+        }
+    });
+});
+    
+
+    
 
 
 

@@ -10,6 +10,11 @@ class Link extends Model
     use HasFactory;
     protected $guarded = [];
 
+    protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
+    ];
+
     public function user(){
        return $this->belongsTo(User::class);
     }
@@ -28,4 +33,8 @@ class Link extends Model
     {
         return $this->hasMany(LinkShare::class);
     }
+
+    // public function category(){
+    //     return $this->belongsTo(LinkCategories::class);
+    // }
 }

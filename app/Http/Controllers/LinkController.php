@@ -86,6 +86,7 @@ class LinkController extends Controller
             'visitData' => $visitData,
             'sharedLinks' => $sharedLinks,
             'mySharedLinks' => $mySharedLinks,
+            'lastvisitData' => $lastvisitData,
         ])->with('title', 'Linksy');
     }
 
@@ -137,6 +138,8 @@ class LinkController extends Controller
             'target_url' => 'required|max:255|url',
             'slug' => 'nullable|max:255|unique:links,slug,' . $link->id,
             'password' => 'nullable|min:6|max:255',
+            'start_time' => 'nullable|date',
+            'end_time' => 'nullable|date',
         ]);
 
         if ($request->has('quickedit')) {
