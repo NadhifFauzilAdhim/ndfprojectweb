@@ -71,32 +71,29 @@
   };
 
   const setupEditModal = () => {
-      const modalEl = document.getElementById('editModal');
-      if (!modalEl) return;
+    const modalEl = document.getElementById('editModal');
+    if (!modalEl) return;
 
-      modalEl.addEventListener('show.bs.modal', ({ relatedTarget: btn }) => {
-          const { id, targetUrl, active, categoryId } = btn.dataset;
+    modalEl.addEventListener('show.bs.modal', ({ relatedTarget: btn }) => {
+        const { id, targetUrl, active, categoryId } = btn.dataset;
 
-          const form = modalEl.querySelector('#editForm');
-          const urlInput = modalEl.querySelector('#editTargetUrl');
-          const switchEl = modalEl.querySelector('#flexSwitchCheckChecked');
-          const labelEl = modalEl.querySelector('#switchLabel');
-          const categorySelect = modalEl.querySelector('#editLinkCategory');
+        const form = modalEl.querySelector('#editForm');
+        const urlInput = modalEl.querySelector('#editTargetUrl');
+        const categorySelect = modalEl.querySelector('#editLinkCategory');
+        const visibilitySelect = modalEl.querySelector('#editVisibility');
 
-          form.action = `/dashboard/link/${id}`;
-          urlInput.value = targetUrl;
+        form.action = `/dashboard/link/${id}`;
+        urlInput.value = targetUrl;
 
-          if(categorySelect) {
-              categorySelect.value = categoryId || "";
-          }
+        if (categorySelect) {
+            categorySelect.value = categoryId || "";
+        }
 
-          if (switchEl && labelEl) {
-              switchEl.checked = active === '1';
-              labelEl.textContent = switchEl.checked ? 'Active' : 'Inactive';
-              switchEl.onchange = () => labelEl.textContent = switchEl.checked ? 'Active' : 'Inactive';
-          }
-      });
-  };
+        if (visibilitySelect) {
+            visibilitySelect.value = active === '1' ? '1' : '0';
+        }
+    });
+};
 
   const setupAddCategoryModal = () => {
       const addCategoryForm = document.getElementById('addCategoryForm');

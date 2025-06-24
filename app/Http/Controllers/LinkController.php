@@ -38,33 +38,31 @@ class LinkController extends Controller
         $cacheKey = "user_{$userId}_dashboard";
         $search = $request->input('search');
         $categorySlug = $request->input('category');
-        // Analytic Service
         $data = Cache::remember($cacheKey, 300, function () use ($userId, $search) {
             return $this->analyticService->getDashboardData($userId);
         });
         extract($data);
 
         $links = Link::where('user_id', $userId)
-            ->with('linkCategory') // Eager load relasi untuk efisiensi
-            ->when($search, function ($query) use ($search) {
-                // ... (logika pencarian Anda tidak berubah)
-            })
-            // TAMBAHKAN BLOK 'when' INI UNTUK FILTER KATEGORI
-            ->when($categorySlug, function ($query) use ($categorySlug) {
-                if ($categorySlug === 'uncategorized') {
-                    // Jika user memilih 'Tanpa Kategori'
-                    return $query->whereNull('link_category_id');
-                } else {
-                    // Jika user memilih kategori tertentu
-                    // Gunakan whereHas untuk memfilter berdasarkan relasi
-                    return $query->whereHas('linkCategory', function ($q) use ($categorySlug) {
-                        $q->where('slug', $categorySlug);
-                    });
-                }
-            })
-            ->latest()
-            ->paginate(12, ['*'], 'own_links')
-            ->withQueryString();
+        ->with('linkCategory')
+        ->when($search, function ($query) use ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('slug', 'like', "%{$search}%")
+                ->orWhere('title', 'like', "%{$search}%");
+            });
+        })
+        ->when($categorySlug, function ($query) use ($categorySlug) {
+            if ($categorySlug === 'uncategorized') {
+                return $query->whereNull('link_category_id');
+            }
+
+            return $query->whereHas('linkCategory', function ($q) use ($categorySlug) {
+                $q->where('slug', $categorySlug);
+            });
+        })
+        ->latest()
+        ->paginate(12, ['*'], 'own_links')
+        ->withQueryString();
 
         $linkCategories = LinkCategory::where('user_id', $userId)->orderBy('name')->get();
 

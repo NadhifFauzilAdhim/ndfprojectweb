@@ -244,7 +244,6 @@
                             <div class="card card-body shadow-sm border-0">
                                 <form id="linkform" action="/dashboard/link" method="POST">
                                     @csrf
-                                    <!-- URL Destination Field -->
                                     <div class="mb-4">
                                         <label for="url_target" class="form-label fw-bold">URL Destination</label>
                                         <input type="text" class="form-control @error('target_url') is-invalid @enderror shadow-sm" id="target_url" name="target_url" placeholder="https://example.com" value="{{ old('target_url') }}">
@@ -254,58 +253,58 @@
                                         </div>
                                         @enderror
                                     </div>
-                                    <!-- Shortened Link Field -->
-                                    <div class="mb-4">
-                                        <label for="short_link" class="form-label fw-bold">Shortened Link</label>
-                                    
-                                        <div class="d-flex flex-column flex-md-row gap-2 align-items-stretch">
-                                            <div class="input-group shadow-sm flex-grow-1">
+                            
+                                    <div class="row">
+                                        <div class="col-lg-6 mb-4">
+                                            <label for="short_link" class="form-label fw-bold">Shortened Link</label>
+                                            <div class="input-group shadow-sm">
                                                 <span class="input-group-text bg-light" id="basic-addon3">linksy.site/</span>
-                                    
                                                 <input type="text" class="form-control @error('slug') is-invalid @enderror" id="short_link" name="slug" placeholder="custom-slug" value="{{ old('slug') }}" aria-describedby="basic-addon3">
                                             </div>
-                                    
-                                            <select class="form-select shadow-sm mt-2 mt-md-0 w-auto flex-grow-0" name="active" aria-label="Visibility select">
+                                            @error('slug')
+                                            <div class="invalid-feedback d-block">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </div>
+                            
+                                        <div class="col-lg-3 col-md-6 mb-4">
+                                            <label for="visibility_select" class="form-label fw-bold">Visibility</label>
+                                            <select class="form-select shadow-sm @error('active') is-invalid @enderror" id="visibility_select" name="active" aria-label="Visibility select">
                                                 <option value="1" {{ old('active', '1') == '1' ? 'selected' : '' }}>Visible to Everyone</option>
                                                 <option value="0" {{ old('active') == '0' ? 'selected' : '' }}>Private (Only You)</option>
                                             </select>
+                                            @error('active')
+                                            <div class="invalid-feedback d-block">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
                                         </div>
-                                    
-                                        @error('slug')
-                                        <div class="invalid-feedback d-block">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    
-                                        @error('active')
-                                        <div class="invalid-feedback d-block">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label for="link_category_id_select" class="form-label fw-bold">Category (Optional)</label>
-                                        <div class="input-group">
-                                            <select class="form-select @error('link_category_id') is-invalid @enderror" id="link_category_id_select" name="link_category_id">
-                                                <option value="">-- No Category --</option>
-                                                @foreach($linkCategories as $category)
+                            
+                                        <div class="col-lg-3 col-md-6 mb-4">
+                                            <label for="link_category_id_select" class="form-label fw-bold">Category <span class="fw-normal">(Optional)</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="bi bi-folder"></i></span>
+                                                <select class="form-select @error('link_category_id') is-invalid @enderror" id="link_category_id_select" name="link_category_id">
+                                                    <option value="">-- No Category --</option>
+                                                    @foreach($linkCategories as $category)
                                                     <option value="{{ $category->id }}" {{ old('link_category_id') == $category->id ? 'selected' : '' }}>
                                                         {{ $category->name }}
                                                     </option>
-                                                @endforeach
-                                            </select>
-                                            <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#addCategoryModal" title="Add New Category">
-                                                <i class="bi bi-plus-lg"></i>
-                                            </button>
+                                                    @endforeach
+                                                </select>
+                                                <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#addCategoryModal" title="Add New Category">
+                                                    <i class="bi bi-plus-lg"></i>
+                                                </button>
+                                            </div>
                                             @error('link_category_id')
-                                                <div class="invalid-feedback d-block">
-                                                    {{ $message }}
-                                                </div>
+                                            <div class="invalid-feedback d-block">
+                                                {{ $message }}
+                                            </div>
                                             @enderror
                                         </div>
                                     </div>
-                                    <!-- Submit Button -->
+                            
                                     <div class="text-end">
                                         <button type="submit" class="btn btn-primary px-4" id="linkSubmitBtn">
                                             <span id="linkBtnSpinner" class="spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
@@ -996,15 +995,17 @@
                             </div>
         
                             <div class="mb-4">
-                                <label class="form-label fw-500 mb-3">Link Status</label>
-                                <div class="bg-light rounded p-3">
-                                    <div class="form-check form-switch">
-                                        <input type="hidden" name="active" value="0">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="active" value="1">
-                                        <label class="form-check-label" for="flexSwitchCheckChecked" id="switchLabel">Inactive</label>
-                                    </div>
-                                    <div class="form-text mt-2">Choose whether this link should be Active or Inactive.</div>
+                                <label for="editVisibility" class="form-label fw-500 mb-3">Link Visibility</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-eye text-muted"></i>
+                                    </span>
+                                    <select class="form-select border-start-0" id="editVisibility" name="visibility" required>
+                                        <option value="1">Public</option>
+                                        <option value="0">Private</option>
+                                    </select>
                                 </div>
+                                <div class="form-text mt-2">Choose whether this link is Public or Private.</div>
                             </div>
         
                             <input type="hidden" name="quickedit" value="1">
