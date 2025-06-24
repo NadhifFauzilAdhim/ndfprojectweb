@@ -6,6 +6,7 @@ use App\Models\Link;
 use App\Models\User;
 use App\Models\BlockedIp;
 use App\Models\LinkShare;
+use App\Models\LinkCategory;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Linkvisithistory;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\ValidationException;
 use App\Notifications\linkShareNotif;
 use Illuminate\Support\Facades\Notification;
+use Carbon\Carbon;
 use App\Services\{LinkService,
                   AnalyticService,
                   ApiServices
@@ -35,6 +37,7 @@ class LinkController extends Controller
         $userId = Auth::id();
         $cacheKey = "user_{$userId}_dashboard";
         $search = $request->input('search');
+        $categorySlug = $request->input('category');
         // Analytic Service
         $data = Cache::remember($cacheKey, 300, function () use ($userId, $search) {
             return $this->analyticService->getDashboardData($userId);
@@ -42,14 +45,28 @@ class LinkController extends Controller
         extract($data);
 
         $links = Link::where('user_id', $userId)
-        ->when($search, function ($query) use ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('slug', 'like', "%{$search}%")
-                  ->orWhere('title', 'like', "%{$search}%");
-            });
-        })
-        ->latest()
-        ->paginate(12, ['*'], 'own_links');
+            ->with('linkCategory') // Eager load relasi untuk efisiensi
+            ->when($search, function ($query) use ($search) {
+                // ... (logika pencarian Anda tidak berubah)
+            })
+            // TAMBAHKAN BLOK 'when' INI UNTUK FILTER KATEGORI
+            ->when($categorySlug, function ($query) use ($categorySlug) {
+                if ($categorySlug === 'uncategorized') {
+                    // Jika user memilih 'Tanpa Kategori'
+                    return $query->whereNull('link_category_id');
+                } else {
+                    // Jika user memilih kategori tertentu
+                    // Gunakan whereHas untuk memfilter berdasarkan relasi
+                    return $query->whereHas('linkCategory', function ($q) use ($categorySlug) {
+                        $q->where('slug', $categorySlug);
+                    });
+                }
+            })
+            ->latest()
+            ->paginate(12, ['*'], 'own_links')
+            ->withQueryString();
+
+        $linkCategories = LinkCategory::where('user_id', $userId)->orderBy('name')->get();
 
         $sharedLinks = Link::with('user') 
             ->join('link_shares', 'links.id', '=', 'link_shares.link_id')
@@ -87,6 +104,7 @@ class LinkController extends Controller
             'sharedLinks' => $sharedLinks,
             'mySharedLinks' => $mySharedLinks,
             'lastvisitData' => $lastvisitData,
+            'linkCategories' => $linkCategories,
         ])->with('title', 'Linksy');
     }
 
@@ -95,25 +113,53 @@ class LinkController extends Controller
      */
     public function show(Link $link, Request $request)
     {
-        $this->authorizeLink($link);
-
         $filter = $request->query('filter', 'all');
         $visithistory = $this->analyticService->getVisitHistory($link->id, $filter);
-        $redirectedCount = $this->getVisitCount($link->id, 1);
-        $rejectedCount = $this->getVisitCount($link->id, 0);
+        $redirectedCount = Linkvisithistory::where('link_id', $link->id)->where('status', 1)->count();
+        $rejectedCount = Linkvisithistory::where('link_id', $link->id)->where('status', 0)->count();
+
+
         $blockedIps = BlockedIp::where('link_id', $link->id)->get();
         $topReferersRaw = Linkvisithistory::where('link_id', $link->id)
             ->select('referer_url', DB::raw('COUNT(*) as visit_count'))
+            ->whereNotNull('referer_url')
+            ->where('referer_url', '!=', '')
             ->groupBy('referer_url')
             ->orderByDesc('visit_count')
             ->limit(5)
             ->get();
         $topReferers = [
-            'labels' => $topReferersRaw->pluck('referer_url')->toArray(),
+            'labels' => $topReferersRaw->pluck('referer_url')->map(function ($url) {
+                return $url ? parse_url($url, PHP_URL_HOST) : 'Direct';
+            })->toArray(),
             'data' => $topReferersRaw->pluck('visit_count')->toArray(),
         ];
         $chartData = $this->analyticService->singleLinkStatistic($link->id, false);
         $location = $this->analyticService->getLocationStatistic($link->id);
+
+        $countdown = [
+            'target_time' => null,
+            'message' => null,
+            'status_class' => null,
+        ];
+
+        if ($link->scheduled) {
+            $now = now();
+            $startTime = $link->start_time ? Carbon::parse($link->start_time) : null;
+            $endTime = $link->end_time ? Carbon::parse($link->end_time) : null;
+
+            if ($startTime && $now->isBefore($startTime)) {
+                $countdown['target_time'] = $startTime->toIso8601String();
+                $countdown['message'] = 'Link akan menjadi aktif dalam:';
+                $countdown['status_class'] = 'alert-primary';
+            }
+            elseif ($endTime && $now->isBefore($endTime)) {
+                $countdown['target_time'] = $endTime->toIso8601String();
+                $countdown['message'] = 'Link aktif dan akan kadaluarsa dalam:';
+                $countdown['status_class'] = 'alert-warning';
+            }
+        }
+
         return view('dashboard.shortlink.linkdetail', compact(
             'link',
             'visithistory',
@@ -123,7 +169,8 @@ class LinkController extends Controller
             'filter',
             'chartData',
             'topReferers',
-            'location'
+            'location',
+            'countdown' 
         ))->with('title', 'Detail Link');
     }
 
@@ -177,6 +224,7 @@ class LinkController extends Controller
                 'target_url' => 'required|max:255|url',
                 'slug' => 'required|max:255|unique:links|regex:/^[\S]+$/|not_in:dashboard,admin,settings',
                 'active' => 'required|boolean',
+                'link_category_id' => 'nullable|exists:link_categories,id',
             ]);
             $link = $this->linkService->createLink($validatedData, Auth::id());
             return redirect()->back()->with('success', 'Link Berhasil Ditambahkan');

@@ -1,5 +1,5 @@
 <x-dashlayout>
-    <x-slot:title>{{ $title }}</x-slot:title>
+    <x-slot:title>{{ "Linksy" }}</x-slot:title>
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
@@ -283,28 +283,6 @@
                                         </div>
                                         @enderror
                                     </div>
-
-                                    <div class="mb-4">
-                                        <label for="link_category_id_select" class="form-label fw-bold">Category (Optional)</label>
-                                        <div class="input-group">
-                                            <select class="form-select @error('link_category_id') is-invalid @enderror" id="link_category_id_select" name="link_category_id">
-                                                <option value="">-- No Category --</option>
-                                                @foreach($linkCategories as $category)
-                                                    <option value="{{ $category->id }}" {{ old('link_category_id') == $category->id ? 'selected' : '' }}>
-                                                        {{ $category->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#addCategoryModal" title="Add New Category">
-                                                <i class="bi bi-plus-lg"></i>
-                                            </button>
-                                            @error('link_category_id')
-                                                <div class="invalid-feedback d-block">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
                                     <!-- Submit Button -->
                                     <div class="text-end">
                                         <button type="submit" class="btn btn-primary px-4" id="linkSubmitBtn">
@@ -332,401 +310,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="container">
-                        <div class="row nav nav-tabs justify-content-center d-flex flex-wrap" id="linkTabs" role="tablist">
-                            <div class="col-4 p-1">
-                                <button class="nav-link active btn btn-sm w-100" id="your-links-tab" data-bs-toggle="tab" data-bs-target="#your-links" type="button" role="tab">
-                                    <iconify-icon icon="solar:link-bold-duotone" class="fs-5" style="position: relative; top: 3px;"></iconify-icon> 
-                                    <span class="d-none d-sm-inline"> Your Links</span>
-                                </button>
-                            </div>
-                            <div class="col-4 p-1">
-                                <button class="nav-link btn btn-sm w-100" id="shared-links-tab" data-bs-toggle="tab" data-bs-target="#shared-links" type="button" role="tab">
-                                    <iconify-icon icon="solar:round-arrow-down-line-duotone" class="fs-5" style="position: relative; top: 3px;"></iconify-icon> 
-                                    <span class="d-none d-sm-inline"> Shared to You</span>
-                                </button>
-                            </div>
-                            <div class="col-4 p-1">
-                                <button class="nav-link btn btn-sm w-100" id="links-you-shared-tab" data-bs-toggle="tab" data-bs-target="#links-you-shared" type="button" role="tab">
-                                    <iconify-icon icon="solar:square-share-line-line-duotone" class="fs-5" style="position: relative; top: 3px;"></iconify-icon> 
-                                    <span class="d-none d-sm-inline"> Shared by You</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 mt-4 tab-content" id="linkTabsContent">
-                        <!-- Your Links -->
-                        <div class="tab-pane fade show active" id="your-links" role="tabpanel" aria-labelledby="your-links-tab">
-    
-                            <div class="category-filter-container bg-light-subtle p-2 rounded-4 mb-4">
-                                <div class="d-flex overflow-x-auto hide-scrollbar">
-                                    <ul class="nav nav-pills flex-nowrap gap-2">
-                            
-                                        <li class="nav-item">
-                                            <a class="nav-link d-flex align-items-center gap-2 py-2 px-3 rounded-pill text-nowrap {{ !request('category') ? 'active' : '' }}" 
-                                               href="{{ route('link.index') }}#linkTabsContent">
-                                                <iconify-icon icon="solar:widget-5-bold-duotone"></iconify-icon>
-                                                All
-                                            </a>
-                                        </li>
-                            
-                                        @foreach ($linkCategories as $category)
-                                        <li class="nav-item">
-                                            <a class="nav-link d-flex align-items-center gap-2 py-2 px-3 rounded-pill text-nowrap {{ request('category') == $category->slug ? 'active' : '' }}" 
-                                                href="{{ route('link.index', ['category' => $category->slug, 'search' => request('search')]) }}#linkTabsContent">
-                                                <iconify-icon icon="solar:folder-with-files-line-duotone"></iconify-icon>
-                                                {{ $category->name }}
-                                            </a>
-                                        </li>
-                                        @endforeach
-                            
-                                        <li class="nav-item">
-                                            <a class="nav-link d-flex align-items-center gap-2 py-2 px-3 rounded-pill text-nowrap {{ request('category') == 'uncategorized' ? 'active' : '' }}" 
-                                               href="{{ route('link.index', ['category' => 'uncategorized', 'search' => request('search')]) }}#linkTabsContent">
-                                                 <iconify-icon icon="solar:file-remove-line-duotone"></iconify-icon>
-                                                No Category
-                                            </a>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <button type="button"
-                                                    class="nav-link d-flex align-items-center gap-2 py-2 px-3 rounded-pill text-nowrap btn "
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#addCategoryModal"
-                                                    title="Tambah Kategori Baru">
-                                                <i class="bi bi-plus-lg"></i> Add Category
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            
-                           
-                            
-                            <div class="row">
-                                @forelse ($links as $link)
-                                <div class="col-md-4 d-flex align-items-stretch">
-                                    <div class="card {{ ($link->scheduled && $link->active) ? 'scheduled-active' : '' }} shadow border-0 w-100 card-hover rounded-5 ">
-                                        <div class="card-body">
-                                            <div class="row d-flex align-items-center mb-2">
-                                                <div class="col-12 d-flex align-items-center">
-                                                    <img data-src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($link->target_url) }}&size=32"
-                                                         alt="Favicon"
-                                                         class="rounded me-2 lazyload"
-                                                         style="width: 25px; height: 25px; flex-shrink: 0;">
-                                                    <input type="text"
-                                                           class="form-control border-0 p-0 text-dark fw-bold fs-5 bg-transparent"
-                                                           value="{{ $link->title ?? '' }}"
-                                                           placeholder="Type Here To Change Title"
-                                                           data-link-slug="{{ $link->slug }}"
-                                                           data-previous-title="{{ $link->title }}">
-                                                </div>
-                                            </div>
-                                            <div class="row d-flex align-items-center mb-2">
-                                                <div class="col-10">
-                                                    <h6 class="card-title text-truncate mb-0">
-                                                        <input type="text"
-                                                               class="form-control border-0 p-0 text-dark fw-bold bg-transparent"
-                                                               id="linkInput-{{ $link->slug }}"
-                                                               value="{{ 'linksy.site/' . $link->slug }}"
-                                                               readonly>
-                                                    </h6>
-                                                </div>
-                                                <div class="col-2 text-start px-0">
-                                                    <button class="btn btn-outline-dark btn-sm"
-                                                            onclick="copyFunction('{{ $link->slug }}')">
-                                                        <iconify-icon icon="solar:copy-line-duotone"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <p class="text-muted small mb-1">Destination:</p>
-                                            <a href="{{ $link->target_url }}" target="_blank" class="d-block text-truncate link-dark text-decoration-none"
-                                               style="transition: color 0.2s;"
-                                               onmouseover="this.classList.replace('link-dark', 'text-primary')"
-                                               onmouseout="this.classList.replace('text-primary', 'link-dark')">
-                                                {{ Str::limit(strip_tags($link->target_url), 80) }}
-                                            </a>
-                        
-                                            <div class="mt-3 mb-2">
-                                                <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill fw-medium py-1 px-3 small" style="font-size: 0.75rem;">
-                                                    <iconify-icon icon="solar:folder-with-files-line-duotone" class="me-1" style="position: relative; top: 2px; font-size: 0.8rem;"></iconify-icon>
-                                                    <small>{{ $link->linkCategory->name ?? 'No Category' }}</small>
-                                                </span>
-                                            </div>
-                                            <div class="d-flex justify-content-between mt-2">
-                                                <div class="text-muted small">
-                                                    <iconify-icon icon="solar:calendar-bold" class="me-1" style="position: relative; top: 3px;"></iconify-icon> {{ $link->created_at->format('d M Y') }}
-                                                </div>
-                                                <div class="text-muted small">
-                                                    <iconify-icon icon="solar:graph-up-bold" class="me-1" style="position: relative; top: 3px;"></iconify-icon> <b>{{ $link->visits }}</b> visits
-                                                </div>
-                                                <div class="text-muted small">
-                                                    <iconify-icon icon="solar:user-check-bold" class="me-1" style="position: relative; top: 3px;"></iconify-icon> <b>{{ $link->unique_visits }}</b> unique
-                                                </div>
-                                            </div>
-                                            
-                                            @if($link->scheduled)
-                                            <div class="d-flex justify-content-between mt-2">
-                                                @if($link->start_time)
-                                                <div class="text-success small">
-                                                    <iconify-icon icon="mdi:clipboard-text-date" class="me-1" style="position: relative; top: 3px;"></iconify-icon>
-                                                    Start: {{ $link->start_time->format('d M Y, H:i') }}
-                                                </div>
-                                                @endif
-                                                
-                                                @if($link->end_time)
-                                                <div class="text-danger small">
-                                                    <iconify-icon icon="mdi:clipboard-text-date" class="me-1" style="position: relative; top: 3px;"></iconify-icon>
-                                                    End: {{ $link->end_time->format('d M Y, H:i') }}
-                                                </div>
-                                                @endif
-                                            </div>
-                                            @endif
-                                            
-                                            <div class="d-flex justify-content-end mt-3 position-relative dropup">
-                                                
-                                                @if($link->scheduled)
-                                                <button class="btn btn-outline-info btn-sm rounded-pill me-2">
-                                                    <iconify-icon icon="gala:clock"></iconify-icon>
-                                                </button>
-                                                @endif
-                                                @if($link->password_protected)
-                                                <button class="btn btn-outline-info btn-sm rounded-pill me-2">
-                                                    <iconify-icon icon="solar:key-outline"></iconify-icon>
-                                                </button>
-                                                @endif
-                                                
-                                                <button class="btn btn-outline-{{ $link->active ? 'primary' : 'danger' }} btn-sm rounded-pill me-2">
-                                                    <iconify-icon icon="solar:earth-bold-duotone"></iconify-icon>
-                                                </button>
-                                                
-                                                <a class="btn btn-outline-primary btn-sm rounded-pill d-flex align-items-center gap-1 px-3 py-1 me-2 shadow-sm transition"
-                                                   href="/dashboard/link/{{ $link->slug }}"
-                                                >
-                                                    <iconify-icon icon="solar:chart-bold"></iconify-icon>
-                                                    <span>Analytic</span>
-                                                </a>
-                                                
-                                                <button class="btn btn-outline-primary btn-sm rounded-pill" data-bs-toggle="dropdown">
-                                                    <iconify-icon icon="solar:menu-dots-bold"></iconify-icon>
-                                                </button>
-                                                
-                                                <ul class="dropdown-menu dropdown-menu-end" style="z-index: 1050;">
-                                                    <li>
-                                                        <a class="dropdown-item" href="/dashboard/link/{{ $link->slug }}#link-settings">
-                                                            <iconify-icon icon="solar:settings-bold" class="me-2"></iconify-icon>Link Settings
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <button
-                                                            class="dropdown-item generate-qr"
-                                                            data-url="{{ 'https://linksy.site/' . $link->slug }}"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#qrCodeModal"
-                                                        >
-                                                            <iconify-icon icon="solar:qr-code-bold" class="me-2"></iconify-icon> Generate QR
-                                                        </button>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item"
-                                                           href="#"
-                                                           data-bs-toggle="modal"
-                                                           data-bs-target="#editModal"
-                                                           data-id="{{ $link->slug }}"
-                                                           data-target-url="{{ $link->target_url }}"
-                                                           data-category-id="{{ $link->link_category_id }}" 
-                                                           data-active="{{ $link->active }}">
-                                                            <iconify-icon icon="solar:pen-bold" class="me-2"></iconify-icon> Quick Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <button class="dropdown-item"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#shareLinkModal"
-                                                                data-id="{{ $link->slug }}">
-                                                            <iconify-icon icon="solar:share-bold" class="me-2"></iconify-icon> Share Link
-                                                        </button>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item text-danger"
-                                                           href="#"
-                                                           data-bs-toggle="modal"
-                                                           data-bs-target="#deleteModal"
-                                                           data-id="{{ $link->slug }}">
-                                                            <iconify-icon icon="solar:trash-bin-minimalistic-bold" class="me-2"></iconify-icon> Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @empty
-                                <div class="col-12">
-                                    <div class="text-center p-5 bg-light rounded-3">
-                                        <iconify-icon icon="solar:file-remove-line-duotone" width="80" class="text-muted mb-3"></iconify-icon>
-                                        <h4 class="fw-light">No Links Found</h4>
-                                        <p class="text-muted">Tidak ada link yang ditemukan pada filter ini. Coba buat link baru atau pilih kategori lain.</p>
-                                    </div>
-                                </div>
-                                @endforelse
-                            </div>
-                            
-                            <div class="mt-4">
-                                {{ $links->links() }}
-                            </div>
-                        </div>
-                        <!-- Shared Links -->
-                        <div class="tab-pane fade" id="shared-links" role="tabpanel" aria-labelledby="shared-links-tab">
-                            <div class="row">
-                                @forelse ($sharedLinks as $sharedlink)
-                                <div class="col-md-4 d-flex align-items-stretch ">
-                                    <div class="card shadow border-0 w-100 card-hover rounded-5">
-                                        <div class="card-body">
-                                            <div class="row d-flex align-items-center mb-2">
-                                                <div class="col-12 d-flex align-items-center">
-                                                    <img data-src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($sharedlink->target_url) }}&size=32" 
-                                                         alt="Favicon" 
-                                                         class="rounded me-2 lazyload" 
-                                                         style="width: 25px; height: 25px; flex-shrink: 0;">
-                                                    <input type="text" 
-                                                           class="form-control border-0 p-0 text-dark fw-bold fs-5" 
-                                                           value="{{ $sharedlink->title }}" 
-                                                           readonly>
-                                                </div>
-                                            </div>
-                                            <p class="text-muted small mb-1">Destination:</p>
-                                            <a href="{{ $sharedlink->target_url }}" target="_blank" class="d-block text-truncate link-dark text-decoration-none"
-                                               style="transition: color 0.2s;"
-                                               onmouseover="this.classList.replace('link-dark', 'text-primary')"
-                                               onmouseout="this.classList.replace('text-primary', 'link-dark')">
-                                                {{ Str::limit(strip_tags($sharedlink->target_url), 80) }}
-                                            </a>
-                            
-                                            <div class="mt-2">
-                                                <p class="text-muted small mb-1">
-                                                    <iconify-icon icon="solar:user-speak-rounded-bold-duotone" class="me-1" style="position: relative; top: 3px;"></iconify-icon>
-                                                    Shared by: @<b>{{ $sharedlink->user->username }}</b>
-                                                </p>
-                                                 <p class="text-muted small mb-1">
-                                                    <iconify-icon icon="solar:calendar-minimalistic-bold-duotone" class="me-1" style="position: relative; top: 3px;"></iconify-icon>
-                                                    Shared on: {{ \Carbon\Carbon::parse($sharedlink->share_created_at)->format('d M Y') }}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> 
-                            @empty
-                                <div class="empty-container text-center w-100">
-                                    <p>No links have been shared with you yet.</p>
-                                </div>
-                            @endforelse
-                                {{ $sharedLinks->links() }}
-                            </div>
-                        </div>
-                        <!-- Links You Shared -->
-                        <div class="tab-pane fade" id="links-you-shared" role="tabpanel" aria-labelledby="links-you-shared-tab">
-                            <div class="row g-3">
-                                @forelse ($mySharedLinks as $sharedLink)
-                                <div class="col-md-4 d-flex align-items-stretch ">
-                                    <div class="card shadow border-0 w-100 card-hover rounded-5">
-                                        <div class="card-body">
-                                            <div class="row d-flex align-items-center mb-2">
-                                                <div class="col-12 d-flex align-items-center">
-                                                    <img data-src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($sharedLink->link->target_url) }}&size=32" 
-                                                         alt="Favicon" 
-                                                         class="rounded me-2 lazyload" 
-                                                         style="width: 25px; height: 25px; flex-shrink: 0;">
-                                                    <input type="text" 
-                                                           class="form-control border-0 p-0 text-dark fw-bold fs-5" 
-                                                           value="{{ $sharedLink->link->title }}" 
-                                                           readonly>
-                                                </div>
-                                            </div>
-                                            <p class="text-muted small mb-1">Destination:</p>
-                                            <a href="{{ $sharedLink->link->target_url }}" target="_blank" class="d-block text-truncate link-dark text-decoration-none"
-                                               style="transition: color 0.2s;"
-                                               onmouseover="this.classList.replace('link-dark', 'text-primary')"
-                                               onmouseout="this.classList.replace('text-primary', 'link-dark')">
-                                                {{ Str::limit(strip_tags($sharedLink->link->target_url), 80) }}
-                                            </a>
-                            
-                                            <div class="mt-2">
-                                                <p class="text-muted small mb-1">
-                                                    <iconify-icon icon="solar:user-bold-duotone" class="me-1" style="position: relative; top: 3px;"></iconify-icon>
-                                                    Shared to: @<b>{{ $sharedLink->sharedWith->username }}</b>
-                                                </p>
-                                                <p class="text-muted small mb-1">
-                                                    <iconify-icon icon="solar:calendar-add-bold-duotone" class="me-1" style="position: relative; top: 3px;"></iconify-icon>
-                                                    Shared on: {{ $sharedLink->created_at->format('d M Y') }}
-                                                </p>
-                                            </div>
-                                            
-                                            <div class="d-flex justify-content-end mt-3 position-relative dropup">
-                                                @if($sharedLink->link->password_protected)
-                                                    <button class="btn btn-outline-dark btn-sm rounded-pill me-2" title="Password Protected">
-                                                        <iconify-icon icon="solar:key-outline"></iconify-icon>
-                                                    </button>
-                                                @endif
-                            
-                                                <button class="btn btn-outline-{{ $sharedLink->link->active ? 'primary' : 'danger' }} btn-sm rounded-pill me-2" title="{{ $sharedLink->link->active ? 'Link Active' : 'Link Inactive' }}">
-                                                    <iconify-icon icon="solar:earth-bold-duotone"></iconify-icon>
-                                                </button>
-                            
-                                                <a class="btn btn-outline-primary btn-sm rounded-pill d-flex align-items-center gap-1 px-3 py-1 me-2 shadow-sm transition" 
-                                                   href="/dashboard/link/{{ $sharedLink->link->slug }}"
-                                                   title="View Analytics for Original Link">
-                                                    <iconify-icon icon="solar:chart-bold"></iconify-icon>
-                                                    <span>Analytic</span>
-                                                </a>
-                            
-                                                <button class="btn btn-outline-primary btn-sm rounded-pill" data-bs-toggle="dropdown" title="More Options">
-                                                    <iconify-icon icon="solar:menu-dots-bold"></iconify-icon>
-                                                </button>
-                            
-                                                <ul class="dropdown-menu dropdown-menu-end" style="z-index: 1050;">
-                                                    <li>
-                                                        <a class="dropdown-item" href="/dashboard/link/{{ $sharedLink->link->slug }}" title="View Details of Original Link">
-                                                            <iconify-icon icon="solar:info-circle-bold" class="me-2"></iconify-icon> Detail Link Asli
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <button 
-                                                            class="dropdown-item generate-qr" 
-                                                            data-url="{{ 'https://linksy.site/' . $sharedLink->link->slug }}"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#qrCodeModal"
-                                                            title="Generate QR Code for Original Link"
-                                                        >
-                                                            <iconify-icon icon="solar:qr-code-bold" class="me-2"></iconify-icon> QR Link Asli
-                                                        </button>
-                                                    </li>
-                                                    <li>
-                                                        <form action="{{ route('links.share.delete', $sharedLink->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to unshare this link?');">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="dropdown-item text-danger">
-                                                                <iconify-icon icon="solar:trash-bin-minimalistic-bold" class="me-2"></iconify-icon> Hapus Bagikan
-                                                            </button>
-                                                        </form>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @empty
-                                <div class="empty-container text-center w-100"> <p>No shared links found.</p>
-                                </div>
-                            @endforelse
-                            </div>
-                            <div class="mt-3">
-                                {{ $mySharedLinks->links() }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               {{ $slot }}
             </div>
         </div>
         <!-- Modal for Sharing Link -->
@@ -786,39 +370,6 @@
                         </button>
                         <button  id="shareButton" type="button" class="btn  btn-primary px-4" >
                             <i class="bi bi-send-check me-2"></i>Share Now
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content rounded-4 shadow-lg border-0">
-                    <div class="modal-header border-bottom-0 pt-4 px-4">
-                        <h5 class="modal-title fw-semibold" id="addCategoryModalLabel">Add New Category</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body px-4">
-                        <form id="addCategoryForm" novalidate>
-                            <div class="mb-3">
-                                <label for="categoryName" class="form-label">Category Name</label>
-                                <input type="text"
-                                       class="form-control rounded-3"
-                                       id="categoryName"
-                                       name="name"
-                                       placeholder="Enter category name"
-                                       required
-                                       maxlength="50">
-                                <div id="categoryNameError" class="invalid-feedback mt-1"></div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer border-top-0 px-4 pb-4">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" form="addCategoryForm" class="btn btn-primary d-flex align-items-center gap-2" id="saveCategoryBtn">
-                            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                            <span>Create Category</span>
                         </button>
                     </div>
                 </div>
@@ -956,7 +507,7 @@
                             <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                     </div>
-                    
+        
                     <div class="modal-body py-4 px-5">
                         <form id="editForm" action="" method="POST">
                             @csrf
@@ -964,7 +515,7 @@
                             
                             <div class="mb-4">
                                 <label for="editTargetUrl" class="form-label fw-500 mb-3">Destination URL</label>
-                                <div class="input-group">
+                                <div class="input-group input-group">
                                     <span class="input-group-text bg-light border-end-0">
                                         <i class="bi bi-link-45deg text-muted"></i>
                                     </span>
@@ -978,42 +529,23 @@
                                 </div>
                                 <div class="form-text mt-2">Enter the full URL including http:// or https://</div>
                             </div>
-        
                             <div class="mb-4">
-                                <label for="editLinkCategory" class="form-label fw-500 mb-3">Category</label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light border-end-0">
-                                        <i class="bi bi-folder2-open text-muted"></i>
-                                    </span>
-                                    <select class="form-select border-start-0" id="editLinkCategory" name="link_category_id">
-                                        <option value="">-- No Category --</option>
-                                        @foreach($linkCategories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-text mt-2">Choose a category or leave it empty.</div>
-                            </div>
-        
-                            <div class="mb-4">
-                                <label class="form-label fw-500 mb-3">Link Status</label>
+                                <label class="form-label fw-500 mb-3">Link Visibility</label>
                                 <div class="bg-light rounded p-3">
-                                    <div class="form-check form-switch">
-                                        <input type="hidden" name="active" value="0">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="active" value="1">
-                                        <label class="form-check-label" for="flexSwitchCheckChecked" id="switchLabel">Inactive</label>
-                                    </div>
-                                    <div class="form-text mt-2">Choose whether this link should be Active or Inactive.</div>
+                                    <select class="form-select" id="visibilitySelect" name="visibility">
+                                        <option value="0">Private</option>
+                                        <option value="1">Public</option>
+                                    </select>
+                                    <div class="form-text mt-2">Choose whether this link should be private or publicly accessible</div>
                                 </div>
+                                <input type="hidden" name="quickedit" value="1">
                             </div>
         
-                            <input type="hidden" name="quickedit" value="1">
-                            
                             <div class="modal-footer bg-light px-0 pb-0 mt-4" style="border-radius: 0 0 20px 20px;">
-                                <button type="button" class="btn btn-neutral" data-bs-dismiss="modal">
+                                <button type="button" class="btn btn btn-neutral" data-bs-dismiss="modal">
                                     <i class="bi bi-x-circle me-2"></i>Discard
                                 </button>
-                                <button type="submit" class="btn btn-primary px-4">
+                                <button type="submit" class="btn btn btn-primary px-4">
                                     <i class="bi bi-save2 me-2"></i>Save Changes
                                 </button>
                             </div>

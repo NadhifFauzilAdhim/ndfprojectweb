@@ -59,12 +59,15 @@
                 Waiting for scan...
             </div>
             <div id="actionButtons" class="action-buttons text-center">
-                <button id="copyBtn" class="btn btn-outline-secondary btn-sm">
+                <button id="copyBtn" class="btn btn-secondary btn-sm">
                     <i class="bi bi-clipboard me-1"></i> Copy
                 </button>
                 <button id="saveBtn" class="btn btn-primary btn-sm">
                     <i class="bi bi-save me-1"></i> Save
                 </button>
+                <button id="openBtn" class="btn btn-success btn-sm">
+                  <i class="bi bi-browser-edge"></i> Open
+              </button>
             </div>
         </div>
 

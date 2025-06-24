@@ -9,6 +9,36 @@
                 <li class="breadcrumb-item active" aria-current="page">{{ $link->slug }}</li>
             </ol>
         </nav>
+        @if($countdown['target_time'])
+        <div id="countdown-banner" class="alert {{ $countdown['status_class'] }} shadow-sm rounded-5 p-3 mb-4" role="alert" data-countdown-target="{{ $countdown['target_time'] }}">
+            <div class="d-flex flex-column pt-3 flex-md-row align-items-center justify-content-center text-center gap-3">
+                <div class="fw-semibold">
+                    <i class="bi bi-stopwatch me-2"></i>{{ $countdown['message'] }}
+                </div>
+                <div id="countdown-timer" class="d-flex justify-content-center gap-3">
+                    <div>
+                        <h4 id="days" class="fw-bold mb-0">00</h4>
+                        <span class="small">Days</span>
+                    </div>
+                    <div><h4 class="fw-bold mb-0">:</h4></div>
+                    <div>
+                        <h4 id="hours" class="fw-bold mb-0">00</h4>
+                        <span class="small">Hours</span>
+                    </div>
+                    <div><h4 class="fw-bold mb-0">:</h4></div>
+                    <div>
+                        <h4 id="minutes" class="fw-bold mb-0">00</h4>
+                        <span class="small">Mins</span>
+                    </div>
+                    <div><h4 class="fw-bold mb-0">:</h4></div>
+                    <div>
+                        <h4 id="seconds" class="fw-bold mb-0">00</h4>
+                        <span class="small">Secs</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
 
         <div class="card shadow-sm mb-4 rounded-5 rounded-5">
             <div class="card-body p-4">
@@ -138,37 +168,47 @@
                     <div class="swiper-wrapper">
                         @forelse ($visithistory as $visit)
                         <div class="swiper-slide">
-                            <div class="card border card-hover">
-                                <div class="card-body">
+                            <div class="card border card-hover h-100">
+                                <div class="card-body d-flex flex-column">
                                     <h6 class="card-title fw-bold text-primary">
                                         <i class="bi bi-calendar-event me-2"></i>{{ $visit->created_at }}
                                     </h6>
-                                    <p class="card-text mb-1"><i class="bi bi-info-circle me-2 text-primary"></i> Status:
+                                    <p class="card-text mb-1">
+                                        <i class="bi bi-info-circle me-2 text-primary"></i> Status:
                                         @if($visit->status)
-                                        <span class="badge rounded-pill bg-info ms-1"><small>Redirected</small></span>
+                                            <span class="badge rounded-pill bg-info ms-1"><small>Redirected</small></span>
                                         @else
-                                        <span class="badge rounded-pill bg-danger ms-1"><small>Rejected</small></span>
+                                            <span class="badge rounded-pill bg-danger ms-1"><small>Rejected</small></span>
                                         @endif
                                     </p>
-                                    <p class="card-text mb-1"><i class="bi bi-hdd-network me-2 text-primary"></i> IP Address: {{ $visit->ip_address }}</p>
+                                    <p class="card-text mb-1 d-flex align-items-center">
+                                        <i class="bi bi-hdd-network me-2 text-primary"></i> IP Address: <span class="ip-address me-2">{{ $visit->ip_address }}</span>
+                                        <button class="btn btn-sm btn-outline-primary reveal-ip-provider-btn" data-ip="{{ $visit->ip_address }}">
+                                            Reveal Provider <i class="bi bi-globe"></i>
+                                        </button>
+                                    </p>
+                                    <div class="ip-provider-info mt-1 mb-2 small text-muted" style="display: none;">
+                                        Loading...
+                                    </div>
+                    
                                     <p class="card-text mb-1"><i class="bi bi-browser-edge me-2 text-primary"></i> Browser: {{ $visit->user_agent }}</p>
                                     <p class="card-text mb-1"><i class="bi bi-link me-2 text-primary"></i> Referer: {{ $visit->referer_url ?? 'Direct' }}</p>
                                     <p class="card-text mb-1"><i class="bi bi-geo-alt-fill me-2 text-primary"></i> Location: {{ $visit->location }}</p>
-                                    <p class="card-text"><i class="bi bi-check-circle me-2 text-primary"></i> Unique:
+                                    <p class="card-text mb-auto"><i class="bi bi-check-circle me-2 text-primary"></i> Unique:
                                         @if($visit->is_unique)
-                                        <span class="badge bg-primary"><small>Yes</small></span>
+                                            <span class="badge bg-primary"><small>Yes</small></span>
                                         @else
-                                        <span class="badge rounded-pill bg-warning"><small>No</small></span>
+                                            <span class="badge rounded-pill bg-warning"><small>No</small></span>
                                         @endif
                                     </p>
                                 </div>
                             </div>
                         </div>
-                        @empty
+                    @empty
                         <div class="swiper-slide">
                             <div class="text-center text-muted">No visit history found.</div>
                         </div>
-                        @endforelse
+                    @endforelse
                     </div>
                 </div>
                 <div class="mt-4 d-flex justify-content-center">
@@ -306,9 +346,34 @@
 
     <script src="{{ asset('js/dashjs/linkdetail.js') }}"></script>
     <script src="{{ asset('js/dashjs/linksummary.js') }}"></script>
+    <script src="{{ asset('js/dashjs/ipProvider.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             showQRCode('{{ url('r/' . $link->slug) }}');
+            const countdownBanner = document.getElementById('countdown-banner');
+            if (countdownBanner) {
+                const targetTime = new Date(countdownBanner.dataset.countdownTarget).getTime();
+
+                const countdownInterval = setInterval(function() {
+                    const now = new Date().getTime();
+                    const distance = targetTime - now;
+                    if (distance < 0) {
+                        clearInterval(countdownInterval);
+                        countdownBanner.innerHTML = `<div class="text-center fw-semibold"><i class="bi bi-check-circle-fill me-2"></i>Waktu yang ditentukan telah tercapai. Silakan refresh halaman untuk melihat status terbaru.</div>`;
+                        return;
+                    }
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    document.getElementById("days").innerText = String(days).padStart(2, '0');
+                    document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+                    document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+                    document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+
+                }, 1000);
+            }
         });
         const visitDataGlobal = @json($chartData);
         const toprefDataGlobal = @json($topReferers);

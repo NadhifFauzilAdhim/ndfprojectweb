@@ -1,84 +1,175 @@
 /*
  * File: link.js
- * Deskripsi: Script untuk halaman link dashboard shortlink
- * Author ; Nadhif Fauzil.
+ * Deskripsi: Script untuk halaman link dashboard shortlink (termasuk manajemen kategori)
+ * Author: Nadhif Fauzil.
  */
 
 (() => {
-    // ==================== UTIL FUNCTIONS ====================
-    const isValidUrl = url => /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(\/\S*)?$/i.test(url);
-    const showToast = (message, type = 'success') => {
+  // ==================== UTIL FUNCTIONS ====================
+  const isValidUrl = url => /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(\/\S*)?$/i.test(url);
+  const showToast = (message, type = 'success') => {
       Swal.fire({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        icon: type,
-        text: message,
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          icon: type,
+          text: message,
       });
-    };
-  
-    const postForm = async ({ url, data = {}, useMethod = 'POST' }) => {
+  };
+
+  const postForm = async ({ url, data = {}, useMethod = 'POST' }) => {
       const token = document.querySelector('meta[name="csrf-token"]').content;
-      const options = { method: useMethod, headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': token } };
-      options.body = useMethod === 'DELETE' ? `@csrf\n@method('DELETE')` : JSON.stringify(data);
+      const options = {
+          method: useMethod,
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': token,
+              'Accept': 'application/json'
+          }
+      };
+      if (useMethod !== 'GET' && useMethod !== 'HEAD') {
+           options.body = JSON.stringify(data);
+      }
       return fetch(url, options);
-    };
-  
-    // ==================== DELETE CONFIRMATION ====================
-    const confirmDelete = slug => {
+  };
+
+  // ==================== DELETE CONFIRMATION ====================
+  const confirmDelete = slug => {
       Swal.fire({
-        title: 'Apakah Anda yakin?',
-        text: 'Link ini akan dihapus secara permanen!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Ya, hapus!',
-        cancelButtonText: 'Batal',
+          title: 'Apakah Anda yakin?',
+          text: 'Link ini akan dihapus secara permanen!',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Ya, hapus!',
+          cancelButtonText: 'Batal',
       }).then(async result => {
-        if (result.isConfirmed) {
-          await postForm({ url: `/dashboard/link/${slug}`, useMethod: 'DELETE' });
-          location.reload();
-        }
+          if (result.isConfirmed) {
+              document.getElementById(`deleteForm-${slug}`).submit();
+          }
       });
-    };
-  
-    // ==================== MODAL HANDLERS ====================
-    const setupDeleteModal = () => {
+  };
+
+  // ==================== MODAL HANDLERS ====================
+  const setupDeleteModal = () => {
       const modalEl = document.getElementById('deleteModal');
+      if (!modalEl) return;
+
       const inputEl = modalEl.querySelector('#deleteConfirmationInput');
       const btnEl = modalEl.querySelector('#deleteButton');
-  
+
       modalEl.addEventListener('show.bs.modal', ({ relatedTarget: btn }) => {
-        const id = btn.dataset.id;
-        modalEl.querySelector('#deleteForm').action = `/dashboard/link/${id}`;
-        inputEl.value = '';
-        btnEl.disabled = true;
-        inputEl.oninput = () => btnEl.disabled = inputEl.value !== 'DELETE';
+          const id = btn.dataset.id;
+          modalEl.querySelector('#deleteForm').action = `/dashboard/link/${id}`;
+          inputEl.value = '';
+          btnEl.disabled = true;
+          inputEl.oninput = () => btnEl.disabled = inputEl.value !== 'DELETE';
       });
-    };
-  
-    const setupEditModal = () => {
+  };
+
+  const setupEditModal = () => {
       const modalEl = document.getElementById('editModal');
+      if (!modalEl) return;
+
       modalEl.addEventListener('show.bs.modal', ({ relatedTarget: btn }) => {
-        const { id, targetUrl, active } = btn.dataset;
-        const form = modalEl.querySelector('#editForm');
-        const urlInput = modalEl.querySelector('#editTargetUrl');
-        const switchEl = modalEl.querySelector('#flexSwitchCheckChecked');
-        const labelEl = modalEl.querySelector('#switchLabel');
-  
-        form.action = `/dashboard/link/${id}`;
-        urlInput.value = targetUrl;
-        switchEl.checked = active === '1';
-        labelEl.textContent = switchEl.checked ? 'Active' : 'Inactive';
-        switchEl.onchange = () => labelEl.textContent = switchEl.checked ? 'Active' : 'Inactive';
+          const { id, targetUrl, active, categoryId } = btn.dataset;
+
+          const form = modalEl.querySelector('#editForm');
+          const urlInput = modalEl.querySelector('#editTargetUrl');
+          const switchEl = modalEl.querySelector('#flexSwitchCheckChecked');
+          const labelEl = modalEl.querySelector('#switchLabel');
+          const categorySelect = modalEl.querySelector('#editLinkCategory');
+
+          form.action = `/dashboard/link/${id}`;
+          urlInput.value = targetUrl;
+
+          if(categorySelect) {
+              categorySelect.value = categoryId || "";
+          }
+
+          if (switchEl && labelEl) {
+              switchEl.checked = active === '1';
+              labelEl.textContent = switchEl.checked ? 'Active' : 'Inactive';
+              switchEl.onchange = () => labelEl.textContent = switchEl.checked ? 'Active' : 'Inactive';
+          }
       });
-    };
+  };
+
+  const setupAddCategoryModal = () => {
+      const addCategoryForm = document.getElementById('addCategoryForm');
+      if (!addCategoryForm) return;
+
+      const saveCategoryBtn = document.getElementById('saveCategoryBtn');
+      const categoryNameInput = document.getElementById('categoryName');
+      const categoryNameError = document.getElementById('categoryNameError');
+      const addCategoryModalEl = document.getElementById('addCategoryModal');
+      const addCategoryModal = new bootstrap.Modal(addCategoryModalEl);
+      
+      const createFormCategorySelect = document.getElementById('link_category_id_select');
+      const editFormCategorySelect = document.getElementById('editLinkCategory');
+
+      addCategoryForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          saveCategoryBtn.disabled = true;
+          saveCategoryBtn.querySelector('.spinner-border').classList.remove('d-none');
+          categoryNameInput.classList.remove('is-invalid');
+          const storeUrl = '/dashboard/link-category';
+          postForm({
+              url: storeUrl,
+              data: { name: categoryNameInput.value }
+          })
+          .then(response => {
+              if (!response.ok) {
+                  return response.json().then(err => { throw err });
+              }
+              return response.json();
+          })
+          .then(data => {
+              if (data.success) {
+                  const newOption = new Option(data.data.name, data.data.id);
+                  if (createFormCategorySelect) {
+                      createFormCategorySelect.add(newOption.cloneNode(true));
+                  }
+                  if (editFormCategorySelect) {
+                      editFormCategorySelect.add(newOption.cloneNode(true));
+                  }
+                  if (createFormCategorySelect) {
+                      newOption.selected = true;
+                  }
+                  
+                  addCategoryModal.hide();
+                  addCategoryForm.reset();
+                  showToast('Category added successfully!', 'success');
+              }
+          })
+          .catch(error => {
+              console.error('Error:', error);
+              if (error.errors && error.errors.name) {
+                  categoryNameInput.classList.add('is-invalid');
+                  categoryNameError.textContent = error.errors.name[0];
+              } else {
+                  showToast(error.message || 'An unexpected error occurred.', 'error');
+              }
+          })
+          .finally(() => {
+              saveCategoryBtn.disabled = false;
+              saveCategoryBtn.querySelector('.spinner-border').classList.add('d-none');
+          });
+      });
+
+      addCategoryModalEl.addEventListener('hidden.bs.modal', function () {
+          categoryNameInput.classList.remove('is-invalid');
+          addCategoryForm.reset();
+      });
+  };
   
-    // ==================== CHART INITIALIZATION ====================
-    let trafficChart = null; // Deklarasikan variabel chart di scope luar
+  document.addEventListener('DOMContentLoaded', setupEditModal);
+  
+    let trafficChart = null;
 
     const initChart = visitData => {
         const config = {
@@ -283,18 +374,17 @@
     document.addEventListener('DOMContentLoaded', () => {
       setupDeleteModal();
       setupEditModal();
-      initChart(window.visitDataGlobal || []);
-      setupChartSelector();
-      console.log(window.visitDataGlobal);
+      setupAddCategoryModal(); 
       setupQRCode();
       setupTitleUpdater();
       setupShareModal();
-  
-      // Show toasts on load
+      
+      if(typeof ApexCharts !== 'undefined' && document.querySelector('#traffic-overview')) {
+          initChart(window.visitDataGlobal || { thisWeek: [], lastWeek: [] });
+          setupChartSelector();
+      }
       document.querySelectorAll('.toast:not(.copy-toast)').forEach(el => new bootstrap.Toast(el).show());
-    });
-  
-    // expose untuk tombol delete inline
-    window.confirmDelete = confirmDelete;
-  })();
+  });
+  window.confirmDelete = confirmDelete;
+})();
   

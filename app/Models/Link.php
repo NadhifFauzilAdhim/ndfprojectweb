@@ -33,8 +33,9 @@ class Link extends Model
     {
         return $this->hasMany(LinkShare::class);
     }
+    public function linkCategory()
+    {
+        return $this->belongsTo(LinkCategory::class,'link_category_id');
+    }
 
-    // public function category(){
-    //     return $this->belongsTo(LinkCategories::class);
-    // }
 }

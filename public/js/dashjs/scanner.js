@@ -23,7 +23,8 @@ const scanQRModalElement = document.getElementById('scanQRModal');
 const toggleFlashBtnElement = document.getElementById('toggleFlashBtn');
 const imageInputElement = document.getElementById('imageInput');
 const saveBtnElement = document.getElementById('saveBtn');
-const copyBtnElement = document.getElementById('copyBtn'); // Cache copy button
+const copyBtnElement = document.getElementById('copyBtn'); 
+const openBtnElement = document.getElementById('openBtn'); 
 const uploadImageBtnElement = document.getElementById('uploadImageBtn');
 
 // DOM Elements for History
@@ -57,6 +58,8 @@ if (scanQRModalElement) {
 toggleFlashBtnElement?.addEventListener('click', toggleFlash);
 copyBtnElement?.addEventListener('click', handleCopy);
 saveBtnElement?.addEventListener('click', handleSave);
+openBtnElement?.addEventListener('click', handleOpen);
+
 uploadImageBtnElement?.addEventListener('click', () => imageInputElement?.click());
 imageInputElement?.addEventListener('change', event => {
     const file = event.target.files[0];
@@ -370,6 +373,14 @@ function handleCopy() {
             console.error('Gagal menyalin:', err);
             showToast('Gagal menyalin. Coba lagi atau salin manual.', 'error');
         });
+}
+
+function handleOpen() {
+    if (!lastScannedUrl) {
+        showToast('Tidak ada hasil untuk dibuka.', 'info');
+        return;
+    }
+    window.open(lastScannedUrl, '_blank');
 }
 
 async function handleSave() {

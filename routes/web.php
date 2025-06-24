@@ -18,6 +18,7 @@ use App\Http\Controllers\LinkController;
 use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\TrackingController;
+use App\Http\Controllers\LinkCategoryController;
 
 // Public routes 
 Route::middleware('throttle:60,1')->group(function () {
@@ -111,6 +112,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
             Route::resource('dashboard/tracking', TrackingController::class)->only(['index', 'store', 'show', 'destroy', 'update']);
         });
         route::view('/dashboard/linknest', 'dashboard.linknest.index',['title' => 'Linknest'])->name('linknest');
+        Route::post('/dashboard/link-category', [LinkCategoryController::class, 'store'])->name('link-category.store');
     });
 
     // Blocked IPs '
