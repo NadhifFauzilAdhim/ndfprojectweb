@@ -17,7 +17,8 @@
         "piwik/device-detector": "^6.4",
         "predis/predis": "2.0",
         "realrashid/sweet-alert": "^7.2",
-        "ryangjchandler/laravel-cloudflare-turnstile": "^2.0"
+        "ryangjchandler/laravel-cloudflare-turnstile": "^2.0",
+        "usercheck/usercheck-laravel": "^0.5.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",

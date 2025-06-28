@@ -60,38 +60,82 @@ class UserProfileController extends Controller
     public function changeProfileImage(Request $request, User $user)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|max:4096', 
         ]);
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             try {
                 $file = $request->file('image');
-                $imageName = uniqid() . '.' . $file->getClientOriginalExtension();
-                $destinationPath = base_path('../public/avatars');
 
+                $originalExtension = strtolower($file->getClientOriginalExtension());
+                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+
+                if (!in_array($originalExtension, $allowedExtensions)) {
+                    return redirect()->back()->with('error', 'Ekstensi file tidak valid. Hanya file .jpg, .jpeg, .png, dan .gif yang diizinkan.');
+                }
+
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mimeType = finfo_file($finfo, $file->getPathname());
+                finfo_close($finfo);
+
+                $allowedMimeTypes = [
+                    'image/jpeg' => 'jpg',
+                    'image/png' => 'png',
+                    'image/gif' => 'gif',
+                ];
+
+                if (!array_key_exists($mimeType, $allowedMimeTypes)) {
+                    return redirect()->back()->with('error', 'Tipe file tidak valid. Hanya gambar JPEG, PNG, dan GIF yang diizinkan.');
+                }
+
+                $safeExtension = $allowedMimeTypes[$mimeType];
+                $imageName = uniqid() . '.' . $safeExtension; 
+
+                $destinationPath = base_path('../public/avatars');
                 if (!file_exists($destinationPath)) {
-                    mkdir($destinationPath, 0755, true); 
+                    mkdir($destinationPath, 0755, true);
                 }
 
                 if ($user->avatar && file_exists(base_path('../public/' . $user->avatar))) {
-                    unlink(base_path('../public/' . $user->avatar)); 
+                    unlink(base_path('../public/' . $user->avatar));
                 }
-                $tempPath = $file->move($destinationPath, $imageName);
-                $fullPath = $destinationPath . '/' . $imageName; 
-                $imgManager = new ImageManager(new Driver);
-                $filteredImage = $imgManager->read($fullPath);
-                $filteredImage->resize(500, 500)->place(base_path('../img/watermark.png'), 'bottom-right', 10, 10)->save($fullPath);
+
+                $temporaryFilePath = $destinationPath . '/' . $imageName; 
+                $file->move($destinationPath, $imageName);
+
+                try {
+                    $imgManager = new ImageManager(new Driver);
+                    $filteredImage = $imgManager->read($temporaryFilePath); 
+                    $filteredImage->resize(500, 500);
+
+                    if ($safeExtension === 'jpg' || $safeExtension === 'jpeg') {
+                        $filteredImage->toJpeg(80)->save($temporaryFilePath);
+                    } elseif ($safeExtension === 'png') {
+                        $filteredImage->toPng()->save($temporaryFilePath);
+                    } elseif ($safeExtension === 'gif') {
+                        $filteredImage->toGif()->save($temporaryFilePath);
+                    } else {
+                        $filteredImage->save($temporaryFilePath, 80);
+                    }
+
+                } catch (\Exception $e) {
+                    if (file_exists($temporaryFilePath)) {
+                        unlink($temporaryFilePath); 
+                    }
+                    return redirect()->back()->with('error', 'File yang diunggah bukan gambar yang valid atau rusak setelah pemeriksaan lebih lanjut.');
+                }
 
                 $imagePath = 'avatars/' . $imageName;
                 $user->avatar = $imagePath;
                 $user->save();
 
-                return redirect('/dashboard/profile')->with('success', 'Profile image updated successfully.');
+                return redirect('/dashboard/profile')->with('success', 'Gambar profil berhasil diperbarui.');
+
             } catch (\Exception $e) {
-                return redirect()->back()->with('error','Error processing image: ' . $e->getMessage());
+                return redirect()->back()->with('error', 'Terjadi kesalahan saat memproses gambar: ' . $e->getMessage());
             }
         } else {
-            return redirect()->back()->with('error','File not uploaded or invalid.');
+            return redirect()->back()->with('error', 'File tidak diunggah atau tidak valid.');
         }
     }
 

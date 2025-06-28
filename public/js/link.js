@@ -314,6 +314,94 @@
         });
       });
     };
+
+    const setupCategoryShared = () => { 
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+    
+        // Menangani klik pada tombol toggle share
+        document.body.addEventListener('click', function (event) {
+            if (event.target.closest('.toggle-share-btn')) {
+                const button = event.target.closest('.toggle-share-btn');
+                const categoryId = button.dataset.categoryId;
+                const isCurrentlyShared = button.classList.contains('btn-info');
+    
+                // Tampilkan konfirmasi
+                Swal.fire({
+                    title: isCurrentlyShared ? 'Buat Pribadi?' : 'Bagikan Kategori?',
+                    text: isCurrentlyShared
+                        ? 'Kategori akan menjadi pribadi dan tidak dapat diakses publik.'
+                        : 'Kategori akan dibagikan dan bisa diakses publik.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: isCurrentlyShared ? 'Ya, buat pribadi' : 'Ya, bagikan',
+                    cancelButtonText: 'Batal',
+                    reverseButtons: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                        fetch(`/dashboard/link-category/${categoryId}/toggle-share`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken,
+                                'Accept': 'application/json',
+                                '_method': 'PATCH', 
+                            },
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                if (data.success) {
+                                    const isShared = data.shared;
+                                    navigator.clipboard.writeText(`https://linksy.site/vault/${categoryId}`); // Simpan link ke clipboard
+                                    button.classList.toggle('btn-info', isShared);
+                                    button.classList.toggle('btn-outline-secondary', !isShared);
+                                    button.textContent = isShared ? 'Shared' : 'Private';
+    
+                                    // Perbarui tooltip
+                                    const newTitle = isShared
+                                        ? 'This category is shared. Click to make private.'
+                                        : 'This category is private. Click to share.';
+                                    button.setAttribute('data-bs-original-title', newTitle);
+    
+                                    const tooltipInstance = bootstrap.Tooltip.getInstance(button);
+                                    if (tooltipInstance) {
+                                        tooltipInstance.setContent({ '.tooltip-inner': newTitle });
+                                    }
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Berhasil',
+                                        text: data.message,
+                                        timer: 1500,
+                                        showConfirmButton: false,
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal',
+                                        text: data.message || 'Terjadi kesalahan saat memperbarui status.',
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal',
+                                    text: 'Gagal memperbarui status kategori.',
+                                });
+                            });
+                    }
+                });
+            }
+        });
+    };
+
   
     // ==================== DYNAMIC TITLE UPDATE ====================
     const setupTitleUpdater = () => {
@@ -375,6 +463,7 @@
       setupQRCode();
       setupTitleUpdater();
       setupShareModal();
+      setupCategoryShared();
       
       if(typeof ApexCharts !== 'undefined' && document.querySelector('#traffic-overview')) {
           initChart(window.visitDataGlobal || { thisWeek: [], lastWeek: [] });

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Http\JsonResponse;
 
 class LinkCategoryController extends Controller
 {
@@ -47,4 +48,21 @@ class LinkCategoryController extends Controller
             ]
         ], 201);
     }
+    public function toggleShare(LinkCategory $category): JsonResponse
+    {
+        if ($category->user_id !== Auth::id()) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized action.'], 403);
+        }
+
+        $category->shared = !$category->shared;
+        $category->save();
+
+        $newStatus = $category->shared ? 'shared' : 'private';
+        return response()->json([
+            'success' => true,
+            'message' => "Category is now {$newStatus}.",
+            'shared' => $category->shared,
+        ]);
+    }
+    
 }

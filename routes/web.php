@@ -106,13 +106,14 @@ Route::middleware(['auth', 'verified'])->group(function() {
         Route::post('/dashboard/link/share', [LinkController::class, 'share']);
         Route::get('dashboard/link/{link}/summary', [LinkController::class, 'generateSummary'])->name('link.summary');
         Route::delete('dashboard/link/share/{linkShare}', [LinkController::class, 'deleteShare'])->name('links.share.delete');
-        // routes/web.php
-        // Route::get('dashboard/tracking', \App\Livewire\TrackingIndex::class)->name('dashboard.tracking.index');
         Route::name('dashboard.')->group(function () {
             Route::resource('dashboard/tracking', TrackingController::class)->only(['index', 'store', 'show', 'destroy', 'update']);
         });
         route::view('/dashboard/linknest', 'dashboard.linknest.index',['title' => 'Linknest'])->name('linknest');
         Route::post('/dashboard/link-category', [LinkCategoryController::class, 'store'])->name('link-category.store');
+        Route::post('/dashboard/link-category/{category}/toggle-share', [LinkCategoryController::class, 'toggleShare'])
+        ->name('link-category.toggle-share');
+    
     });
 
     // Blocked IPs '

@@ -371,14 +371,27 @@
                                         </li>
                             
                                         @foreach ($linkCategories as $category)
-                                        <li class="nav-item">
-                                            <a class="nav-link d-flex align-items-center gap-2 py-2 px-3 rounded-pill text-nowrap {{ request('category') == $category->slug ? 'active' : '' }}" 
-                                                href="{{ route('link.index', ['category' => $category->slug, 'search' => request('search')]) }}#linkTabsContent">
-                                                <iconify-icon icon="solar:folder-with-files-line-duotone"></iconify-icon>
+                                        <li class="d-flex align-items-center border rounded-pill border-0 px-3 py-2 bg-light-subtle">
+                                            {{-- Tautan ke kategori --}}
+                                            <a href="{{ route('link.index', ['category' => $category->slug, 'search' => request('search')]) }}#linkTabsContent"
+                                               class="nav-link d-flex align-items-center gap-2 py-2 px-3 rounded-pill text-nowrap me-2 {{ request('category') == $category->slug ? 'active' : '' }}">
+                                                <iconify-icon icon="solar:folder-line-duotone"></iconify-icon>
                                                 {{ $category->name }}
                                             </a>
+                                    
+                                            @if(request('category') == $category->slug)
+                                            <button type="button"
+                                                    class="btn btn-info d-flex align-items-center border rounded-pill border-0 px-3 py-2 toggle-share-btn "
+                                                    data-category-id="{{ $category->slug }}"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="{{ $category->shared ? 'Shared category. Click to make private.' : 'Private category. Click to share.' }}">
+                                                {{ $category->shared ? 'Shared' : 'Private' }}
+                                            </button>
+                                            @endif
                                         </li>
-                                        @endforeach
+                                    @endforeach
+                                    
                             
                                         <li class="nav-item">
                                             <a class="nav-link d-flex align-items-center gap-2 py-2 px-3 rounded-pill text-nowrap {{ request('category') == 'uncategorized' ? 'active' : '' }}" 
@@ -1026,6 +1039,7 @@
         <script>
             window.visitDataGlobal = @json($visitData);  
             console.log(window.visitDataGlobal);
+
         </script>
         <script src="{{ asset('js/link.js') }}"></script>
         <script src="{{ asset('js/dashjs/utils.js') }}"></script>

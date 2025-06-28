@@ -24,7 +24,7 @@ class RegisterController extends Controller
         $request->validate([
             'name' => 'required|max:255|min:3',
             'username' => 'required|min:3|max:255|unique:users|regex:/^\S*$/u',
-            'email' => 'required|email:dns|unique:users',
+            'email' => 'required|email:dns|unique:users|usercheck:block_disposable',
             'password' => 'required|min:5|max:255',
             'cf-turnstile-response' => ['required', Rule::turnstile()]
 
