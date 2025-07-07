@@ -64,5 +64,15 @@ class LinkCategoryController extends Controller
             'shared' => $category->shared,
         ]);
     }
+
+    public function destroy(LinkCategory $category)
+    {
+        if ($category->user_id !== Auth::id()) {
+            return redirect()->route('link.index')->with('error', 'Unauthorized action.');
+        }
+
+        $category->delete();
+        return redirect()->route('link.index')->with('success', 'Kategori berhasil dihapus!');
+    }
     
 }

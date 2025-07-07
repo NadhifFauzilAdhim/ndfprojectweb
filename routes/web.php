@@ -114,6 +114,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
         Route::post('/dashboard/link-category', [LinkCategoryController::class, 'store'])->name('link-category.store');
         Route::post('/dashboard/link-category/{category}/toggle-share', [LinkCategoryController::class, 'toggleShare'])
         ->name('link-category.toggle-share');
+        Route::delete('/dashboard/link-category/{category}', [LinkCategoryController::class, 'destroy'])->name('linkCategory.destroy');
     
     });
 
