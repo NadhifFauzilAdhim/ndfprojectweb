@@ -11,79 +11,92 @@
                 </a>
                 <h3 class="mt-3 mb-0">Create an Account</h3>
                 <p class="mb-0">Sign up to get started</p>
-                @if(@session('success'))
-                    <div class="alert alert-success alert-dismissible fade show rounded-3" role="alert">
+                
+                {{-- Session Alerts --}}
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show rounded-3 m-4" role="alert">
                         {{ session('success') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                @elseif (@session('error'))
-                    <div class="alert alert-danger alert-dismissible fade show rounded-3" role="alert">
+                @elseif(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show rounded-3 m-4" role="alert">
                         {{ session('error') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                @endsession
+                @endif
             </div>
 
-            <div class="card-body ">
-                <form method="POST" class="needs-validation" novalidate>
+            <div class="card-body pt-3">
+                <form method="POST" action="{{-- route('register') --}}" class="needs-validation" novalidate>
                 @csrf
-                <div class="mb-4">
-                    <label class="form-label small mb-2">Full Name</label>
+                {{-- Full Name --}}
+                <div class="mb-3">
+                    <label class="form-label small mb-1">Full Name</label>
                     <div class="input-group">
-                        <span class="input-group-text bg-light border-end-0">
-                            <i class="bi bi-person-vcard text-primary"></i>
-                        </span>
+                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-person-vcard text-primary"></i></span>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Full Name" required value="{{ old('name') }}">
                         @error('name')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
                 
-                <div class="mb-4">
-                    <label class="form-label small mb-2">Username</label>
+                {{-- Username --}}
+                <div class="mb-3">
+                    <label class="form-label small mb-1">Username</label>
                     <div class="input-group">
-                        <span class="input-group-text bg-light border-end-0">
-                            <i class="bi bi-person-fill-check text-primary"></i>
-                        </span>
+                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-person-fill-check text-primary"></i></span>
                         <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" placeholder="Username" required value="{{ old('username') }}">
                         @error('username')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
                 
-                <div class="mb-4">
-                    <label class="form-label small mb-2">Email Address</label>
+                {{-- Email Address --}}
+                <div class="mb-3">
+                    <label class="form-label small mb-1">Email Address</label>
                     <div class="input-group">
-                    <span class="input-group-text bg-light border-end-0">
-                        <i class="bi bi-envelope-fill text-primary"></i>
-                    </span>
-                    <input type="email" class="form-control rounded-end @error('email') is-invalid @enderror" name="email" placeholder="name@example.com" required value="{{ old('email') }}">
-                    <div class="invalid-feedback">
-                        @error('email') {{ $message }} @else Please enter valid email @enderror
-                    </div>
+                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-envelope-fill text-primary"></i></span>
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="name@example.com" required value="{{ old('email') }}">
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
 
-                <div class="mb-4">
-                    <label class="form-label small mb-2">Password</label>
+                {{-- Password --}}
+                <div class="mb-3">
+                    <label class="form-label small mb-1">Password</label>
                     <div class="input-group">
-                    <span class="input-group-text bg-light border-end-0">
-                        <i class="bi bi-lock-fill text-primary"></i>
-                    </span>
-                    <input type="password" class="form-control rounded-end @error('password') is-invalid @enderror" name="password" placeholder="••••••••" required>
+                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock-fill text-primary"></i></span>
+                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="••••••••" required>
+                        @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
-                    @error('password')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
                 </div>
+
+                {{-- Password Confirmation (New Field) --}}
+                <div class="mb-4">
+                    <label class="form-label small mb-1">Confirm Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-check2-circle text-primary"></i></span>
+                        <input type="password" class="form-control" name="password_confirmation" placeholder="••••••••" required>
+                    </div>
+                </div>
+                
+                {{-- Turnstile and Submit Button --}}
                 <div class="text-center">
                     <x-turnstile data-theme="light"/>
+                    @error('cf-turnstile-response')
+                        <div class="text-danger small mt-2">{{ $message }}</div>
+                    @enderror
                 </div>
-                <div class="mb-4">
+
+                <div class="my-4">
                     <button type="submit" class="btn btn-primary w-100">
-                    <i class="bi bi-person-plus me-2"></i>Sign Up
+                        <i class="bi bi-person-plus me-2"></i>Sign Up
                     </button>
                 </div>
 
@@ -100,17 +113,11 @@
                 </form>
             </div>
 
-            <div class="card-footer bg-transparent text-center pt-1">
+            <div class="card-footer bg-transparent text-center pt-1 pb-3">
                 <div class="d-flex gap-3 justify-content-center">
-                <a href="#" class="btn btn-outline-secondary btn-icon rounded-circle">
-                    <i class="bi bi-google"></i>
-                </a>
-                <a href="#" class="btn btn-outline-secondary btn-icon rounded-circle">
-                    <i class="bi bi-facebook"></i>
-                </a>
-                <a href="#" class="btn btn-outline-secondary btn-icon rounded-circle">
-                    <i class="bi bi-github"></i>
-                </a>
+                    <a href="#" class="btn btn-outline-secondary btn-icon rounded-circle"><i class="bi bi-google"></i></a>
+                    <a href="#" class="btn btn-outline-secondary btn-icon rounded-circle"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="btn btn-outline-secondary btn-icon rounded-circle"><i class="bi bi-github"></i></a>
                 </div>
             </div>
             </div>

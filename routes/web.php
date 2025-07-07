@@ -19,6 +19,7 @@ use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\LinkCategoryController;
+use App\Http\Controllers\CleanupController;
 
 // Public routes 
 Route::middleware('throttle:60,1')->group(function () {
@@ -140,7 +141,7 @@ Route::middleware(['auth', 'admin', 'verified'])->group(function() {
         Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show');
         Route::delete('/dashboard/postmanagement/{post:slug}', [AdminPostController::class, 'destroy'])->name('postmanagement.destroy');
         Route::resource('/dashboard/postmanagement', AdminPostController::class)->only(['index','destroy']);
-        
+        Route::get('/cleanup/visit-nsn', [CleanupController::class, 'cleanupOldVisits']); 
     });
 });
 

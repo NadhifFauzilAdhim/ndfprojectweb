@@ -3,13 +3,12 @@
   <script src="https://static.elfsight.com/platform/platform.js" async></script>
 <div class="elfsight-app-16c599f4-70fd-4b71-aa1d-bfb0ee7810ef" data-elfsight-app-lazy></div>
   <div class="container-fluid">
-    <div class="alert alert-warning text-center" role="alert"> <i class="bi bi-info-circle-fill me-2"></i>Maaf, karena tingginya tingkat spam, fitur post hanya tersedia untuk pengguna terverifikasi. </div>
       <div class="row">
         <div class="col-lg-4">
           <div class="card rounded-5">
             <div class="card-body text-center card-fixed-size">
               @if(Auth::user()->avatar)
-                <img data-src="{{ asset('storage/'. auth()->user()->avatar) }}" alt="image" class="img-fluid img-fluid rounded-circle lazyload" width="205">
+                <img data-src="{{ asset('public/'. auth()->user()->avatar) }}" alt="image" class="img-fluid img-fluid rounded-circle lazyload" width="205">
               @elseif(Auth::user()->google_avatar)
                 <img data-src="{{ Auth::user()->google_avatar }}" alt="image" class="img-fluid img-fluid rounded-circle lazyload" width="205">
               @else
@@ -24,15 +23,14 @@
                 We're glad to have you here. Explore the features and tools available on your dashboard to make the most out of your experience.
               </p>
              
-              <div style="margin-top: -89px;">
+              <div style="margin-top: -90px;">
                 <img src="{{ asset('img/frog.gif') }}" alt="Cat sitting gif" class="img-fluid lazyload" style="width: 271px;">
               </div>
             </div>
           </div>
-          
           <div class="d-block d-lg-none mt-4 mobiprof-menu">
-            <div class="card">
-                <div class="card-body">
+            <div class="card rounded-5 shadow-sm">
+               <div class="card-body">
                     <div class="row g-3 text-center">
                         <div class="col-3">
                             <a href="/dashboard/link" class="text-decoration-none">
@@ -78,7 +76,7 @@
               <div class="card rounded-5">
                   <div class="card-body">
                       <h5 class="card-title d-flex align-items-center gap-2 mb-4">
-                          Traffic Overview
+                          Visit Static
                           <span>
                               <iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success" data-bs-title="Traffic Overview"></iconify-icon>
                           </span>
@@ -160,49 +158,38 @@
             </div>
             </div>
         </div>
-        <div class="col-lg-4">
-            <div class="card shadow-sm border-0 rounded-5">
+        <div class="col-lg-4 d-flex align-items-stretch mb-4">
+          <div class="card w-100 rounded-4 shadow-sm">
               <div class="card-body">
-                <h5 class="card-title fw-semibold mb-4">Last Visits History</h5>
-                <div class="table-responsive" style="max-height: 350px; overflow-y: auto; overflow-x: hidden;">
-                  <table class="table align-middle mb-0">
-                    <thead class="sticky-top" style="top: 0; z-index: 1;">
-                      <tr>
-                        <th scope="col" class="ps-0 text-nowrap">Link</th>
-                        <th scope="col" class="text-center text-nowrap">Date</th>
-                        <th scope="col" class="text-center text-nowrap">#</th>
-                      </tr>
-                    </thead>
-                    <tbody class="table-group-divider">
+                  <h5 class="card-title fw-semibold mb-4">Last Visit History</h5>
+                  <div class="pe-3" style="max-height: 350px; overflow-y: auto;">
                       @forelse ($lastLinkVisit as $visit)
-                        <tr>
-                          <td class="ps-0 fw-medium text-truncate" style="max-width: 180px;">
-                            <span class="d-block text-truncate" title="{{ $visit->link->title }}">
-                              <small>{{ $visit->link->title }}</small>
-                            </span>
-                          </td>
-                          <td class="text-center fw-medium text-nowrap">
-                            <small>{{ $visit->created_at->diffForHumans() }}</small>
-                          </td>
-                          <td class="text-center">
-                            <a href="/dashboard/link/{{ $visit->link->slug }}" class="text-decoration-none text-dark" title="Lihat Detail">
-                              <iconify-icon icon="solar:double-alt-arrow-right-bold-duotone" width="20" height="20"></iconify-icon>
-                            </a>
-                          </td>
-                        </tr>
+                          <a href="/dashboard/link/{{ $visit->link->slug }}" title="Lihat Detail: {{ $visit->link->title }}" class="text-decoration-none">
+                              <div class="d-flex align-items-center py-2 border-bottom border-200">
+                              <img data-src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{ urlencode($visit->link->target_url) }}&size=32"
+                                alt="Favicon"
+                                class="rounded me-2 lazyload"
+                                style="width: 25px; height: 25px; flex-shrink: 0;">
+                                  <div class="flex-grow-1">
+                                      <h6 class="mb-0 text-dark text-truncate" style="max-width: 180px;">{{ $visit->link->title }}</h6>
+                                      <small class="text-muted">{{ $visit->created_at->diffForHumans() }}</small>
+                                  </div>
+                                  <div class="flex-shrink-0 ms-2">
+                                      <iconify-icon icon="solar:alt-arrow-right-line-duotone" width="20" height="20" class="text-muted"></iconify-icon>
+                                  </div>
+                              </div>
+                          </a>
                       @empty
-                        <tr>
-                          <td colspan="3" class="text-center text-muted">
-                            Tidak ada data <span class="ms-1">&#129300;</span>
-                          </td>
-                        </tr>
+                          <div class="d-flex flex-column align-items-center justify-content-center text-center text-muted" style="min-height: 200px;">
+                              <iconify-icon icon="solar:file-text-line-duotone" width="50" height="50"></iconify-icon>
+                              <p class="mt-3 mb-0">Tidak ada riwayat kunjungan.</p>
+                              <small>Data akan muncul di sini saat link Anda dikunjungi.</small>
+                          </div>
                       @endforelse
-                    </tbody>
-                  </table>
-                </div>
+                  </div>
               </div>
-            </div>
           </div>
+        </div>
       
         <div class="col-lg-4 d-flex align-items-stretch">
             <div class="card w-100 rounded-5 shadow-sm">
@@ -254,7 +241,7 @@
           <div class="position-relative">
             <a href="javascript:void(0)">
              @if($post->image)
-                <img data-src="{{ asset('storage/' . $post->image) }}" class="img-fluid rounded-top w-100 fixed-size lazyload" alt="">
+                <img data-src="{{ asset('public/' . $post->image) }}" class="img-fluid rounded-top w-100 fixed-size lazyload" alt="">
             @else
             <img 
             data-src="{{ $post->category->image ? $post->category->image : asset('img/programmer_text_2.jpg') }}" 

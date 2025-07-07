@@ -246,7 +246,7 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="url_target" class="form-label fw-bold">URL Destination</label>
-                                        <input type="text" class="form-control @error('target_url') is-invalid @enderror shadow-sm" id="target_url" name="target_url" placeholder="https://example.com" value="{{ old('target_url') }}">
+                                        <input type="text" class="form-control @error('target_url') is-invalid @enderror shadow-sm" id="target_url" name="target_url" placeholder="https://example.com" value="{{ old('target_url') }}" required>
                                         @error('target_url')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -259,7 +259,7 @@
                                             <label for="short_link" class="form-label fw-bold">Shortened Link</label>
                                             <div class="input-group shadow-sm">
                                                 <span class="input-group-text bg-light" id="basic-addon3">linksy.site/</span>
-                                                <input type="text" class="form-control @error('slug') is-invalid @enderror" id="short_link" name="slug" placeholder="custom-slug" value="{{ old('slug') }}" aria-describedby="basic-addon3">
+                                                <input type="text" class="form-control @error('slug') is-invalid @enderror" id="short_link" name="slug" placeholder="custom-slug" value="{{ old('slug') }}" aria-describedby="basic-addon3" required>
                                             </div>
                                             @error('slug')
                                             <div class="invalid-feedback d-block">

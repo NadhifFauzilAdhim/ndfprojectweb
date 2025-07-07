@@ -38,31 +38,33 @@ class LinkController extends Controller
         $cacheKey = "user_{$userId}_dashboard";
         $search = $request->input('search');
         $categorySlug = $request->input('category');
+
         $data = Cache::remember($cacheKey, 300, function () use ($userId, $search) {
             return $this->analyticService->getDashboardData($userId);
         });
         extract($data);
 
         $links = Link::where('user_id', $userId)
-        ->with('linkCategory')
-        ->when($search, function ($query) use ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('slug', 'like', "%{$search}%")
-                ->orWhere('title', 'like', "%{$search}%");
-            });
-        })
-        ->when($categorySlug, function ($query) use ($categorySlug) {
-            if ($categorySlug === 'uncategorized') {
-                return $query->whereNull('link_category_id');
-            }
+            ->with('linkCategory')
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('slug', 'like', "%{$search}%")
+                    ->orWhere('title', 'like', "%{$search}%");
+                });
+            })
+            ->when($categorySlug, function ($query) use ($categorySlug) {
+                if ($categorySlug === 'uncategorized') {
+                    return $query->whereNull('link_category_id');
+                }
 
-            return $query->whereHas('linkCategory', function ($q) use ($categorySlug) {
-                $q->where('slug', $categorySlug);
-            });
-        })
-        ->latest()
-        ->paginate(12, ['*'], 'own_links')
-        ->withQueryString();
+                return $query->whereHas('linkCategory', function ($q) use ($categorySlug) {
+                    $q->where('slug', $categorySlug);
+                });
+            })
+            ->latest()
+            ->paginate(12, ['*'], 'own_links')
+            ->withQueryString();
+
 
         $linkCategories = LinkCategory::where('user_id', $userId)->orderBy('name')->get();
 
@@ -208,6 +210,8 @@ class LinkController extends Controller
         $validated = $request->validate([
             'title' => 'required|max:255',
         ]);
+        $validated['title'] = Str::limit($validated['title'], 50);
+
         $link->update(['title' => $validated['title']]);
         return response()->json(['success' => true, 'message' => 'Title updated!']);
     }
@@ -215,7 +219,8 @@ class LinkController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+   
+     public function store(Request $request)
     {
         try {
             $validatedData = $request->validate([
