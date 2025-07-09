@@ -113,11 +113,11 @@ class LinkController extends Controller
      */
     public function show(Link $link, Request $request)
     {
+        $this->authorizeLink($link);
         $filter = $request->query('filter', 'all');
         $visithistory = $this->analyticService->getVisitHistory($link->id, $filter);
         $redirectedCount = Linkvisithistory::where('link_id', $link->id)->where('status', 1)->count();
         $rejectedCount = Linkvisithistory::where('link_id', $link->id)->where('status', 0)->count();
-
 
         $blockedIps = BlockedIp::where('link_id', $link->id)->get();
         $topReferersRaw = Linkvisithistory::where('link_id', $link->id)
@@ -207,12 +207,15 @@ class LinkController extends Controller
 
     public function updateTitle(Request $request, Link $link)
     {
+        $this->authorizeLink($link);
         $validated = $request->validate([
             'title' => 'required|max:255',
         ]);
-        $validated['title'] = Str::limit($validated['title'], 50);
-
-        $link->update(['title' => $validated['title']]);
+    
+        $cleanTitle = htmlspecialchars($validated['title'], ENT_QUOTES, 'UTF-8');
+        $cleanTitle = Str::limit($cleanTitle, 50);
+    
+        $link->update(['title' => $cleanTitle]);
         return response()->json(['success' => true, 'message' => 'Title updated!']);
     }
 
@@ -272,7 +275,6 @@ class LinkController extends Controller
 
     public function share(Request $request)
     {
-      
         try {
             $validated = $request->validate([
                 'link_id' => 'required|exists:links,slug',

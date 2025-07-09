@@ -371,15 +371,15 @@
                                         </li>
                             
                                         @foreach ($linkCategories as $category)
-                                            <li class="d-flex align-items-center border rounded-pill border-0 px-3 py-2 bg-light-subtle">
+                                        <li class="d-flex align-items-center border rounded-pill border-0 px-2 py-2 category-item {{ $category->shared ? 'bg-primary-subtle' : '' }} {{ request('category') == $category->slug ? 'bg-primary-subtle' : '' }}">
                                                 <a href="{{ route('link.index', ['category' => $category->slug, 'search' => request('search')]) }}#linkTabsContent"
-                                                    class="nav-link d-flex align-items-center gap-2 py-2 px-3 rounded-pill text-nowrap me-2 {{ request('category') == $category->slug ? 'active' : '' }}">
+                                                    class="nav-link d-flex align-items-center gap-2 py-2 px-3 rounded-pill text-nowrap  {{ request('category') == $category->slug ? 'active' : '' }}">
                                                     <iconify-icon icon="solar:folder-line-duotone"></iconify-icon>
                                                     {{ $category->name }}
                                                 </a>
                                             
                                                 @if(request('category') == $category->slug)
-                                                <div class="d-flex align-items-center gap-2">
+                                                <div class="d-flex align-items-center gap-2 ms-2">
                                                     <button type="button"
                                                             class="btn btn-info d-flex align-items-center border rounded-pill border-0 px-3 py-2 toggle-share-btn"
                                                             data-category-id="{{ $category->slug }}"

@@ -325,7 +325,7 @@
                     if (result.isConfirmed) {
                         postForm({ 
                             url: `/dashboard/link-category/${categoryId}/toggle-share`, 
-                            useMethod: 'PATCH'
+                            _method: 'PATCH'
                         })
                         .then(response => {
                             if (!response.ok) {
