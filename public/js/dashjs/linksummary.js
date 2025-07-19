@@ -1,3 +1,50 @@
+/**
+ * @param {jQuery} targetElement 
+ * @param {string} htmlString 
+ * @param {function} onComplete 
+ */
+function typeWriter(targetElement, htmlString, onComplete) {
+    targetElement.empty(); 
+    const tempDiv = $('<div>').html(htmlString).contents(); 
+
+    let i = 0;
+    function processNode() {
+        if (i >= tempDiv.length) {
+            if (onComplete) onComplete();
+            return;
+        }
+        
+        const node = tempDiv[i];
+        let j = 0;
+
+        if (node.nodeType === 1) { 
+            const element = $(`<${node.tagName.toLowerCase()}>`);
+            targetElement.append(element);
+            typeWriter(element, $(node).html(), () => {
+                i++;
+                processNode();
+            });
+        } else if (node.nodeType === 3) {
+            const text = node.nodeValue;
+            function typeChar() {
+                if (j < text.length) {
+                    targetElement.append(text.charAt(j));
+                    j++;
+                    setTimeout(typeChar, 5); 
+                } else {
+                    i++;
+                    processNode();
+                }
+            }
+            typeChar();
+        } else { 
+            i++;
+            processNode();
+        }
+    }
+    processNode();
+}
+
 $(document).ready(function () {
     $('#generate-summary-btn').on('click', function () {
         const btn = $(this);
@@ -5,95 +52,67 @@ $(document).ready(function () {
         const loadingIndicator = $('#summary-loading');
         const resultDiv = $('#summary-result');
 
-        // Reset state
         btn.prop('disabled', true);
         loadingIndicator.removeClass('d-none');
-        resultDiv.empty().removeClass('alert-danger');
+        resultDiv.empty().removeClass('summary-card');
 
         $.ajax({
             url: `/dashboard/link/${linkId}/summary`,
             method: 'GET',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             success: function (response) {
                 loadingIndicator.addClass('d-none');
-                btn.prop('disabled', false);
 
                 if (response.success) {
                     const stats = response.stats || {};
                     const summaryData = {
-                        total: stats.total || 0,
-                        locations: stats.locations || 'Tidak tercatat',
-                        lastVisit: stats.last_visit || 'Belum ada',
-                        summary: response.summary || 'Tidak ada ringkasan yang tersedia',
-                        recommendations: response.recommendations || 'Pertimbangkan untuk membagikan link ke platform lain untuk meningkatkan jangkauan.'
+                        total: stats['Total Kunjungan'] || 0,
+                        locations: stats['Lokasi Terbanyak'] || 'Tidak tercatat',
+                        lastVisit: stats['5 Kunjungan Terakhir'] && stats['5 Kunjungan Terakhir'][0] ? stats['5 Kunjungan Terakhir'][0].Waktu : 'Belum ada',
                     };
 
-                    const summaryCard = `
-                        <div class="summary-card position-relative">
-                            <button class="btn btn-sm btn-light copy-btn" title="Salin ke Clipboard">
+                    const summaryCardShell = `
+                        <div class="position-relative">
+                            <button class="btn btn-sm btn-light copy-btn" title="Salin ke Clipboard" style="display: none;">
                                 <i class="bi bi-clipboard"></i>
                             </button>
-                            
                             <div class="d-flex gap-2 flex-wrap mb-4">
-                                <div class="stats-badge">
-                                    <i class="bi bi-people me-1"></i>Total Kunjungan: ${summaryData.total}
-                                </div>
-                                <div class="stats-badge">
-                                    <i class="bi bi-geo-alt me-1"></i>Lokasi: ${summaryData.locations}
-                                </div>
-                                <div class="stats-badge">
-                                    <i class="bi bi-clock-history me-1"></i>Terakhir: ${summaryData.lastVisit}
-                                </div>
+                                <div class="stats-badge"><i class="bi bi-people me-1"></i>Total Kunjungan: ${summaryData.total}</div>
+                                <div class="stats-badge"><i class="bi bi-geo-alt me-1"></i>Lokasi: ${summaryData.locations}</div>
+                                <div class="stats-badge"><i class="bi bi-clock-history me-1"></i>Terakhir: ${summaryData.lastVisit}</div>
                             </div>
-                            
-                            <h6 class="section-heading">Analisis Pola</h6>
-                            <p class="text-muted lh-base mb-4">${summaryData.summary}</p>
-                            
-                            <h6 class="section-heading">Rekomendasi Strategis</h6>
-                            <div class="alert alert-light border">
-                                ${summaryData.recommendations}
-                            </div>
-                        </div>
-                    `;
+                            <div id="ai-analysis-content"></div>
+                        </div>`;
+                    
+                    resultDiv.addClass('summary-card').html(summaryCardShell);
+                    const aiContentDiv = $('#ai-analysis-content');
 
-                    resultDiv.html(summaryCard);
+                    typeWriter(aiContentDiv, response.summary, function() {
+                        btn.prop('disabled', false); 
+                        resultDiv.find('.copy-btn').fadeIn(); 
 
-                    // Add copy functionality
-                    resultDiv.find('.copy-btn').on('click', function() {
-                        const copyButton = $(this);
-                        navigator.clipboard.writeText(summaryData.summary)
-                            .then(() => {
-                                copyButton.html('<i class="bi bi-check2 me-1"></i>Tersalin!');
+                        resultDiv.find('.copy-btn').on('click', function() {
+                            const copyButton = $(this);
+                            const textToCopy = resultDiv.find('#ai-analysis-content').text().trim();
+                            
+                            navigator.clipboard.writeText(textToCopy).then(() => {
+                                copyButton.html('<i class="bi bi-check2"></i> Tersalin!');
                                 setTimeout(() => {
                                     copyButton.html('<i class="bi bi-clipboard"></i>');
                                 }, 2000);
-                            })
-                            .catch(err => {
-                                console.error('Gagal menyalin:', err);
                             });
+                        });
                     });
 
                 } else {
-                    resultDiv.html(`
-                        <div class="alert alert-danger border-danger d-flex align-items-center">
-                            <i class="bi bi-x-circle-fill me-2"></i>
-                            ${response.message || 'Terjadi kesalahan saat memproses permintaan'}
-                        </div>
-                    `);
+                    resultDiv.html(`<div class="alert alert-warning">${response.message || 'Gagal membuat ringkasan.'}</div>`);
+                    btn.prop('disabled', false);
                 }
             },
             error: function (xhr) {
                 loadingIndicator.addClass('d-none');
                 btn.prop('disabled', false);
-                resultDiv.html(`
-                    <div class="alert alert-danger border-danger d-flex align-items-center">
-                        <i class="bi bi-x-circle-fill me-2"></i>
-                        Terjadi kesalahan koneksi - ${xhr.statusText || 'Server tidak merespon'}
-                    </div>
-                `);
-                console.error('Error:', xhr.responseText);
+                resultDiv.html(`<div class="alert alert-danger">Error: ${xhr.statusText || 'Tidak bisa terhubung ke server.'}</div>`);
             }
         });
     });

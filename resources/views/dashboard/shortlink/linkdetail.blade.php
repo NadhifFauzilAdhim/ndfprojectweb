@@ -146,7 +146,7 @@
                                 <span>Analyzing traffic patterns...</span>
                             </div>
                         </div>
-                        <div id="summary-result" class="mt-3"></div>
+                        <div id="summary-result" class="mt-3" style="max-height: 300px; overflow-y: auto;"></div>
                     </div>
                 </div>
             </div>

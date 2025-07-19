@@ -119,6 +119,7 @@ class LinkController extends Controller
         $redirectedCount = Linkvisithistory::where('link_id', $link->id)->where('status', 1)->count();
         $rejectedCount = Linkvisithistory::where('link_id', $link->id)->where('status', 0)->count();
 
+
         $blockedIps = BlockedIp::where('link_id', $link->id)->get();
         $topReferersRaw = Linkvisithistory::where('link_id', $link->id)
             ->select('referer_url', DB::raw('COUNT(*) as visit_count'))
@@ -219,6 +220,7 @@ class LinkController extends Controller
         return response()->json(['success' => true, 'message' => 'Title updated!']);
     }
 
+
     /**
      * Store a newly created resource in storage.
      */
@@ -275,6 +277,7 @@ class LinkController extends Controller
 
     public function share(Request $request)
     {
+      
         try {
             $validated = $request->validate([
                 'link_id' => 'required|exists:links,slug',
@@ -407,11 +410,6 @@ class LinkController extends Controller
             }
 
             $stats = [
-                'Total Kunjungan' => $totalVisits,
-                'Kunjungan Unik' => $uniqueVisits,
-                'Lokasi Terbanyak' => $this->getMostCommonLocation($link->id),
-                'Referer Utama' => $this->getTopReferer($link->id),
-                'Device Populer' => $this->getDeviceStats($link->id),
                 '5 Kunjungan Terakhir' => $recentVisits->map(fn($v) => [
                     'Waktu' => $v->created_at->format('d M Y H:i'),
                     'Status' => $v->status ? 'Redirected' : 'Blocked',
@@ -420,16 +418,25 @@ class LinkController extends Controller
                 ])->toArray()
             ];
 
-            $prompt = "Berdasarkan data statistik berikut:\n";
-            foreach ($stats as $label => $value) {
-                $prompt .= "- $label: " . json_encode($value, JSON_UNESCAPED_SLASHES) . "\n";
-            }
-            $prompt .= "\nBuat ringkasan dalam 3 poin utama menggunakan Bahasa Indonesia yang mudah dimengerti oleh pengguna aplikasi (bukan teknikal). Tampilkan hasilnya langsung dalam format HTML dengan struktur berikut:\n" .
+            $statsString = "
+            - Total Kunjungan: {$totalVisits}
+            - Kunjungan Unik: {$uniqueVisits} (Ini adalah jumlah orang berbeda yang mengklik link Anda)
+            - Lokasi Pengunjung Terbanyak: " . json_encode($this->getMostCommonLocation($link->id), JSON_UNESCAPED_SLASHES) . "
+            - Sumber Lalu Lintas Utama (Referer): " . json_encode($this->getTopReferer($link->id), JSON_UNESCAPED_SLASHES) . " (Ini adalah dari mana pengunjung datang, misal: Instagram, Google, atau langsung)
+            - Perangkat yang Paling Sering Digunakan: " . json_encode($this->getDeviceStats($link->id), JSON_UNESCAPED_SLASHES) . "
+            - Riwayat 5 Kunjungan Terakhir: " . json_encode($stats['5 Kunjungan Terakhir'], JSON_UNESCAPED_SLASHES);
+
+            $prompt = "Anda adalah seorang asisten analis data yang cerdas dan ramah. Tugas Anda adalah menganalisis data kunjungan sebuah link pendek dan menyajikannya dalam ringkasan yang mudah dipahami, memberikan wawasan, dan saran yang bisa ditindaklanjuti oleh pemilik link (pengguna aplikasi).\n\n" .
+                    "Berikut adalah data kunjungan untuk dianalisis:\n" .
+                    $statsString . "\n\n" .
+                    "Berdasarkan data di atas, buatlah analisis dalam Bahasa Indonesia. Gunakan bahasa yang positif, memotivasi, dan mudah dimengerti. Fokus pada apa arti data ini bagi pengguna dan apa yang bisa mereka lakukan selanjutnya.\n\n" .
+                    "Format output harus berupa HTML dengan struktur WAJIB berikut:\n\n" .
                     "<ul>\n" .
-                    "<li><b>1. Tren Utama:</b> ...</li>\n" .
-                    "<li><b>2. Pola Menarik:</b> ...</li>\n" .
-                    "<li><b>3. Rekomendasi:</b> ...</li>\n" .
-                    "</ul>";
+                    "  <li><b>Performa Singkat 📈:</b> Jelaskan secara singkat performa link berdasarkan total dan unik kunjungan. Beri apresiasi jika angkanya bagus.</li>\n" .
+                    "  <li><b>Siapa Audiens Anda 🎯:</b> Gabungkan data lokasi, perangkat, dan sumber lalu lintas untuk menggambarkan profil audiens. Siapa mereka dan dari mana mereka datang?</li>\n" .
+                    "  <li><b>Saran & Langkah Selanjutnya 💡:</b> Berikan 1-2 saran konkret dan bisa langsung diterapkan. Contoh: Jika sumber utama dari Instagram, sarankan untuk lebih aktif mempromosikan di sana. Jika banyak dari perangkat mobile, sarankan untuk memastikan halaman tujuan ramah seluler. Jika tidak ada referer (direct), jelaskan artinya.</li>\n" .
+                    "</ul>\n\n" .
+                    "PENTING: Pastikan output HANYA berupa kode HTML <ul>...</ul> saja, tanpa teks pembuka atau penutup lainnya.";
 
             $model = 'gemini-2.0-flash';
             $response = $this->apiServices->generateGeminiResponse($prompt, $model, $geminiCacheKey);
