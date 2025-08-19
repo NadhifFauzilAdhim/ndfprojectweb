@@ -773,7 +773,7 @@
                         <form id="shareLinkForm">
                             <div class="mb-4">
                                 <label for="sharedWith" class="form-label fw-500 mb-3">Recipient's Username</label>
-                                <div class="input-group input-group-lg">
+                                <div class="input-group input-group-lg position-relative">
                                     <span class="input-group-text bg-light border-end-0">
                                         <i class="bi bi-person-circle text-muted"></i>
                                     </span>
@@ -783,8 +783,9 @@
                                            name="shared_with" 
                                            placeholder="e.g. johndoe123"
                                            style="height: 50px;"
+                                           autocomplete="off"
                                            required>
-                                </div>
+                                    </div>
                                 <div class="form-text mt-2">Enter the exact username of the person you want to share with</div>
                             </div>
                             

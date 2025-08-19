@@ -16,7 +16,7 @@
      <section id="hero" class="d-flex flex-column justify-content-center align-items-center position-relative text-center vh-100">
       <div class="hero-container" data-aos="fade-in">
         <h1>Nadhif Fauzil Adhim</h1>
-        <p>I'm <span class="typed" data-typed-items="Backend Dev, IoT Enthusiast, Assistant Lecturer", "></span></p>
+        <p>I'm <span class="typed" data-typed-items="Backend Dev, Web Dev, Machine Learn Enthusiast, Assistant Lecturer", "></span></p>
         <div class="d-flex flex-wrap justify-content-center gap-3 mt-3">
           <a class="btn btn-light rounded-pill py-2 px-4 d-flex align-items-center justify-content-center" target="_blank" href="https://www.linkedin.com/in/nadhif-fauzil-adhim-99a330294">
             <i class="bi bi-linkedin"></i> <span class="d-none d-md-inline ms-2 name-text">LinkedIn</span>
@@ -33,8 +33,8 @@
               <i class="bi bi-download"></i> <span class="d-none d-md-inline ms-2">Download</span>
             </button>
             <ul class="dropdown-menu bg-dark" aria-labelledby="downloadDropdown">
-              <li><a class="dropdown-item text-light bg-transparent" href="#"><i class="bi bi-file-earmark-person me-1"></i>CV</a></li>
-              <li><a class="dropdown-item text-light bg-transparent" href="{{ url('/r/portofolio') }}" target="_blank"><i class="bi bi-card-text me-1"></i>Portofolio</a></li>
+              <li><a class="dropdown-item text-light bg-transparent" href="https://linksy.site/cv" target="_blank"><i class="bi bi-file-earmark-person me-1"></i>CV</a></li>
+              <li><a class="dropdown-item text-light bg-transparent" href="https://linksy.site/portofolio" target="_blank"><i class="bi bi-card-text me-1"></i>Portofolio</a></li>
             </ul>
           </div>
         </div>
@@ -51,7 +51,11 @@
   
           <div class="section-title" data-aos="fade-right" data-aos-delay="200">
             <h2>About</h2>
-            <p>Hayy!! My name is Nadhif Fauzil Adhim. I am a computer science student at AMIKOM University. I have a strong interest in the world of technology, especially in the fields of Computer Science, Web Develoment, and IoT</p>
+            <p>Hayy!! My name is Nadhif Fauzil Adhim. I am a Computer Science student at Universitas Amikom Yogyakarta with a deep passion for technology and innovation. My primary areas of interest include Web Development, Backend Systems, Internet of Things (IoT), and Machine Learning. I believe technology has the power to solve real-world problems and improve lives, and I am eager to be part of that transformation.
+
+            <br><br> Currently, I am focusing on developing my skills in building scalable and secure web applications, exploring IoT solutions that bridge the digital and physical worlds, and learning how Machine Learning can be applied to create intelligent, data-driven systems. I enjoy working on projects that challenge me to learn new technologies, design efficient architectures, and deliver solutions that are both user-centric and impactful.
+
+            As a lifelong learner.</p>
           </div>
   
           <div class="row">
@@ -59,24 +63,17 @@
               <img data-src="img/author.png" class="img-fluid author-image lazyload" alt="">
             </div>
             <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
-              <h3>Web Developer &amp; IoT Entusiast</h3>
+              <h3>Web Developer &amp; Machine Learning Enthusiast</h3>
               <p class="fst-italic">
                 As a Web & IoT Developer, I am passionate about creating engaging and user-friendly digital experiences
               </p>
               <div class="row">
                 <div class="col-lg-6">
                   <ul>
-                    <li><i class="bi bi-chevron-right"></i> <strong>Birthday:</strong> <span>10 Nov 2003</span></li>
-                    <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span>www.ndfproject.my.id</span></li>
-                    <li><i class="bi bi-chevron-right"></i> <strong>Phone:</strong> <span>+62 8572 7785 062</span></li>
-                    <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>Kulon Progo</span></li>
-                  </ul>
-                </div>
-                <div class="col-lg-6">
-                  <ul>
-                    <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span id="umurSpan">21</span></li>
+                    <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span><a href="https://www.ndfproject.my.id" target="_blank">www.ndfproject.my.id</a></span></li>
+                    <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>Kulon Progo, Yogyakarta</span></li>
                     <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>Bachelor</span></li>
-                    <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span>analyticgames@gmail.com</span></li>
+                    <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span><a href="mailto:nadhifauziladhim@gmail.com">nadhifauziladhim@gmail.com</a></span></li>
                   </ul>
                 </div>
               </div>
@@ -129,116 +126,124 @@
       </section><!-- End Facts Section -->
   
       <!-- ======= Skills Section ======= -->
-     <!-- Skills Section -->
-     <section id="skills" class="skills section-bg">
-      <div class="container">
-    
-        <div class="section-title" data-aos="fade-up" data-aos-delay="100">
-          <h2>Skills & Expertise</h2>
-          <p>My skills are organized by development fields, showcasing my focus on creating integrated solutions across different technology platforms.</p>
-        </div>
-    
-        <div class="row">
-    
-          <div class="col-12" data-aos="fade-up" data-aos-delay="200">
-            <h3 class="skills-category-title">Web Development</h3>
-            <hr class="skills-hr">
-            <div class="row">
-              <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
-                <div class="skill-box">
-                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" class="lazyload" alt="Laravel">
-                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/livewire/livewire-original.svg" class="lazyload" alt="Livewire">
+      <style>.skills{padding:60px 0}.section-title h2{font-size:32px;font-weight:700;margin-bottom:20px;padding-bottom:20px;position:relative;color:#333}.section-title p{margin-bottom:30px}.skills .swiper-slide{height:auto;text-align:center}.skills .skill-wrapper{background:#fff;padding:30px;border-radius:8px;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:transform .3s}.skills .skill-wrapper:hover{transform:translateY(-5px)}.skills .skill-wrapper img{height:40px;margin:0 5px 15px}.skills .skill-wrapper h4{font-size:16px;font-weight:700;margin:0 0 10px}.skills .skill-wrapper p{font-style:italic;color:#6c757d;font-size:14px;margin:0}.skills .swiper-pagination{position:static;margin-top:25px}.skills .swiper-pagination-bullet{width:12px;height:12px;background-color:#ddd;opacity:1}.skills .swiper-pagination-bullet-active{background-color:#007bff}.skills .skill-wrapper:has(img + img){flex-wrap:wrap;flex-direction:row;justify-content:center}.skills .skill-wrapper:has(img + img) img{margin-bottom:15px;margin-left:8px;margin-right:8px}.skills .skill-wrapper:has(img + img) h4,.skills .skill-wrapper:has(img + img) p{flex-basis:100%;text-align:center}</style>
+      <section id="skills" class="skills section-bg">
+        <div class="container">
+      
+          <div class="section-title" data-aos="fade-up">
+            <h2>Skills & Expertise</h2>
+            <p>My skills are organized by development fields, showcasing my focus on creating integrated solutions across different technology platforms.</p>
+          </div>
+      
+          <div class="swiper skills-swiper" data-aos="fade-up" data-aos-delay="100">
+            <div class="swiper-wrapper">
+              
+              <div class="swiper-slide">
+                <div class="skill-wrapper">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" class="lazyload" alt="Laravel">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/livewire/livewire-original.svg" class="lazyload" alt="Livewire">
                   <h4>Laravel & Livewire</h4>
                   <p>Advanced</p>
                 </div>
               </div>
-              <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
-                <div class="skill-box">
-                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg" class="lazyload" alt="VueJS">
-                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" class="lazyload" alt="React">
+              <div class="swiper-slide">
+                <div class="skill-wrapper">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg" class="lazyload" alt="VueJS">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" class="lazyload" alt="React">
                   <h4>Vue & React</h4>
                   <p>Intermediate</p>
                 </div>
               </div>
-              <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
-                <div class="skill-box">
-                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" class="lazyload" alt="Bootstrap">
-                   <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" class="lazyload" alt="Tailwind CSS">
+              <div class="swiper-slide">
+                <div class="skill-wrapper">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" class="lazyload" alt="Bootstrap">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" class="lazyload" alt="Tailwind CSS">
                   <h4>Bootstrap & Tailwind</h4>
                   <p>Advanced</p>
                 </div>
               </div>
-              <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
-                <div class="skill-box">
-                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" class="lazyload" alt="MySQL">
-                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" class="lazyload" alt="PostgreSQL">
+              <div class="swiper-slide">
+                <div class="skill-wrapper">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" class="lazyload" alt="MySQL">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" class="lazyload" alt="PostgreSQL">
                   <h4>MySQL & PostgreSQL</h4>
                   <p>Advanced</p>
                 </div>
               </div>
-            </div>
-          </div>
-    
-          <div class="col-12 mt-5" data-aos="fade-up" data-aos-delay="300">
-            <h3 class="skills-category-title">AI & Machine Learning</h3>
-            <hr class="skills-hr">
-            <div class="row">
-              <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
-                <div class="skill-box">
-                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="lazyload" alt="Python">
+      
+              <div class="swiper-slide">
+                <div class="skill-wrapper">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="lazyload" alt="Python">
                   <h4>Python</h4>
                   <p>Intermediate</p>
                 </div>
               </div>
-              <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
-                <div class="skill-box">
-                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg" class="lazyload" alt="TensorFlow">
+              <div class="swiper-slide">
+                <div class="skill-wrapper">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg" class="lazyload" alt="TensorFlow">
                   <h4>TensorFlow</h4>
                   <p>Intermediate</p>
                 </div>
               </div>
-               <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
-                <div class="skill-box">
-                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/opencv/opencv-original.svg" class="lazyload" alt="OpenCV">
-                  <h4>OpenCV</h4>
-                  <p>Intermediate</p>
-                </div>
-              </div>
-            </div>
-          </div>
-    
-          <div class="col-12 mt-5" data-aos="fade-up" data-aos-delay="400">
-            <h3 class="skills-category-title">IoT & Mobile Development</h3>
-            <hr class="skills-hr">
-            <div class="row">
-              <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
-                <div class="skill-box">
-                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg" class="lazyload" alt="Kotlin">
+              
+              <div class="swiper-slide">
+                <div class="skill-wrapper">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg" class="lazyload" alt="Kotlin">
                   <h4>Kotlin</h4>
                   <p>Intermediate</p>
                 </div>
               </div>
-              <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
-                <div class="skill-box">
-                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" class="lazyload" alt="C++">
+              <div class="swiper-slide">
+                <div class="skill-wrapper">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" class="lazyload" alt="C++">
                   <h4>C++</h4>
                   <p>Intermediate</p>
                 </div>
               </div>
-              <div class="col-lg-3 col-md-4 col-6 skill-card mt-4">
-                <div class="skill-box">
-                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg" class="lazyload" alt="Arduino">
+              <div class="swiper-slide">
+                <div class="skill-wrapper">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg" class="lazyload" alt="Arduino">
                   <h4>Arduino</h4>
                   <p>Advanced</p>
                 </div>
               </div>
+      
+              <div class="swiper-slide">
+                <div class="skill-wrapper">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" class="lazyload" alt="Docker">
+                  <h4>Docker</h4>
+                  <p>Intermediate</p>
+                </div>
+              </div>
+
+              <div class="swiper-slide">
+                <div class="skill-wrapper">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" class="lazyload" alt="Postman">
+                  <h4>Postman</h4>
+                  <p>Advanced</p>
+                </div>
+              </div>
+
+              <div class="swiper-slide">
+                <div class="skill-wrapper">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" class="lazyload" alt="Git">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" class="lazyload" alt="GitHub">
+                  <h4>Git & GitHub</h4>
+                  <p>Advanced</p>
+                </div>
+              </div>
+
+              <div class="swiper-slide">
+                <div class="skill-wrapper">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" class="lazyload" alt="Figma">
+                  <h4>Figma</h4>
+                  <p>Intermediate</p>
+                </div>
+              </div>
             </div>
           </div>
-    
         </div>
-      </div>
-    </section>
-    
+      </section>
     <style>
       .skills-category-title {
         font-size: 24px;
@@ -252,7 +257,7 @@
         border: 0;
         border-top: 2px solid #eef0f2;
       }
-      .skill-box img {
+      .skill-wrapper img {
         height: 40px; /* Menyeragamkan tinggi ikon */
         margin: 0 5px 15px 5px; /* Memberi jarak antar ikon */
       }
@@ -273,8 +278,8 @@
                 <p><em>An undergraduate student majoring in Computer Science at Universitas Amikom Yogyakarta, passionate about Information Technology (IT), web development, IoT, and software engineering. Experienced as a Lab Assistant, facilitating practical learning, assisting students with troubleshooting, and enhancing their understanding of technical concepts. Committed to continuous learning and innovation in the tech industy</em></p>
                 <ul>
                   <li>Kulon Progo, Yogyakarta, 55672</li>
-                  <li>(62) 85 727 785 062</li>
-                  <li>analyticgames@gmail.com</li>
+                  <li><a href="tel:+6285727785062">+62 8572 7785 062</a></li>
+                  <li><a href="mailto:nadhifauziladhim@gmail.com">nadhifauziladhim@gmail.com</a></li>
                 </ul>
               </div>
               <h3 class="resume-title">Education</h3>
@@ -285,7 +290,7 @@
                 <ul>
                   <li>GPA: 3.8/4.0</li>
                   <li>Gaining expertise in computer science principles, algorithms, and data structures.</li>
-                  <li>Serving as a Lab Assistant, guiding students in Algorithms and Programming, Advanced Programming, Microcontrollers, and Database Systems.</li>
+                  <li>Serving as a Asistant Lecturer, guiding students in Algorithms and Programming, Advanced Programming, Microcontrollers, Web Programming, and Database Systems.</li>
                 </ul>
               </div>
               <div class="resume-item">
@@ -301,6 +306,16 @@
             <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
               <h3 class="resume-title">Experience</h3>
               <div class="resume-item">
+                <h4>Assistant Lecturer</h4>
+                <h5>2023 - 2025</h5>
+                <p><em>Universitas Amikom Yogyakarta | Forum Asisten</em></p>
+                <ul>
+                  <li>Lead the instruction and guidance on programming languages, focusing on Algorithms and Programming, Advanced Programming, Microcontrollers, Web Programming and Database Systems.</li>
+                  <li>Crafted and delivered engaging curriculum content, tailored to these subjects, to support student learning and skill development.</li>
+                  <li>Provided hands-on assistance, supervised project work, and assessed students' progress to foster a collaborative and interactive learning environment.</li>
+                </ul>
+              </div>
+              <div class="resume-item">
                 <h4>SAMSUNG INNOVATION CAMPUS batch 5</h4>
                 <h5>2024</h5>
                 <p><em>Samsung Innovation Campus Batch 5 AI & IoT Stage 1 - 3</em></p>
@@ -309,19 +324,9 @@
                 </ul>
               </div>
               <div class="resume-item">
-                <h4>Lab Assistant</h4>
-                <h5>2023 - 2025</h5>
-                <p><em>Universitas Amikom Yogyakarta</em></p>
-                <ul>
-                  <li>Lead the instruction and guidance on programming languages, focusing on Algorithms and Programming, Advanced Programming, Microcontrollers, and Database Systems.</li>
-                  <li>Crafted and delivered engaging curriculum content, tailored to these subjects, to support student learning and skill development.</li>
-                  <li>Provided hands-on assistance, supervised project work, and assessed students' progress to foster a collaborative and interactive learning environment.</li>
-                </ul>
-              </div>
-              <div class="resume-item">
                 <h4>FLS2N (National Art & Culture Competition)</h4>
                 <h5>2020-2021</h5>
-                <p><em>SMA Negeri 1 Kalibawang</em></p>
+                <p><em>Ministry of Education and Culture Republic of Indonesia</em></p>
                 <ul>
                   <li>Achieved <strong>1st place</strong> at the provincial level and <strong>8th place</strong> at the national level in the film category.
 
@@ -583,8 +588,7 @@
                       </div>
                     </div>
                 </div>
-                <div class="swiper-pagination"></div>
-               
+                <div class="swiper-pagination" style="bottom:-20px; position:relative;"></div>
             </div>
         </div>
     </section>
@@ -604,7 +608,7 @@
               </div>
               <div class="project-content">
                 <div class="d-flex align-items-center justify-content-center mb-2">
-                  <img data-src="img/member/nadhif.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="z-index: 2;">
+                  <img data-src="img/member/681a28fc2af5d.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="z-index: 2;">
                 </div>
                 <h4>Kostify: Cari Kost dengan Mudah</h4>
                 <p>Platform digital yang dirancang untuk menyederhanakan proses pencarian dan pengelolaan indekos, membantu pengguna menemukan hunian ideal dengan cepat.</p>
@@ -631,7 +635,7 @@
               </div>
               <div class="project-content">
                 <div class="d-flex align-items-center justify-content-center mb-2">
-                  <img data-src="img/member/nadhif.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="z-index: 2;">
+                  <img data-src="img/member/681a28fc2af5d.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="z-index: 2;">
                 </div>
                 <h4>Linksy: Smart Link Management</h4>
                 <p>Solusi manajemen tautan cerdas untuk memperpendek, mengkustomisasi, dan menganalisis performa URL, ideal untuk kampanye pemasaran dan optimasi media sosial.</p>
@@ -660,7 +664,7 @@
               </div>
               <div class="project-content">
                 <div class="d-flex align-items-center justify-content-center mb-2">
-                  <img data-src="img/member/nadhif.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="z-index: 2;">
+                  <img data-src="img/member/681a28fc2af5d.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="z-index: 2;">
                   <img data-src="img/member/arip.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
                   <img data-src="img/member/ferdi.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
                   <img data-src="img/member/julian.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="margin-left: -5px; z-index: 1;">
@@ -686,10 +690,10 @@
               </div>
               <div class="project-content">
                 <div class="d-flex align-items-center justify-content-center mb-2">
-                  <img data-src="img/member/nadhif.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="z-index: 2;">
+                  <img data-src="img/member/681a28fc2af5d.png" class="rounded-circle lazyload" width="20" height="20" alt="Developer" style="z-index: 2;">
                 </div>
-                <h4>FocusEye</h4>
-                <p>Aplikasi cerdas yang memanfaatkan AI untuk menganalisis tingkat fokus siswa di kelas, memberikan data objektif untuk mendukung metode pengajaran yang lebih efektif.</p>
+                <h4>FocusEye: Pantau Fokus, Raih Prestasi</h4>
+                <p>Aplikasi cerdas berbasis AI untuk memantau tingkat fokus secara real-time dalam berbagai situasi, mulai dari belajar, bekerja, hingga aktivitas sehari-hari.</p>
                 <div class="project-tech-stack my-3">
                   <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg" class="lazyload" title="TensorFlow" alt="TensorFlow Logo" />
                   <img data-src="{{ asset('img/tech/mediapipelogo.png') }}" class="lazyload" title="MediaPipe" alt="MediaPipe Logo" width="40" />
@@ -697,15 +701,18 @@
                   <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg" class="lazyload" title="SQLite" alt="SQLite Logo" />
                 </div>
                 <div class="project-links">
-                  <a href="https://blog.ndfproject.my.id/2025/04/07/classroom-attention-analytics-system-meningkatkan-kualitas-pembelajaran/" class="btn btn-sm btn-outline-dark rounded-pill">
-                    <i class="bi bi-file-earmark-code"></i> Documentation
+                  <a href="https://github.com/NadhifFauzilAdhim/FocusEyeApp.git" class="btn btn-sm btn-outline-dark rounded-pill">
+                    <i class="bi bi-github"></i> Source Code
+                  </a>
+                  <a href="https://linksy.site/focuseye_apps_download" class="btn btn-sm btn-outline-primary rounded-pill">
+                    <i class="bi bi-eye"></i> Apps
                   </a>
                 </div>
               </div>
             </div>
-    
           </div>
-          <div class="swiper-pagination"></div>
+          <style></style>
+          <div class="swiper-pagination" style="bottom:-20px; position:relative;"></div>
         </div>
       </div>
     </section>
@@ -787,9 +794,7 @@
                           </div>
                           @endforeach
                       </div>
-                      <!-- Navigation dan Pagination -->
                       <div class="swiper-pagination"></div>
-                    
                   </div>
               @else
                   <div class="text-center w-100">
@@ -811,7 +816,7 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide member-card">
             <div class="testimonial-item" data-aos="fade-up">
-              <img data-src="img/member/nadhif.png" class="testimonial-img lazyload" alt="">
+              <img data-src="img/member/681a28fc2af5d.png" class="testimonial-img lazyload" alt="">
               <h3>Nadhif Fauzil Adhim</h3>
               <h4>Backend Developer</h4>
             </div>
@@ -878,13 +883,13 @@
                 <div class="email">
                   <i class="bi bi-envelope"></i>
                   <h4>Email:</h4>
-                  <p>analyticgames@gmail.com</p>
+                  <p><a href="mailto:nadhifauziladhim@gmail.com">nadhifauziladhim@gmail.com</a></p>
                 </div>
   
                 <div class="phone">
                   <i class="bi bi-phone"></i>
                   <h4>Call:</h4>
-                  <p>+62 8572 7785 062</p>
+                  <p><a href="tel:+6285727785062">+62 8572 7785 062"></a></p>
                 </div>
   
                 <iframe src="https://maps.google.com/maps?q=kalibawang&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
@@ -936,4 +941,5 @@
             toast.show();
         });
     </script>
+    
 </x-layout>

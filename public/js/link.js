@@ -433,7 +433,7 @@
         setupTitleUpdater();
         setupShareModal();
         setupCategoryShared();
-        setupDeleteCategoryForms(); // <--- MEMANGGIL FUNGSI BARU DI SINI
+        setupDeleteCategoryForms();
         
         if(typeof ApexCharts !== 'undefined' && document.querySelector('#traffic-overview')) {
             initChart(window.visitDataGlobal || { thisWeek: [], lastWeek: [] });

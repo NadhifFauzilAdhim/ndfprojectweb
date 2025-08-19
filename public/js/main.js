@@ -320,6 +320,36 @@ var blogSwiper = new Swiper(".blogSwiper", {
   },
 });
 
+  document.addEventListener('DOMContentLoaded', function () {
+    new Swiper('.skills-swiper', {
+      speed: 600,
+      loop: true,
+      autoplay: {
+        delay: 2500, 
+        disableOnInteraction: false 
+      },
+      slidesPerView: 'auto',
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      breakpoints: {
+        320: {
+          slidesPerView: 2,
+          spaceBetween: 20
+        },
+        768: {
+          slidesPerView: 4,
+          spaceBetween: 30
+        },
+        992: {
+          slidesPerView: 5,
+          spaceBetween: 40
+        }
+      }
+    });
+  });
+
   /**
    * Animation on scroll
    */

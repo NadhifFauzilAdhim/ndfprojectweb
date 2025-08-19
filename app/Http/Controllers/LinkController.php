@@ -257,15 +257,6 @@ class LinkController extends Controller
     }
     
     /**
-     * Get visit count by status.
-     */
-    private function getVisitCount($linkId, $status)
-    {
-        return Linkvisithistory::where('link_id', $linkId)
-            ->where('status', $status)
-            ->count();
-    }
-    /**
      * Authorize link access.
      */
     private function authorizeLink(Link $link)
