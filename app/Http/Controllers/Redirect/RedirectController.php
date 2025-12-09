@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Redirect;
+use App\Http\Controllers\Controller;
 use App\Models\Link;
 use App\Models\Linkvisithistory;
 use App\Models\BlockedIp; 

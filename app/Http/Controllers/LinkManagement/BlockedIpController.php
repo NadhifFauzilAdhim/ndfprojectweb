@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\LinkManagement;
+use App\Http\Controllers\Controller;
 use App\Models\BlockedIp;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;

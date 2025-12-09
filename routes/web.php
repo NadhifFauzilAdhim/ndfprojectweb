@@ -1,24 +1,24 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\UserManagement\AdminUserController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\AdminCategoryController;
-use App\Http\Controllers\AdminPostController;
-use App\Http\Controllers\BlockedIpController;
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Post\AdminCategoryController;
+use App\Http\Controllers\Post\AdminPostController;
+use App\Http\Controllers\LinkManagement\BlockedIpController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\DashboardPostController;
-use App\Http\Controllers\ForgotPasswordController;
-use App\Http\Controllers\GauthController;
-use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\LinkController;
-use App\Http\Controllers\RedirectController;
+use App\Http\Controllers\Post\DashboardPostController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\GauthController;
+use App\Http\Controllers\UserManagement\UserProfileController;
+use App\Http\Controllers\LinkManagement\LinkController;
+use App\Http\Controllers\Redirect\RedirectController;
 use App\Http\Controllers\TodoController;
-use App\Http\Controllers\TrackingController;
-use App\Http\Controllers\LinkCategoryController;
+use App\Http\Controllers\Redirect\TrackingController;
+use App\Http\Controllers\LinkManagement\LinkCategoryController;
 use App\Http\Controllers\CleanupController;
 
 // Public routes 

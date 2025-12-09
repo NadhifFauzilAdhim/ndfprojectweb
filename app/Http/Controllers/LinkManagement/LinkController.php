@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\LinkManagement;
 
+use App\Http\Controllers\Controller;
 use App\Models\Link;
 use App\Models\User;
 use App\Models\BlockedIp;

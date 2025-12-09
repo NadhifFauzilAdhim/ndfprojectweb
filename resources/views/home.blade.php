@@ -14,10 +14,14 @@
   </div>
      <!-- ======= About Section ======= -->
      <section id="hero" class="d-flex flex-column justify-content-center align-items-center position-relative text-center vh-100">
+  
+      <div class="hero-overlay"></div>
+    
       <div class="hero-container" data-aos="fade-in">
         <h1>Nadhif Fauzil Adhim</h1>
-        <p>I'm <span class="typed" data-typed-items="Backend Dev, Web Dev, Machine Learn Enthusiast, Assistant Lecturer", "></span></p>
-        <div class="d-flex flex-wrap justify-content-center gap-3 mt-3">
+        <p>I'm <span class="typed fw-bold" data-typed-items="Backend Dev, Web Dev, Machine Learning Enthusiast, Assistant Lecturer"></span></p>
+        
+        <div class="d-flex flex-wrap justify-content-center gap-3 mt-3" data-aos="fade-up" data-aos-delay="200">
           <a class="btn btn-light rounded-pill py-2 px-4 d-flex align-items-center justify-content-center" target="_blank" href="https://www.linkedin.com/in/nadhif-fauzil-adhim-99a330294">
             <i class="bi bi-linkedin"></i> <span class="d-none d-md-inline ms-2 name-text">LinkedIn</span>
           </a>
@@ -39,12 +43,18 @@
           </div>
         </div>
       </div>
+      
       <div class="video-wrap position-absolute w-100 h-100 top-0 start-0 z-n1">
         <video autoplay loop muted class="custom-video w-100 h-100 object-fit-cover" poster="{{ asset('img/poster.png') }}">
           <source src="{{ asset('vid/bannervid.mp4') }}" type="video/mp4">
           Your browser does not support the video tag.
         </video>
       </div>
+    
+      <div class="scroll-down">
+        <a href="#about"><i class="bi bi-chevron-down"></i></a>
+      </div>
+    
     </section>
      <section id="about" class="about">
         <div class="container py-auto">
@@ -65,7 +75,7 @@
             <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
               <h3>Web Developer &amp; Machine Learning Enthusiast</h3>
               <p class="fst-italic">
-                As a Web & IoT Developer, I am passionate about creating engaging and user-friendly digital experiences
+                I am passionate about creating engaging and user-friendly digital experiences
               </p>
               <div class="row">
                 <div class="col-lg-6">
@@ -268,53 +278,25 @@
           <div class="section-title" data-aos="fade-up" data-aos-delay="200">
             <h2>Resume</h2>
             <p>
-              Discover my academic journey, professional experiences, and key accomplishments that define my expertise and passion in the field of technology.</p>
+              Discover my academic journey, professional experiences, and key accomplishments that define my expertise and passion in the field of technology.
+            </p>
           </div>
           <div class="row">
+            
             <div class="col-lg-6" data-aos="fade-up">
-              <h3 class="resume-title">Sumary</h3>
+              
+              <h3 class="resume-title">Summary</h3>
               <div class="resume-item pb-0">
                 <h4>Nadhif Fauzil Adhim</h4>
-                <p><em>An undergraduate student majoring in Computer Science at Universitas Amikom Yogyakarta, passionate about Information Technology (IT), web development, IoT, and software engineering. Experienced as a Lab Assistant, facilitating practical learning, assisting students with troubleshooting, and enhancing their understanding of technical concepts. Committed to continuous learning and innovation in the tech industy</em></p>
+                <p><em>An undergraduate student majoring in Computer Science at Universitas Amikom Yogyakarta, passionate about Information Technology (IT), web development, IoT, and machine learning. Experienced as a Lab Assistant, facilitating practical learning, assisting students with troubleshooting, and enhancing their understanding of technical concepts. Committed to continuous learning and innovation in the tech industy</em></p>
                 <ul>
                   <li>Kulon Progo, Yogyakarta, 55672</li>
                   <li><a href="tel:+6285727785062">+62 8572 7785 062</a></li>
                   <li><a href="mailto:nadhifauziladhim@gmail.com">nadhifauziladhim@gmail.com</a></li>
                 </ul>
               </div>
-              <h3 class="resume-title">Education</h3>
-              <div class="resume-item">
-                <h4>Bachelor of informatics</h4>
-                <h5>2022 </h5>
-                <p><em>Universitas Amikom Yogyakarta</em></p>
-                <ul>
-                  <li>GPA: 3.8/4.0</li>
-                  <li>Gaining expertise in computer science principles, algorithms, and data structures.</li>
-                  <li>Serving as a Asistant Lecturer, guiding students in Algorithms and Programming, Advanced Programming, Microcontrollers, Web Programming, and Database Systems.</li>
-                </ul>
-              </div>
-              <div class="resume-item">
-                <h4>STUDENT HIGH SCHOOL</h4>
-                <h5>2019 - 2022</h5>
-                <p><em>SMA Negeri 1 Kalibawang</em></p>
-                <ul>
-                  <li>Engaged in various academic subjects and extracurricular activities.</li>
-                  <li>Actively participated in student organizations, developing leadership and teamwork skills.</li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-              <h3 class="resume-title">Experience</h3>
-              <div class="resume-item">
-                <h4>Assistant Lecturer</h4>
-                <h5>2023 - 2025</h5>
-                <p><em>Universitas Amikom Yogyakarta | Forum Asisten</em></p>
-                <ul>
-                  <li>Lead the instruction and guidance on programming languages, focusing on Algorithms and Programming, Advanced Programming, Microcontrollers, Web Programming and Database Systems.</li>
-                  <li>Crafted and delivered engaging curriculum content, tailored to these subjects, to support student learning and skill development.</li>
-                  <li>Provided hands-on assistance, supervised project work, and assessed students' progress to foster a collaborative and interactive learning environment.</li>
-                </ul>
-              </div>
+      
+              <h3 class="resume-title">Achievements & Organizational</h3>
               <div class="resume-item">
                 <h4>SAMSUNG INNOVATION CAMPUS batch 5</h4>
                 <h5>2024</h5>
@@ -328,11 +310,9 @@
                 <h5>2020-2021</h5>
                 <p><em>Ministry of Education and Culture Republic of Indonesia</em></p>
                 <ul>
-                  <li>Achieved <strong>1st place</strong> at the provincial level and <strong>8th place</strong> at the national level in the film category.
-
-                    Worked collaboratively in a team to create a short film, handling scriptwriting, directing, and editing.
-                    
-                    Developed strong storytelling and multimedia production skills through the competition.</li>
+                  <li>Achieved <strong>1st place</strong> at the provincial level and <strong>8th place</strong> at the national level in the film category.</li>
+                  <li>Worked collaboratively in a team to create a short film, handling scriptwriting, directing, and editing.</li>
+                  <li>Developed strong storytelling and multimedia production skills through the competition.</li>
                 </ul>
               </div>
               <div class="resume-item">
@@ -343,8 +323,56 @@
                   <li>Developing and implementing various marketing programs, including logos, brochures, infographics, and presentations, to enhance communication between OSIS and the student .</li>
                 </ul>
               </div>
+            </div>
+            
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+              
+              <h3 class="resume-title">Education</h3>
+              <div class="resume-item">
+                <h4>Bachelor of Informatics</h4>
+                <h5>2022 </h5>
+                <p><em>Universitas Amikom Yogyakarta</em></p>
+                <ul>
+                  <li>GPA: 3.8/4.0</li>
+                  <li>Gaining expertise in computer science principles, algorithms, and data structures.</li>
+                  <li>Serving as an Assistant Lecturer, guiding students in Algorithms and Programming, Advanced Programming, Microcontrollers, Web Programming, and Database Systems.</li>
+                </ul>
+              </div>
+              <div class="resume-item">
+                <h4>STUDENT HIGH SCHOOL</h4>
+                <h5>2019 - 2022</h5>
+                <p><em>SMA Negeri 1 Kalibawang</em></p>
+                <ul>
+                  <li>Engaged in various academic subjects and extracurricular activities.</li>
+                  <li>Actively participated in student organizations, developing leadership and teamwork skills.</li>
+                </ul>
+              </div>
+              
+              <h3 class="resume-title">Professional Experience</h3>
+              
+              <div class="resume-item">
+                <h4>Technical Support</h4>
+                <h5>2025</h5>
+                <p><em>Universitas Amikom Yogyakarta | Unit Pelayanan Teknis</em></p>
+                <ul>
+                  <li>Monitored and maintained the operational stability of university systems, hardware, and network infrastructure.</li>
+                  <li>Managed and troubleshot hardware and software to ensure smooth daily operations.</li>
+                  <li>Provided prompt technical support to university staff and students, resolving IT-related issues effectively to minimize downtime.</li>
+                </ul>
+              </div>
+              <div class="resume-item">
+                <h4>Assistant Lecturer</h4>
+                <h5>2023 - 2025</h5>
+                <p><em>Universitas Amikom Yogyakarta | Forum Asisten</em></p>
+                <ul>
+                  <li>Lead the instruction and guidance on programming languages, focusing on Algorithms and Programming, Advanced Programming, Microcontrollers, Web Programming and Database Systems.</li>
+                  <li>Crafted and delivered engaging curriculum content, tailored to these subjects, to support student learning and skill development.</li>
+                  <li>Provided hands-on assistance, supervised project work, and assessed students' progress to foster a collaborative and interactive learning environment.</li>
+                </ul>
+              </div>
               
             </div>
+            
           </div>
         </div>
       </section>
@@ -354,239 +382,315 @@
                 <h2>Certificate</h2>
                 <p>These certificates reflect a commitment to continuous learning</p>
             </div>
-            <!-- Slider main container -->
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
-                    <!-- Slides -->
+    
                     <div class="swiper-slide">
                         <div class="portfolio-item Web-dev featured">
-                            <div class="portfolio-wrap">
-                                <img data-src="certificate/SertifikatAMCC.jpeg" class="img-fluid lazyload" alt="">
+                            <div class="portfolio-wrap overflow-hidden">
+                                <img data-src="certificate/SertifikatAMCC.jpeg" class="img-fluid lazyload" alt="Sertifikat Keanggotaan AMCC">
                                 <div class="portfolio-links">
                                     <a href="https://amcc.or.id" target="_blank">
                                         <i class="bi bi-check2-square"></i>
                                         <h6>Check Credential</h6>
                                     </a>
                                 </div>
+                                <div class="p-3 bg-white text-center">
+                                    <h4 class="fs-6 fw-semibold mb-1">Web Development Bootcamp</h4>
+                                    <p class="small text-body-secondary mb-0">AMCC</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Contoh slide kedua -->
+    
                     <div class="swiper-slide">
                         <div class="portfolio-item featured">
-                            <div class="portfolio-wrap">
-                                <img data-src="certificate/SertifikatAsisten.jpeg" class="img-fluid lazyload" alt="">
+                            <div class="portfolio-wrap  overflow-hidden">
+                                <img data-src="certificate/SertifikatAsisten.jpeg" class="img-fluid lazyload" alt="Sertifikat Asisten Praktikum">
                                 <div class="portfolio-links">
                                     <a href="https://forumasisten.or.id/sertifikat/4871198960f1f156a5/show" target="_blank">
                                         <i class="bi bi-check2-square"></i>
                                         <h6>Check Credential</h6>
                                     </a>
                                 </div>
+                                <div class="p-3 bg-white text-center">
+                                    <h4 class="fs-6 fw-semibold mb-1">Asisten Praktikum Algoritma & Pemrograman</h4>
+                                    <p class="small text-body-secondary mb-0">Forum Asisten</p>
+                                </div>
                             </div>
                         </div>
                     </div>
+    
                     <div class="swiper-slide">
-                      <div class="portfolio-item featured">
-                        <div class="portfolio-wrap">
-                          <img data-src="certificate/SertifikatAsisten.jpeg" class="img-fluid lazyload" alt="">
-                          <div class="portfolio-links">
-                            <a  href="https://forumasisten.or.id/sertifikat/4871198960f1f156a5/show" target="_blank"><i class="bi bi-check2-square"> </i>
-                              <h6>Check Credential</h6>
-                            </a>
-                          </div>
+                        <div class="portfolio-item featured">
+                            <div class="portfolio-wrap  overflow-hidden">
+                                <img data-src="certificate/SertifikatMikro.png" class="img-fluid lazyload" alt="Sertifikat Asisten Mikrokontroler">
+                                <div class="portfolio-links">
+                                    <a href="https://forumasisten.or.id/sertifikat/5601646117cee6daa5d/show" target="_blank">
+                                        <i class="bi bi-check2-square"></i>
+                                        <h6>Check Credential</h6>
+                                    </a>
+                                </div>
+                                <div class="p-3 bg-white text-center">
+                                    <h4 class="fs-6 fw-semibold mb-1">Asisten Praktikum Mikrokontroler</h4>
+                                    <p class="small text-body-secondary mb-0">Forum Asisten</p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
+    
                     <div class="swiper-slide">
-                      <div class="portfolio-item featured">
-                        <div class="portfolio-wrap">
-                          <img data-src="certificate/SertifikatMikro.png" class="img-fluid lazyload" alt="">
-                          <div class="portfolio-links">
-                            <a  href="https://forumasisten.or.id/sertifikat/5601646117cee6daa5d/show" target="_blank"><i class="bi bi-check2-square"> </i>
-                              <h6>Check Credential</h6>
-                            </a>
-                          </div>
+                        <div class="portfolio-item featured">
+                            <div class="portfolio-wrap  overflow-hidden">
+                                <img data-src="certificate/SertifikatSBD.png" class="img-fluid lazyload" alt="Sertifikat Asisten Sistem Basis Data">
+                                <div class="portfolio-links">
+                                    <a href="https://forumasisten.or.id/sertifikat/707151011e6d5f4f3c8/show" target="_blank">
+                                        <i class="bi bi-check2-square"></i>
+                                        <h6>Check Credential</h6>
+                                    </a>
+                                </div>
+                                <div class="p-3 bg-white text-center">
+                                    <h4 class="fs-6 fw-semibold mb-1">Asisten Praktikum Sistem Basis Data</h4>
+                                    <p class="small text-body-secondary mb-0">Forum Asisten</p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
+    
                     <div class="swiper-slide">
-                      <div class="portfolio-item featured">
-                        <div class="portfolio-wrap">
-                          <img data-src="certificate/SertifikatSBD.png" class="img-fluid lazyload" alt="">
-                          <div class="portfolio-links">
-                            <a  href="https://forumasisten.or.id/sertifikat/707151011e6d5f4f3c8/show" target="_blank"><i class="bi bi-check2-square"> </i>
-                              <h6>Check Credential</h6>
-                            </a>
-                          </div>
+                        <div class="portfolio-item featured IoT">
+                            <div class="portfolio-wrap  overflow-hidden">
+                                <img data-src="certificate/SICStage1.png" class="img-fluid lazyload" alt="Sertifikat Shell Idea Challenge Stage 1">
+                                <div class="portfolio-links">
+                                    <a href="#" target="_blank">
+                                        <i class="bi bi-check2-square"></i>
+                                        <h6>Check Credential</h6>
+                                    </a>
+                                </div>
+                                <div class="p-3 bg-white text-center">
+                                    <h4 class="fs-6 fw-semibold mb-1">Samsung Innovation Campus Batch 5 AI & IoT Stage 1 - 3</h4>
+                                    <p class="small text-body-secondary mb-0">Samsung Indonesia</p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
+    
                     <div class="swiper-slide">
-                      <div class="portfolio-item featured IoT">
-                        <div class="portfolio-wrap">
-                          <img data-src="certificate/SICStage1.png" class="img-fluid lazyload" alt="">
-                          <div class="portfolio-links">
-                            <a href=" " target="_blank"><i class="bi bi-check2-square"> </i>
-                              <h6>Check Credential</h6>
-                            </a>
-                          </div>
+                        <div class="portfolio-item featured IoT">
+                            <div class="portfolio-wrap  overflow-hidden">
+                                <img data-src="certificate/SICStage2.png" class="img-fluid lazyload" alt="Sertifikat Shell Idea Challenge Stage 2">
+                                <div class="portfolio-links">
+                                    <a href="#" target="_blank">
+                                        <i class="bi bi-check2-square"></i>
+                                        <h6>Check Credential</h6>
+                                    </a>
+                                </div>
+                                <div class="p-3 bg-white text-center">
+                                    <h4 class="fs-6 fw-semibold mb-1">Samsung Innovation Campus Batch 5 AI & IoT Stage 2 - 3</h4>
+                                    <p class="small text-body-secondary mb-0">Samsung Indonesia</p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
+    
                     <div class="swiper-slide">
-                      <div class="portfolio-item featured IoT">
-                        <div class="portfolio-wrap">
-                          <img data-src="certificate/SICStage2.png" class="img-fluid lazyload" alt="">
-                          <div class="portfolio-links">
-                            <a href=" " target="_blank"><i class="bi bi-check2-square"> </i>
-                              <h6>Check Credential</h6>
-                            </a>
-                          </div>
+                        <div class="portfolio-item featured IoT">
+                            <div class="portfolio-wrap  overflow-hidden">
+                                <img data-src="certificate/SICStage3.png" class="img-fluid lazyload" alt="Sertifikat Shell Idea Challenge Stage 3">
+                                <div class="portfolio-links">
+                                    <a href="#" target="_blank">
+                                        <i class="bi bi-check2-square"></i>
+                                        <h6>Check Credential</h6>
+                                    </a>
+                                </div>
+                                <div class="p-3 bg-white text-center">
+                                    <h4 class="fs-6 fw-semibold mb-1">Samsung Innovation Campus Batch 5 AI & IoT Stage 3</h4>
+                                    <p class="small text-body-secondary mb-0">Samsung Indonesia</p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
+    
                     <div class="swiper-slide">
-                      <div class="portfolio-item featured IoT">
-                        <div class="portfolio-wrap">
-                          <img data-src="certificate/SICStage3.png" class="img-fluid lazyload" alt="">
-                          <div class="portfolio-links">
-                            <a href=" " target="_blank"><i class="bi bi-check2-square"> </i>
-                              <h6>Check Credential</h6>
-                            </a>
-                          </div>
+                        <div class="portfolio-item">
+                            <div class="portfolio-wrap  overflow-hidden">
+                                <img data-src="certificate/SertifikatPythonAlgorithm.png" class="img-fluid lazyload" alt="Sertifikat Python & Algoritma">
+                                <div class="portfolio-links">
+                                    <a href="https://badgr.com/public/assertions/-5JsF-_9TjC-ITtVvv_8rg?identity__email=nadya15a3@gmail.com" target="_blank">
+                                        <i class="bi bi-check2-square"></i>
+                                        <h6>Check Credential</h6>
+                                    </a>
+                                </div>
+                                <div class="p-3 bg-white text-center">
+                                    <h4 class="fs-6 fw-semibold mb-1">Algorithm & Data Structure</h4>
+                                    <p class="small text-body-secondary mb-0">Skillvul</p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
+    
                     <div class="swiper-slide">
-                      <div class="portfolio-item">
-                        <div class="portfolio-wrap">
-                          <img data-src="certificate/SertifikatPythonAlgorithm.png" class="img-fluid lazyload" alt="">
-                          <div class="portfolio-links">
-                            <a href="https://badgr.com/public/assertions/-5JsF-_9TjC-ITtVvv_8rg?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
-                              <h6>Check Credential</h6>
-                            </a>
-                          </div>
+                        <div class="portfolio-item IoT">
+                            <div class="portfolio-wrap  overflow-hidden">
+                                <img data-src="certificate/SertifikatPythonDasar.png" class="img-fluid lazyload" alt="Sertifikat Python Dasar">
+                                <div class="portfolio-links">
+                                    <a href="https://badgr.com/public/assertions/fhm-f9N4RkWAtFsj1h9w7w?identity__email=nadya15a3@gmail.com" target="_blank">
+                                        <i class="bi bi-check2-square"></i>
+                                        <h6>Check Credential</h6>
+                                    </a>
+                                </div>
+                                <div class="p-3 bg-white text-center">
+                                    <h4 class="fs-6 fw-semibold mb-1">Dasar Pemrograman Python</h4>
+                                    <p class="small text-body-secondary mb-0">Skillvul</p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
-
+    
                     <div class="swiper-slide">
-
-                      <div class="portfolio-item IoT ">
-                        <div class="portfolio-wrap">
-                          <img data-src="certificate/SertifikatPythonDasar.png" class="img-fluid lazyload" alt="">
-                          <div class="portfolio-links">
-                            <a href="https://badgr.com/public/assertions/fhm-f9N4RkWAtFsj1h9w7w?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
-                              <h6>Check Credential</h6>
-                            </a>
-                          </div>
+                        <div class="portfolio-item IoT">
+                            <div class="portfolio-wrap  overflow-hidden">
+                                <img data-src="certificate/SertifikatPythonLanjut.png" class="img-fluid lazyload" alt="Sertifikat Python Lanjutan">
+                                <div class="portfolio-links">
+                                    <a href="https://badgr.com/public/assertions/M6e1x0CoRFK9JkCoJecclw?identity__email=nadya15a3@gmail.com" target="_blank">
+                                        <i class="bi bi-check2-square"></i>
+                                        <h6>Check Credential</h6>
+                                    </a>
+                                </div>
+                                <div class="p-3 bg-white text-center">
+                                    <h4 class="fs-6 fw-semibold mb-1">Pemrograman Python Lanjutan</h4>
+                                    <p class="small text-body-secondary mb-0">Skillvul</p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
+    
                     <div class="swiper-slide">
-
-                      <div class="portfolio-item IoT ">
-                        <div class="portfolio-wrap">
-                          <img data-src="certificate/SertifikatPythonLanjut.png" class="img-fluid lazyload" alt="">
-                          <div class="portfolio-links">
-                            <a href="https://badgr.com/public/assertions/M6e1x0CoRFK9JkCoJecclw?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
-                              <h6>Check Credential</h6>
-                            </a>
-                          </div>
+                        <div class="portfolio-item IoT">
+                            <div class="portfolio-wrap  overflow-hidden">
+                                <img data-src="certificate/SertifikatIoT.png" class="img-fluid lazyload" alt="Sertifikat Pengenalan IoT">
+                                <div class="portfolio-links">
+                                    <a href="https://badgr.com/public/assertions/LK1xozEMTHSsqSI38ch93A?identity__email=nadya15a3@gmail.com" target="_blank">
+                                        <i class="bi bi-check2-square"></i>
+                                        <h6>Check Credential</h6>
+                                    </a>
+                                </div>
+                                <div class="p-3 bg-white text-center">
+                                    <h4 class="fs-6 fw-semibold mb-1">Pengenalan Internet of Things</h4>
+                                    <p class="small text-body-secondary mb-0">Skillvul</p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
+    
                     <div class="swiper-slide">
-
-                      <div class="portfolio-item IoT ">
-                        <div class="portfolio-wrap">
-                          <img data-src="certificate/SertifikatIoT.png" class="img-fluid lazyload" alt="">
-                          <div class="portfolio-links">
-                            <a href="https://badgr.com/public/assertions/LK1xozEMTHSsqSI38ch93A?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
-                              <h6>Check Credential</h6>
-                            </a>
-                          </div>
+                        <div class="portfolio-item IoT">
+                            <div class="portfolio-wrap  overflow-hidden">
+                                <img data-src="certificate/SertifikatIoTFundamental.png" class="img-fluid lazyload" alt="Sertifikat IoT Fundamental">
+                                <div class="portfolio-links">
+                                    <a href="https://badgr.com/public/assertions/LK1xozEMTHSsqSI38ch93A?identity__email=nadya15a3@gmail.com" target="_blank">
+                                        <i class="bi bi-check2-square"></i>
+                                        <h6>Check Credential</h6>
+                                    </a>
+                                </div>
+                                <div class="p-3 bg-white text-center">
+                                    <h4 class="fs-6 fw-semibold mb-1">Fundamental Internet of Things</h4>
+                                    <p class="small text-body-secondary mb-0">Skillvul</p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
+    
                     <div class="swiper-slide">
-
-                      <div class="portfolio-item IoT ">
-                        <div class="portfolio-wrap">
-                          <img data-src="certificate/SertifikatIoTFundamental.png" class="img-fluid lazyload" alt="">
-                          <div class="portfolio-links">
-                            <a href="https://badgr.com/public/assertions/LK1xozEMTHSsqSI38ch93A?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
-                              <h6>Check Credential</h6>
-                            </a>
-                          </div>
+                        <div class="portfolio-item IoT">
+                            <div class="portfolio-wrap  overflow-hidden">
+                                <img data-src="certificate/SertifikatIoTSoftware.png" class="img-fluid lazyload" alt="Sertifikat Perangkat Lunak IoT">
+                                <div class="portfolio-links">
+                                    <a href="https://badgr.com/public/assertions/z_YkmXG6RPuXybWMOUgUJw?identity__email=nadya15a3@gmail.com" target="_blank">
+                                        <i class="bi bi-check2-square"></i>
+                                        <h6>Check Credential</h6>
+                                    </a>
+                                </div>
+                                <div class="p-3 bg-white text-center">
+                                    <h4 class="fs-6 fw-semibold mb-1">Perangkat Lunak IoT</h4>
+                                    <p class="small text-body-secondary mb-0">Skillvul</p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
+                    
                     <div class="swiper-slide">
-
-                      <div class="portfolio-item IoT ">
-                        <div class="portfolio-wrap">
-                          <img data-src="certificate/SertifikatIoTSoftware.png" class="img-fluid lazyload" alt="">
-                          <div class="portfolio-links">
-                            <a href="https://badgr.com/public/assertions/z_YkmXG6RPuXybWMOUgUJw?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
-                              <h6>Check Credential</h6>
-                            </a>
-                          </div>
+                        <div class="portfolio-item Web-dev">
+                            <div class="portfolio-wrap  overflow-hidden">
+                                <img data-src="certificate/SertifikatFrontEnd.png" class="img-fluid lazyload" alt="Sertifikat Belajar Membuat Front-End Web untuk Pemula dari Dicoding">
+                                <div class="portfolio-links">
+                                    <a href="https://www.dicoding.com/certificates/2VX34365NZYQ" target="_blank">
+                                        <i class="bi bi-check2-square"></i>
+                                        <h6>Check Credential</h6>
+                                    </a>
+                                </div>
+                                <div class="p-3 bg-white text-center">
+                                    <h4 class="fs-6 fw-semibold mb-1">Belajar Membuat Front-End Web untuk Pemula</h4>
+                                    <p class="small text-body-secondary mb-0">Dicoding Indonesia</p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
+    
                     <div class="swiper-slide">
-
-                      <div class="portfolio-item Web-dev ">
-                        <div class="portfolio-wrap">
-                          <img data-src="certificate/SertifikatFrontEnd.png" class="img-fluid lazyload" alt="">
-                          <div class="portfolio-links">
-                            <a href="https://www.dicoding.com/certificates/2VX34365NZYQ" target="_blank"><i class="bi bi-check2-square"> </i>
-                              <h6>Check Credential</h6>
-                            </a>
-                          </div>
+                        <div class="portfolio-item IoT">
+                            <div class="portfolio-wrap  overflow-hidden">
+                                <img data-src="certificate/SertifikatIoTHealthMonitoringSystem.png" class="img-fluid lazyload" alt="Sertifikat Proyek Akhir IoT Health Monitoring System">
+                                <div class="portfolio-links">
+                                    <a href="https://badgr.com/public/assertions/1ey6ROu9T3C6yRBtcc1tUQ?identity__email=nadya15a3@gmail.com" target="_blank">
+                                        <i class="bi bi-check2-square"></i>
+                                        <h6>Check Credential</h6>
+                                    </a>
+                                </div>
+                                <div class="p-3 bg-white text-center">
+                                    <h4 class="fs-6 fw-semibold mb-1">Proyek Akhir: IoT Health Monitoring</h4>
+                                    <p class="small text-body-secondary mb-0">Skillvul</p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
+    
                     <div class="swiper-slide">
-
-                      <div class="portfolio-item IoT ">
-                        <div class="portfolio-wrap">
-                          <img data-src="certificate/SertifikatIoTHealthMonitoringSystem.png" class="img-fluid lazyload" alt="">
-                          <div class="portfolio-links">
-                            <a href="https://badgr.com/public/assertions/1ey6ROu9T3C6yRBtcc1tUQ?identity__email=nadya15a3@gmail.com" target="_blank"><i class="bi bi-check2-square"> </i>
-                              <h6>Check Credential</h6>
-                            </a>
-                          </div>
+                        <div class="portfolio-item Web-dev">
+                            <div class="portfolio-wrap  overflow-hidden">
+                                <img data-src="certificate/SertifikatFrontEndJavascript.png" class="img-fluid lazyload" alt="Sertifikat Belajar JavaScript untuk Web Front-End dari Dicoding">
+                                <div class="portfolio-links">
+                                    <a href="https://www.dicoding.com/certificates/EYX4J09JWZDL" target="_blank">
+                                        <i class="bi bi-check2-square"></i>
+                                        <h6>Check Credential</h6>
+                                    </a>
+                                </div>
+                                <div class="p-3 bg-white text-center">
+                                    <h4 class="fs-6 fw-semibold mb-1">Belajar Dasar Pemrograman JavaScript</h4>
+                                    <p class="small text-body-secondary mb-0">Dicoding Indonesia</p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
+    
                     <div class="swiper-slide">
-
-                      <div class="portfolio-item Web-dev ">
-                        <div class="portfolio-wrap">
-                          <img data-src="certificate/SertifikatFrontEndJavascript.png" class="img-fluid lazyload" alt="">
-                          <div class="portfolio-links">
-                            <a href="https://www.dicoding.com/certificates/EYX4J09JWZDL" target="_blank"><i class="bi bi-check2-square"> </i>
-                              <h6>Check Credential</h6>
-                            </a>
-                          </div>
+                        <div class="portfolio-item Web-dev">
+                            <div class="portfolio-wrap  overflow-hidden">
+                                <img data-src="certificate/SertifikatReact.png" class="img-fluid lazyload" alt="Sertifikat Belajar React dari Dicoding">
+                                <div class="portfolio-links">
+                                    <a href="https://www.dicoding.com/certificates/N9ZOY11VYPG5" target="_blank">
+                                        <i class="bi bi-check2-square"></i>
+                                        <h6>Check Credential</h6>
+                                    </a>
+                                </div>
+                                <div class="p-3 bg-white text-center">
+                                    <h4 class="fs-6 fw-semibold mb-1">Belajar Membuat Aplikasi Web dengan React</h4>
+                                    <p class="small text-body-secondary mb-0">Dicoding Indonesia</p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                    <div class="swiper-slide">
-
-                      <div class="portfolio-item Web-dev ">
-                        <div class="portfolio-wrap">
-                          <img data-src="certificate/SertifikatReact.png" class="img-fluid lazyload" alt="">
-                          <div class="portfolio-links">
-                            <a href="https://www.dicoding.com/certificates/N9ZOY11VYPG5" target="_blank"><i class="bi bi-check2-square"> </i>
-                              <h6>Check Credential</h6>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+    
                 </div>
                 <div class="swiper-pagination" style="bottom:-20px; position:relative;"></div>
             </div>
@@ -696,8 +800,8 @@
                 <p>Aplikasi cerdas berbasis AI untuk memantau tingkat fokus secara real-time dalam berbagai situasi, mulai dari belajar, bekerja, hingga aktivitas sehari-hari.</p>
                 <div class="project-tech-stack my-3">
                   <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg" class="lazyload" title="TensorFlow" alt="TensorFlow Logo" />
-                  <img data-src="{{ asset('img/tech/mediapipelogo.png') }}" class="lazyload" title="MediaPipe" alt="MediaPipe Logo" width="40" />
                   <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg" class="lazyload" title="Kotlin" alt="Kotlin Logo" />
+                  <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" class="lazyload" title="Laravel" alt="Laravel Logo" />
                   <img data-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg" class="lazyload" title="SQLite" alt="SQLite Logo" />
                 </div>
                 <div class="project-links">

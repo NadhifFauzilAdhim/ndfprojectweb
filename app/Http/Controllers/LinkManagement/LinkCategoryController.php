@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\LinkManagement;
 use App\Models\LinkCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 
 class LinkCategoryController extends Controller
 {
