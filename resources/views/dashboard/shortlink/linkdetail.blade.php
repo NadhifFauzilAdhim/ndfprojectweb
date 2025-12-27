@@ -247,7 +247,7 @@
                                     <div class="mb-3">
                                         <label for="slug" class="form-label">Short URL</label>
                                         <div class="input-group">
-                                            <span class="input-group-text bg-light text-primary">linksy.site/</span>
+                                            <span class="input-group-text bg-light text-primary">linksy.my.id/</span>
                                             <input type="text" class="form-control shadow-sm" id="slug" name="slug" value="{{ $link->slug }}" placeholder="Custom short link" required>
                                             <div class="invalid-feedback" id="slug-error"></div>
                                         </div>

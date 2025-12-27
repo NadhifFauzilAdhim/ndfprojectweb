@@ -4,12 +4,12 @@ use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserManagement\AdminUserController;
-use App\Http\Controllers\EventController;
+use App\Http\Controllers\Blog\EventController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Post\AdminCategoryController;
 use App\Http\Controllers\Post\AdminPostController;
 use App\Http\Controllers\LinkManagement\BlockedIpController;
-use App\Http\Controllers\CommentController;
+use App\Http\Controllers\Blog\CommentController;
 use App\Http\Controllers\Post\DashboardPostController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\GauthController;
@@ -20,7 +20,10 @@ use App\Http\Controllers\TodoController;
 use App\Http\Controllers\Redirect\TrackingController;
 use App\Http\Controllers\LinkManagement\LinkCategoryController;
 use App\Http\Controllers\CleanupController;
-
+use App\Http\Controllers\Tools\DiscordUserController;
+use App\Http\Controllers\Tools\ToolsController;
+use App\Http\Controllers\Tools\NetworkLookupController;
+use App\Http\Controllers\Tools\IpLookupController;
 // Public routes 
 Route::middleware('throttle:60,1')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -31,6 +34,15 @@ Route::middleware('throttle:60,1')->group(function () {
     Route::get('/event', [EventController::class, 'index'])->name('event');
     Route::get('/event/{id}', [EventController::class, 'show'])->name('eventdetail');
     Route::view('/focuseye/privacy-policy', 'privacy-policy')->name('privacy');
+    //Tools 
+    Route::get('tools', [ToolsController::class, 'index'])->name('tools');
+    //Discord Lookup
+    Route::get('tools/discord-lookup', [DiscordUserController::class, 'index'])->name('discord.lookup');
+    //Network Lookup
+    Route::get('tools/network-lookup', [NetworkLookupController::class, 'index'])->name('network.lookup');
+    //IP Lookup
+    Route::get('tools/ip-lookup', [IpLookupController::class, 'index'])->name('ip.lookup');
+    
 
 });
 
@@ -51,6 +63,7 @@ Route::middleware('guest')->group(function() {
         //Google Authentication
         Route::get('/oauth/google', [GauthController::class, 'redirectToProvider'])->name('oauth.google');
         Route::get('/oauth/google/callback', [GauthController::class, 'handleProviderCallback'])->name('oauth.google.callback');
+        
     });
     Route::middleware('throttle:20,1')->group(function () {
         Route::get('/forgot-password',[ForgotPasswordController::class,'passwordReset'])->name('password.request');
@@ -100,7 +113,8 @@ Route::middleware(['auth', 'verified'])->group(function() {
 
     // Link management 
     Route::middleware('throttle:60,1')->group(function () {
-        Route::resource('/dashboard/link', LinkController::class)->only(['index', 'store', 'show', 'destroy','update']);
+        Route::resource('/dashboard/link', LinkController::class)->only(['index', 'store', 'show', 'destroy','update'])
+        ->names(['dashboard.link.index', 'dashboard.link.store', 'dashboard.link.show', 'dashboard.link.destroy', 'dashboard.link.update']);
         Route::post('/dashboard/link/{link}/update-title', [LinkController::class, 'updateTitle']);
         Route::post('/qrcode/generate',[LinkController::class,'qrcodegenerate'])->name('links.qrcodegenerate');
         Route::post('/qrcode/scan',[LinkController::class,'qrcodescan'])->name('links.qrcodescan');
@@ -161,4 +175,5 @@ Route::middleware('throttle:10,1')->group(function () {
     Route::get('/r/{link:slug}', RedirectController::class);
     Route::post('/r/{link:slug}', RedirectController::class)->name('link.redirect');
     Route::get('/r/{link:slug}', RedirectController::class)->name('link.access');
+    
 });

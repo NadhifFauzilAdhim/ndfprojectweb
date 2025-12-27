@@ -58,5 +58,11 @@ return [
     'gemini' => [
         'api_key' => env('GEMINI_API_KEY'),
     ],
+    'discord' => [
+        'bot_token' => env('DISCORD_BOT_TOKEN'),
+    ],
+    'ipgeolocation' => [
+        'key' => env('IPGEOLOCATION_API_KEY'),
+    ],
 
 ];

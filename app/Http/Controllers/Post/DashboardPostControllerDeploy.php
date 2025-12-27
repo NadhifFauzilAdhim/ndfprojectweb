@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Post;
-use App\Http\Controllers\Controller;
+namespace App\Http\Controllers;
+
 use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -22,7 +22,7 @@ class DashboardPostController extends Controller
         $search = $request->input('search');
         return view('dashboard.post', [
             'title' => 'Create Post',
-            'posts' => Post::where('author_id', Auth::id())
+            'posts' => Post::select(['id', 'title','is_published', 'author_id', 'category_id', 'excerpt', 'slug', 'image', 'created_at', 'updated_at'])->where('author_id', Auth::id())
             ->when($search, function ($query, $search) {
                 return $query->where('title', 'like', "%{$search}%")
                             ->orWhere('slug', 'like', "%{$search}%");
@@ -47,15 +47,17 @@ class DashboardPostController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+         $validatedData = $request->validate([
             'title' => 'required|max:255',
             'slug' => 'required|unique:posts',
             'category_id' => 'required',
-            'image' => 'nullable|image|file|max:2048', // Gambar opsional
-            'body' => 'required',
+            'is_published' => 'required|boolean',
+            'image' => 'image|file|max:2048',
+            'body' => 'required'
         ]);
     
         $validatedData['author_id'] = Auth::id(); // Tetapkan author_id terlebih dahulu
+        $validatedData['excerpt'] = str()->limit(trim(preg_replace('/\s+/', ' ', strip_tags($request->body))), 100);
     
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             try {
@@ -119,7 +121,7 @@ class DashboardPostController extends Controller
         $datarules = [
             'title' => 'required|max:255',
             'category_id' => 'required',
-            'image' => 'nullable|image|file|max:2048', 
+            'image' => 'nullable|image|file|max:2048', // Gambar opsional
             'body' => 'required',
         ];
     
@@ -138,9 +140,11 @@ class DashboardPostController extends Controller
                 $file = $request->file('image');
                 $imageName = uniqid() . '.' . $file->getClientOriginalExtension();
                 $destinationPath = base_path('../public/post-image');
+    
                 if (!file_exists($destinationPath)) {
-                    mkdir($destinationPath, 0755, true);    
+                    mkdir($destinationPath, 0755, true);
                 }
+    
                 $file->move($destinationPath, $imageName);
                 $fullPath = $destinationPath . '/' . $imageName;
                 $imgManager = new ImageManager(new Driver);
@@ -154,15 +158,37 @@ class DashboardPostController extends Controller
         }
     
         $validatedData['author_id'] = Auth::id();
+        $validatedData['excerpt'] = str()->limit(trim(preg_replace('/\s+/', ' ', strip_tags($request->body))), 100);
         $post->update($validatedData);
+    
         return redirect('/dashboard/posts')->with('success', 'Post Berhasil Diubah');
     }
-
+    
 
     /**
      * Remove the specified resource from storage.
      */
-    public function generatePost(Request $request)
+    public function destroy(Post $post)
+    {
+        try {
+            if ($post->image && file_exists(base_path('../public/' . $post->image))) {
+                unlink(base_path('../public/' . $post->image));
+            }
+            $post->delete();
+    
+            return redirect('/dashboard/posts')->with('success', 'Post berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menghapus post: ' . $e->getMessage());
+        }
+    }
+
+    public function checkSlug(Request $request)
+    {
+        $slug = SlugService::createSlug(Post::class,'slug', $request->title);
+        return response()->json(['slug'=>$slug]);
+    }
+
+     public function generatePost(Request $request)
     {
         $request->validate([
             'title' => 'required|max:255',
@@ -170,6 +196,7 @@ class DashboardPostController extends Controller
         ]);
         $title = $request->input('title');
         $language = $request->input('language');
+        $model = 'gemini-2.0-flash';
     
         try {
             $prompt = "Write a well-structured article about '$title' in '$language'. 
@@ -178,8 +205,8 @@ class DashboardPostController extends Controller
             - Well-organized paragraphs using <p>.
             - Proper structure with an introduction, main content, and conclusion.
             - Avoid unnecessary tags.";
-            $result = Gemini::geminiPro()->generateContent($prompt);
-
+            $result = Gemini::generativeModel($model)->generateContent($prompt);
+            
             $generatedContent = $result->text();
     
             return response()->json([
@@ -197,6 +224,13 @@ class DashboardPostController extends Controller
     }
     public function visibility(Post $post , Request $request)
     {
-        dd($request->all());
+       $validatedData = $request->validate([
+           'is_published' => 'required|boolean'
+       ]);
+       if($post->is_published != $validatedData['is_published']){
+           $post->update($validatedData);
+           return redirect()->back()->with('success','Visibility Diubah');
+       }
+       return redirect()->back()->with('error','Post Tidak Berubah');
     }
 }

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Gemini\Laravel\Facades\Gemini;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\Client\ConnectionException;
 
 class ApiServices
 {
@@ -53,6 +54,73 @@ class ApiServices
             return 'data:image/png;base64,' . base64_encode($response->body());
         }
         return response('Failed to generate QR Code.', 500);
+    }
+
+    public function fetchDiscordUser(string $userId)
+    {
+        $token = config('services.discord.bot_token');
+        
+        $response = Http::withHeaders([
+            'Authorization' => "Bot {$token}",
+        ])->get("https://discord.com/api/v10/users/{$userId}");
+
+        if ($response->notFound()) {
+            return null;
+        }
+
+        if ($response->failed()) {
+            throw new \Exception('Failed to fetch user information');
+        }
+
+        return $response->json();
+    }
+
+
+    public function ipLookup(string $ip): array
+    {
+        $apiKey = config('services.ipgeolocation.key');
+
+        if (!$apiKey) {
+            return [
+                'success' => false,
+                'message' => 'API key belum dikonfigurasi.',
+            ];
+        }
+
+        try {
+            $response = Http::timeout(5)
+                ->retry(2, 300)
+                ->acceptJson()
+                ->get('https://api.ipgeolocation.io/v2/ipgeo', [
+                    'apiKey' => $apiKey,
+                    'ip'     => $ip,
+                ]);
+
+            if ($response->ok()) {
+                return [
+                    'success' => true,
+                    'data'    => $response->json(),
+                ];
+            }
+
+            return [
+                'success' => false,
+                'message' => 'IP Address tidak valid atau kuota API habis.',
+            ];
+
+        } catch (ConnectionException $e) {
+            return [
+                'success' => false,
+                'message' => 'Gagal terhubung ke layanan IP Geolocation.',
+            ];
+        } catch (\Throwable $e) {
+            report($e);
+
+            return [
+                'success' => false,
+                'message' => 'Terjadi kesalahan sistem.',
+            ];
+        }
     }
     
 }

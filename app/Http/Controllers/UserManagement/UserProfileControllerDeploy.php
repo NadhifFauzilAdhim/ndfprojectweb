@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\UserManagement;
-use App\Http\Controllers\Controller;
+namespace App\Http\Controllers;
+
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Facades\Log;
 
@@ -59,6 +60,9 @@ class UserProfileController extends Controller
 
     public function changeProfileImage(Request $request, User $user)
     {
+
+        // return redirect()->back()->with('error', 'Fitur penggantian gambar profil sedang dalam perbaikan. Mohon coba lagi nanti.');
+
         $request->validate([
             'image' => 'required|image|max:4096', 
         ]);
@@ -87,9 +91,8 @@ class UserProfileController extends Controller
                 if (!array_key_exists($mimeType, $allowedMimeTypes)) {
                     return redirect()->back()->with('error', 'Tipe file tidak valid. Hanya gambar JPEG, PNG, dan GIF yang diizinkan.');
                 }
-
                 $safeExtension = $allowedMimeTypes[$mimeType];
-                $imageName = uniqid() . '.' . $safeExtension; 
+                $imageName = uniqid() . '.' . $safeExtension;
 
                 $destinationPath = base_path('../public/avatars');
                 if (!file_exists($destinationPath)) {
@@ -101,7 +104,7 @@ class UserProfileController extends Controller
                 }
 
                 $temporaryFilePath = $destinationPath . '/' . $imageName; 
-                $file->move($destinationPath, $imageName);
+                $file->move($destinationPath, $imageName); 
 
                 try {
                     $imgManager = new ImageManager(new Driver);
@@ -111,7 +114,7 @@ class UserProfileController extends Controller
                     if ($safeExtension === 'jpg' || $safeExtension === 'jpeg') {
                         $filteredImage->toJpeg(80)->save($temporaryFilePath);
                     } elseif ($safeExtension === 'png') {
-                        $filteredImage->toPng()->save($temporaryFilePath);
+                        $filteredImage->toPng()->save($temporaryFilePath); 
                     } elseif ($safeExtension === 'gif') {
                         $filteredImage->toGif()->save($temporaryFilePath);
                     } else {
@@ -120,7 +123,7 @@ class UserProfileController extends Controller
 
                 } catch (\Exception $e) {
                     if (file_exists($temporaryFilePath)) {
-                        unlink($temporaryFilePath); 
+                        unlink($temporaryFilePath); // Hapus jika gagal diproses
                     }
                     return redirect()->back()->with('error', 'File yang diunggah bukan gambar yang valid atau rusak setelah pemeriksaan lebih lanjut.');
                 }
@@ -157,6 +160,7 @@ class UserProfileController extends Controller
         return redirect('/dashboard/profile')->with('success', 'Link untuk mengganti password telah dikirimkan ke email Anda');
     }
 
+
     public function showResetPasswordForm(Request $request)
     {
         $token = $request->query('token');
@@ -170,6 +174,7 @@ class UserProfileController extends Controller
             'user' => Auth::user()
         ]);
     }
+
 
     public function updatePassword(Request $request)
     {
@@ -195,4 +200,6 @@ class UserProfileController extends Controller
         Log::info('Password updated for user id: ' . $user->id);
         return redirect('/dashboard/profile')->with('success', 'Password Anda telah berhasil diperbarui');
     }
+    
+    
 }

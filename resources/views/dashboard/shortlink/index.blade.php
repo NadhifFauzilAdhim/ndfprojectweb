@@ -424,9 +424,6 @@
                                     </ul>
                                 </div>
                             </div>
-                            
-                           
-                            
                             <div class="row">
                                 @forelse ($links as $link)
                                 <div class="col-md-4 d-flex align-items-stretch">
@@ -445,22 +442,71 @@
                                                            data-link-slug="{{ $link->slug }}"
                                                            data-previous-title="{{ $link->title }}">
                                                 </div>
-                                            </div>
-                                            <div class="row d-flex align-items-center mb-2">
-                                                <div class="col-10">
-                                                    <h6 class="card-title text-truncate mb-0">
-                                                        <input type="text"
-                                                               class="form-control border-0 p-0 text-dark fw-bold bg-transparent"
-                                                               id="linkInput-{{ $link->slug }}"
-                                                               value="{{ 'linksy.site/' . $link->slug }}"
-                                                               readonly>
-                                                    </h6>
+                                            </div>          
+                                            <div class="mb-2">
+                                                <div class="row d-flex align-items-center">
+                                                    <div class="col-10">
+                                                        <h6 class="card-title text-truncate mb-0 d-flex align-items-center">
+                                                            <span class="me-2 text-success d-flex align-items-center" 
+                                                                  data-bs-toggle="tooltip" 
+                                                                  data-bs-placement="top" 
+                                                                  title="Domain Utama (Recommended)">
+                                                                <iconify-icon icon="solar:verified-check-bold-duotone" class="fs-5"></iconify-icon>
+                                                            </span>
+                                                            
+                                                            <input type="text"
+                                                                   class="form-control border-0 p-0 text-dark fw-bold bg-transparent"
+                                                                   id="linkInput-{{ $link->slug }}"
+                                                                   value="{{ 'linksy.my.id/' . $link->slug }}"
+                                                                   readonly>
+                                                        </h6>
+                                                    </div>
+                                                    
+                                                    <div class="col-2 text-end px-0">
+                                                        <div class="btn-group" role="group">
+                                                            <button class="btn btn-outline-dark btn-sm"
+                                                                    onclick="copyFunction('{{ $link->slug }}')"
+                                                                    data-bs-toggle="tooltip"
+                                                                    title="Copy Link">
+                                                                <iconify-icon icon="solar:copy-line-duotone"></iconify-icon>
+                                                            </button>
+                                            
+                                                            <button class="btn btn-outline-dark btn-sm" 
+                                                                    type="button" 
+                                                                    data-bs-toggle="collapse" 
+                                                                    data-bs-target="#collapseLegacy-{{ $link->slug }}" 
+                                                                    aria-expanded="false" 
+                                                                    aria-controls="collapseLegacy-{{ $link->slug }}"
+                                                                    title="Tampilkan link alternatif">
+                                                                <iconify-icon icon="solar:alt-arrow-down-bold-duotone"></iconify-icon>
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="col-2 text-start px-0">
-                                                    <button class="btn btn-outline-dark btn-sm"
-                                                            onclick="copyFunction('{{ $link->slug }}')">
-                                                        <iconify-icon icon="solar:copy-line-duotone"></iconify-icon>
-                                                    </button>
+                                            
+                                                <div class="collapse mt-2 ps-3 border-start border-3 border-danger bg-light rounded-end" id="collapseLegacy-{{ $link->slug }}">
+                                                    <div class="row py-2 align-items-center">
+                                                        <div class="col-12">
+                                                            <h6 class="card-title text-truncate mb-0 d-flex align-items-center" style="font-size: 0.9em;">
+                                                                <a tabindex="0" 
+                                                                   class="me-2 text-danger d-flex align-items-center text-decoration-none" 
+                                                                   role="button" 
+                                                                   data-bs-toggle="popover" 
+                                                                   data-bs-trigger="hover focus"
+                                                                   data-bs-placement="top"
+                                                                   title="⚠️ Perhatian" 
+                                                                   data-bs-content="Domain linksy.site akan segera discontinue pada Januari 2026. Mohon beralih ke linksy.my.id.">
+                                                                    <iconify-icon icon="solar:danger-circle-bold-duotone" class="fs-5"></iconify-icon>
+                                                                </a>
+                                                                
+                                                                <input type="text"
+                                                                       class="form-control border-0 p-0 text-secondary bg-transparent fst-italic"
+                                                                       id="linkInput-site-{{ $link->slug }}"
+                                                                       value="{{ 'linksy.site/' . $link->slug }}"
+                                                                       readonly>
+                                                            </h6>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <p class="text-muted small mb-1">Destination:</p>
