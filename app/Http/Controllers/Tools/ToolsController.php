@@ -3,21 +3,18 @@
 namespace App\Http\Controllers\Tools;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class ToolsController extends Controller
 {
     public function index()
     {
-        // Daftar tools bisa didefinisikan di sini agar view lebih rapi
-        // dan mudah ditambah di kemudian hari.
         $tools = [
 
             [
                 'name' => 'Link Shortener',
                 'description' => 'Buat link pendek dengan kustomisasi URL, password, dan jangka waktu aktif.',
                 'icon' => 'bi-link-45deg',
-                'color' => '#22c55e', // Green – produktivitas
+                'color' => '#22c55e',
                 'route' => 'link.index',
                 'badge' => 'Available',
             ],
@@ -25,7 +22,7 @@ class ToolsController extends Controller
                 'name' => 'Location Tracker',
                 'description' => 'Lacak lokasi akurat dengan link publik.',
                 'icon' => 'bi-geo-alt-fill',
-                'color' => '#ef4444', // Red – deprecated / warning
+                'color' => '#ef4444',
                 'route' => 'dashboard.tracking.index',
                 'badge' => 'Deprecated',
             ],
@@ -33,7 +30,7 @@ class ToolsController extends Controller
                 'name' => 'Network WHOIS Lookup',
                 'description' => 'Cek pemilik jaringan, ASN, kontak teknis, dan informasi registrasi IP (RDAP).',
                 'icon' => 'bi-diagram-3-fill',
-                'color' => '#0ea5e9', // Sky Blue – network
+                'color' => '#0ea5e9',
                 'route' => 'network.lookup',
                 'badge' => 'Available',
             ],
@@ -41,7 +38,7 @@ class ToolsController extends Controller
                 'name' => 'IP Geolocation',
                 'description' => 'Lacak lokasi fisik, negara, dan detail ISP dari alamat IP publik.',
                 'icon' => 'bi-globe-americas',
-                'color' => '#f59e0b', // Amber – geo / analysis
+                'color' => '#f59e0b',
                 'route' => 'ip.lookup',
                 'badge' => 'Available',
             ],
@@ -49,20 +46,26 @@ class ToolsController extends Controller
                 'name' => 'Discord Lookup',
                 'description' => 'Analisis mendalam profil pengguna Discord, cek tanggal pembuatan akun, status Nitro, dan unduh aset HD.',
                 'icon' => 'bi-discord',
-                'color' => '#5865F2', // Discord brand color
+                'color' => '#5865F2',
                 'route' => 'discord.lookup',
+                'badge' => 'Available',
+            ],
+            [
+                'name' => 'REST API Tester',
+                'description' => 'Uji endpoint API langsung dari browser (Client-Side).',
+                'icon' => 'bi-send-check-fill',
+                'color' => '#0ea5e9',
+                'route' => 'api.tester',
                 'badge' => 'Available',
             ],
             [
                 'name' => 'DNS Lookup',
                 'description' => 'Cek informasi DNS dari domain yang Anda inginkan.',
                 'icon' => 'bi-shield-lock-fill',
-                'color' => '#6366f1', // Indigo – security
+                'color' => '#6366f1',
                 'route' => '#',
                 'badge' => 'Coming Soon',
             ],
-            
-        
         ];
 
         return view('tools.index', compact('tools'));

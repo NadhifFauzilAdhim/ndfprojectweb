@@ -24,6 +24,7 @@ use App\Http\Controllers\Tools\DiscordUserController;
 use App\Http\Controllers\Tools\ToolsController;
 use App\Http\Controllers\Tools\NetworkLookupController;
 use App\Http\Controllers\Tools\IpLookupController;
+use App\Http\Controllers\Tools\ApiTesterController;
 // Public routes 
 Route::middleware('throttle:60,1')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -42,6 +43,14 @@ Route::middleware('throttle:60,1')->group(function () {
     Route::get('tools/network-lookup', [NetworkLookupController::class, 'index'])->name('network.lookup');
     //IP Lookup
     Route::get('tools/ip-lookup', [IpLookupController::class, 'index'])->name('ip.lookup');
+    //Api Tester
+    Route::get('tools/api-tester', [ApiTesterController::class, 'index'])->name('api.tester');
+    
+    // Forum
+    Route::middleware('auth')->get('/forum', function () {
+        return view('forum.index');
+    })->name('forum.index');
+
     
 
 });
