@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\ChatMessage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\RateLimiter;
 use Livewire\Component;
 
@@ -11,14 +12,20 @@ class ForumChat extends Component
 {
     public $message;
 
+    protected $cacheKey = 'forum_chat_messages';
+
     public function render()
     {
-        return view('livewire.forum-chat', [
-            'messages' => ChatMessage::with('user')
+        $messages = Cache::remember($this->cacheKey, 3600, function () {
+            return ChatMessage::with('user')
                 ->latest()
                 ->take(50)
                 ->get()
-                ->sortBy('created_at'),
+                ->sortBy('created_at');
+        });
+
+        return view('livewire.forum-chat', [
+            'messages' => $messages,
         ]);
     }
 
@@ -32,16 +39,19 @@ class ForumChat extends Component
             'chat-message:'.Auth::id(),
             $perMinute = 5,
             function () {
+                $saveInput = strip_tags($this->message);
                 $this->validate([
                     'message' => 'required|string|max:1000',
                 ]);
 
                 ChatMessage::create([
                     'user_id' => Auth::id(),
-                    'message' => $this->message,
+                    'message' => $saveInput,
                 ]);
 
                 $this->message = '';
+
+                Cache::forget($this->cacheKey);
             }
         );
 
@@ -58,8 +68,10 @@ class ForumChat extends Component
         }
         $message = ChatMessage::find($messageId);
 
-        if ($message && $message->user_id === Auth::id()) {
+        if ($message && ($message->user_id === Auth::id() || Auth::user()->is_admin)) {
             $message->delete();
+
+            Cache::forget($this->cacheKey);
         }
     }
 }
