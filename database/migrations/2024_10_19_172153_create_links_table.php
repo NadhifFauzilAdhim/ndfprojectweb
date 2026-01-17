@@ -18,9 +18,9 @@ return new class extends Migration
                 indexName : 'links_user_id'
             );
             $table->foreignId('link_category_id')
-                  ->nullable()
-                  ->constrained('link_categories')
-                  ->onDelete('set null'
+                ->nullable()
+                ->constrained('link_categories')
+                ->onDelete('set null'
                 );
             $table->string('title')->nullable();
             $table->string('slug');

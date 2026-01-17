@@ -123,4 +123,8 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'shorting_url' => [
+        'base_url' => env('SHORTING_URL_BASE_URL', 'linksy.my.id'),
+    ],
+
 ];

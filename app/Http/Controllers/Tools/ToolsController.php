@@ -15,7 +15,7 @@ class ToolsController extends Controller
                 'description' => 'Buat link pendek dengan kustomisasi URL, password, dan jangka waktu aktif.',
                 'icon' => 'bi-link-45deg',
                 'color' => '#22c55e',
-                'route' => 'link.index',
+                'route' => 'instant-link',
                 'badge' => 'Available',
             ],
             [

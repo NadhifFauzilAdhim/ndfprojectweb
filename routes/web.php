@@ -1,31 +1,33 @@
 <?php
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Home\HomeController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\UserManagement\AdminUserController;
-use App\Http\Controllers\Blog\EventController;
-use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Post\AdminCategoryController;
-use App\Http\Controllers\Post\AdminPostController;
-use App\Http\Controllers\LinkManagement\BlockedIpController;
-use App\Http\Controllers\Blog\CommentController;
-use App\Http\Controllers\Post\DashboardPostController;
+
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\GauthController;
-use App\Http\Controllers\UserManagement\UserProfileController;
-use App\Http\Controllers\LinkManagement\LinkController;
-use App\Http\Controllers\Redirect\RedirectController;
-use App\Http\Controllers\TodoController;
-use App\Http\Controllers\Redirect\TrackingController;
-use App\Http\Controllers\LinkManagement\LinkCategoryController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Blog\CommentController;
+use App\Http\Controllers\Blog\EventController;
 use App\Http\Controllers\CleanupController;
-use App\Http\Controllers\Tools\DiscordUserController;
-use App\Http\Controllers\Tools\ToolsController;
-use App\Http\Controllers\Tools\NetworkLookupController;
-use App\Http\Controllers\Tools\IpLookupController;
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\LinkManagement\BlockedIpController;
+use App\Http\Controllers\LinkManagement\LinkCategoryController;
+use App\Http\Controllers\LinkManagement\LinkController;
+use App\Http\Controllers\Post\AdminCategoryController;
+use App\Http\Controllers\Post\AdminPostController;
+use App\Http\Controllers\Post\DashboardPostController;
+use App\Http\Controllers\Redirect\RedirectController;
+use App\Http\Controllers\Redirect\TrackingController;
+use App\Http\Controllers\TodoController;
 use App\Http\Controllers\Tools\ApiTesterController;
-// Public routes 
+use App\Http\Controllers\Tools\DiscordUserController;
+use App\Http\Controllers\Tools\IpLookupController;
+use App\Http\Controllers\Tools\NetworkLookupController;
+use App\Http\Controllers\Tools\ToolsController;
+use App\Http\Controllers\UserManagement\AdminUserController;
+use App\Http\Controllers\UserManagement\UserProfileController;
+use Illuminate\Support\Facades\Route;
+
+// Public routes
 Route::middleware('throttle:60,1')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/blog', [HomeController::class, 'blog']);
@@ -35,7 +37,7 @@ Route::middleware('throttle:60,1')->group(function () {
     Route::get('/event', [EventController::class, 'index'])->name('event');
     Route::get('/event/{id}', [EventController::class, 'show'])->name('eventdetail');
     Route::view('/focuseye/privacy-policy', 'privacy-policy')->name('privacy');
-    //Tools 
+    //Tools
     Route::get('tools', [ToolsController::class, 'index'])->name('tools');
     //Discord Lookup
     Route::get('tools/discord-lookup', [DiscordUserController::class, 'index'])->name('discord.lookup');
@@ -45,13 +47,11 @@ Route::middleware('throttle:60,1')->group(function () {
     Route::get('tools/ip-lookup', [IpLookupController::class, 'index'])->name('ip.lookup');
     //Api Tester
     Route::get('tools/api-tester', [ApiTesterController::class, 'index'])->name('api.tester');
-    
+
     // Forum
     Route::middleware('auth')->get('/forum', function () {
         return view('forum.index');
     })->name('forum.index');
-
-    
 
 });
 
@@ -62,28 +62,28 @@ Route::middleware('throttle:20,1')->group(function () {
     Route::get('/apidocumentation', [HomeController::class, 'ipdocuments'])->name('ipdocuments');
 });
 
-// Authentication routes 
-Route::middleware('guest')->group(function() {
+// Authentication routes
+Route::middleware('guest')->group(function () {
     Route::middleware('throttle:20,1')->group(function () {
         Route::get('/login', [LoginController::class, 'index'])->name('login');
         Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate');
-        Route::get('/register', [RegisterController::class, 'index'])->name('register');    
+        Route::get('/register', [RegisterController::class, 'index'])->name('register');
         Route::post('/register', [RegisterController::class, 'store'])->name('storeregister');
         //Google Authentication
         Route::get('/oauth/google', [GauthController::class, 'redirectToProvider'])->name('oauth.google');
         Route::get('/oauth/google/callback', [GauthController::class, 'handleProviderCallback'])->name('oauth.google.callback');
-        
+
     });
     Route::middleware('throttle:20,1')->group(function () {
-        Route::get('/forgot-password',[ForgotPasswordController::class,'passwordReset'])->name('password.request');
-        Route::post('/forgot-password',[ForgotPasswordController::class,'resetRequest'])->name('password.email');
-        Route::get('/reset-password/{token}',[ForgotPasswordController::class,'resetToken'])->name('password.reset');
-        Route::post('/reset-password',[ForgotPasswordController::class,'resetForm'])->name('password.update');
+        Route::get('/forgot-password', [ForgotPasswordController::class, 'passwordReset'])->name('password.request');
+        Route::post('/forgot-password', [ForgotPasswordController::class, 'resetRequest'])->name('password.email');
+        Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'resetToken'])->name('password.reset');
+        Route::post('/reset-password', [ForgotPasswordController::class, 'resetForm'])->name('password.update');
     });
 });
 
 // Email Verification routes
-Route::middleware('auth')->group(function() {
+Route::middleware('auth')->group(function () {
     Route::get('/email/verify', [RegisterController::class, 'verifyemail'])->name('verification.notice');
     Route::get('/email/verify-success', [RegisterController::class, 'verificationSuccess'])->name('verification.success');
     Route::post('/email/verification-notification', [RegisterController::class, 'verificationResend'])
@@ -95,24 +95,24 @@ Route::middleware('auth')->group(function() {
     Route::post('/logout', [LoginController::class, 'deauthenticate'])->name('logout');
 });
 
-Route::middleware(['auth', 'verified'])->group(function() {
+Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard routes
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Profile routes 
+    // Profile routes
     Route::middleware('throttle:20,1')->group(function () {
         Route::resource('/dashboard/profile', UserProfileController::class)->only(['index', 'update'])->parameters(['profile' => 'user:username']);
         Route::put('/dashboard/profile/{user:username}/change-image', [UserProfileController::class, 'changeProfileImage']);
     });
 
-    // Password management 
+    // Password management
     Route::middleware('throttle:3,1')->group(function () {
         Route::get('/dashboard/profile/change-password', [UserProfileController::class, 'changePassword'])->name('profile.change-password');
         Route::get('/dashboard/profile/reset-password', [UserProfileController::class, 'showResetPasswordForm'])->name('profile.reset-password');
         Route::post('/dashboard/profile/update-password', [UserProfileController::class, 'updatePassword'])->name('profile.update-password');
     });
 
-    // Comments dan Replies 
+    // Comments dan Replies
     Route::middleware('throttle:10,1')->group(function () {
         Route::post('/post/{post:slug}/comment', [CommentController::class, 'store']);
         Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
@@ -120,26 +120,29 @@ Route::middleware(['auth', 'verified'])->group(function() {
         Route::delete('/commentReply/{reply}', [CommentController::class, 'destroyReply'])->name('commentReply.destroy');
     });
 
-    // Link management 
+    // Link management
     Route::middleware('throttle:60,1')->group(function () {
-        Route::resource('/dashboard/link', LinkController::class)->only(['index', 'store', 'show', 'destroy','update'])
-        ->names(['dashboard.link.index', 'dashboard.link.store', 'dashboard.link.show', 'dashboard.link.destroy', 'dashboard.link.update']);
+        Route::resource('/dashboard/link', LinkController::class)->only(['index', 'store', 'show', 'destroy', 'update'])
+            ->names(['dashboard.link.index', 'dashboard.link.store', 'dashboard.link.show', 'dashboard.link.destroy', 'dashboard.link.update']);
         Route::post('/dashboard/link/{link}/update-title', [LinkController::class, 'updateTitle']);
-        Route::post('/qrcode/generate',[LinkController::class,'qrcodegenerate'])->name('links.qrcodegenerate');
-        Route::post('/qrcode/scan',[LinkController::class,'qrcodescan'])->name('links.qrcodescan');
+        Route::post('/qrcode/generate', [LinkController::class, 'qrcodegenerate'])->name('links.qrcodegenerate');
+        Route::post('/qrcode/scan', [LinkController::class, 'qrcodescan'])->name('links.qrcodescan');
         Route::post('/dashboard/link/share', [LinkController::class, 'share']);
         Route::get('dashboard/link/{link}/summary', [LinkController::class, 'generateSummary'])->name('link.summary');
         Route::delete('dashboard/link/share/{linkShare}', [LinkController::class, 'deleteShare'])->name('links.share.delete');
         Route::name('dashboard.')->group(function () {
             Route::resource('dashboard/tracking', TrackingController::class)->only(['index', 'store', 'show', 'destroy', 'update']);
         });
-        route::view('/dashboard/linknest', 'dashboard.linknest.index',['title' => 'Linknest'])->name('linknest');
+        route::view('/dashboard/linknest', 'dashboard.linknest.index', ['title' => 'Linknest'])->name('linknest');
         Route::post('/dashboard/link-category', [LinkCategoryController::class, 'store'])->name('link-category.store');
         Route::post('/dashboard/link-category/{category}/toggle-share', [LinkCategoryController::class, 'toggleShare'])
-        ->name('link-category.toggle-share');
+            ->name('link-category.toggle-share');
         Route::delete('/dashboard/link-category/{category}', [LinkCategoryController::class, 'destroy'])->name('linkCategory.destroy');
-    
+
     });
+
+    // Instant Link
+    Route::middleware('throttle:30,1')->get('/instant-link', \App\Livewire\InstantShortlink::class)->name('instant-link');
 
     // Blocked IPs '
     Route::middleware('throttle:10,1')->group(function () {
@@ -147,7 +150,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
         Route::delete('/unblock-ip/{id}', [BlockedIpController::class, 'unblock'])->name('unblock.ip');
     });
 
-    // Todo List 
+    // Todo List
     Route::middleware('throttle:60,1')->group(function () {
         Route::resource('/dashboard/todolist', TodoController::class);
         Route::put('/dashboard/todolist/{id}', [TodoController::class, 'update'])->name('todolist.update');
@@ -155,8 +158,8 @@ Route::middleware(['auth', 'verified'])->group(function() {
     });
 });
 
-// Dashboard Admin routes 
-Route::middleware(['auth', 'admin', 'verified'])->group(function() {
+// Dashboard Admin routes
+Route::middleware(['auth', 'admin', 'verified'])->group(function () {
     Route::middleware('throttle:20,1')->group(function () {
         Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'checkSlug']);
         Route::resource('/dashboard/posts', DashboardPostController::class);
@@ -164,13 +167,13 @@ Route::middleware(['auth', 'admin', 'verified'])->group(function() {
         Route::post('/dashboard/posts/{post:slug}/visibility', [DashboardPostController::class, 'visibility'])->name('posts.visibility');
         Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show');
         Route::delete('/dashboard/postmanagement/{post:slug}', [AdminPostController::class, 'destroy'])->name('postmanagement.destroy');
-        Route::resource('/dashboard/postmanagement', AdminPostController::class)->only(['index','destroy']);
-        Route::get('/cleanup/visit-nsn', [CleanupController::class, 'cleanupOldVisits']); 
+        Route::resource('/dashboard/postmanagement', AdminPostController::class)->only(['index', 'destroy']);
+        Route::get('/cleanup/visit-nsn', [CleanupController::class, 'cleanupOldVisits']);
     });
 });
 
-// Owner-specific routes 
-Route::middleware(['auth', 'owner', 'verified'])->group(function() {
+// Owner-specific routes
+Route::middleware(['auth', 'owner', 'verified'])->group(function () {
     Route::middleware('throttle:5,1')->group(function () {
         Route::resource('/dashboard/usersetting', AdminUserController::class)->only(['index', 'update']);
         Route::patch('/dashboard/usersetting/{user}/toggle-verification', [AdminUserController::class, 'update'])->name('usersetting.toggleVerification');
@@ -179,10 +182,10 @@ Route::middleware(['auth', 'owner', 'verified'])->group(function() {
     });
 });
 
-// Redirect route 
+// Redirect route
 Route::middleware('throttle:10,1')->group(function () {
     Route::get('/r/{link:slug}', RedirectController::class);
     Route::post('/r/{link:slug}', RedirectController::class)->name('link.redirect');
     Route::get('/r/{link:slug}', RedirectController::class)->name('link.access');
-    
+
 });

@@ -42,7 +42,7 @@ return [
     'clarity' => [
         'id' => env('CLARITY_ID'),
     ],
-    
+
     'onesignal' => [
         'app_id' => env('ONESIGNAL_APP_ID'),
     ],
